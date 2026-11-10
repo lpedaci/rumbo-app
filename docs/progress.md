@@ -45,7 +45,9 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 **Ajuste pedido por Lourdes: validación de campos**
 - Máscaras de entrada (fecha, entero, código, sin espacios) integradas en `TextField`, y esquemas de Zod con mensajes concretos.
 - Formulario de ejemplo con React Hook Form en `/styleguide`. Probado en el navegador con teclado real: letras bloqueadas, fecha inexistente marcada, error que desaparece al corregir.
-- `npm test`: 79/79.
+- Aviso para lectores de pantalla cuando una máscara descarta un carácter, con el valor final (D-28), como pide la sección 2.10 actualizada.
+- `CLAUDE.md` actualizado por Lourdes (máscaras en 2.10 y rango del plazo en F2) y verificado contra lo implementado. Se restauró en 2.1.1 la serie de gráficos 4 `#B9779D`, confirmada en D-22.
+- `npm test`: 83/83.
 
 **Problemas encontrados**
 - INC-002 a INC-005, todos resueltos.

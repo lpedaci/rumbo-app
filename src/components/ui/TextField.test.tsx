@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { useForm } from 'react-hook-form';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 import es from '@/locales/es.json';
 import { dateMask } from '@/lib/input-masks';
@@ -53,6 +53,23 @@ describe('TextField with a mask and validation', () => {
     expect(input).not.toHaveAttribute('maxlength');
     fireEvent.change(input, { target: { value: 'asd13x10y2026' } });
     expect(input.value).toBe('13/10/2026');
+  });
+
+  it('tells screen readers that a character was not accepted and reads the final value', () => {
+    vi.useFakeTimers();
+    render(<DateForm />);
+    const input = screen.getByLabelText('Fecha de ingreso');
+    fireEvent.change(input, { target: { value: '13a' } });
+    act(() => {
+      vi.advanceTimersByTime(60);
+    });
+    const live = document.querySelector('[aria-live="polite"]');
+    expect(live).toHaveTextContent('Ese carácter no se acepta en este campo. Valor actual: 13');
+    act(() => {
+      vi.advanceTimersByTime(4000);
+    });
+    expect(live).toHaveTextContent('');
+    vi.useRealTimers();
   });
 
   it('shows no error while typing for the first time, then validates on blur', async () => {

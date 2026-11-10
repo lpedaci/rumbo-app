@@ -24,7 +24,9 @@
     "close": "Close",
     "cancel": "Cancel",
     "dismiss": "Dismiss",
-    "notificationsRegion": "Notifications"
+    "notificationsRegion": "Notifications",
+    "maskRejected": "That character isn't allowed in this field. Current value: {{value}}",
+    "emptyValue": "empty"
   },
   "validation": {
     "required": "This field is required. Fill it in to continue.",

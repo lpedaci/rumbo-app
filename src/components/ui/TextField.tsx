@@ -1,6 +1,15 @@
-import { type ChangeEvent, forwardRef, type InputHTMLAttributes, type ReactNode, useId } from 'react';
+import {
+  type ChangeEvent,
+  forwardRef,
+  type InputHTMLAttributes,
+  type ReactNode,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import type { InputMask } from '@/lib/input-masks';
+import { hasRejectedCharacters, type InputMask } from '@/lib/input-masks';
 import { cn } from '@/lib/utils';
 import { Icon } from './Icon';
 
@@ -50,11 +59,29 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
   // Masks already cap the length. A native maxLength would cut pasted text BEFORE the
   // mask cleans it ("13 / 10 / 2026" or "246 810"), so it is ignored on masked fields.
   const nativeMaxLength = mask ? undefined : maxLength;
+  const { t } = useTranslation();
+
+  // Screen readers echo every key, including the ones a mask discards. A polite live
+  // region then says that the character was not accepted and reads the final value (2.10).
+  const [announcement, setAnnouncement] = useState('');
+  const announceTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(announceTimer.current), []);
+
+  const announceRejection = (value: string) => {
+    window.clearTimeout(announceTimer.current);
+    setAnnouncement('');
+    // Re-set on the next tick so the same message is announced again if repeated.
+    announceTimer.current = window.setTimeout(() => {
+      setAnnouncement(t('ui.maskRejected', { value: value || t('ui.emptyValue') }));
+      announceTimer.current = window.setTimeout(() => setAnnouncement(''), 4000);
+    }, 50);
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (mask) {
       const input = event.target;
       const masked = mask(input.value);
+      if (hasRejectedCharacters(mask, input.value)) announceRejection(masked);
       if (masked !== input.value) {
         // Keep the caret where the user was typing, adjusted by the removed characters.
         const caret = Math.max(0, (input.selectionStart ?? masked.length) - (input.value.length - masked.length));
@@ -65,7 +92,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
     onChange?.(event);
   };
 
-  const { t } = useTranslation();
   const autoId = useId();
   const inputId = id ?? autoId;
   const supportId = `${inputId}-support`;
@@ -113,6 +139,11 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
         {invalid && <Icon name="error" size={16} className="mt-px" />}
         <span>{invalid ? error : helperText}</span>
       </p>
+      {mask && (
+        <span className="sr-only" aria-live="polite" aria-atomic="true">
+          {announcement}
+        </span>
+      )}
     </div>
   );
 });

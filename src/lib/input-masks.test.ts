@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dateMask, digitsMask, integerMask, noSpacesMask } from './input-masks';
+import { dateMask, digitsMask, hasRejectedCharacters, integerMask, noSpacesMask } from './input-masks';
 
 describe('dateMask', () => {
   it('drops letters and symbols', () => {
@@ -59,5 +59,25 @@ describe('digitsMask and noSpacesMask', () => {
 
   it('removes spaces from emails', () => {
     expect(noSpacesMask(' sofia @nortia.demo ')).toBe('sofia@nortia.demo');
+  });
+});
+
+describe('hasRejectedCharacters', () => {
+  it('flags letters but not separators in dates', () => {
+    expect(hasRejectedCharacters(dateMask, '13a')).toBe(true);
+    expect(hasRejectedCharacters(dateMask, '13-10-2026')).toBe(false);
+    expect(hasRejectedCharacters(dateMask, '13/10/2026')).toBe(false);
+  });
+
+  it('flags decimals and letters in integers, but not the minus sign', () => {
+    const offset = integerMask({ allowNegative: true });
+    expect(hasRejectedCharacters(offset, '-3')).toBe(false);
+    expect(hasRejectedCharacters(offset, '3,5')).toBe(true);
+    expect(hasRejectedCharacters(integerMask(), '-3')).toBe(true);
+  });
+
+  it('accepts spaces in pasted codes and flags them in emails', () => {
+    expect(hasRejectedCharacters(digitsMask(6), '246 810')).toBe(false);
+    expect(hasRejectedCharacters(noSpacesMask, 'sofia @nortia.demo')).toBe(true);
   });
 });

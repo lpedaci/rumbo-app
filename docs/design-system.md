@@ -178,6 +178,7 @@ Variantes `standard`, `tonal` y `outlined`; tamaños de 40 y 32 px. `label` es o
 | `digitsMask(6)` | Código de verificación | Solo 6 dígitos; quita los espacios al pegar |
 | `noSpacesMask` | Correos | Quita los espacios |
 
+  Si se escribe o se pega un carácter que la máscara descarta, `TextField` avisa a los lectores de pantalla con una región `aria-live` cortés que incluye el valor final, por ejemplo: "Ese carácter no se acepta en este campo. Valor actual: 13" (D-28).
   Los campos con máscara usan `type="text"` (no `type="number"`, que acepta "e", "+" y decimales) e ignoran el `maxLength` nativo: el navegador cortaría el texto pegado antes de limpiarlo (INC-005).
 - **Validación** con React Hook Form y Zod (`src/lib/validation.ts`), en modo `onTouched`: la primera validación ocurre al salir del campo o al enviar; después de un error, el campo se revalida en cada cambio y el mensaje desaparece apenas el dato es correcto. Al enviar, el foco va al primer campo con error. Los valores nunca se borran.
 - Los mensajes son claves de i18n (`validation.*`) y dicen qué corregir, por ejemplo: "Esa fecha no existe. Revisa el día y el mes". Las fechas se validan contra el calendario (31/02 no pasa).

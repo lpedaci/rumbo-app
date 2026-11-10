@@ -241,7 +241,7 @@ Todos los textos viven en `src/locales/`. Antes de cerrar cada pantalla, revisar
 - **Debajo de cada campo va un texto de ayuda** (*supporting text* de M3, `body-small`, color `on-surface-variant`) que indica **exactamente qué hay que poner y en qué formato**, con un ejemplo. Por ejemplo:
     - Correo: "Tu correo corporativo, por ejemplo: nombre.apellido@nortia.demo".
     - Fecha de ingreso: "Formato DD/MM/AAAA, por ejemplo: 13/10/2026".
-    - Plazo de una tarea: "Días respecto del ingreso. Usa números negativos para antes del ingreso, por ejemplo: -3".
+    - Plazo de una tarea: "Días respecto del ingreso, entre -30 y 90. Usa números negativos para antes del ingreso, por ejemplo: -3".
     - Contraseña nueva: la lista de requisitos, que se tilda en vivo a medida que se cumplen.
 - El placeholder es opcional y, si se usa, solo muestra un ejemplo breve con el mismo contenido del texto de ayuda; nunca una instrucción que no esté también en el texto de ayuda. Si se usa, su color debe cumplir el contraste de texto (4,5:1).
 - El texto de ayuda se asocia al campo con `aria-describedby`.
@@ -254,6 +254,7 @@ Todos los textos viven en `src/locales/`. Antes de cerrar cada pantalla, revisar
     5. **Un error nunca borra lo cargado:** los datos ingresados se conservan siempre (salvo la contraseña, por seguridad).
 - **Errores del servidor:** aunque el formulario esté bien, el proceso puede fallar. Simular en la demo al menos un caso (por ejemplo, "El servicio no está disponible"), que se dispare solo con un comentario específico en el formulario de "¿Problemas para iniciar sesión?" (G4), para que no aparezca por accidente: se muestra un aviso arriba del formulario, se conservan los datos y se ofrece "Reintentar".
 - Atributos `autocomplete` correctos (`email`, `current-password`, `new-password`, `one-time-code`) y tipos de input adecuados (`email`, `date`, `number`, `tel`).
+- **Máscaras de entrada:** los campos con formato fijo solo aceptan los caracteres válidos, también al pegar (fecha: dígitos y barras automáticas; plazo: enteros con signo menos opcional, sin `type="number"`; código de verificación: 6 dígitos sin espacios; correo: sin espacios). La máscara no reemplaza la validación ni el texto de ayuda, y el valor final debe anunciarse correctamente al lector de pantalla.
 - **No pedir dos veces el mismo dato** en un mismo flujo (criterio 3.3.7 de WCAG 2.2).
 - **Autenticación accesible** (3.3.8): permitir pegar y usar gestores de contraseñas; el código MFA acepta pegado y se completa en un solo campo, no en seis cajitas separadas.
 
@@ -422,6 +423,7 @@ Priorizadas con una matriz de decisión (valor para el usuario 40 %, demostraci�
 - Crear, duplicar y editar una plantilla.
 - Dentro de una plantilla: etapas fijas y tareas que se agregan, editan, eliminan y **reordenan con arrastrar y soltar**.
 - Cada tarea define: título, descripción, tipo, responsable (nuevo ingreso, jefe, buddy, RRHH, IT, Facilities), **plazo relativo** a la fecha de ingreso (ej.: -3 días, +5 días) y **dependencias** de otras tareas de la misma plantilla.
+- **Rango del plazo relativo:** de -30 a 90 días respecto de la fecha de ingreso (cubre desde el preingreso hasta el final de la etapa Días 30 a 90).
 - Validaciones: no permitir dependencias circulares ni una dependencia cuyo plazo sea posterior al de la tarea que depende de ella.
 - Vista previa del recorrido como lo verá el nuevo ingreso, con una fecha de ingreso de ejemplo.
 

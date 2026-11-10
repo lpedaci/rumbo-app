@@ -24,7 +24,9 @@
     "close": "Cerrar",
     "cancel": "Cancelar",
     "dismiss": "Cerrar aviso",
-    "notificationsRegion": "Avisos"
+    "notificationsRegion": "Avisos",
+    "maskRejected": "Ese carácter no se acepta en este campo. Valor actual: {{value}}",
+    "emptyValue": "vacío"
   },
   "validation": {
     "required": "Este dato es obligatorio. Complétalo para continuar.",
