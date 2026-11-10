@@ -48,14 +48,14 @@ Carácter frío, limpio y profesional, con fondos blancos y grises fríos. Sin c
 | `inverse-surface` / `inverse-on-surface` | `#1F2937` / `#F3F4F6` | Tooltips y toasts |
 | `scrim` | `#000000` al 32 % | Fondo detrás de los diálogos |
 
-**Reglas de uso verificadas por el test de contraste** (`src/styles/tokens.test.ts`, 52 casos):
+**Reglas de uso verificadas por el test de contraste** (`src/styles/tokens.test.ts`, 51 casos):
 - Todo texto *on* sobre su base y todo *on-container* sobre su container supera 4,5:1.
 - Los colores base se usan como texto solo sobre `surface`, `surface-container-lowest` y `surface-container`. **Nunca sobre `surface-container-high`**, porque `success` queda en 4,19:1 (D-21).
 - **Píldoras de estado:** fondo container, texto *on-container* e ícono en el color base. El color base como texto sobre su container no llega a 4,5:1 en `success` (4,26:1), así que solo se usa para el ícono, que necesita 3:1 (D-21).
 - `outline` llega a 3:1 sobre las tres superficies claras. Los campos siempre tienen relleno blanco, así que su borde siempre contrasta.
 - El color nunca es la única señal: todo estado lleva ícono y texto.
 
-**Series de gráficos**, en orden: `#1F6F78`, `#9C3D74`, `#5B8FA8`, `#C98AAE` y `#6B7280`. El área bajo la línea va en color plano al 12 %, nunca con degradé. **La serie 4 (`#C98AAE`) tiene 2,72:1 sobre blanco**, por debajo del 3:1 que pide WCAG para objetos gráficos. Está pendiente de confirmar (D-22).
+**Series de gráficos**, en orden: `#1F6F78`, `#9C3D74`, `#5B8FA8`, `#B9779D` y `#6B7280`. Todas llegan a 3:1 sobre blanco, como pide WCAG para objetos gráficos. La serie 4 reemplaza a `#C98AAE`, que tenía 2,72:1 (D-22). El área bajo la línea va en color plano al 12 %, nunca con degradé.
 
 **Modo oscuro:** los roles están **preparados** en `tokens.css` bajo `[data-theme='dark']`, pero no se usan en la fase A. Antes de activarlos hay que verificarlos con Material Theme Builder.
 
@@ -237,7 +237,7 @@ Radix Tooltip: se abre con hover y con foco de teclado. Fondo `inverse-surface`,
 
 | Qué | Cómo | Resultado al 10/11/2026 |
 | --- | --- | --- |
-| Contraste de tokens | `npm test` (`tokens.test.ts`) | 52/52 |
+| Contraste de tokens | `npm test` (`tokens.test.ts`) | 51/51 |
 | Desbordes en 320, 375, 768, 1024, 1280 y 1440 px | `npm run test:e2e` (`e2e/overflow.spec.ts`), capturas en `docs/screenshots/` | 18/18 |
 | axe (WCAG 2.2 A y AA) a 375 y 1280 px | `npm run test:e2e` (`e2e/a11y.spec.ts`) | 6/6 sin violaciones |
 | Un único `h1` por pantalla | `e2e/a11y.spec.ts` | 3/3 |

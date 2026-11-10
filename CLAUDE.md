@@ -70,7 +70,7 @@ Los colores se nombran y usan con los **roles de Material 3** (cada rol tiene su
 - Contraste verificado: todas las bases pasan WCAG AA (mínimo 4,5:1) como texto sobre blanco y con texto blanco encima; los on-container superan 10:1; `outline` cumple 3:1.
 - El color nunca es la única señal: los estados llevan además ícono y texto (por ejemplo, ícono de check + "Completada").
 - Los colores de estado (`error`, `success`, `warning`, `info`) se usan **solo** para estados, nunca como decoración ni como series de gráficos.
-- Series de gráficos, en este orden: `primary`, `tertiary`, `#5B8FA8` (petróleo claro), `#C98AAE` (ciruela claro), `#6B7280` (gris).
+- Series de gráficos, en este orden: `primary`, `tertiary`, `#5B8FA8` (petróleo claro), `#B9779D` (ciruela claro; reemplaza a `#C98AAE` para llegar a 3:1, ver D-22), `#6B7280` (gris).
 - Preparar los mismos roles para modo oscuro con Material Theme Builder, sin implementarlo en la fase A.
 
 ### 2.1.2 Tipografía: Inter con la escala de Material 3

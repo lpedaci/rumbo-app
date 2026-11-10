@@ -61,7 +61,7 @@
   --chart-1: #1f6f78;
   --chart-2: #9c3d74;
   --chart-3: #5b8fa8;
-  --chart-4: #c98aae;
+  --chart-4: #b9779d; /* D-22: replaces #C98AAE (2.72:1) to reach 3:1 on white */
   --chart-5: #6b7280;
   --chart-area-opacity: 0.12;
 

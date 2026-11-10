@@ -35,12 +35,11 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - `docs/design-system.md` con los valores implementados.
 
 **Verificación**
-- `npm test`: 60/60 (incluye 52 de contraste de tokens). `npm run test:e2e`: 27/27. Lint y build sin errores.
+- `npm test`: 59/59 (incluye 51 de contraste de tokens; la serie de gráficos 4 se reemplazó por `#B9779D`, D-22). `npm run test:e2e`: 27/27. Lint y build sin errores.
 - JS inicial: 149 KB gzip (límite de RNF-005: 300 KB). `/styleguide` no está en el build.
 - Capturas revisadas a 375 y 1280 px.
 
 **Pendiente**
-- **D-22**: confirmar el reemplazo de la serie de gráficos 4 (`#C98AAE` → `#B9779D`).
 - El patrón de tablas como tarjetas en mobile se implementa con los listados (paso 7). La validación de formularios con React Hook Form y Zod, desde el paso 4.
 
 **Problemas encontrados**

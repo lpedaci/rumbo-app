@@ -98,19 +98,14 @@ describe('color tokens: WCAG 2.2 AA contrast', () => {
     });
   }
 
-  it('chart-4 exception is still below 3:1 (remove this test once D-22 is resolved)', () => {
-    expect(contrast(token('chart-4'), token('md-sys-color-surface-container-lowest'))).toBeLessThan(NON_TEXT);
-  });
-
   it('inverse surface (tooltips) keeps text contrast', () => {
     expect(
       contrast(token('md-sys-color-inverse-on-surface'), token('md-sys-color-inverse-surface')),
     ).toBeGreaterThanOrEqual(TEXT);
   });
 
-  // chart-4 (#C98AAE, 2.72:1) is a known exception pending confirmation (D-22).
   it('chart series reach 3:1 against the card surface', () => {
-    for (const i of [1, 2, 3, 5]) {
+    for (let i = 1; i <= 5; i++) {
       expect(contrast(token(`chart-${i}`), token('md-sys-color-surface-container-lowest'))).toBeGreaterThanOrEqual(
         NON_TEXT,
       );

@@ -217,7 +217,7 @@ export function StyleguidePage() {
             ))}
           </div>
           <p className="text-body-small text-on-surface-variant">
-            La serie 4 (#C98AAE) tiene 2,72:1 sobre blanco, por debajo de 3:1. Pendiente de confirmar (D-22).
+            Todas las series llegan a 3:1 sobre blanco. El área bajo las líneas va en color plano al 12 %, sin degradé.
           </p>
         </Panel>
       </Section>
