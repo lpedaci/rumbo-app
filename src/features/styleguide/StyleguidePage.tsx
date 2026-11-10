@@ -26,8 +26,8 @@ import {
   TableHeaderCell,
   TableRow,
 } from '@/components/ui/Table';
-import { TextField } from '@/components/ui/TextField';
 import { toast } from '@/components/ui/toast-store';
+import { ValidationDemoForm } from './ValidationDemoForm';
 
 const sections = [
   ['colores', 'Colores'],
@@ -146,7 +146,6 @@ export function StyleguidePage() {
   const [chips, setChips] = useState({ overdue: true, blocked: false, done: false });
   const [segment, setSegment] = useState<'hire' | 'cohort'>('hire');
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [progress, setProgress] = useState(45);
 
   return (
@@ -324,52 +323,13 @@ export function StyleguidePage() {
         </Panel>
       </Section>
 
-      <Section id="campos" title="Campos: etiqueta, texto de ayuda y errores">
-        <Panel>
-          <form className="grid grid-cols-1 gap-5 md:grid-cols-2" noValidate onSubmit={(e) => e.preventDefault()}>
-            <TextField
-              label="Correo corporativo"
-              type="email"
-              autoComplete="email"
-              required
-              helperText="Tu correo corporativo, por ejemplo: nombre.apellido@nortia.demo"
-            />
-            <TextField
-              label="Fecha de ingreso"
-              required
-              inputMode="numeric"
-              defaultValue="31/02/2026"
-              helperText="Formato DD/MM/AAAA, por ejemplo: 13/10/2026"
-              error="Ingresa una fecha válida con el formato DD/MM/AAAA"
-            />
-            <TextField
-              label="Plazo de la tarea"
-              type="number"
-              optional
-              helperText="Días respecto del ingreso. Usa números negativos para antes del ingreso, por ejemplo: -3"
-            />
-            <TextField
-              label="Contraseña"
-              type={showPassword ? 'text' : 'password'}
-              autoComplete="current-password"
-              required
-              helperText="La contraseña de tu cuenta corporativa"
-              trailing={
-                <IconButton
-                  icon={showPassword ? 'visibility_off' : 'visibility'}
-                  label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                  size="xs"
-                  onClick={() => setShowPassword((v) => !v)}
-                />
-              }
-            />
-            <TextField
-              label="Área"
-              disabled
-              defaultValue="Datos"
-              helperText="Se completa según el puesto elegido"
-            />
-          </form>
+      <Section id="campos" title="Campos: etiqueta, texto de ayuda, máscaras y validación">
+        <Panel className="flex flex-col gap-4">
+          <p className="text-body-medium text-on-surface-variant">
+            Prueba escribir letras en la fecha, el plazo o el código: no se aceptan. Los errores aparecen al salir del
+            campo o al enviar, desaparecen apenas se corrigen y nunca borran lo cargado.
+          </p>
+          <ValidationDemoForm />
         </Panel>
       </Section>
 

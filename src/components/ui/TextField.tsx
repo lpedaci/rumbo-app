@@ -1,5 +1,6 @@
-import { forwardRef, type InputHTMLAttributes, type ReactNode, useId } from 'react';
+import { type ChangeEvent, forwardRef, type InputHTMLAttributes, type ReactNode, useId } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { InputMask } from '@/lib/input-masks';
 import { cn } from '@/lib/utils';
 import { Icon } from './Icon';
 
@@ -16,6 +17,11 @@ export interface TextFieldProps extends Omit<InputHTMLAttributes<HTMLInputElemen
   optional?: boolean;
   /** Element inside the field on the right, such as a "show password" icon button. */
   trailing?: ReactNode;
+  /**
+   * Filters what can be typed or pasted (see `lib/input-masks.ts`), so a date or a
+   * number field never receives letters. Validity is still checked by the form schema.
+   */
+  mask?: InputMask;
 }
 
 /**
@@ -24,9 +30,41 @@ export interface TextFieldProps extends Omit<InputHTMLAttributes<HTMLInputElemen
  * icon and aria-invalid. The value is never cleared on error (2.10).
  */
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField(
-  { label, helperText, error, optional, required, trailing, id, className, disabled, ...props },
+  {
+    label,
+    helperText,
+    error,
+    optional,
+    required,
+    trailing,
+    mask,
+    id,
+    className,
+    disabled,
+    onChange,
+    maxLength,
+    ...props
+  },
   ref,
 ) {
+  // Masks already cap the length. A native maxLength would cut pasted text BEFORE the
+  // mask cleans it ("13 / 10 / 2026" or "246 810"), so it is ignored on masked fields.
+  const nativeMaxLength = mask ? undefined : maxLength;
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (mask) {
+      const input = event.target;
+      const masked = mask(input.value);
+      if (masked !== input.value) {
+        // Keep the caret where the user was typing, adjusted by the removed characters.
+        const caret = Math.max(0, (input.selectionStart ?? masked.length) - (input.value.length - masked.length));
+        input.value = masked;
+        input.setSelectionRange(caret, caret);
+      }
+    }
+    onChange?.(event);
+  };
+
   const { t } = useTranslation();
   const autoId = useId();
   const inputId = id ?? autoId;
@@ -49,6 +87,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
           disabled={disabled}
           aria-invalid={invalid || undefined}
           aria-describedby={supportId}
+          onChange={handleChange}
+          maxLength={nativeMaxLength}
           className={cn(
             'h-12 w-full min-w-0 rounded-sm border border-outline bg-surface-container-lowest px-3 text-body-large text-on-surface md:h-10 md:text-body-medium',
             'transition-colors duration-150 ease-standard placeholder:text-on-surface-variant',

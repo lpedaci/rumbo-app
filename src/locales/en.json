@@ -25,5 +25,14 @@
     "cancel": "Cancel",
     "dismiss": "Dismiss",
     "notificationsRegion": "Notifications"
+  },
+  "validation": {
+    "required": "This field is required. Fill it in to continue.",
+    "email": "Enter an email in the format first.last@nortia.demo",
+    "dateFormat": "Enter the full date as DD/MM/YYYY, for example: 13/10/2026",
+    "dateInvalid": "That date doesn't exist. Check the day and month",
+    "integer": "Enter a whole number, for example: -3 or 5",
+    "offsetRange": "Enter a number of days between {{min}} and {{max}}",
+    "otp": "Enter the 6 digits of the code"
   }
 }

@@ -42,8 +42,13 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 **Pendiente**
 - El patrón de tablas como tarjetas en mobile se implementa con los listados (paso 7). La validación de formularios con React Hook Form y Zod, desde el paso 4.
 
+**Ajuste pedido por Lourdes: validación de campos**
+- Máscaras de entrada (fecha, entero, código, sin espacios) integradas en `TextField`, y esquemas de Zod con mensajes concretos.
+- Formulario de ejemplo con React Hook Form en `/styleguide`. Probado en el navegador con teclado real: letras bloqueadas, fecha inexistente marcada, error que desaparece al corregir.
+- `npm test`: 79/79.
+
 **Problemas encontrados**
-- INC-002 a INC-004, todos resueltos.
+- INC-002 a INC-005, todos resueltos.
 
 ## Paso 1: setup
 

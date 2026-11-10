@@ -169,7 +169,19 @@ Variantes `standard`, `tonal` y `outlined`; tamaños de 40 y 32 px. `label` es o
 - El error reemplaza al texto de ayuda en el mismo lugar, en color `error`, con ícono y `aria-invalid`. Nunca borra el valor cargado.
 - Altura de 48 px en mobile y 40 px en desktop. Admite un elemento a la derecha (`trailing`), como mostrar u ocultar la contraseña.
 - El texto de ayuda mantiene el contraste completo aunque el campo esté deshabilitado, porque explica por qué lo está.
-- El comportamiento de validación (no marcar errores mientras se escribe por primera vez, revalidar al corregir, resumen de errores) se implementa con React Hook Form y Zod en cada formulario, desde el paso 4.
+- **Máscaras de entrada** (`mask`, en `src/lib/input-masks.ts`): impiden escribir o pegar caracteres que no corresponden al dato. Son filtros, no validaciones:
+
+| Máscara | Campo | Qué hace |
+| --- | --- | --- |
+| `dateMask` | Fechas DD/MM/AAAA | Solo dígitos, agrega las barras al escribir, máximo 8 dígitos; acepta pegar "13-10-2026" |
+| `integerMask` | Plazos en días, cantidades | Solo dígitos y, si se permite, un signo menos inicial; sin decimales ni "e" |
+| `digitsMask(6)` | Código de verificación | Solo 6 dígitos; quita los espacios al pegar |
+| `noSpacesMask` | Correos | Quita los espacios |
+
+  Los campos con máscara usan `type="text"` (no `type="number"`, que acepta "e", "+" y decimales) e ignoran el `maxLength` nativo: el navegador cortaría el texto pegado antes de limpiarlo (INC-005).
+- **Validación** con React Hook Form y Zod (`src/lib/validation.ts`), en modo `onTouched`: la primera validación ocurre al salir del campo o al enviar; después de un error, el campo se revalida en cada cambio y el mensaje desaparece apenas el dato es correcto. Al enviar, el foco va al primer campo con error. Los valores nunca se borran.
+- Los mensajes son claves de i18n (`validation.*`) y dicen qué corregir, por ejemplo: "Esa fecha no existe. Revisa el día y el mes". Las fechas se validan contra el calendario (31/02 no pasa).
+- Hay un formulario de ejemplo funcionando en `/styleguide`. El resumen de errores para formularios largos se agrega con el primer formulario largo (A3, paso 7).
 
 ### StatusPill
 Tonos `success`, `warning`, `error`, `info`, `primary` y `neutral`. Siempre lleva ícono y texto. Rótulos de estado según [information-architecture.md](information-architecture.md):

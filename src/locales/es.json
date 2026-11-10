@@ -25,5 +25,14 @@
     "cancel": "Cancelar",
     "dismiss": "Cerrar aviso",
     "notificationsRegion": "Avisos"
+  },
+  "validation": {
+    "required": "Este dato es obligatorio. Complétalo para continuar.",
+    "email": "Ingresa un correo con el formato nombre.apellido@nortia.demo",
+    "dateFormat": "Ingresa la fecha completa con el formato DD/MM/AAAA, por ejemplo: 13/10/2026",
+    "dateInvalid": "Esa fecha no existe. Revisa el día y el mes",
+    "integer": "Ingresa un número entero, por ejemplo: -3 o 5",
+    "offsetRange": "Ingresa un número de días entre {{min}} y {{max}}",
+    "otp": "Ingresa los 6 dígitos del código"
   }
 }
