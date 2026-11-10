@@ -27,6 +27,18 @@ export const DEMO_ACCOUNTS: { personId: string; role: Role }[] = [
   { personId: 'p-diego', role: 'it_admin' },
 ];
 
+/** Keys of the demo journeys in the URL (`/login?demo=carla`), chosen on the demo start (G0). */
+export const DEMO_KEYS = { carla: 'p-carla', martin: 'p-martin', sofia: 'p-sofia', diego: 'p-diego' } as const;
+export type DemoKey = keyof typeof DEMO_KEYS;
+
+export function demoKeyFor(personId: string): DemoKey | undefined {
+  return (Object.keys(DEMO_KEYS) as DemoKey[]).find((key) => DEMO_KEYS[key] === personId);
+}
+
+export function personIdForDemoKey(key: string | null): string | undefined {
+  return key && key in DEMO_KEYS ? DEMO_KEYS[key as DemoKey] : undefined;
+}
+
 const data = () => useDataStore.getState();
 const session = () => useSessionStore.getState();
 
@@ -51,7 +63,7 @@ function audit(actorId: string, action: string, result: 'success' | 'failure' | 
 
 const METHOD_LABEL: Record<AuthMethod, string> = {
   sso_microsoft: 'SSO Microsoft',
-  sso_google: 'SSO Google Workspace',
+  sso_google: 'SSO Google',
   password: 'Correo y contraseña',
 };
 

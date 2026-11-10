@@ -18,8 +18,11 @@ export interface CheckedPage {
 }
 
 export const PAGES: CheckedPage[] = [
+  { id: 'g0-home', path: '/#/' },
   { id: 'g1-login', path: '/#/login' },
-  { id: 'g2-sso', path: '/#/login/sso?provider=microsoft' },
+  { id: 'g1-login-preselected', path: '/#/login?demo=martin' },
+  { id: 'g2-sso', path: '/#/login/sso?provider=google' },
+  { id: 'g2-sso-preselected', path: '/#/login/sso?provider=microsoft&account=p-sofia&demo=1' },
   { id: 'g3-verify', path: '/#/login/verify', pendingMfaFor: 'hire' },
   { id: 'g4-access-help', path: '/#/access-help' },
   { id: 'g5-security', path: '/#/account/security', role: 'manager' },

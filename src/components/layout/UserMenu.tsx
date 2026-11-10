@@ -93,12 +93,12 @@ export function UserMenu() {
       <ConfirmDialog
         open={resetOpen}
         onOpenChange={setResetOpen}
-        title={t('auth.login.resetTitle')}
-        description={t('auth.login.resetBody')}
-        confirmLabel={t('auth.login.resetConfirm')}
+        title={t('home.resetTitle')}
+        description={t('home.resetBody')}
+        confirmLabel={t('home.resetConfirm')}
         onConfirm={() => {
           resetDemo();
-          navigate('/login', { replace: true });
+          navigate('/', { replace: true });
         }}
       />
     </>

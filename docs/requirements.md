@@ -29,9 +29,9 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| RF-001 | El sistema debe permitir iniciar sesión con SSO simulado (Microsoft y Google Workspace) pasando por un paso intermedio de redirección. | Todos | G1, G2 | Must | Al elegir un proveedor se ve G2 y luego se llega a G3 con el usuario elegido. | Hecho |
+| RF-001 | El sistema debe permitir iniciar sesión con SSO simulado (Microsoft y Google) pasando por una simulación neutra de la redirección, que no imita la página del proveedor. | Todos | G1, G2 | Must | G2 está rotulada como simulación, no usa el diseño, colores ni textos de Microsoft o Google, y "Continuar" lleva a G3. | Hecho |
 | RF-002 | El sistema debe permitir iniciar sesión con correo y contraseña de las cuentas demo. | Todos | G1 | Must | Las 4 cuentas `@nortia.demo` con `Demo.2026!` llegan a G3. | Hecho |
-| RF-003 | El sistema debe ofrecer 4 accesos de demo de un clic que recorren el flujo completo con el código MFA precargado. | Todos | G1, G3 | Must | Un clic en cada tarjeta termina en el inicio del rol pasando por MFA. | Hecho |
+| RF-003 | El sistema debe ofrecer, desde el inicio de la demo, un recorrido por rol que abre el login con ese rol preseleccionado y completa SSO y MFA con el código precargado. | Todos | G0, G1, G2, G3 | Must | Cada tarjeta de G0 abre `/login?demo=…`; "Continuar como…" llega al inicio del rol confirmando sin escribir; "Cambiar recorrido" vuelve a G0. | Hecho |
 | RF-004 | El sistema debe mostrar un error genérico ante credenciales inválidas, sin revelar si el correo existe. | Todos | G1 | Must | Correo inexistente y contraseña errónea muestran el mismo mensaje. | Hecho |
 | RF-005 | El sistema debe bloquear la cuenta tras 5 intentos fallidos y derivar a sistemas, sin desbloqueo automático ni por el usuario. | Todos | G1, G4 | Must | Al quinto intento aparece el aviso de bloqueo con enlace a G4; esperar o recargar no desbloquea. | Hecho |
 | RF-006 | El sistema debe pedir un código de 6 dígitos (MFA) en un único campo que acepte pegado, con "Recordar este dispositivo por 30 días" y "Usar un código de respaldo". | Todos | G3 | Must | `246810` valida; otro código muestra "No pudimos verificar el código. Revisa que tenga 6 dígitos". Pegar el código funciona. | Hecho |
@@ -49,6 +49,8 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-018 | El sistema debe ofrecer un menú de usuario con nombre, rol, "Mi seguridad" y "Cerrar sesión". | Todos | G6, G5 | Must | Accesible con teclado desde el header. | Hecho |
 | RF-019 | El sistema debe ofrecer "Restablecer demo" en el menú de usuario y en el login. | Todos | G1, G6 | Must | Limpia `localStorage`, recarga los datos semilla y cierra la sesión. | Hecho |
 | RF-020 | El login debe mostrar el aviso "Esto es una demo: no ingreses datos reales". | Todos | G1 | Must | Visible sin desplazar en 375 px. | Hecho |
+| RF-087 | El sistema debe mostrar un inicio de la demo (G0) en `/` que presente el proyecto, explique que es un prototipo con datos ficticios y deje elegir uno de los 4 recorridos, con enlaces al case study y a la documentación y "Restablecer demo". | Todos | G0 | Must | G0 es lo primero que ve quien llega sin sesión; con sesión, `/` lleva al inicio del rol. | Hecho (enlace al case study pendiente, D-41) |
+| RF-088 | Los botones de SSO deben usar los logos oficiales sin modificar, los textos "Continuar con Microsoft" y "Continuar con Google" y la misma prominencia, y el login no debe tener tarjetas de roles ni panel de marketing. | Todos | G1 | Must | Logos en `src/assets/brands/` con nota de origen; ambos botones con el mismo componente. | Hecho |
 | RF-086 | El sistema debe simular al menos un error de servidor en un formulario, conservando los datos y ofreciendo "Reintentar". | Todos | G4 | Must | Con el motivo "Otro" y el comentario `error-servidor`, el envío falla una vez con "El servicio no está disponible"; al reintentar, funciona. | Hecho |
 
 ### F1. Mi recorrido (fase A)

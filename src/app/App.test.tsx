@@ -27,12 +27,39 @@ beforeEach(() => {
 });
 
 describe('routing and access control', () => {
-  it('sends a visitor without session to the login, with a single h1 in Spanish', async () => {
+  it('shows the demo start (G0) to a visitor without session, with a single h1 in Spanish', async () => {
     renderAt('/');
     await screen.findByRole('heading', { level: 1 });
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.auth.login.title);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.home.title);
     expect(document.documentElement.lang).toBe('es');
+  });
+
+  it('G0 offers one journey per role, each opening the login with that role preselected', async () => {
+    renderAt('/');
+    await screen.findByRole('heading', { level: 1 });
+    const links = screen.getAllByRole('link', { name: /^Recorrer como/ });
+    expect(links.map((l) => l.getAttribute('href'))).toEqual([
+      '/login?demo=carla',
+      '/login?demo=martin',
+      '/login?demo=sofia',
+      '/login?demo=diego',
+    ]);
+  });
+
+  it('the login is clean: no role cards, and a preselected role shows "Vas a entrar como…"', async () => {
+    renderAt('/login');
+    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(es.auth.login.title);
+    expect(screen.queryByText(/Vas a entrar como/)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: es.auth.login.ssoMicrosoft })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: es.auth.login.ssoGoogle })).toBeInTheDocument();
+  });
+
+  it('with ?demo=carla, the login offers "Continuar como Carla" and "Cambiar recorrido"', async () => {
+    renderAt('/login?demo=carla');
+    expect(await screen.findByRole('heading', { level: 2, name: 'Vas a entrar como Carla, RRHH' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Continuar como Carla' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: es.auth.login.preselected.change })).toHaveAttribute('href', '/');
   });
 
   it('remembers the requested route when there is no session', async () => {

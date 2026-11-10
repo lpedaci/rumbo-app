@@ -9,11 +9,13 @@ export interface RadioOption {
   description?: string;
 }
 
-interface RadioGroupProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+interface RadioGroupProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value'> {
   legend: string;
   options: RadioOption[];
   helperText?: string;
   error?: string;
+  /** Controlled mode: the selected value (omit it with React Hook Form `register`). */
+  value?: string;
 }
 
 /**
@@ -21,7 +23,7 @@ interface RadioGroupProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 't
  * work for every assistive technology. Compatible with React Hook Form `register`.
  */
 export const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(function RadioGroup(
-  { legend, options, helperText, error, required, className, ...inputProps },
+  { legend, options, helperText, error, required, className, value, ...inputProps },
   ref,
 ) {
   const { t } = useTranslation();
@@ -53,6 +55,7 @@ export const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(function
                 id={id}
                 type="radio"
                 value={option.value}
+                {...(value !== undefined ? { checked: option.value === value } : {})}
                 className="mt-0.5 size-5 shrink-0 cursor-pointer accent-primary"
                 {...inputProps}
               />

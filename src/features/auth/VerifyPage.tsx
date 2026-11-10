@@ -23,7 +23,6 @@ import {
   verifyMfa,
 } from './auth-service';
 import { AuthLayout } from './AuthLayout';
-import { LoginPreview } from './LoginPreview';
 
 const appSchema = z.object({ code: otpField, remember: z.boolean() });
 const backupSchema = z.object({
@@ -80,7 +79,7 @@ export function VerifyPage() {
   };
 
   return (
-    <AuthLayout aside={<LoginPreview />}>
+    <AuthLayout>
       <header className="flex flex-col gap-1">
         <h1 className="text-headline-small text-on-surface">{t('auth.mfa.title')}</h1>
         <p className="text-body-large text-on-surface-variant">{t('auth.mfa.subtitle')}</p>

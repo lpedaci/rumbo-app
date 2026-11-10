@@ -125,9 +125,10 @@ Todos los estados se muestran como píldora con ícono y texto, nunca solo con c
 
 ```mermaid
 flowchart TD
-    ROOT["Rumbo"] --> ACC["Acceso"]
+    ROOT["Rumbo"] --> G0["G0 Inicio de la demo"]
+    ROOT --> ACC["Acceso"]
     ACC --> G1["G1 Login"]
-    G1 --> G2["G2 Redirección SSO"]
+    G1 --> G2["G2 Simulación de SSO"]
     G1 --> G3["G3 Verificación en dos pasos"]
     G1 --> G4["G4 Problemas para iniciar sesión"]
 

@@ -68,15 +68,15 @@ Muestra los cinco actores (cualquier usuario agrupa a los cuatro roles cuando el
 **Flujo principal (SSO)**
 1. El sistema muestra G1 con SSO como opción principal, el acceso con correo y los accesos de demo.
 2. El usuario elige "Continuar con Microsoft".
-3. El sistema muestra G2 simulando la redirección y la elección de cuenta.
-4. El usuario elige su cuenta.
+3. El sistema muestra G2: una simulación neutra, rotulada como tal, que no imita la página del proveedor.
+4. El usuario elige "Continuar" (si llegó sin rol preseleccionado, antes elige la cuenta de demo).
 5. El sistema muestra G3 y pide el código de 6 dígitos (en la demo, visible en un aviso).
 6. El usuario ingresa el código y, si quiere, marca "Recordar este dispositivo por 30 días".
 7. El sistema valida el código, crea la sesión, registra `auth.login` y `auth.mfa_verified` y lleva al usuario a la ruta pedida o al inicio de su rol.
 
 **Flujos alternativos**
 - **2a. Correo y contraseña:** el usuario elige "Iniciar sesión con correo y contraseña", completa los datos y continúa en el paso 5.
-- **2b. Acceso de demo:** el usuario elige una tarjeta "Entrar como...". El sistema recorre los pasos 3 a 7 con el código precargado; el usuario solo confirma.
+- **2b. Recorrido de demo:** en el inicio de la demo (G0) el visitante elige "Recorrer como Carla". El login muestra "Vas a entrar como Carla, RRHH"; con "Continuar como Carla" el sistema recorre los pasos 3 a 7 con el código precargado y el visitante solo confirma. "Cambiar recorrido" vuelve a G0.
 - **5a. Dispositivo recordado:** si el dispositivo fue recordado hace menos de 30 días, el sistema omite G3.
 - **6a. Código de respaldo:** el usuario elige "Usar un código de respaldo" y lo ingresa.
 

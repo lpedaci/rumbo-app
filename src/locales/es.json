@@ -4,7 +4,7 @@
     "company": "Nortia S.A.",
     "tagline": "Recorridos de ingreso claros para cada persona nueva, su jefe directo y RRHH.",
     "skipToContent": "Saltar al contenido",
-    "demoNotice": "Esto es una demo: no ingreses datos reales."
+    "demoNotice": "Demo con datos ficticios: no ingreses datos reales."
   },
   "notFound": {
     "title": "No encontramos esta página",
@@ -41,14 +41,14 @@
   "auth": {
     "methods": {
       "sso_microsoft": "Microsoft",
-      "sso_google": "Google Workspace",
+      "sso_google": "Google",
       "password": "Correo y contraseña"
     },
     "login": {
       "title": "Inicia sesión en Rumbo",
-      "subtitle": "Usa tu cuenta corporativa de Nortia.",
+      "subtitle": "Usa tu cuenta de trabajo de Nortia.",
       "ssoMicrosoft": "Continuar con Microsoft",
-      "ssoGoogle": "Continuar con Google Workspace",
+      "ssoGoogle": "Continuar con Google",
       "or": "o",
       "emailToggle": "Iniciar sesión con correo y contraseña",
       "emailLabel": "Correo corporativo",
@@ -64,43 +64,24 @@
       "lockedTitle": "El acceso a esta cuenta está bloqueado",
       "lockedBody": "Por seguridad, bloqueamos el acceso después de varios intentos fallidos. Solo el área de sistemas puede restablecerlo, después de verificar tu identidad.",
       "troubleLink": "¿Problemas para iniciar sesión?",
-      "resetDemo": "Restablecer demo",
-      "resetTitle": "¿Restablecer la demo?",
-      "resetBody": "Todos los cambios vuelven a su estado inicial y se cierra la sesión.",
-      "resetConfirm": "Restablecer demo",
       "logout": {
         "manual": "Cerraste sesión.",
         "expired": "Cerramos tu sesión por inactividad. Inicia sesión de nuevo para continuar.",
         "reset": "Restablecimos la demo. Los datos volvieron a su estado inicial."
       },
-      "demo": {
-        "title": "Explora la demo",
-        "subtitle": "Entra con un clic como cualquiera de los cuatro roles. El código de verificación ya está cargado.",
-        "enterAs": "Entrar como {{name}}, {{role}}",
-        "description": {
-          "admin": "Diseña plantillas, da de alta ingresos y sigue el avance.",
-          "manager": "Acompaña a su equipo con check-ins de 30, 60 y 90 días.",
-          "hire": "Recorre su ingreso: tareas, cursos y check-ins.",
-          "it_admin": "Atiende solicitudes de acceso y revisa la auditoría."
-        }
-      },
-      "preview": {
-        "title": "Cada persona sabe qué hacer, con quién y para cuándo.",
-        "journey": "Recorrido de ingreso",
-        "progress": "Avance del mes 1",
-        "tasks": [
-          "Acceso al data warehouse",
-          "Configurar el entorno de análisis",
-          "Primer análisis guiado"
-        ]
+      "preselected": {
+        "title": "Vas a entrar como {{name}}, {{role}}",
+        "continue": "Continuar como {{name}}",
+        "change": "Cambiar recorrido"
       }
     },
     "sso": {
-      "title": "Conectando con {{provider}}",
-      "redirecting": "Te redirigimos al proveedor de identidad de Nortia…",
-      "simulated": "Simulación: en la demo no salimos de Rumbo ni se envía ningún dato.",
-      "chooseAccount": "Elige tu cuenta corporativa",
-      "continueAs": "Continuar como {{name}}",
+      "title": "Inicio de sesión con {{provider}}",
+      "simulation": "Simulación: en un entorno real, acá te redirigiríamos al inicio de sesión de tu empresa con {{provider}}.",
+      "branding": "En producción, esa página mostraría la marca de Nortia: los proveedores de identidad permiten que cada empresa la personalice.",
+      "accountLegend": "Cuenta de demo para continuar",
+      "accountHelp": "Elige con qué persona de la demo quieres iniciar sesión.",
+      "continue": "Continuar",
       "back": "Volver al inicio de sesión"
     },
     "mfa": {
@@ -271,5 +252,72 @@
     "manager": "jefe directo",
     "hire": "nuevo ingreso",
     "it_admin": "sistemas"
+  },
+  "home": {
+    "eyebrow": "Rumbo · Recorridos de ingreso",
+    "title": "Cada persona sabe qué hacer, con quién y para cuándo.",
+    "intro": "Rumbo es una plataforma donde RRHH diseña el recorrido de ingreso de cada puesto, el jefe directo acompaña con check-ins y la persona nueva sabe en todo momento qué le toca hacer. RRHH ve el avance y detecta dónde se traban los recorridos.",
+    "demoTitle": "Sobre esta demo",
+    "demoBody": "Es un prototipo navegable con datos ficticios de Nortia S.A., una empresa inventada de servicios tecnológicos. Los cambios que hagas se guardan solo en este navegador.",
+    "chooseTitle": "Elige un recorrido",
+    "chooseSubtitle": "Recorre Rumbo desde la perspectiva de cada rol. Una vez dentro, puedes cambiar de rol cuando quieras con el selector «Ver como».",
+    "youWillSee": "Vas a poder recorrer:",
+    "cardAction": "Recorrer como {{name}}",
+    "roles": {
+      "admin": {
+        "title": "Carla, RRHH",
+        "description": "People Partner. Diseña los recorridos y sigue el avance de todos los ingresos.",
+        "points": [
+          "El panel con indicadores, gráficos y alertas",
+          "El constructor de plantillas con dependencias",
+          "El alta de un ingreso nuevo"
+        ]
+      },
+      "manager": {
+        "title": "Martín, jefe directo",
+        "description": "Líder de Desarrollo. Acompaña a las personas nuevas de su equipo.",
+        "points": [
+          "Su equipo en onboarding",
+          "Los check-ins de 30, 60 y 90 días",
+          "Cómo escalar a RRHH un hito no cumplido"
+        ]
+      },
+      "hire": {
+        "title": "Sofía, nuevo ingreso",
+        "description": "Analista de Datos Jr. Está en su primer mes en Nortia.",
+        "points": [
+          "Su recorrido por etapas y lo próximo que le toca",
+          "Tareas que, al completarse, desbloquean otras",
+          "Su autoevaluación antes del check-in"
+        ]
+      },
+      "it_admin": {
+        "title": "Diego, sistemas",
+        "description": "Mesa de ayuda IT. Gestiona los accesos y la seguridad.",
+        "points": [
+          "Las solicitudes de acceso con verificación de identidad",
+          "Las cuentas bloqueadas y la auditoría",
+          "La matriz de permisos y las políticas"
+        ]
+      }
+    },
+    "linksTitle": "Más sobre el proyecto",
+    "caseStudy": "Ver el case study",
+    "docs": "Ver la documentación",
+    "newTab": "(se abre en una pestaña nueva)",
+    "resetDemo": "Restablecer demo",
+    "resetTitle": "¿Restablecer la demo?",
+    "resetBody": "Todos los cambios vuelven a su estado inicial y se cierra la sesión.",
+    "resetConfirm": "Restablecer demo",
+    "preview": {
+      "label": "Vista previa del recorrido de Sofía",
+      "journey": "Recorrido de ingreso",
+      "progress": "Avance del mes 1",
+      "tasks": [
+        "Acceso al data warehouse",
+        "Configurar el entorno de análisis",
+        "Primer análisis guiado"
+      ]
+    }
   }
 }

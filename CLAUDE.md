@@ -30,7 +30,7 @@ El objetivo del proyecto es **mostrar en un portfolio** flujos complejos con var
 ### 2.1 Base: Material Design 3, personalizado
 - El sistema visual se basa en **Material Design 3** (Google): roles de color, escala tipográfica, elevación, estados (hover, foco, presionado) y patrones de componentes. Es público y se puede usar sin problemas de licencia.
 - **Se implementa con Tailwind + shadcn/ui**, no con una librería de Material: los fundamentos de M3 se traducen a tokens propios. Así el resultado no se ve como una app de Google por defecto.
-- **Personalización obligatoria:** paleta y tipografía propias (definidas en 2.1.1), radios y densidad propios. Nada de logos, nombres ni elementos de marca de otras empresas.
+- **Personalización obligatoria:** paleta y tipografía propias (definidas en 2.1.1), radios y densidad propios. Nada de logos, nombres ni elementos de marca de otras empresas, con una única excepción: los logos oficiales de Microsoft y Google en los botones de inicio de sesión (ver F0).
 - **Densidad:** interfaz de herramienta corporativa, con información densa pero clara y jerarquía fuerte, apta para trabajar muchas horas (tablas, listas, dashboards).
 - Modo claro como principal; preparar los tokens para modo oscuro aunque no se implemente en la fase A.
 
@@ -358,12 +358,40 @@ Priorizadas con una matriz de decisión (valor para el usuario 40 %, demostraci�
 
 ### F0. Autenticación y control de acceso (simulados en la interfaz)
 
-**Inicio de sesión**
-- Pantalla de login con logo del producto y de la empresa ficticia.
-- **SSO corporativo como opción principal:** botones "Continuar con Microsoft" y "Continuar con Google Workspace". En la demo abren un paso intermedio que simula la redirección al proveedor de identidad y vuelve con la sesión del usuario elegido.
+**Inicio de la demo (G0)**
+
+La demo para el portfolio y el producto se separan: la pantalla de inicio presenta el proyecto y deja elegir el recorrido; el login queda limpio, como lo vería un empleado de Nortia.
+
+- Ruta `/`. Es la primera pantalla para quien llega sin sesión.
+- Contenido, en este orden:
+    1. Logo y nombre de Rumbo, y una frase que diga qué es y qué problema resuelve (por ejemplo: "Cada persona sabe qué hacer, con quién y para cuándo").
+    2. Breve explicación de la demo: es un prototipo con datos ficticios de una empresa inventada, Nortia S.A.
+    3. **Elección del recorrido:** cuatro tarjetas, una por rol (Carla, RRHH; Martín, jefe directo; Sofía, nuevo ingreso; Diego, sistemas). Cada una con qué hace ese rol y qué va a poder recorrer (2 o 3 puntos concretos).
+    4. Enlaces "Ver el case study" (al portfolio) y "Ver la documentación" (al `docs/README.md` del repositorio).
+    5. "Restablecer demo".
+- Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
+- Diseño coherente con el resto del producto (bento, sin degradés, sin sombras); en mobile, las tarjetas en una columna.
+- La vista previa del producto que hoy está en el panel derecho del login se mueve a esta pantalla.
+
+**Inicio de sesión (G1)**
+- Pantalla de login limpia, con el logo de Rumbo y el de la empresa ficticia, y el texto "Usa tu cuenta de trabajo de Nortia" (Microsoft desaconseja expresiones como "cuenta corporativa" junto a su botón y recomienda "cuenta de trabajo o educativa").
+- **SSO como opción principal:** botones "Continuar con Microsoft" y "Continuar con Google".
+    - **Logos oficiales sin modificar**, descargados de las páginas de marca de cada empresa y guardados en `src/assets/brands/` con una nota de origen. Nunca cambiar su color, proporción o tamaño relativo, nunca combinarlos con el logo de Rumbo, nunca usar íconos genéricos ni versiones monocromáticas.
+    - Logo "G" de Google en sus colores estándar sobre fondo blanco. Logo de Microsoft de cuatro cuadrados.
+    - Textos exactos: "Continuar con Microsoft" y "Continuar con Google" (no "Google Workspace").
+    - Los dos botones con el mismo tamaño, estilo y peso visual (Google exige igual prominencia frente a otras opciones).
 - Opción secundaria "Iniciar sesión con correo y contraseña" (`carla@nortia.demo`, `martin@nortia.demo`, `sofia@nortia.demo`, `diego@nortia.demo`, contraseña `Demo.2026!`).
-- **Accesos de demo de un clic:** cuatro tarjetas ("Entrar como Carla, RRHH", "Entrar como Martín, jefe directo", "Entrar como Sofía, nuevo ingreso", "Entrar como Diego, sistemas") que recorren el flujo completo, incluido MFA, con el código precargado.
-- Aviso visible: "Esto es una demo: no ingreses datos reales".
+- **Con un rol preseleccionado desde el inicio:** arriba del login aparece un único aviso "Vas a entrar como Carla, RRHH", con el botón principal "Continuar como Carla" (recorre SSO y MFA con el código precargado) y el enlace "Cambiar recorrido", que vuelve a `/`. El resto del login sigue igual.
+- **Sin rol preseleccionado** (quien entra directo a `/login`): login limpio; se puede usar cualquiera de las credenciales de demo.
+- Se mantiene "¿Problemas para iniciar sesión?".
+- Aviso de demo discreto (una línea, sin ocupar el espacio principal): "Demo con datos ficticios: no ingreses datos reales".
+- Ya no hay tarjetas de roles ni panel de marketing en el login.
+
+**Simulación de la redirección SSO (G2)**
+- Pantalla **neutra y claramente rotulada** como simulación, por ejemplo: "Simulación: en un entorno real, acá te redirigiríamos al inicio de sesión de tu empresa con Microsoft".
+- **Nunca imitar la página real de inicio de sesión de Microsoft ni de Google** (ni su diseño, ni sus colores, ni sus textos): una copia de esa página funciona igual que una página de phishing, aunque sea para una demo.
+- Puede mencionar que, en producción, esa página mostraría la marca de Nortia (los proveedores permiten que cada empresa personalice su página de inicio de sesión), sin reproducirla.
+- Botón "Continuar" que completa el inicio de sesión simulado y lleva a la verificación en dos pasos.
 
 **Mensajes y protección contra fuerza bruta**
 - Error de credenciales **genérico** ("Correo o contraseña incorrectos"), sin revelar si el correo existe.
@@ -530,8 +558,9 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
 ### Generales
 | # | Pantalla | Ruta | Notas |
 | --- | --- | --- | --- |
-| G1 | Login (SSO, email y contraseña, accesos de demo) | `/login` | F0. `/` redirige acá si no hay sesión |
-| G2 | Simulación de redirección SSO | `/login/sso` | F0 |
+| G0 | Inicio de la demo (presentación y elección de recorrido) | `/` | F0 |
+| G1 | Login (SSO, correo y contraseña, rol preseleccionado opcional) | `/login` | F0 |
+| G2 | Simulación neutra de redirección SSO | `/login/sso` | F0 |
 | G3 | Verificación en dos pasos | `/login/verify` | F0 |
 | G4 | Problemas para iniciar sesión (canales de sistemas + solicitud de ayuda y confirmación) | `/access-help` | F0 |
 | G5 | Mi seguridad (MFA, dispositivos recordados y sesiones activas) | `/account/security` | F0, F11 (sesiones: fase B) |
@@ -586,7 +615,7 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
 | N2 | Detalle de tarea o curso | `/me/tasks/:id` | F1 |
 | N3 | Mi check-in (autoevaluación) | `/me/checkin/:stage` | F5 |
 
-Total: **23 pantallas en fase A** (7 generales y de acceso + 7 admin RRHH + 3 jefe + 3 nuevo ingreso + 3 admin de sistemas) y **16 más en fase B**, **39 en total**. Los comentarios (F9) viven dentro de N2, J2 y A4; las notificaciones y la búsqueda rápida, en el layout.
+Total: **24 pantallas en fase A** (8 generales y de acceso + 7 admin RRHH + 3 jefe + 3 nuevo ingreso + 3 admin de sistemas) y **16 más en fase B**, **40 en total**. Los comentarios (F9) viven dentro de N2, J2 y A4; las notificaciones y la búsqueda rápida, en el layout.
 
 ### Estados que cada pantalla debe contemplar
 - Vacío (sin datos), carga simulada breve, error de validación y éxito (toast de confirmación).
@@ -743,7 +772,7 @@ interface UserPreferences {
 - 3 plantillas: Analista de Datos, Desarrollador/a Frontend, Ejecutivo/a Comercial (12 a 18 tareas cada una).
 - 10 a 12 ingresos en distintos estados y con distintos niveles de avance, incluidos al menos 2 con atrasos, 1 con una tarea bloqueada y 1 check-in escalado.
 - El nuevo ingreso del rol demo (Sofía) ingresó el **13/10/2026**: está en **Mes 1**, con avance parcial y el check-in de 30 días pendiente, con vencimiento el **12/11/2026**.
-- Botón "Restablecer demo" (en el menú de usuario y en el login) que limpia `localStorage`, recarga los datos semilla y cierra la sesión.
+- Botón "Restablecer demo" (en el inicio de la demo y en el menú de usuario) que limpia `localStorage`, recarga los datos semilla y cierra la sesión.
 
 - Auditoría semilla: 40 a 60 eventos de las últimas semanas, incluidos intentos fallidos, un bloqueo y un acceso denegado.
 - Solicitudes de acceso semilla: 5 o 6 en distintos estados, con al menos una cuenta bloqueada pendiente.
@@ -806,7 +835,7 @@ El modelo de datos ya contempla `owner: 'it' | 'facilities' | 'buddy'` para que 
 1. Setup: Vite + TS + Tailwind + shadcn/ui + router + react-i18next + deploy a GitHub Pages funcionando con una página vacía.
 2. Tokens de Material 3 personalizados, componente `<Icon />`, `<BentoCard />`, tokens de elevación y animación, componentes base y página `/styleguide`, a partir de la sección 2 y de `/design-references/`. Configurar también el test de desbordes de Playwright.
 3. Datos semilla, tipos, stores y funciones de cálculo (`dueDate`, estados, métricas) con tests unitarios simples.
-4. Seguridad base: `permissions.ts`, store de sesión, auditoría, rutas protegidas, login con SSO y MFA simulados, bloqueo y "Problemas para iniciar sesión", expiración de sesión y layout con selector de rol (G1 a G7).
+4. Seguridad base: `permissions.ts`, store de sesión, auditoría, rutas protegidas, login con SSO y MFA simulados, bloqueo y "Problemas para iniciar sesión", expiración de sesión y layout con selector de rol (G0 a G7).
 5. Nuevo ingreso: N1, N2.
 6. Admin: plantillas A5, A6, A7.
 7. Admin: ingresos A2, A3, A4.
@@ -837,7 +866,10 @@ Después de cada paso, verificar que el build compila, que los tests pasan y que
 
 ## 11. Criterios de aceptación del MVP
 
-- [ ] Desde el login se entra con un clic a cualquiera de los 4 roles, pasando por SSO o contraseña y MFA simulados.
+- [ ] Desde el inicio de la demo se elige cualquiera de los 4 roles y, con "Continuar como…", se entra pasando por SSO o contraseña y MFA simulados.
+- [ ] El login no tiene tarjetas de roles ni panel de marketing; con rol preseleccionado muestra "Vas a entrar como…" y "Cambiar recorrido".
+- [ ] Los botones de SSO usan los logos oficiales sin modificar, con los textos "Continuar con Microsoft" y "Continuar con Google" y la misma prominencia.
+- [ ] La simulación de SSO es neutra, está rotulada como simulación y no imita las páginas de Microsoft ni de Google.
 - [ ] Sin sesión no se puede ver ninguna pantalla interna, y cada rol solo accede a sus rutas; los intentos denegados quedan en la auditoría.
 - [ ] Los errores de login son genéricos, y 5 intentos fallidos bloquean la cuenta sin opción de autodesbloqueo.
 - [ ] Desde "Problemas para iniciar sesión" se genera una solicitud que aparece en la bandeja de sistemas, y al resolverla (desbloqueo o cambio forzado de contraseña) el usuario puede volver a entrar.

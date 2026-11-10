@@ -4,7 +4,7 @@
     "company": "Nortia S.A.",
     "tagline": "Clear onboarding journeys for every new hire, their manager, and HR.",
     "skipToContent": "Skip to content",
-    "demoNotice": "This is a demo: don't enter real data."
+    "demoNotice": "Demo with fictitious data: don't enter real information."
   },
   "notFound": {
     "title": "We couldn't find this page",
@@ -41,14 +41,14 @@
   "auth": {
     "methods": {
       "sso_microsoft": "Microsoft",
-      "sso_google": "Google Workspace",
+      "sso_google": "Google",
       "password": "Email and password"
     },
     "login": {
       "title": "Sign in to Rumbo",
       "subtitle": "Use your Nortia work account.",
       "ssoMicrosoft": "Continue with Microsoft",
-      "ssoGoogle": "Continue with Google Workspace",
+      "ssoGoogle": "Continue with Google",
       "or": "or",
       "emailToggle": "Sign in with email and password",
       "emailLabel": "Work email",
@@ -64,43 +64,24 @@
       "lockedTitle": "Access to this account is locked",
       "lockedBody": "For security, we lock access after several failed attempts. Only IT can restore it, after verifying your identity.",
       "troubleLink": "Trouble signing in?",
-      "resetDemo": "Reset demo",
-      "resetTitle": "Reset the demo?",
-      "resetBody": "All changes go back to their initial state and you're signed out.",
-      "resetConfirm": "Reset demo",
       "logout": {
         "manual": "You signed out.",
         "expired": "We signed you out after a period of inactivity. Sign in again to continue.",
         "reset": "We reset the demo. All data is back to its initial state."
       },
-      "demo": {
-        "title": "Explore the demo",
-        "subtitle": "Sign in with one click as any of the four roles. The verification code is already filled in.",
-        "enterAs": "Sign in as {{name}}, {{role}}",
-        "description": {
-          "admin": "Designs templates, adds new hires and tracks progress.",
-          "manager": "Supports their team with 30, 60 and 90-day check-ins.",
-          "hire": "Goes through onboarding: tasks, courses and check-ins.",
-          "it_admin": "Handles access requests and reviews the audit log."
-        }
-      },
-      "preview": {
-        "title": "Everyone knows what to do, with whom and by when.",
-        "journey": "Onboarding journey",
-        "progress": "Month 1 progress",
-        "tasks": [
-          "Data warehouse access",
-          "Set up the analysis environment",
-          "First guided analysis"
-        ]
+      "preselected": {
+        "title": "You're signing in as {{name}}, {{role}}",
+        "continue": "Continue as {{name}}",
+        "change": "Change journey"
       }
     },
     "sso": {
-      "title": "Connecting to {{provider}}",
-      "redirecting": "Redirecting you to Nortia's identity provider…",
-      "simulated": "Simulation: the demo never leaves Rumbo and sends no data.",
-      "chooseAccount": "Choose your work account",
-      "continueAs": "Continue as {{name}}",
+      "title": "Sign in with {{provider}}",
+      "simulation": "Simulation: in a real environment, we'd redirect you to your company's {{provider}} sign-in page here.",
+      "branding": "In production, that page would show Nortia's branding: identity providers let each company customize it.",
+      "accountLegend": "Demo account to continue with",
+      "accountHelp": "Choose which demo person you want to sign in as.",
+      "continue": "Continue",
       "back": "Back to sign in"
     },
     "mfa": {
@@ -271,5 +252,72 @@
     "manager": "manager",
     "hire": "new hire",
     "it_admin": "IT"
+  },
+  "home": {
+    "eyebrow": "Rumbo · Onboarding journeys",
+    "title": "Everyone knows what to do, with whom and by when.",
+    "intro": "Rumbo is a platform where HR designs the onboarding journey for each role, managers support it with check-ins and new hires always know what comes next. HR tracks progress and spots where journeys get stuck.",
+    "demoTitle": "About this demo",
+    "demoBody": "It is a clickable prototype with fictitious data from Nortia S.A., a made-up technology services company. Your changes are only saved in this browser.",
+    "chooseTitle": "Choose a journey",
+    "chooseSubtitle": "Explore Rumbo from each role. Once inside, you can switch roles anytime with the \"View as\" selector.",
+    "youWillSee": "You'll be able to explore:",
+    "cardAction": "Explore as {{name}}",
+    "roles": {
+      "admin": {
+        "title": "Carla, HR",
+        "description": "People Partner. Designs journeys and tracks every new hire.",
+        "points": [
+          "The dashboard with KPIs, charts and alerts",
+          "The template builder with dependencies",
+          "Adding a new hire"
+        ]
+      },
+      "manager": {
+        "title": "Martín, manager",
+        "description": "Development Lead. Supports the new people on his team.",
+        "points": [
+          "His team in onboarding",
+          "The 30, 60 and 90-day check-ins",
+          "How to escalate an unmet milestone to HR"
+        ]
+      },
+      "hire": {
+        "title": "Sofía, new hire",
+        "description": "Junior Data Analyst. In her first month at Nortia.",
+        "points": [
+          "Her journey by stage and what comes next",
+          "Tasks that unlock others when completed",
+          "Her self-review before the check-in"
+        ]
+      },
+      "it_admin": {
+        "title": "Diego, IT",
+        "description": "IT help desk. Manages access and security.",
+        "points": [
+          "Access requests with identity verification",
+          "Locked accounts and the audit log",
+          "The permission matrix and policies"
+        ]
+      }
+    },
+    "linksTitle": "More about the project",
+    "caseStudy": "View the case study",
+    "docs": "View the documentation",
+    "newTab": "(opens in a new tab)",
+    "resetDemo": "Reset demo",
+    "resetTitle": "Reset the demo?",
+    "resetBody": "All changes go back to their initial state and you're signed out.",
+    "resetConfirm": "Reset demo",
+    "preview": {
+      "label": "Preview of Sofía's journey",
+      "journey": "Onboarding journey",
+      "progress": "Month 1 progress",
+      "tasks": [
+        "Data warehouse access",
+        "Set up the analysis environment",
+        "First guided analysis"
+      ]
+    }
   }
 }

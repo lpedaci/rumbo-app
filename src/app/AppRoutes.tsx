@@ -17,6 +17,7 @@ const NewPasswordPage = lazy(() =>
   import('@/features/auth/NewPasswordPage').then((m) => ({ default: m.NewPasswordPage })),
 );
 const AccessHelpPage = lazy(() => import('@/features/auth/AccessHelpPage').then((m) => ({ default: m.AccessHelpPage })));
+const DemoHomePage = lazy(() => import('@/features/home/DemoHomePage').then((m) => ({ default: m.DemoHomePage })));
 const SecurityPage = lazy(() => import('@/features/account/SecurityPage').then((m) => ({ default: m.SecurityPage })));
 
 // Internal style guide: development only (CLAUDE.md 2.8). `import.meta.env.DEV` is
@@ -25,9 +26,10 @@ const StyleguidePage = import.meta.env.DEV
   ? lazy(() => import('@/features/styleguide/StyleguidePage').then((m) => ({ default: m.StyleguidePage })))
   : null;
 
-function RootRedirect() {
+/** `/`: the demo start (G0) for visitors, the role home for signed-in users. */
+function RootRoute() {
   const user = useCurrentUser();
-  return <Navigate to={user ? homePath(user) : '/login'} replace />;
+  return user ? <Navigate to={homePath(user)} replace /> : <DemoHomePage />;
 }
 
 /** Unknown routes: G7 inside the layout when signed in, a standalone page otherwise. */
@@ -42,9 +44,8 @@ export function AppRoutes() {
   return (
     <Suspense fallback={null}>
     <Routes>
-      <Route path="/" element={<RootRedirect />} />
-
-      {/* Access (public): G1 to G4 */}
+      {/* Demo start (G0) and access (G1 to G4): public */}
+      <Route path="/" element={<RootRoute />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/login/sso" element={<SsoPage />} />
       <Route path="/login/verify" element={<VerifyPage />} />

@@ -10,7 +10,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 1 | Setup (Vite, TS, Tailwind, shadcn/ui, router, i18n, deploy) | Hecho | 10/11/2026 |
 | 2 | Tokens M3, `<Icon />`, `<BentoCard />`, styleguide, test de desbordes | Hecho | 10/11/2026 |
 | 3 | Datos semilla, tipos, stores y cálculos con tests | Hecho | 10/11/2026 |
-| 4 | Seguridad base y layout (G1 a G7) | Hecho | 10/11/2026 |
+| 4 | Seguridad base y layout (G0 a G7) | Hecho (con el ajuste de G0) | 10/11/2026 |
 | 5 | Nuevo ingreso: N1, N2 | Pendiente | |
 | 6 | Plantillas: A5, A6, A7 | Pendiente | |
 | 7 | Ingresos: A2, A3, A4 | Pendiente | |
@@ -20,6 +20,25 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
+
+## Paso 4, ajuste: inicio de la demo (G0) y login limpio
+
+**Por qué:** Lourdes actualizó F0 en `CLAUDE.md` para separar la capa de portfolio del producto (D-40).
+
+**Qué se hizo**
+- **G0 en `/`:** frase de valor, explicación de la demo, vista previa del producto (desde 768 px), 4 recorridos con 3 puntos concretos cada uno, enlace a la documentación y "Restablecer demo". El enlace al case study espera su URL (D-41).
+- **G1:** login limpio con "Usa tu cuenta de trabajo de Nortia". Con `?demo=…` muestra "Vas a entrar como…", "Continuar como…" y "Cambiar recorrido". El aviso de demo quedó en una línea.
+- **Botones de SSO:** logos oficiales sin modificar en `src/assets/brands/`, con nota de origen (D-42), los textos "Continuar con Microsoft" y "Continuar con Google" y el mismo componente para los dos.
+- **G2:** simulación neutra y rotulada, que menciona que en producción la página llevaría la marca de Nortia. Tiene un botón "Continuar", y sin rol preseleccionado agrega la elección de cuenta de demo (D-43).
+- El logo de las pantallas de acceso vuelve a G0. Restablecer la demo desde el menú de usuario también vuelve a G0.
+
+**Verificación**
+- `npm test`: 163/163, con tests nuevos de G0, del login limpio y del rol preseleccionado.
+- `npm run test:e2e`: 135/135. Son 15 pantallas en 6 anchos sin desborde, axe sin violaciones y un único `h1`.
+- Recorrido manual: G0, "Recorrer como Carla", login con aviso, G2, "Continuar", G3 con código precargado y A1.
+
+**Pendiente**
+- D-41 (URL del case study) y D-44 (unificar "cuenta de trabajo" en G4).
 
 ## Paso 4: seguridad base y layout (G1 a G7)
 

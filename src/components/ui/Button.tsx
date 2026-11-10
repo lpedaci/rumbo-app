@@ -125,9 +125,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   );
 
   if (asChild) {
+    // Slottable puts the icons inside the child element (for example a router Link).
     return (
       <Slot.Root ref={ref} className={cn(buttonVariants({ variant, size, fullWidth }), className)} {...props}>
-        {children}
+        {leadingIcon && <Icon name={leadingIcon} size={iconSize} />}
+        <Slot.Slottable>{children}</Slot.Slottable>
+        {trailingIcon && <Icon name={trailingIcon} size={iconSize} />}
       </Slot.Root>
     );
   }
