@@ -1,27 +1,186 @@
+@import '@fontsource-variable/inter';
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import './tokens.css';
 
 /*
- * Design tokens (Material 3 color roles, typography, radii, spacing, elevation)
- * are defined in step 2 in `tokens.css`. Until then, only a neutral base so the
- * empty shell renders with an explicit background and readable text.
+ * Tailwind theme = Rumbo tokens only.
+ * Default palettes, font sizes, radii and shadows are reset so components can
+ * only use M3 roles (CLAUDE.md 2.1.1 to 2.1.3, 2.5). `inline` keeps the CSS
+ * variables live, so a future dark theme only swaps tokens.css values.
  */
+@theme inline {
+  /* Colors */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-primary: var(--md-sys-color-primary);
+  --color-on-primary: var(--md-sys-color-on-primary);
+  --color-primary-container: var(--md-sys-color-primary-container);
+  --color-on-primary-container: var(--md-sys-color-on-primary-container);
+  --color-secondary: var(--md-sys-color-secondary);
+  --color-on-secondary: var(--md-sys-color-on-secondary);
+  --color-secondary-container: var(--md-sys-color-secondary-container);
+  --color-on-secondary-container: var(--md-sys-color-on-secondary-container);
+  --color-tertiary: var(--md-sys-color-tertiary);
+  --color-on-tertiary: var(--md-sys-color-on-tertiary);
+  --color-tertiary-container: var(--md-sys-color-tertiary-container);
+  --color-on-tertiary-container: var(--md-sys-color-on-tertiary-container);
+  --color-error: var(--md-sys-color-error);
+  --color-on-error: var(--md-sys-color-on-error);
+  --color-error-container: var(--md-sys-color-error-container);
+  --color-on-error-container: var(--md-sys-color-on-error-container);
+  --color-success: var(--md-custom-color-success);
+  --color-on-success: var(--md-custom-color-on-success);
+  --color-success-container: var(--md-custom-color-success-container);
+  --color-on-success-container: var(--md-custom-color-on-success-container);
+  --color-warning: var(--md-custom-color-warning);
+  --color-on-warning: var(--md-custom-color-on-warning);
+  --color-warning-container: var(--md-custom-color-warning-container);
+  --color-on-warning-container: var(--md-custom-color-on-warning-container);
+  --color-info: var(--md-custom-color-info);
+  --color-on-info: var(--md-custom-color-on-info);
+  --color-info-container: var(--md-custom-color-info-container);
+  --color-on-info-container: var(--md-custom-color-on-info-container);
+
+  --color-surface: var(--md-sys-color-surface);
+  --color-surface-container-lowest: var(--md-sys-color-surface-container-lowest);
+  --color-surface-container: var(--md-sys-color-surface-container);
+  --color-surface-container-high: var(--md-sys-color-surface-container-high);
+  --color-on-surface: var(--md-sys-color-on-surface);
+  --color-on-surface-variant: var(--md-sys-color-on-surface-variant);
+  --color-outline: var(--md-sys-color-outline);
+  --color-outline-variant: var(--md-sys-color-outline-variant);
+  --color-scrim: var(--md-sys-color-scrim);
+  --color-inverse-surface: var(--md-sys-color-inverse-surface);
+  --color-inverse-on-surface: var(--md-sys-color-inverse-on-surface);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Typography: M3 roles only (size / line-height / weight) */
+  --font-*: initial;
+  --font-sans: var(--md-ref-typeface);
+
+  --text-*: initial;
+  --text-display-small: 2.25rem;
+  --text-display-small--line-height: 2.75rem;
+  --text-display-small--font-weight: 600;
+  --text-display-small--letter-spacing: -0.01em;
+  --text-headline-small: 1.5rem;
+  --text-headline-small--line-height: 2rem;
+  --text-headline-small--font-weight: 600;
+  --text-headline-small--letter-spacing: -0.005em;
+  --text-title-large: 1.375rem;
+  --text-title-large--line-height: 1.75rem;
+  --text-title-large--font-weight: 600;
+  --text-title-medium: 1rem;
+  --text-title-medium--line-height: 1.5rem;
+  --text-title-medium--font-weight: 600;
+  --text-title-small: 0.875rem;
+  --text-title-small--line-height: 1.25rem;
+  --text-title-small--font-weight: 500;
+  --text-body-large: 1rem;
+  --text-body-large--line-height: 1.5rem;
+  --text-body-large--font-weight: 400;
+  --text-body-medium: 0.875rem;
+  --text-body-medium--line-height: 1.25rem;
+  --text-body-medium--font-weight: 400;
+  --text-body-small: 0.75rem;
+  --text-body-small--line-height: 1rem;
+  --text-body-small--font-weight: 400;
+  --text-label-large: 0.875rem;
+  --text-label-large--line-height: 1.25rem;
+  --text-label-large--font-weight: 500;
+  --text-label-medium: 0.75rem;
+  --text-label-medium--line-height: 1rem;
+  --text-label-medium--font-weight: 500;
+  --text-label-small: 0.6875rem;
+  --text-label-small--line-height: 1rem;
+  --text-label-small--font-weight: 500;
+
+  /* Shape */
+  --radius-*: initial;
+  --radius-xs: var(--md-sys-shape-extra-small);
+  --radius-sm: var(--md-sys-shape-small);
+  --radius-md: var(--md-sys-shape-medium);
+  --radius-lg: var(--md-sys-shape-large);
+  --radius-full: var(--md-sys-shape-full);
+
+  /* Elevation: two levels only */
+  --shadow-*: initial;
+  --shadow-elevation-1: var(--elevation-1);
+  --shadow-elevation-2: var(--elevation-2);
+
+  /* Motion */
+  --ease-*: initial;
+  --ease-standard: var(--md-sys-motion-easing-standard);
+  --ease-emphasized-decelerate: var(--md-sys-motion-easing-emphasized-decelerate);
+  --ease-emphasized-accelerate: var(--md-sys-motion-easing-emphasized-accelerate);
+
+  /* Pulse for skeletons (opacity only, no animated gradient) */
+  --animate-pulse-soft: pulse-soft 1.6s var(--md-sys-motion-easing-standard) infinite;
+
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.55;
+    }
+  }
+}
+
 @layer base {
   html {
     color-scheme: light;
     -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-height) + 1rem); /* WCAG 2.4.11: focus not obscured by sticky header */
   }
 
   body {
     margin: 0;
     min-height: 100dvh;
-    background-color: #f6f8f9; /* temporary: M3 `surface`, moves to tokens.css in step 2 */
-    color: #111827; /* temporary: M3 `on-surface` */
-    font-family: system-ui, sans-serif;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-ref-typeface);
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: 1.5rem;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
   }
 
+  @media (min-width: 1024px) {
+    body {
+      font-size: 0.875rem; /* body-medium is the base text on desktop (2.1.2) */
+      line-height: 1.25rem;
+    }
+  }
+
+  /* Visible focus everywhere: 2px primary ring with offset (2.1.3, 2.10). */
+  :focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  /* Numbers in KPIs, tables and dates use tabular figures. */
+  .tabular-nums,
+  table,
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Reduced motion: OS setting or the in-app preference (F17) on <html>. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -31,5 +190,14 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+
+  html[data-reduce-motion='true'] *,
+  html[data-reduce-motion='true'] *::before,
+  html[data-reduce-motion='true'] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

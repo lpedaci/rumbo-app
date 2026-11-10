@@ -1,4 +1,5 @@
 import { HashRouter } from 'react-router';
+import { AppProviders } from './AppProviders';
 import { AppRoutes } from './AppRoutes';
 
 /**
@@ -8,7 +9,9 @@ import { AppRoutes } from './AppRoutes';
 export function App() {
   return (
     <HashRouter>
-      <AppRoutes />
+      <AppProviders>
+        <AppRoutes />
+      </AppProviders>
     </HashRouter>
   );
 }

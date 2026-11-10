@@ -18,9 +18,9 @@ Rumbo es una plataforma B2B de recorridos de ingreso (onboarding) corporativo. E
 | [decisions.md](decisions.md) | Dudas encontradas en la especificación y cómo se resolvieron |
 | [issues.md](issues.md) | Registro de incidencias (errores y problemas) |
 | [progress.md](progress.md) | Avance por paso del plan de trabajo |
-| `design-system.md` | Sistema de diseño implementado, igual a `/styleguide`. Se redacta en el paso 2 |
+| [design-system.md](design-system.md) | Tokens (color, tipografía, espaciado, forma, elevación, íconos, movimiento) y componentes base, iguales a `/styleguide` |
 | `security.md` | Arquitectura de seguridad de producción. Se redacta en el paso 11 |
-| `screenshots/` | Capturas del test de desbordes en 6 anchos (320 a 1440 px). Se generan desde el paso 2 |
+| [screenshots/](screenshots/) | Capturas del test de desbordes en 6 anchos (320 a 1440 px). Se regeneran con `npm run test:e2e` |
 
 ## Cómo leer esta documentación
 

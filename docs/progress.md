@@ -8,7 +8,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | --- | --- | --- | --- |
 | 0 | Documentación base | Hecho (revisado por Lourdes) | 10/11/2026 |
 | 1 | Setup (Vite, TS, Tailwind, shadcn/ui, router, i18n, deploy) | Hecho | 10/11/2026 |
-| 2 | Tokens M3, `<Icon />`, `<BentoCard />`, styleguide, test de desbordes | Pendiente | |
+| 2 | Tokens M3, `<Icon />`, `<BentoCard />`, styleguide, test de desbordes | Hecho | 10/11/2026 |
 | 3 | Datos semilla, tipos, stores y cálculos con tests | Pendiente | |
 | 4 | Seguridad base y layout (G1 a G7) | Pendiente | |
 | 5 | Nuevo ingreso: N1, N2 | Pendiente | |
@@ -20,6 +20,31 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
+
+## Paso 2: sistema de diseño
+
+**Qué se hizo**
+- `src/styles/tokens.css`: roles de color de M3 (incluidos los personalizados de estado), superficies, series de gráficos, forma, espaciado de layout, dos niveles de elevación, movimiento y capas de estado. Roles oscuros preparados, sin activar.
+- Tema de Tailwind limitado a los tokens: no existen paletas, tamaños de texto, radios ni sombras por defecto.
+- Inter alojada en el proyecto. 11 roles tipográficos de M3 como utilidades (`text-title-medium`, etc.).
+- `<Icon />` con 90 íconos Material Symbols Rounded 300, generados por script (`npm run icons`).
+- Componentes base: Button, IconButton, Tooltip, TextField, StatusPill, FilterChip, SegmentedButton, ProgressBar, Skeleton, BentoGrid, BentoCard, Table, Dialog, ConfirmDialog y Toaster.
+- Animaciones con Motion y reducción de movimiento (sistema y preferencia de la app).
+- `/styleguide`, solo en desarrollo, con todos los tokens y componentes.
+- Playwright: test de desbordes (3 pantallas × 6 anchos, capturas en `docs/screenshots/`) y axe (WCAG 2.2 AA) a 375 y 1280 px.
+- `docs/design-system.md` con los valores implementados.
+
+**Verificación**
+- `npm test`: 60/60 (incluye 52 de contraste de tokens). `npm run test:e2e`: 27/27. Lint y build sin errores.
+- JS inicial: 149 KB gzip (límite de RNF-005: 300 KB). `/styleguide` no está en el build.
+- Capturas revisadas a 375 y 1280 px.
+
+**Pendiente**
+- **D-22**: confirmar el reemplazo de la serie de gráficos 4 (`#C98AAE` → `#B9779D`).
+- El patrón de tablas como tarjetas en mobile se implementa con los listados (paso 7). La validación de formularios con React Hook Form y Zod, desde el paso 4.
+
+**Problemas encontrados**
+- INC-002 a INC-004, todos resueltos.
 
 ## Paso 1: setup
 
