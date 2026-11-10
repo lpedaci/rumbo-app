@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/*
+ * Design tokens (Material 3 color roles, typography, radii, spacing, elevation)
+ * are defined in step 2 in `tokens.css`. Until then, only a neutral base so the
+ * empty shell renders with an explicit background and readable text.
+ */
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: #f6f8f9; /* temporary: M3 `surface`, moves to tokens.css in step 2 */
+    color: #111827; /* temporary: M3 `on-surface` */
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Tests
+coverage/
+test-results/
+playwright-report/
+blob-report/
+
+# Third-party Dribbble shots used only as local visual reference (CLAUDE.md 2.2).
+# They belong to their authors, so they are not published in this public repo.
+design-references/
+
+# Environment (never commit secrets)
+.env
+.env.*
+
+# Editors and OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

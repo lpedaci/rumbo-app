@@ -1,0 +1,19 @@
+{
+  "app": {
+    "name": "Rumbo",
+    "company": "Nortia S.A.",
+    "tagline": "Recorridos de ingreso claros para cada persona nueva, su jefe directo y RRHH.",
+    "skipToContent": "Saltar al contenido",
+    "demoNotice": "Esto es una demo: no ingreses datos reales."
+  },
+  "placeholder": {
+    "title": "Rumbo está en construcción",
+    "body": "Pronto vas a poder recorrer el producto desde cada rol: RRHH, jefe directo, nuevo ingreso y sistemas.",
+    "status": "Paso 1 de la fase A: estructura del proyecto lista."
+  },
+  "notFound": {
+    "title": "No encontramos esta página",
+    "body": "Revisa la dirección o vuelve al inicio.",
+    "backHome": "Volver al inicio"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "app": {
+    "name": "Rumbo",
+    "company": "Nortia S.A.",
+    "tagline": "Clear onboarding journeys for every new hire, their manager, and HR.",
+    "skipToContent": "Skip to content",
+    "demoNotice": "This is a demo: don't enter real data."
+  },
+  "placeholder": {
+    "title": "Rumbo is under construction",
+    "body": "Soon you'll be able to explore the product from every role: HR, manager, new hire, and IT.",
+    "status": "Phase A, step 1: project structure ready."
+  },
+  "notFound": {
+    "title": "We couldn't find this page",
+    "body": "Check the address or go back to the home page.",
+    "backHome": "Back to home"
+  }
+}
