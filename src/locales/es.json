@@ -6,11 +6,6 @@
     "skipToContent": "Saltar al contenido",
     "demoNotice": "Esto es una demo: no ingreses datos reales."
   },
-  "placeholder": {
-    "title": "Rumbo está en construcción",
-    "body": "Pronto vas a poder recorrer el producto desde cada rol: RRHH, jefe directo, nuevo ingreso y sistemas.",
-    "status": "Fase A, paso 2: sistema de diseño listo."
-  },
   "notFound": {
     "title": "No encontramos esta página",
     "body": "Revisa la dirección o vuelve al inicio.",
@@ -36,5 +31,245 @@
     "integer": "Ingresa un número entero, por ejemplo: -3 o 5",
     "offsetRange": "Ingresa un número de días entre {{min}} y {{max}}",
     "otp": "Ingresa los 6 dígitos del código"
+  },
+  "roles": {
+    "admin": "RRHH",
+    "manager": "Jefe directo",
+    "hire": "Nuevo ingreso",
+    "it_admin": "Sistemas"
+  },
+  "auth": {
+    "methods": {
+      "sso_microsoft": "Microsoft",
+      "sso_google": "Google Workspace",
+      "password": "Correo y contraseña"
+    },
+    "login": {
+      "title": "Inicia sesión en Rumbo",
+      "subtitle": "Usa tu cuenta corporativa de Nortia.",
+      "ssoMicrosoft": "Continuar con Microsoft",
+      "ssoGoogle": "Continuar con Google Workspace",
+      "or": "o",
+      "emailToggle": "Iniciar sesión con correo y contraseña",
+      "emailLabel": "Correo corporativo",
+      "emailHelp": "Tu correo corporativo, por ejemplo: nombre.apellido@nortia.demo",
+      "passwordLabel": "Contraseña",
+      "passwordHelp": "La contraseña de tu cuenta de Nortia. En la demo es Demo.2026!",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "submit": "Iniciar sesión",
+      "submitting": "Verificando…",
+      "invalid": "Correo o contraseña incorrectos. Revisa los datos e intenta de nuevo.",
+      "attemptsWarning": "Por seguridad, la cuenta se bloquea después de {{max}} intentos fallidos.",
+      "lockedTitle": "El acceso a esta cuenta está bloqueado",
+      "lockedBody": "Por seguridad, bloqueamos el acceso después de varios intentos fallidos. Solo el área de sistemas puede restablecerlo, después de verificar tu identidad.",
+      "troubleLink": "¿Problemas para iniciar sesión?",
+      "resetDemo": "Restablecer demo",
+      "resetTitle": "¿Restablecer la demo?",
+      "resetBody": "Todos los cambios vuelven a su estado inicial y se cierra la sesión.",
+      "resetConfirm": "Restablecer demo",
+      "logout": {
+        "manual": "Cerraste sesión.",
+        "expired": "Cerramos tu sesión por inactividad. Inicia sesión de nuevo para continuar.",
+        "reset": "Restablecimos la demo. Los datos volvieron a su estado inicial."
+      },
+      "demo": {
+        "title": "Explora la demo",
+        "subtitle": "Entra con un clic como cualquiera de los cuatro roles. El código de verificación ya está cargado.",
+        "enterAs": "Entrar como {{name}}, {{role}}",
+        "description": {
+          "admin": "Diseña plantillas, da de alta ingresos y sigue el avance.",
+          "manager": "Acompaña a su equipo con check-ins de 30, 60 y 90 días.",
+          "hire": "Recorre su ingreso: tareas, cursos y check-ins.",
+          "it_admin": "Atiende solicitudes de acceso y revisa la auditoría."
+        }
+      },
+      "preview": {
+        "title": "Cada persona sabe qué hacer, con quién y para cuándo.",
+        "journey": "Recorrido de ingreso",
+        "progress": "Avance del mes 1",
+        "tasks": [
+          "Acceso al data warehouse",
+          "Configurar el entorno de análisis",
+          "Primer análisis guiado"
+        ]
+      }
+    },
+    "sso": {
+      "title": "Conectando con {{provider}}",
+      "redirecting": "Te redirigimos al proveedor de identidad de Nortia…",
+      "simulated": "Simulación: en la demo no salimos de Rumbo ni se envía ningún dato.",
+      "chooseAccount": "Elige tu cuenta corporativa",
+      "continueAs": "Continuar como {{name}}",
+      "back": "Volver al inicio de sesión"
+    },
+    "mfa": {
+      "title": "Verificación en dos pasos",
+      "subtitle": "Ingresa el código de 6 dígitos que muestra tu app autenticadora.",
+      "signingAs": "Iniciando sesión como {{name}}",
+      "demoCode": "Demo: el código es {{code}} y ya está cargado.",
+      "demoCodeManual": "Demo: el código es {{code}}.",
+      "demoBackup": "Demo: el código de respaldo es {{code}}.",
+      "codeLabel": "Código de verificación",
+      "codeHelp": "Los 6 dígitos de tu app autenticadora. Puedes pegarlo",
+      "backupLabel": "Código de respaldo",
+      "backupHelp": "Uno de los códigos de 8 dígitos que guardaste al activar la verificación",
+      "remember": "Recordar este dispositivo por 30 días",
+      "rememberHelp": "En esta computadora no vamos a pedirte el código hasta el {{date}}.",
+      "useBackup": "Usar un código de respaldo",
+      "useApp": "Usar el código de la app",
+      "submit": "Verificar",
+      "invalid": "No pudimos verificar el código. Revisa que tenga 6 dígitos y que sea el que muestra la app ahora.",
+      "invalidBackup": "No pudimos verificar el código de respaldo. Revisa que tenga 8 dígitos.",
+      "relink": "Sistemas restableció tu verificación en dos pasos. Vincula de nuevo tu app autenticadora y después ingresa el código.",
+      "cancel": "Cancelar e iniciar sesión con otra cuenta"
+    },
+    "newPassword": {
+      "title": "Crea una contraseña nueva",
+      "subtitle": "Sistemas pidió que cambies tu contraseña. Elige una que cumpla todos los requisitos.",
+      "label": "Contraseña nueva",
+      "help": "Tiene que cumplir todos los requisitos de la lista.",
+      "rulesTitle": "Requisitos",
+      "rules": {
+        "minLength": "Al menos {{min}} caracteres",
+        "uppercase": "Una mayúscula",
+        "lowercase": "Una minúscula",
+        "number": "Un número",
+        "symbol": "Un símbolo, por ejemplo: . ! # $",
+        "notPrevious": "Distinta de la contraseña anterior"
+      },
+      "met": "cumplido",
+      "notMet": "pendiente",
+      "strength": "Seguridad de la contraseña: {{level}}",
+      "levels": {
+        "0": "sin datos",
+        "1": "débil",
+        "2": "aceptable",
+        "3": "buena",
+        "4": "muy buena"
+      },
+      "submit": "Guardar contraseña",
+      "invalid": "La contraseña todavía no cumple todos los requisitos."
+    }
+  },
+  "accessHelp": {
+    "title": "Problemas para iniciar sesión",
+    "intro": "Las cuentas de Rumbo son corporativas y el acceso lo gestiona el área de sistemas de Nortia. Por seguridad, no se puede recuperar ni desbloquear una cuenta desde esta pantalla.",
+    "ssoTitle": "Si inicias sesión con Microsoft o Google",
+    "ssoBody": "Tu contraseña es la de tu cuenta de la empresa. Se cambia con sistemas, no en esta plataforma.",
+    "channelsTitle": "Mesa de ayuda de sistemas",
+    "portal": "Portal de tickets: soporte.nortia.demo",
+    "email": "Correo: soporte.it@nortia.demo",
+    "phone": "Teléfono: interno 4400",
+    "hours": "De lunes a viernes, de 8 a 20 h",
+    "formTitle": "Solicitar ayuda a sistemas",
+    "formIntro": "Completa el formulario. Sistemas va a verificar tu identidad antes de restablecer el acceso.",
+    "reasonLegend": "Motivo",
+    "reasonHelp": "Elige la opción que mejor describe lo que te pasa.",
+    "reasons": {
+      "locked": "Mi cuenta está bloqueada",
+      "forgot_password": "Olvidé mi contraseña",
+      "mfa_issue": "No recibo el código de verificación",
+      "other": "Otro motivo"
+    },
+    "reasonRequired": "Elige el motivo de tu solicitud.",
+    "commentLabel": "Comentario",
+    "commentHelp": "Cualquier dato que ayude a sistemas, por ejemplo: desde cuándo te pasa.",
+    "demoTip": "Demo: escribe #error en el comentario para ver cómo se muestra un error del servicio.",
+    "submit": "Enviar solicitud",
+    "sending": "Enviando…",
+    "serverErrorTitle": "El servicio no está disponible",
+    "serverErrorBody": "No pudimos enviar tu solicitud. Tus datos siguen cargados: intenta de nuevo en unos segundos.",
+    "retry": "Reintentar",
+    "confirmTitle": "Recibimos tu solicitud",
+    "confirmNumber": "Número de solicitud: {{id}}",
+    "confirmBody": "Si el correo corresponde a una cuenta de Nortia, sistemas va a verificar tu identidad antes de restablecer el acceso y te va a contactar por los canales registrados.",
+    "confirmKeep": "Guarda el número para hacer el seguimiento con la mesa de ayuda.",
+    "viewAsIt": "Ver como sistemas (demo)",
+    "backToLogin": "Volver al inicio de sesión"
+  },
+  "layout": {
+    "mainNav": "Navegación principal",
+    "nav": {
+      "dashboard": "Panel",
+      "hires": "Ingresos",
+      "templates": "Plantillas",
+      "team": "Mi equipo",
+      "journey": "Mi recorrido",
+      "checkin": "Mi check-in",
+      "requests": "Solicitudes",
+      "security": "Seguridad y auditoría"
+    },
+    "viewAs": "Ver como",
+    "viewAsMenu": "Ver Rumbo como otro rol",
+    "switched": "Ahora ves Rumbo como {{name}}, {{role}}",
+    "userMenu": "Menú de usuario de {{name}}",
+    "mySecurity": "Mi seguridad",
+    "sessionDemo": "Ver el aviso de sesión (demo)",
+    "resetDemo": "Restablecer demo",
+    "signOut": "Cerrar sesión",
+    "userMenuSuffix": "menú de usuario"
+  },
+  "session": {
+    "warningTitle": "Tu sesión está por vencer",
+    "warningBody": "Por seguridad, cerramos la sesión después de {{minutes}} minutos sin actividad.",
+    "countdown": "Se va a cerrar en {{time}}.",
+    "stay": "Seguir conectado",
+    "signOut": "Cerrar sesión"
+  },
+  "security": {
+    "title": "Mi seguridad",
+    "subtitle": "Cómo se protege el acceso a tu cuenta de Rumbo.",
+    "accountTitle": "Tu cuenta",
+    "signedInWith": "Iniciaste sesión con: {{method}}",
+    "mfaTitle": "Verificación en dos pasos",
+    "mfaOn": "Activada",
+    "mfaOff": "Desactivada",
+    "mfaRequired": "Es obligatoria para tu rol por la política de seguridad de Nortia.",
+    "mfaOptional": "Es opcional para tu rol. Te recomendamos mantenerla activada.",
+    "mfaEnable": "Activar verificación",
+    "mfaDisable": "Desactivar verificación",
+    "mfaEnabled": "Verificación en dos pasos activada",
+    "mfaDisabled": "Verificación en dos pasos desactivada",
+    "mfaRequiredReason": "La política de Nortia no permite desactivarla para tu rol",
+    "devicesTitle": "Dispositivos recordados",
+    "thisDevice": "Esta computadora",
+    "deviceUntil": "No pide el código hasta el {{date}}",
+    "noDevices": "No hay dispositivos recordados. Al verificar el código, puedes elegir recordar esta computadora por 30 días.",
+    "forget": "Olvidar dispositivo",
+    "forgotten": "Dispositivo olvidado"
+  },
+  "forbidden": {
+    "title": "No tienes acceso a esta sección",
+    "body": "Esta sección corresponde a otro rol. Si crees que necesitas acceso, consulta con RRHH.",
+    "backHome": "Volver a mi inicio"
+  },
+  "upcoming": {
+    "greeting": "Hola, {{name}}",
+    "body": "Estamos construyendo esta pantalla. Mientras tanto, puedes usar el selector «Ver como» para recorrer Rumbo desde otro rol.",
+    "screens": {
+      "A1": "Panel de seguimiento",
+      "A2": "Ingresos",
+      "A3": "Dar de alta un ingreso",
+      "A4": "Ficha del ingreso",
+      "A5": "Plantillas",
+      "A6": "Editor de plantilla",
+      "A7": "Vista previa de la plantilla",
+      "J1": "Mi equipo en onboarding",
+      "J2": "Detalle del ingreso",
+      "J3": "Check-in",
+      "N1": "Mi recorrido",
+      "N2": "Detalle de la tarea",
+      "N3": "Mi check-in",
+      "S1": "Solicitudes de acceso",
+      "S2": "Detalle de la solicitud",
+      "S3": "Seguridad y auditoría"
+    }
+  },
+  "rolesInline": {
+    "admin": "RRHH",
+    "manager": "jefe directo",
+    "hire": "nuevo ingreso",
+    "it_admin": "sistemas"
   }
 }

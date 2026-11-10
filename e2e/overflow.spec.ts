@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { PAGES, WIDTHS } from './pages';
+import { PAGES, prepareSession, WIDTHS } from './pages';
 
 /**
  * CLAUDE.md 2.7: zero horizontal overflow of the page at every width, and no
@@ -10,6 +10,7 @@ for (const page of PAGES) {
   for (const width of WIDTHS) {
     test(`${page.id} @ ${width}px has no horizontal overflow`, async ({ page: browserPage }) => {
       await browserPage.setViewportSize({ width, height: 900 });
+      await prepareSession(browserPage, page);
       await browserPage.goto(page.path);
       await browserPage.locator('h1').first().waitFor();
       await browserPage.evaluate(() => document.fonts.ready);

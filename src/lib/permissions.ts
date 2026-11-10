@@ -1,0 +1,117 @@
+import type { Hire, Role } from '@/types/domain';
+
+/**
+ * Single source of permissions (CLAUDE.md F0): a role × action matrix.
+ * Routes, navigation and buttons always ask `can(user, action)`; components never
+ * compare role names. The matrix in docs/roles.md and the read-only matrix in S3
+ * are generated from PERMISSIONS.
+ *
+ * Scopes express least privilege in the data:
+ * - `all`: everything of that kind
+ * - `team`: only the hires the user manages
+ * - `own`: only the user's own data
+ */
+export type Scope = 'all' | 'team' | 'own';
+
+export const ROLES: Role[] = ['admin', 'manager', 'hire', 'it_admin'];
+
+export const PERMISSIONS = {
+  // Workspaces (sections of the app). Each role lands on its own.
+  'workspace:hr': { admin: 'all' },
+  'workspace:team': { manager: 'team' },
+  'workspace:journey': { hire: 'own' },
+  'workspace:it': { it_admin: 'all' },
+
+  // F4 dashboard
+  'dashboard:view': { admin: 'all' },
+  // F2 templates
+  'template:view': { admin: 'all' },
+  'template:edit': { admin: 'all' },
+  // F3 hires
+  'hire:view': { admin: 'all', manager: 'team', hire: 'own' },
+  'hire:create': { admin: 'all' },
+  /** Mark tasks as done: HR any task (incl. buddy, IT, Facilities), manager own tasks, hire own tasks. */
+  'task:complete': { admin: 'all', manager: 'team', hire: 'own' },
+  // F5 check-ins
+  'checkin:fill': { manager: 'team' },
+  'checkin:self_review': { hire: 'own' },
+  'checkin:view_self_review': { admin: 'all', manager: 'team', hire: 'own' },
+  'checkin:view_escalations': { admin: 'all' },
+  // F6 access and audit (IT only: HR has no access, CLAUDE.md F6)
+  'access_request:view': { it_admin: 'all' },
+  'access_request:resolve': { it_admin: 'all' },
+  'account:unlock': { it_admin: 'all' },
+  'audit:view': { it_admin: 'all' },
+  'audit:export': { it_admin: 'all' },
+  'security:view': { it_admin: 'all' },
+  // Own account (G5)
+  'account:security_own': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
+  // Demo controls, available to every visitor
+  'demo:switch_role': { admin: 'all', manager: 'all', hire: 'all', it_admin: 'all' },
+  'demo:reset': { admin: 'all', manager: 'all', hire: 'all', it_admin: 'all' },
+} as const satisfies Record<string, Partial<Record<Role, Scope>>>;
+
+export type Action = keyof typeof PERMISSIONS;
+
+export interface Subject {
+  personId: string;
+  role: Role;
+}
+
+/** Scope of an action for a user, or null when not allowed. */
+export function scopeOf(user: Subject | null | undefined, action: Action): Scope | null {
+  if (!user) return null;
+  const byRole = PERMISSIONS[action] as Partial<Record<Role, Scope>>;
+  return byRole[user.role] ?? null;
+}
+
+export function can(user: Subject | null | undefined, action: Action): boolean {
+  return scopeOf(user, action) !== null;
+}
+
+/** Least privilege on hires: HR sees all, a manager only their team, a hire only themself. */
+export function canViewHire(user: Subject | null | undefined, hire: Pick<Hire, 'personId' | 'managerId'>): boolean {
+  switch (scopeOf(user, 'hire:view')) {
+    case 'all':
+      return true;
+    case 'team':
+      return hire.managerId === user!.personId;
+    case 'own':
+      return hire.personId === user!.personId;
+    default:
+      return false;
+  }
+}
+
+export function visibleHires<T extends Pick<Hire, 'personId' | 'managerId'>>(user: Subject | null | undefined, hires: T[]): T[] {
+  return hires.filter((hire) => canViewHire(user, hire));
+}
+
+/** Workspace home routes, in priority order. */
+export const WORKSPACE_HOME: { action: Action; path: string }[] = [
+  { action: 'workspace:hr', path: '/admin' },
+  { action: 'workspace:team', path: '/manager' },
+  { action: 'workspace:journey', path: '/me' },
+  { action: 'workspace:it', path: '/it/requests' },
+];
+
+/** Where a user lands after signing in, from the matrix (not from the role name). */
+export function homePath(user: Subject | null | undefined): string {
+  return WORKSPACE_HOME.find(({ action }) => can(user, action))?.path ?? '/login';
+}
+
+/** Required permission for each internal route prefix. Longest prefix wins. */
+export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
+  { prefix: '/admin', action: 'workspace:hr' },
+  { prefix: '/manager', action: 'workspace:team' },
+  { prefix: '/me', action: 'workspace:journey' },
+  { prefix: '/it', action: 'workspace:it' },
+  { prefix: '/account/security', action: 'account:security_own' },
+];
+
+export function requiredPermission(pathname: string): Action | null {
+  const match = ROUTE_PERMISSIONS.filter(({ prefix }) => pathname === prefix || pathname.startsWith(`${prefix}/`)).sort(
+    (a, b) => b.prefix.length - a.prefix.length,
+  )[0];
+  return match?.action ?? null;
+}

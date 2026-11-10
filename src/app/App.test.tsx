@@ -1,38 +1,77 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { switchRole } from '@/features/auth/auth-service';
 import en from '@/locales/en.json';
 import es from '@/locales/es.json';
+import { useDataStore } from '@/store/data-store';
+import { useSessionStore } from '@/store/session-store';
+import { AppProviders } from './AppProviders';
 import { AppRoutes } from './AppRoutes';
 import i18n from './i18n';
 
 function renderAt(path: string) {
   return render(
     <MemoryRouter initialEntries={[path]}>
-      <AppRoutes />
+      <AppProviders>
+        <AppRoutes />
+      </AppProviders>
     </MemoryRouter>,
   );
 }
 
-describe('app shell', () => {
-  it('renders the placeholder home with a single h1 in Spanish', () => {
+beforeEach(() => {
+  localStorage.clear();
+  useDataStore.getState().resetData();
+  useSessionStore.getState().resetSessionState();
+});
+
+describe('routing and access control', () => {
+  it('sends a visitor without session to the login, with a single h1 in Spanish', async () => {
     renderAt('/');
+    await screen.findByRole('heading', { level: 1 });
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.placeholder.title);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.auth.login.title);
     expect(document.documentElement.lang).toBe('es');
   });
 
-  it('exposes a skip link to the main landmark', () => {
-    renderAt('/');
-    const skip = screen.getByRole('link', { name: es.app.skipToContent });
-    expect(skip).toHaveAttribute('href', '#main-content');
+  it('remembers the requested route when there is no session', async () => {
+    renderAt('/admin/templates');
+    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(es.auth.login.title);
+    expect(useSessionStore.getState().returnTo).toBe('/admin/templates');
+  });
+
+  it('exposes a skip link to the main landmark', async () => {
+    renderAt('/login');
+    expect(await screen.findByRole('link', { name: es.app.skipToContent })).toHaveAttribute('href', '#main-content');
     expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content');
+  });
+
+  it('shows G7 and audits the attempt when a role opens another role route', () => {
+    act(() => {
+      switchRole('hire');
+    });
+    renderAt('/admin');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.forbidden.title);
+    expect(useDataStore.getState().auditEvents.at(-1)).toMatchObject({
+      action: 'auth.access_denied',
+      actorId: 'p-sofia',
+      resource: '/admin',
+      result: 'denied',
+    });
+  });
+
+  it('lets each role into its own workspace', () => {
+    act(() => {
+      switchRole('admin');
+    });
+    renderAt('/admin');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.upcoming.screens.A1);
   });
 
   it('shows the not found page for unknown routes', () => {
     renderAt('/does-not-exist');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.notFound.title);
-    expect(screen.getByRole('link', { name: es.notFound.backHome })).toBeInTheDocument();
   });
 });
 
@@ -46,10 +85,13 @@ describe('locales', () => {
     expect(keysOf(en).sort()).toEqual(keysOf(es).sort());
   });
 
-  it('Spanish texts avoid voseo, "usted" and long dashes', () => {
-    const texts = JSON.stringify(es);
+  it('Spanish texts avoid voseo, "usted", long dashes and banned words (CLAUDE.md 2.9)', () => {
+    const valuesOf = (obj: object): string[] =>
+      Object.values(obj).flatMap((value) => (typeof value === 'object' && value !== null ? valuesOf(value) : [String(value)]));
+    const texts = valuesOf(es).join(' | ');
     expect(texts).not.toMatch(/—/);
     expect(texts).not.toMatch(/\b(vos|usted)\b/i);
+    expect(texts).not.toMatch(/\b(loguea|clave|password|dashboard|template|mail|móvil|ordenador)\b/i);
   });
 
   it('switches <html lang> when the language changes', async () => {

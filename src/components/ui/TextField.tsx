@@ -52,6 +52,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
     disabled,
     onChange,
     maxLength,
+    'aria-describedby': extraDescribedBy,
     ...props
   },
   ref,
@@ -112,7 +113,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
           required={required}
           disabled={disabled}
           aria-invalid={invalid || undefined}
-          aria-describedby={supportId}
+          // Helper/error text first, then any extra description (for example a rules list).
+          aria-describedby={[supportId, extraDescribedBy].filter(Boolean).join(' ')}
           onChange={handleChange}
           maxLength={nativeMaxLength}
           className={cn(

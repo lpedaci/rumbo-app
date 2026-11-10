@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
 import { demoNow } from '@/lib/dates';
 import { completeTask as completeTaskRule } from '@/lib/journey';
-import type { AuditEvent } from '@/types/domain';
+import type { AccessRequest, AccountFlags, AuditEvent, AuthAttempts } from '@/types/domain';
 
 /**
  * Demo data store, persisted in localStorage so changes survive a reload
@@ -13,13 +13,19 @@ import type { AuditEvent } from '@/types/domain';
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape changes: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 1;
+export const DATA_SCHEMA_VERSION = 2;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
   logAudit: (event: Omit<AuditEvent, 'id' | 'at'> & { at?: string }) => void;
   /** Marks a journey task as done and records who did it. */
   completeTask: (hireId: string, taskId: string, actorId: string) => void;
+  /** Replaces the failed-attempt record of an email (created if missing). */
+  setAuthAttempts: (record: AuthAttempts) => void;
+  /** Sets or clears flags on an account (forced password change, MFA reset). */
+  setAccountFlags: (personId: string, flags: AccountFlags) => void;
+  /** Adds an access request created from "¿Problemas para iniciar sesión?". */
+  addAccessRequest: (request: AccessRequest) => void;
   /** Restores the seed data ("Restablecer demo"). The session is cleared by the session store. */
   resetData: () => void;
 }
@@ -43,6 +49,8 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.accessRequests) &&
     Array.isArray(data.auditEvents) &&
     Array.isArray(data.authAttempts) &&
+    typeof data.accountFlags === 'object' &&
+    data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
     data.securityPolicy !== null
   );
@@ -72,6 +80,16 @@ export const useDataStore = create<DataState>()(
           };
         }),
 
+      setAuthAttempts: (record) =>
+        set((state) => ({
+          authAttempts: [...state.authAttempts.filter((a) => a.email !== record.email), record],
+        })),
+
+      setAccountFlags: (personId, flags) =>
+        set((state) => ({ accountFlags: { ...state.accountFlags, [personId]: flags } })),
+
+      addAccessRequest: (request) => set((state) => ({ accessRequests: [...state.accessRequests, request] })),
+
       resetData: () => set(buildSeed()),
     }),
     {
@@ -79,13 +97,23 @@ export const useDataStore = create<DataState>()(
       version: DATA_SCHEMA_VERSION,
       storage: createJSONStorage(() => localStorage),
       // Persist data only, never functions.
-      partialize: ({ people, templates, hires, accessRequests, auditEvents, authAttempts, securityPolicy }) => ({
+      partialize: ({
         people,
         templates,
         hires,
         accessRequests,
         auditEvents,
         authAttempts,
+        accountFlags,
+        securityPolicy,
+      }) => ({
+        people,
+        templates,
+        hires,
+        accessRequests,
+        auditEvents,
+        authAttempts,
+        accountFlags,
         securityPolicy,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.

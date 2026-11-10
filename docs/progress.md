@@ -10,7 +10,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 1 | Setup (Vite, TS, Tailwind, shadcn/ui, router, i18n, deploy) | Hecho | 10/11/2026 |
 | 2 | Tokens M3, `<Icon />`, `<BentoCard />`, styleguide, test de desbordes | Hecho | 10/11/2026 |
 | 3 | Datos semilla, tipos, stores y cálculos con tests | Hecho | 10/11/2026 |
-| 4 | Seguridad base y layout (G1 a G7) | Pendiente | |
+| 4 | Seguridad base y layout (G1 a G7) | Hecho | 10/11/2026 |
 | 5 | Nuevo ingreso: N1, N2 | Pendiente | |
 | 6 | Plantillas: A5, A6, A7 | Pendiente | |
 | 7 | Ingresos: A2, A3, A4 | Pendiente | |
@@ -20,6 +20,41 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
+
+## Paso 4: seguridad base y layout (G1 a G7)
+
+**Qué se hizo**
+- `lib/permissions.ts`: matriz rol × acción con alcances (todo, equipo, propio), `can()`, `visibleHires()`, inicio de cada rol y permiso por ruta. La tabla de `docs/roles.md` se genera desde ahí y un test verifica que coincidan (D-08).
+- Store de sesión: sesión simulada, inicio de sesión en curso, ruta a la que volver, dispositivos recordados y MFA opcional.
+- `features/auth/auth-service.ts`: contraseña de demo, error genérico, bloqueo a los 5 intentos (también para correos inexistentes, D-37), SSO simulado, MFA con código y código de respaldo, recordar dispositivo, cambio forzado de contraseña (D-32), cerrar sesión, cambio de rol (D-35), restablecer demo y solicitudes de acceso. Todo queda en la auditoría.
+- Pantallas:
+  - **G1 Login:** SSO primero, correo y contraseña, 4 accesos de demo, aviso de demo, mensajes al cerrar sesión, "¿Problemas para iniciar sesión?" y "Restablecer demo" siempre en el mismo lugar.
+  - **G2 SSO simulado:** redirección y elección de cuenta. Los accesos de demo avanzan solos.
+  - **G3 Verificación en dos pasos:** un solo campo que acepta pegado, código precargado en la demo, código de respaldo y "Recordar este dispositivo".
+  - **Contraseña nueva:** requisitos tildados en vivo e indicador de seguridad, con un solo campo y "Mostrar contraseña" (WCAG 3.3.7).
+  - **G4 Problemas para iniciar sesión:** canales de la mesa de ayuda, aclaración sobre SSO, formulario, error de servidor simulado con `#error` (D-36), confirmación igual exista o no el correo, y "Ver como sistemas (demo)".
+  - **G5 Mi seguridad:** cuenta, MFA obligatorio u opcional según el rol y dispositivos recordados.
+  - **G6 Layout:** header con selector "Ver como" y menú de usuario, sidebar completo (≥ 1280 px), riel de íconos (768 a 1279 px) y menú inferior (< 768 px). Aviso de sesión por vencer al minuto 13 y cierre al 15, con control de demo para verlo.
+  - **G7:** acceso no permitido (registrado en la auditoría) y página no encontrada.
+- Rutas de los 4 roles con pantallas provisorias hasta su paso (D-38) y carga diferida por rutas (INC-006).
+- Componentes nuevos: InlineAlert, TextArea, Checkbox, RadioGroup, DropdownMenu, Avatar, Card, PageHeader y Logo.
+
+**Verificación**
+- `npm test`: 160/160, con 22 tests nuevos de autenticación y permisos y uno de sincronización entre `roles.md` y el código.
+- `npm run test:e2e`: 108/108. Son 12 pantallas en 6 anchos sin desborde, axe sin violaciones a 375 y 1280 px, y un único `h1`.
+- Recorrido manual en el navegador:
+  - Login de demo de Sofía (SSO, MFA y "Mi recorrido").
+  - Cambio de rol a Sistemas.
+  - Aviso de sesión: el foco cae en "Seguir conectado" y Enter extiende la sesión.
+  - Acceso denegado a `/admin` registrado en la auditoría.
+  - G4 con `#error`, "Reintentar", confirmación IT-2026-0142 y "Ver como sistemas", que abre la solicitud como Diego.
+
+**Pendiente**
+- RF-010 queda parcial hasta que S2 exista (paso 10).
+- INC-006: bajar el peso del JS inicial en el paso 12.
+
+**Problemas encontrados**
+- INC-006 a INC-010.
 
 ## Paso 3: datos, reglas de negocio y store
 
@@ -42,7 +77,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - `npm test`: 133/133. Incluye un test de integridad que verifica cada requisito de "Datos semilla" de la sección 7: cantidades, Sofía en el mes 1, atrasos, bloqueos, escalamiento, auditoría, solicitudes y políticas.
 
 **Pendiente**
-- D-30: confirmar el criterio de atribución de atrasos.
+- Nada: D-30 quedó confirmada e incorporada en F4.
 
 ## Paso 2: sistema de diseño
 

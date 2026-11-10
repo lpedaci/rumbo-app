@@ -29,27 +29,27 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| RF-001 | El sistema debe permitir iniciar sesión con SSO simulado (Microsoft y Google Workspace) pasando por un paso intermedio de redirección. | Todos | G1, G2 | Must | Al elegir un proveedor se ve G2 y luego se llega a G3 con el usuario elegido. | Pendiente |
-| RF-002 | El sistema debe permitir iniciar sesión con correo y contraseña de las cuentas demo. | Todos | G1 | Must | Las 4 cuentas `@nortia.demo` con `Demo.2026!` llegan a G3. | Pendiente |
-| RF-003 | El sistema debe ofrecer 4 accesos de demo de un clic que recorren el flujo completo con el código MFA precargado. | Todos | G1, G3 | Must | Un clic en cada tarjeta termina en el inicio del rol pasando por MFA. | Pendiente |
-| RF-004 | El sistema debe mostrar un error genérico ante credenciales inválidas, sin revelar si el correo existe. | Todos | G1 | Must | Correo inexistente y contraseña errónea muestran el mismo mensaje. | Pendiente |
-| RF-005 | El sistema debe bloquear la cuenta tras 5 intentos fallidos y derivar a sistemas, sin desbloqueo automático ni por el usuario. | Todos | G1, G4 | Must | Al quinto intento aparece el aviso de bloqueo con enlace a G4; esperar o recargar no desbloquea. | Pendiente |
-| RF-006 | El sistema debe pedir un código de 6 dígitos (MFA) en un único campo que acepte pegado, con "Recordar este dispositivo por 30 días" y "Usar un código de respaldo". | Todos | G3 | Must | `246810` valida; otro código muestra "No pudimos verificar el código. Revisa que tenga 6 dígitos". Pegar el código funciona. | Pendiente |
-| RF-007 | El sistema debe exigir MFA a RRHH y sistemas y dejarlo opcional para jefe y nuevo ingreso. | Todos | G3, G5 | Must | RRHH y sistemas no pueden desactivarlo en G5; jefe y nuevo ingreso sí. | Pendiente |
-| RF-008 | El sistema debe ofrecer "¿Problemas para iniciar sesión?" con canales de la mesa de ayuda y un formulario de solicitud a sistemas. | Todos | G4 | Must | El formulario valida correo y motivo y genera un número `IT-2026-NNNN`. | Pendiente |
-| RF-009 | La confirmación de la solicitud debe ser idéntica exista o no el correo, e informar que sistemas verificará la identidad. | Todos | G4 | Must | Mismo texto con correo existente e inexistente. | Pendiente |
-| RF-010 | La confirmación debe incluir "Ver como sistemas (demo)", que entra como Diego directo a la solicitud creada. | Todos | G4, S2 | Must | El enlace abre S2 con la solicitud recién creada. | Pendiente |
-| RF-011 | Tras un cambio forzado de contraseña, el sistema debe pedir una nueva con la política visible y validada en vivo e indicador de fortaleza. | Todos | G1 | Must | No se acepta una contraseña de menos de 12 caracteres o sin mayúscula, minúscula, número y símbolo, ni una anterior. | Pendiente |
-| RF-012 | El sistema debe cerrar la sesión tras 15 minutos de inactividad, avisando en el minuto 13 con un modal accesible. | Todos | G6 | Must | El modal ofrece "Seguir conectado" y "Cerrar sesión"; sin respuesta, se cierra. Existe un control de demo para acelerarlo. | Pendiente |
-| RF-013 | El sistema debe permitir cerrar sesión y volver al login con un mensaje de confirmación. | Todos | G6, G1 | Must | El estado de sesión se limpia y G1 muestra la confirmación. | Pendiente |
-| RF-014 | Sin sesión, toda ruta interna debe redirigir al login y volver a la ruta pedida tras iniciar sesión. | Todos | G1 | Must | Abrir `/#/admin/hires` sin sesión lleva a G1 y, al entrar como RRHH, a A2. | Pendiente |
-| RF-015 | Cada rol debe acceder solo a sus rutas; el intento contrario muestra G7 y queda en la auditoría. | Todos | G7 | Must | Sofía en `/admin` ve G7 y aparece un evento `auth.access_denied`. | Pendiente |
-| RF-016 | Los permisos deben definirse en un único archivo como matriz rol × acción, consultado por rutas y botones. | Todos | Todas | Must | No hay condiciones por nombre de rol en los componentes. | Pendiente |
-| RF-017 | El sistema debe ofrecer un selector de rol visible en el header que cierre la sesión actual e inicie la del usuario demo elegido. | Todos | G6 | Must | Cambiar de rol no recarga la página y queda registrado en la auditoría. | Pendiente |
-| RF-018 | El sistema debe ofrecer un menú de usuario con nombre, rol, "Mi seguridad" y "Cerrar sesión". | Todos | G6, G5 | Must | Accesible con teclado desde el header. | Pendiente |
-| RF-019 | El sistema debe ofrecer "Restablecer demo" en el menú de usuario y en el login. | Todos | G1, G6 | Must | Limpia `localStorage`, recarga los datos semilla y cierra la sesión. | Pendiente |
-| RF-020 | El login debe mostrar el aviso "Esto es una demo: no ingreses datos reales". | Todos | G1 | Must | Visible sin desplazar en 375 px. | Pendiente |
-| RF-086 | El sistema debe simular al menos un error de servidor en un formulario, conservando los datos y ofreciendo "Reintentar". | Todos | G4 | Must | Con el motivo "Otro" y el comentario `error-servidor`, el envío falla una vez con "El servicio no está disponible"; al reintentar, funciona. | Pendiente |
+| RF-001 | El sistema debe permitir iniciar sesión con SSO simulado (Microsoft y Google Workspace) pasando por un paso intermedio de redirección. | Todos | G1, G2 | Must | Al elegir un proveedor se ve G2 y luego se llega a G3 con el usuario elegido. | Hecho |
+| RF-002 | El sistema debe permitir iniciar sesión con correo y contraseña de las cuentas demo. | Todos | G1 | Must | Las 4 cuentas `@nortia.demo` con `Demo.2026!` llegan a G3. | Hecho |
+| RF-003 | El sistema debe ofrecer 4 accesos de demo de un clic que recorren el flujo completo con el código MFA precargado. | Todos | G1, G3 | Must | Un clic en cada tarjeta termina en el inicio del rol pasando por MFA. | Hecho |
+| RF-004 | El sistema debe mostrar un error genérico ante credenciales inválidas, sin revelar si el correo existe. | Todos | G1 | Must | Correo inexistente y contraseña errónea muestran el mismo mensaje. | Hecho |
+| RF-005 | El sistema debe bloquear la cuenta tras 5 intentos fallidos y derivar a sistemas, sin desbloqueo automático ni por el usuario. | Todos | G1, G4 | Must | Al quinto intento aparece el aviso de bloqueo con enlace a G4; esperar o recargar no desbloquea. | Hecho |
+| RF-006 | El sistema debe pedir un código de 6 dígitos (MFA) en un único campo que acepte pegado, con "Recordar este dispositivo por 30 días" y "Usar un código de respaldo". | Todos | G3 | Must | `246810` valida; otro código muestra "No pudimos verificar el código. Revisa que tenga 6 dígitos". Pegar el código funciona. | Hecho |
+| RF-007 | El sistema debe exigir MFA a RRHH y sistemas y dejarlo opcional para jefe y nuevo ingreso. | Todos | G3, G5 | Must | RRHH y sistemas no pueden desactivarlo en G5; jefe y nuevo ingreso sí. | Hecho |
+| RF-008 | El sistema debe ofrecer "¿Problemas para iniciar sesión?" con canales de la mesa de ayuda y un formulario de solicitud a sistemas. | Todos | G4 | Must | El formulario valida correo y motivo y genera un número `IT-2026-NNNN`. | Hecho |
+| RF-009 | La confirmación de la solicitud debe ser idéntica exista o no el correo, e informar que sistemas verificará la identidad. | Todos | G4 | Must | Mismo texto con correo existente e inexistente. | Hecho |
+| RF-010 | La confirmación debe incluir "Ver como sistemas (demo)", que entra como Diego directo a la solicitud creada. | Todos | G4, S2 | Must | El enlace abre S2 con la solicitud recién creada. | En curso (S2 se construye en el paso 10) |
+| RF-011 | Tras un cambio forzado de contraseña, el sistema debe pedir una nueva con la política visible y validada en vivo e indicador de fortaleza. | Todos | G1 | Must | No se acepta una contraseña de menos de 12 caracteres o sin mayúscula, minúscula, número y símbolo, ni una anterior. | Hecho |
+| RF-012 | El sistema debe cerrar la sesión tras 15 minutos de inactividad, avisando en el minuto 13 con un modal accesible. | Todos | G6 | Must | El modal ofrece "Seguir conectado" y "Cerrar sesión"; sin respuesta, se cierra. Existe un control de demo para acelerarlo. | Hecho |
+| RF-013 | El sistema debe permitir cerrar sesión y volver al login con un mensaje de confirmación. | Todos | G6, G1 | Must | El estado de sesión se limpia y G1 muestra la confirmación. | Hecho |
+| RF-014 | Sin sesión, toda ruta interna debe redirigir al login y volver a la ruta pedida tras iniciar sesión. | Todos | G1 | Must | Abrir `/#/admin/hires` sin sesión lleva a G1 y, al entrar como RRHH, a A2. | Hecho |
+| RF-015 | Cada rol debe acceder solo a sus rutas; el intento contrario muestra G7 y queda en la auditoría. | Todos | G7 | Must | Sofía en `/admin` ve G7 y aparece un evento `auth.access_denied`. | Hecho |
+| RF-016 | Los permisos deben definirse en un único archivo como matriz rol × acción, consultado por rutas y botones. | Todos | Todas | Must | No hay condiciones por nombre de rol en los componentes. | Hecho |
+| RF-017 | El sistema debe ofrecer un selector de rol visible en el header que cierre la sesión actual e inicie la del usuario demo elegido. | Todos | G6 | Must | Cambiar de rol no recarga la página y queda registrado en la auditoría. | Hecho |
+| RF-018 | El sistema debe ofrecer un menú de usuario con nombre, rol, "Mi seguridad" y "Cerrar sesión". | Todos | G6, G5 | Must | Accesible con teclado desde el header. | Hecho |
+| RF-019 | El sistema debe ofrecer "Restablecer demo" en el menú de usuario y en el login. | Todos | G1, G6 | Must | Limpia `localStorage`, recarga los datos semilla y cierra la sesión. | Hecho |
+| RF-020 | El login debe mostrar el aviso "Esto es una demo: no ingreses datos reales". | Todos | G1 | Must | Visible sin desplazar en 375 px. | Hecho |
+| RF-086 | El sistema debe simular al menos un error de servidor en un formulario, conservando los datos y ofreciendo "Reintentar". | Todos | G4 | Must | Con el motivo "Otro" y el comentario `error-servidor`, el envío falla una vez con "El servicio no está disponible"; al reintentar, funciona. | Hecho |
 
 ### F1. Mi recorrido (fase A)
 
@@ -207,18 +207,18 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | RNF-014 | Las áreas táctiles miden al menos 48 × 48 px en mobile y 24 × 24 px en desktop (2.5.8). | Must | Test de Playwright sobre elementos interactivos a 375 px y 1280 px. | Pendiente |
 | RNF-015 | Las animaciones se reducen a solo opacidad, o se eliminan, con `prefers-reduced-motion` o la preferencia "reducir animaciones". | Must | Prueba con la emulación de reducción de movimiento. | Pendiente |
 | RNF-016 | Cada lista vacía muestra qué va a aparecer y cómo empezar. | Must | Revisión de estados vacíos con datos limpios. | Pendiente |
-| RNF-017 | Los accesos de demo llevan al inicio de cualquier rol en 1 clic más la confirmación del paso MFA precargado, sin escribir nada. | Must | Prueba manual de los 4 roles. | Pendiente |
+| RNF-017 | Los accesos de demo llevan al inicio de cualquier rol en 1 clic más la confirmación del paso MFA precargado, sin escribir nada. | Must | Prueba manual de los 4 roles. | Hecho |
 | RNF-018 | No hay sombras en tarjetas en reposo ni fondos con degradé; solo se usan `--elevation-1` y `--elevation-2`. | Must | Búsqueda en el código (`shadow`, `gradient`) y revisión visual. | Pendiente |
 | RNF-042 | Los errores de formulario cumplen las 5 reglas de 2.10: no aparecen mientras se escribe por primera vez, se muestran en el campo con ícono y `aria-invalid`, son concretos, desaparecen al corregirse y nunca borran lo cargado (salvo contraseñas). | Must | Prueba manual con una lista de verificación por formulario. | Pendiente |
 | RNF-043 | Los formularios largos (A3, A6, J3) muestran además un resumen de errores arriba con enlaces a cada campo y mueven el foco ahí. | Must | Prueba con teclado y lector de pantalla. | Pendiente |
-| RNF-044 | Los campos usan `autocomplete` (`email`, `current-password`, `new-password`, `one-time-code`) y tipos de input adecuados; se permite pegar y usar gestores de contraseñas (3.3.8). | Must | Revisión de código e inspección del DOM. | Pendiente |
+| RNF-044 | Los campos usan `autocomplete` (`email`, `current-password`, `new-password`, `one-time-code`) y tipos de input adecuados; se permite pegar y usar gestores de contraseñas (3.3.8). | Must | Revisión de código e inspección del DOM. | Hecho |
 | RNF-045 | Ningún flujo pide dos veces el mismo dato (3.3.7). | Must | Revisión de cada flujo. | Pendiente |
 | RNF-046 | Toda acción de arrastrar tiene una alternativa de un solo clic (2.5.7). | Must | Prueba del constructor sin arrastrar. | Pendiente |
 | RNF-047 | Cada pantalla tiene landmarks, un único `h1`, encabezados sin saltos, enlace "Saltar al contenido" y `lang` según el idioma. | Must | axe y revisión de la estructura. | Pendiente |
 | RNF-048 | Toasts y estados se anuncian con `aria-live="polite"`; errores críticos con `role="alert"`. | Must | Prueba con NVDA o VoiceOver. | Pendiente |
 | RNF-049 | Cada gráfico tiene título, resumen en texto del dato principal y la opción "Ver como tabla". | Must | Revisión de A1 y demás gráficos. | Pendiente |
 | RNF-050 | Los estados se comunican con ícono y texto, nunca solo con color. | Must | Revisión en escala de grises. | Pendiente |
-| RNF-051 | El acceso a la ayuda y a "¿Problemas para iniciar sesión?" está siempre en el mismo lugar (3.2.6). | Must | Revisión de las pantallas de acceso y del layout. | Pendiente |
+| RNF-051 | El acceso a la ayuda y a "¿Problemas para iniciar sesión?" está siempre en el mismo lugar (3.2.6). | Must | Revisión de las pantallas de acceso y del layout. | Hecho |
 | RNF-052 | axe no reporta errores en ninguna pantalla, y login, recorrido del nuevo ingreso y constructor se prueban con un lector de pantalla. | Must | `@axe-core/playwright` en el test y prueba manual con NVDA o VoiceOver; hallazgos en `issues.md`. | Pendiente |
 | RNF-053 | Todo texto usa un rol tipográfico de 2.1.2 (ningún tamaño suelto), mínimo 12 px para texto de lectura, 11 px solo en insignias, cifras tabulares en números y unidades `rem`. | Must | Búsqueda de tamaños fuera de los tokens. | Pendiente |
 | RNF-055 | Los campos de fecha, número, código y correo no aceptan caracteres que no correspondan al dato, ni al escribir ni al pegar (máscaras), y las fechas se validan contra el calendario. Si se descarta un carácter, el lector de pantalla anuncia que no se aceptó y lee el valor final. | Must | Tests unitarios de `input-masks.ts`, `validation.ts` y `TextField`; prueba manual en `/styleguide`. | Hecho |
@@ -243,7 +243,7 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | RNF-026 | `npm audit` corre en CI y el deploy falla con vulnerabilidades altas o críticas. | Must | Workflow de GitHub Actions. | Pendiente |
 | RNF-027 | Los enlaces externos usan `rel="noopener noreferrer"`. | Must | Regla de ESLint. | Pendiente |
 | RNF-028 | En `localStorage` no se guarda nada que simule una contraseña. | Must | Inspección del almacenamiento tras el login. | Pendiente |
-| RNF-029 | El 100 % de las decisiones de permisos en rutas y botones pasan por `can()`. | Must | Búsqueda de comparaciones con nombres de rol en componentes. | Pendiente |
+| RNF-029 | El 100 % de las decisiones de permisos en rutas y botones pasan por `can()`. | Must | Búsqueda de comparaciones con nombres de rol en componentes. | Hecho |
 
 ### Mantenibilidad
 

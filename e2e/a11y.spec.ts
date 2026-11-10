@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import { PAGES } from './pages';
+import { PAGES, prepareSession } from './pages';
 
 /**
  * CLAUDE.md 2.10: axe without violations on every screen (WCAG 2.2 A and AA rules),
@@ -10,6 +10,7 @@ for (const page of PAGES) {
   for (const width of [375, 1280]) {
     test(`${page.id} @ ${width}px has no axe violations`, async ({ page: browserPage }) => {
       await browserPage.setViewportSize({ width, height: 900 });
+      await prepareSession(browserPage, page);
       await browserPage.goto(page.path);
       await browserPage.locator('h1').first().waitFor();
 
@@ -25,6 +26,7 @@ for (const page of PAGES) {
   }
 
   test(`${page.id} has exactly one h1`, async ({ page: browserPage }) => {
+    await prepareSession(browserPage, page);
     await browserPage.goto(page.path);
     await browserPage.locator('h1').first().waitFor();
     await expect(browserPage.locator('h1')).toHaveCount(1);

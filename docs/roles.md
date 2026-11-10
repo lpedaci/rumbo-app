@@ -37,36 +37,43 @@ El diagrama muestra quién asigna, evalúa, escala o deriva a quién. Todos los 
 
 ## 2. Matriz de permisos (rol × acción)
 
-> **Matriz propuesta.** En el paso 4 se implementa en `src/lib/permissions.ts` y esta tabla pasa a regenerarse desde ese archivo (ver decisión D-08). Rutas y botones consultan siempre `can(user, 'accion')`, nunca el nombre del rol.
+> **Generada desde `src/lib/permissions.ts`** (`permissionMatrixMarkdown()`). Un test (`permissions-doc.test.ts`) falla si esta tabla y el código no coinciden. Rutas, navegación y botones consultan siempre `can(user, 'acción')`, nunca el nombre del rol.
 
-Leyenda: ✅ permitido · 👥 solo su equipo · 🙋 solo lo propio · — no permitido.
+Leyenda: ✅ todo · 👥 solo su equipo · 🙋 solo lo propio · — no permitido.
 
-### Fase A
+### Fase A (implementada)
 
+<!-- permissions:start -->
 | Acción | Descripción | RRHH | Jefe | Nuevo ingreso | Sistemas |
 | --- | --- | :-: | :-: | :-: | :-: |
+| `workspace:hr` | Sección de RRHH (panel, ingresos, plantillas) | ✅ | — | — | — |
+| `workspace:team` | Sección del jefe directo (mi equipo) | — | 👥 | — | — |
+| `workspace:journey` | Sección del nuevo ingreso (mi recorrido) | — | — | 🙋 | — |
+| `workspace:it` | Sección de sistemas (accesos, auditoría) | — | — | — | ✅ |
 | `dashboard:view` | Ver el panel de seguimiento (A1) | ✅ | — | — | — |
 | `template:view` | Ver plantillas y su vista previa | ✅ | — | — | — |
 | `template:edit` | Crear, duplicar, editar y eliminar plantillas | ✅ | — | — | — |
 | `hire:view` | Ver ingresos y su ficha | ✅ | 👥 | 🙋 | — |
 | `hire:create` | Dar de alta un ingreso | ✅ | — | — | — |
-| `task:complete` | Marcar una tarea como hecha | ✅ (cualquiera) | 👥 (las del jefe) | 🙋 (las propias) | — |
+| `task:complete` | Marcar una tarea como hecha | ✅ | 👥 | 🙋 | — |
 | `checkin:fill` | Completar el check-in como jefe (J3) | — | 👥 | — | — |
 | `checkin:self_review` | Responder la autoevaluación (N3) | — | — | 🙋 | — |
 | `checkin:view_self_review` | Leer la autoevaluación del ingreso | ✅ | 👥 | 🙋 | — |
-| `checkin:escalate_view` | Ver y atender check-ins escalados | ✅ | — | — | — |
+| `checkin:view_escalations` | Ver y atender check-ins escalados | ✅ | — | — | — |
 | `access_request:view` | Ver la bandeja de solicitudes de acceso | — | — | — | ✅ |
-| `access_request:resolve` | Verificar identidad y resolver (desbloquear, forzar cambio de contraseña, restablecer MFA, rechazar) | — | — | — | ✅ |
-| `account:unlock` | Desbloquear cuentas desde "Usuarios bloqueados" | — | — | — | ✅ |
+| `access_request:resolve` | Verificar identidad y resolver solicitudes | — | — | — | ✅ |
+| `account:unlock` | Desbloquear cuentas | — | — | — | ✅ |
 | `audit:view` | Ver y filtrar la auditoría | — | — | — | ✅ |
 | `audit:export` | Exportar la auditoría a CSV | — | — | — | ✅ |
 | `security:view` | Ver políticas y matriz de permisos | — | — | — | ✅ |
 | `account:security_own` | Ver "Mi seguridad" (G5) | 🙋 | 🙋 | 🙋 | 🙋 |
-| `account:mfa_toggle` | Desactivar su propio MFA | — | 🙋 | 🙋 | — |
 | `demo:switch_role` | Usar el selector de rol de demo | ✅ | ✅ | ✅ | ✅ |
 | `demo:reset` | Restablecer la demo | ✅ | ✅ | ✅ | ✅ |
+<!-- permissions:end -->
 
-### Fase B
+Las secciones (`workspace:*`) definen a qué rutas entra cada rol: `/admin`, `/manager`, `/me` e `/it`. El inicio de cada rol también sale de la matriz (`homePath`).
+
+### Fase B (propuesta, se implementa con cada función)
 
 | Acción | Descripción | RRHH | Jefe | Nuevo ingreso | Sistemas |
 | --- | --- | :-: | :-: | :-: | :-: |

@@ -6,11 +6,6 @@
     "skipToContent": "Skip to content",
     "demoNotice": "This is a demo: don't enter real data."
   },
-  "placeholder": {
-    "title": "Rumbo is under construction",
-    "body": "Soon you'll be able to explore the product from every role: HR, manager, new hire, and IT.",
-    "status": "Phase A, step 2: design system ready."
-  },
   "notFound": {
     "title": "We couldn't find this page",
     "body": "Check the address or go back to the home page.",
@@ -36,5 +31,245 @@
     "integer": "Enter a whole number, for example: -3 or 5",
     "offsetRange": "Enter a number of days between {{min}} and {{max}}",
     "otp": "Enter the 6 digits of the code"
+  },
+  "roles": {
+    "admin": "HR",
+    "manager": "Manager",
+    "hire": "New hire",
+    "it_admin": "IT"
+  },
+  "auth": {
+    "methods": {
+      "sso_microsoft": "Microsoft",
+      "sso_google": "Google Workspace",
+      "password": "Email and password"
+    },
+    "login": {
+      "title": "Sign in to Rumbo",
+      "subtitle": "Use your Nortia work account.",
+      "ssoMicrosoft": "Continue with Microsoft",
+      "ssoGoogle": "Continue with Google Workspace",
+      "or": "or",
+      "emailToggle": "Sign in with email and password",
+      "emailLabel": "Work email",
+      "emailHelp": "Your work email, for example: first.last@nortia.demo",
+      "passwordLabel": "Password",
+      "passwordHelp": "Your Nortia account password. In the demo it's Demo.2026!",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "submit": "Sign in",
+      "submitting": "Checking…",
+      "invalid": "Incorrect email or password. Check your details and try again.",
+      "attemptsWarning": "For security, the account is locked after {{max}} failed attempts.",
+      "lockedTitle": "Access to this account is locked",
+      "lockedBody": "For security, we lock access after several failed attempts. Only IT can restore it, after verifying your identity.",
+      "troubleLink": "Trouble signing in?",
+      "resetDemo": "Reset demo",
+      "resetTitle": "Reset the demo?",
+      "resetBody": "All changes go back to their initial state and you're signed out.",
+      "resetConfirm": "Reset demo",
+      "logout": {
+        "manual": "You signed out.",
+        "expired": "We signed you out after a period of inactivity. Sign in again to continue.",
+        "reset": "We reset the demo. All data is back to its initial state."
+      },
+      "demo": {
+        "title": "Explore the demo",
+        "subtitle": "Sign in with one click as any of the four roles. The verification code is already filled in.",
+        "enterAs": "Sign in as {{name}}, {{role}}",
+        "description": {
+          "admin": "Designs templates, adds new hires and tracks progress.",
+          "manager": "Supports their team with 30, 60 and 90-day check-ins.",
+          "hire": "Goes through onboarding: tasks, courses and check-ins.",
+          "it_admin": "Handles access requests and reviews the audit log."
+        }
+      },
+      "preview": {
+        "title": "Everyone knows what to do, with whom and by when.",
+        "journey": "Onboarding journey",
+        "progress": "Month 1 progress",
+        "tasks": [
+          "Data warehouse access",
+          "Set up the analysis environment",
+          "First guided analysis"
+        ]
+      }
+    },
+    "sso": {
+      "title": "Connecting to {{provider}}",
+      "redirecting": "Redirecting you to Nortia's identity provider…",
+      "simulated": "Simulation: the demo never leaves Rumbo and sends no data.",
+      "chooseAccount": "Choose your work account",
+      "continueAs": "Continue as {{name}}",
+      "back": "Back to sign in"
+    },
+    "mfa": {
+      "title": "Two-step verification",
+      "subtitle": "Enter the 6-digit code from your authenticator app.",
+      "signingAs": "Signing in as {{name}}",
+      "demoCode": "Demo: the code is {{code}} and it's already filled in.",
+      "demoCodeManual": "Demo: the code is {{code}}.",
+      "demoBackup": "Demo: the backup code is {{code}}.",
+      "codeLabel": "Verification code",
+      "codeHelp": "The 6 digits from your authenticator app. You can paste it",
+      "backupLabel": "Backup code",
+      "backupHelp": "One of the 8-digit codes you saved when you turned on verification",
+      "remember": "Remember this device for 30 days",
+      "rememberHelp": "We won't ask for a code on this computer until {{date}}.",
+      "useBackup": "Use a backup code",
+      "useApp": "Use the app code",
+      "submit": "Verify",
+      "invalid": "We couldn't verify the code. Check that it has 6 digits and matches the one in the app now.",
+      "invalidBackup": "We couldn't verify the backup code. Check that it has 8 digits.",
+      "relink": "IT reset your two-step verification. Link your authenticator app again, then enter the code.",
+      "cancel": "Cancel and sign in with another account"
+    },
+    "newPassword": {
+      "title": "Create a new password",
+      "subtitle": "IT asked you to change your password. Choose one that meets every requirement.",
+      "label": "New password",
+      "help": "It must meet every requirement in the list.",
+      "rulesTitle": "Requirements",
+      "rules": {
+        "minLength": "At least {{min}} characters",
+        "uppercase": "One uppercase letter",
+        "lowercase": "One lowercase letter",
+        "number": "One number",
+        "symbol": "One symbol, for example: . ! # $",
+        "notPrevious": "Different from your previous password"
+      },
+      "met": "met",
+      "notMet": "pending",
+      "strength": "Password strength: {{level}}",
+      "levels": {
+        "0": "none",
+        "1": "weak",
+        "2": "fair",
+        "3": "good",
+        "4": "very good"
+      },
+      "submit": "Save password",
+      "invalid": "The password doesn't meet every requirement yet."
+    }
+  },
+  "accessHelp": {
+    "title": "Trouble signing in",
+    "intro": "Rumbo accounts are work accounts, and access is managed by Nortia's IT team. For security, an account can't be recovered or unlocked from this screen.",
+    "ssoTitle": "If you sign in with Microsoft or Google",
+    "ssoBody": "Your password is your company account password. IT changes it, not this platform.",
+    "channelsTitle": "IT help desk",
+    "portal": "Ticket portal: soporte.nortia.demo",
+    "email": "Email: soporte.it@nortia.demo",
+    "phone": "Phone: extension 4400",
+    "hours": "Monday to Friday, 8 a.m. to 8 p.m.",
+    "formTitle": "Ask IT for help",
+    "formIntro": "Fill in the form. IT will verify your identity before restoring access.",
+    "reasonLegend": "Reason",
+    "reasonHelp": "Choose the option that best describes what's happening.",
+    "reasons": {
+      "locked": "My account is locked",
+      "forgot_password": "I forgot my password",
+      "mfa_issue": "I don't receive the verification code",
+      "other": "Something else"
+    },
+    "reasonRequired": "Choose the reason for your request.",
+    "commentLabel": "Comment",
+    "commentHelp": "Anything that helps IT, for example: since when it's been happening.",
+    "demoTip": "Demo: type #error in the comment to see how a service error is shown.",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "serverErrorTitle": "The service isn't available",
+    "serverErrorBody": "We couldn't send your request. Your details are still here: try again in a few seconds.",
+    "retry": "Try again",
+    "confirmTitle": "We received your request",
+    "confirmNumber": "Request number: {{id}}",
+    "confirmBody": "If the email belongs to a Nortia account, IT will verify your identity before restoring access and will contact you through your registered channels.",
+    "confirmKeep": "Keep the number to follow up with the help desk.",
+    "viewAsIt": "View as IT (demo)",
+    "backToLogin": "Back to sign in"
+  },
+  "layout": {
+    "mainNav": "Main navigation",
+    "nav": {
+      "dashboard": "Dashboard",
+      "hires": "New hires",
+      "templates": "Templates",
+      "team": "My team",
+      "journey": "My journey",
+      "checkin": "My check-in",
+      "requests": "Requests",
+      "security": "Security and audit"
+    },
+    "viewAs": "View as",
+    "viewAsMenu": "View Rumbo as another role",
+    "switched": "You're now viewing Rumbo as {{name}}, {{role}}",
+    "userMenu": "User menu for {{name}}",
+    "mySecurity": "My security",
+    "sessionDemo": "Show the session warning (demo)",
+    "resetDemo": "Reset demo",
+    "signOut": "Sign out",
+    "userMenuSuffix": "user menu"
+  },
+  "session": {
+    "warningTitle": "Your session is about to expire",
+    "warningBody": "For security, we sign you out after {{minutes}} minutes of inactivity.",
+    "countdown": "It will close in {{time}}.",
+    "stay": "Stay signed in",
+    "signOut": "Sign out"
+  },
+  "security": {
+    "title": "My security",
+    "subtitle": "How access to your Rumbo account is protected.",
+    "accountTitle": "Your account",
+    "signedInWith": "You signed in with: {{method}}",
+    "mfaTitle": "Two-step verification",
+    "mfaOn": "On",
+    "mfaOff": "Off",
+    "mfaRequired": "It's required for your role by Nortia's security policy.",
+    "mfaOptional": "It's optional for your role. We recommend keeping it on.",
+    "mfaEnable": "Turn on verification",
+    "mfaDisable": "Turn off verification",
+    "mfaEnabled": "Two-step verification turned on",
+    "mfaDisabled": "Two-step verification turned off",
+    "mfaRequiredReason": "Nortia's policy doesn't allow turning it off for your role",
+    "devicesTitle": "Remembered devices",
+    "thisDevice": "This computer",
+    "deviceUntil": "No code needed until {{date}}",
+    "noDevices": "No remembered devices. When you verify the code, you can choose to remember this computer for 30 days.",
+    "forget": "Forget device",
+    "forgotten": "Device forgotten"
+  },
+  "forbidden": {
+    "title": "You don't have access to this section",
+    "body": "This section belongs to another role. If you think you need access, ask HR.",
+    "backHome": "Back to my home"
+  },
+  "upcoming": {
+    "greeting": "Hi, {{name}}",
+    "body": "We're building this screen. Meanwhile, use the \"View as\" selector to explore Rumbo from another role.",
+    "screens": {
+      "A1": "Tracking dashboard",
+      "A2": "New hires",
+      "A3": "Add a new hire",
+      "A4": "New hire record",
+      "A5": "Templates",
+      "A6": "Template editor",
+      "A7": "Template preview",
+      "J1": "My team in onboarding",
+      "J2": "New hire details",
+      "J3": "Check-in",
+      "N1": "My journey",
+      "N2": "Task details",
+      "N3": "My check-in",
+      "S1": "Access requests",
+      "S2": "Request details",
+      "S3": "Security and audit"
+    }
+  },
+  "rolesInline": {
+    "admin": "HR",
+    "manager": "manager",
+    "hire": "new hire",
+    "it_admin": "IT"
   }
 }

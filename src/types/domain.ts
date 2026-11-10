@@ -42,6 +42,17 @@ export interface AuthAttempts {
   lastAttemptAt?: string;
 }
 
+/**
+ * Account flags set by IT when resolving an access request (F6). Simulated: there
+ * is no real password or authenticator behind them.
+ */
+export interface AccountFlags {
+  /** IT forced a password change: the person must create a new password on the next sign-in. */
+  mustChangePassword?: boolean;
+  /** IT reset two-step verification: the person must link the authenticator again. */
+  mfaReset?: boolean;
+}
+
 export type AccessRequestReason = 'locked' | 'forgot_password' | 'mfa_issue' | 'other';
 export type AccessRequestStatus = 'new' | 'verifying' | 'resolved' | 'rejected';
 export type AccessResolutionAction = 'unlock' | 'force_password_reset' | 'reset_mfa' | 'reject';

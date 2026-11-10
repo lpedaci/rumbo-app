@@ -7,6 +7,7 @@
  */
 import type {
   AccessRequest,
+  AccountFlags,
   AuditEvent,
   AuthAttempts,
   Checkin,
@@ -67,6 +68,8 @@ export interface DemoData {
   accessRequests: AccessRequest[];
   auditEvents: AuditEvent[];
   authAttempts: AuthAttempts[];
+  /** Per person id. Empty in the seed: no pending forced changes. */
+  accountFlags: Record<string, AccountFlags>;
   securityPolicy: SecurityPolicy;
 }
 
@@ -156,6 +159,7 @@ export function buildSeed(): DemoData {
     accessRequests: accessRequests as AccessRequest[],
     auditEvents: auditEvents as AuditEvent[],
     authAttempts: authAttempts as AuthAttempts[],
+    accountFlags: {},
     securityPolicy: securityPolicy as SecurityPolicy,
   });
 }
