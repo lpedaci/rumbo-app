@@ -174,9 +174,9 @@ Organizados según las características de calidad de **ISO/IEC 25010:2023** (IS
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-001 | El 100 % de las métricas del panel se calculan desde los datos en `src/lib/metrics.ts`; ninguna está escrita a mano. | Must | Revisión de código y test unitario que cambia los datos y compara KPIs. | Pendiente |
-| RNF-002 | Los estados `blocked` y `overdue` se calculan siempre a partir de dependencias y `DEMO_TODAY`, nunca se guardan. | Must | Tests unitarios de `lib/` con casos de borde. | Pendiente |
-| RNF-003 | Todas las fechas de la interfaz se muestran como `DD/MM/AAAA`; números con punto de miles y coma decimal. | Must | Test unitario de los formateadores y revisión visual. | Pendiente |
+| RNF-001 | El 100 % de las métricas del panel se calculan desde los datos en `src/lib/metrics.ts`; ninguna está escrita a mano. | Must | Revisión de código y test unitario que cambia los datos y compara KPIs. | Hecho |
+| RNF-002 | Los estados `blocked` y `overdue` se calculan siempre a partir de dependencias y `DEMO_TODAY`, nunca se guardan. | Must | Tests unitarios de `lib/` con casos de borde. | Hecho |
+| RNF-003 | Todas las fechas de la interfaz se muestran como `DD/MM/AAAA`; números con punto de miles y coma decimal. | Must | Test unitario de los formateadores y revisión visual. | Hecho |
 
 ### Eficiencia de desempeño
 
@@ -230,7 +230,7 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | --- | --- | --- | --- | --- |
 | RNF-019 | Todos los cambios persisten en `localStorage` al recargar. | Must | Prueba manual por función. | Pendiente |
 | RNF-020 | "Restablecer demo" deja la aplicación igual a la primera visita. | Must | Prueba manual tras modificar datos de cada rol. | Pendiente |
-| RNF-021 | Si `localStorage` tiene datos corruptos o de una versión anterior del esquema, la app recarga los datos semilla en lugar de romperse. | Should | Test unitario con datos inválidos. | Pendiente |
+| RNF-021 | Si `localStorage` tiene datos corruptos o de una versión anterior del esquema, la app recarga los datos semilla en lugar de romperse. | Should | Test unitario con datos inválidos. | Hecho |
 
 ### Seguridad
 

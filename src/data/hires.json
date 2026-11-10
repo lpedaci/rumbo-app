@@ -1,0 +1,382 @@
+[
+  {
+    "id": "h-sofia",
+    "personId": "p-sofia",
+    "startDate": "2026-10-13",
+    "managerId": "p-martin",
+    "buddyId": "p-nicolas",
+    "hrId": "p-carla",
+    "templateId": "tpl-data",
+    "progress": {
+      "doneThroughOffset": 14,
+      "notDone": [
+        "d11"
+      ],
+      "inProgress": [
+        "d15"
+      ],
+      "lateDays": {
+        "d12": 2
+      }
+    },
+    "checkins": {}
+  },
+  {
+    "id": "h-lucas",
+    "personId": "p-lucas",
+    "startDate": "2026-09-21",
+    "managerId": "p-martin",
+    "buddyId": "p-nicolas",
+    "hrId": "p-carla",
+    "templateId": "tpl-data",
+    "progress": {
+      "doneThroughOffset": 12,
+      "notDone": [
+        "d12"
+      ],
+      "inProgress": [],
+      "lateDays": {
+        "d8": 4
+      }
+    },
+    "checkins": {
+      "day30": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 3,
+          "comment": "Estoy aprendiendo mucho, pero los accesos tardaron y eso me atrasó."
+        },
+        "results": [
+          "partial",
+          "met",
+          "met"
+        ],
+        "managerComment": "Buen avance considerando las demoras de accesos.",
+        "nextSteps": "Priorizar el entorno de análisis y el curso del modelo de datos."
+      }
+    }
+  },
+  {
+    "id": "h-valentina",
+    "personId": "p-valentina",
+    "startDate": "2026-09-07",
+    "managerId": "p-martin",
+    "buddyId": "p-julieta",
+    "hrId": "p-carla",
+    "templateId": "tpl-frontend",
+    "progress": {
+      "doneThroughOffset": 25,
+      "notDone": [],
+      "inProgress": [],
+      "lateDays": {
+        "f14": 8
+      }
+    },
+    "checkins": {
+      "day30": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 2,
+          "comment": "Me siento un poco aislada en las reuniones del equipo."
+        },
+        "results": [
+          "met",
+          "partial",
+          "not_met"
+        ],
+        "managerComment": "Técnicamente avanza bien. Le cuesta integrarse a las ceremonias del equipo.",
+        "nextSteps": "Plan de integración con apoyo de RRHH.",
+        "action": {
+          "type": "escalate",
+          "note": "Pido apoyo de RRHH para un plan de integración con el equipo."
+        }
+      }
+    }
+  },
+  {
+    "id": "h-tomas",
+    "personId": "p-tomas",
+    "startDate": "2026-11-24",
+    "managerId": "p-martin",
+    "buddyId": "p-julieta",
+    "hrId": "p-carla",
+    "templateId": "tpl-frontend",
+    "progress": {
+      "doneThroughOffset": null,
+      "notDone": [],
+      "inProgress": [
+        "f1"
+      ],
+      "lateDays": {}
+    },
+    "checkins": {}
+  },
+  {
+    "id": "h-agustina",
+    "personId": "p-agustina",
+    "startDate": "2026-10-27",
+    "managerId": "p-martin",
+    "buddyId": "p-julieta",
+    "hrId": "p-carla",
+    "templateId": "tpl-frontend",
+    "progress": {
+      "doneThroughOffset": 2,
+      "notDone": [
+        "f8"
+      ],
+      "inProgress": [],
+      "lateDays": {
+        "f3": 1
+      }
+    },
+    "checkins": {}
+  },
+  {
+    "id": "h-martina",
+    "personId": "p-martina",
+    "startDate": "2026-07-06",
+    "managerId": "p-martin",
+    "buddyId": "p-nicolas",
+    "hrId": "p-carla",
+    "templateId": "tpl-data",
+    "progress": {
+      "doneThroughOffset": "all",
+      "notDone": [],
+      "inProgress": [],
+      "lateDays": {
+        "d12": 5
+      }
+    },
+    "checkins": {
+      "day30": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 4,
+          "comment": "Me siento bien acompañada."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      },
+      "day60": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 4,
+          "comment": "Ya resuelvo consultas sola."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      },
+      "day90": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 5,
+          "comment": "Muy conforme con mi ingreso."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      }
+    }
+  },
+  {
+    "id": "h-bruno",
+    "personId": "p-bruno",
+    "startDate": "2026-08-03",
+    "managerId": "p-martin",
+    "buddyId": "p-julieta",
+    "hrId": "p-carla",
+    "templateId": "tpl-frontend",
+    "progress": {
+      "doneThroughOffset": "all",
+      "notDone": [],
+      "inProgress": [],
+      "lateDays": {
+        "f15": 3
+      }
+    },
+    "checkins": {
+      "day30": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 4,
+          "comment": "Todo muy claro."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      },
+      "day60": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 3,
+          "comment": "Mucho trabajo, pero bien."
+        },
+        "results": [
+          "met",
+          "met",
+          "partial"
+        ]
+      },
+      "day90": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 4,
+          "comment": "Contento con el equipo."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      }
+    }
+  },
+  {
+    "id": "h-camila",
+    "personId": "p-camila",
+    "startDate": "2026-10-06",
+    "managerId": "p-lucia",
+    "buddyId": "p-federico",
+    "hrId": "p-carla",
+    "templateId": "tpl-sales",
+    "progress": {
+      "doneThroughOffset": 25,
+      "notDone": [],
+      "inProgress": [],
+      "lateDays": {
+        "c7": 3
+      }
+    },
+    "checkins": {
+      "day30": {
+        "status": "hire_done",
+        "selfReview": {
+          "mood": 4,
+          "comment": "Me gustaría acompañar más reuniones antes de tener cartera propia."
+        }
+      }
+    }
+  },
+  {
+    "id": "h-joaquin",
+    "personId": "p-joaquin",
+    "startDate": "2026-08-17",
+    "managerId": "p-lucia",
+    "buddyId": "p-federico",
+    "hrId": "p-carla",
+    "templateId": "tpl-sales",
+    "progress": {
+      "doneThroughOffset": 45,
+      "notDone": [
+        "c13"
+      ],
+      "inProgress": [],
+      "lateDays": {}
+    },
+    "checkins": {
+      "day30": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 4,
+          "comment": "Buen arranque."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      },
+      "day60": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 3,
+          "comment": "Espero la asignación de mi cartera."
+        },
+        "results": [
+          "met",
+          "met",
+          "partial"
+        ]
+      }
+    }
+  },
+  {
+    "id": "h-paula",
+    "personId": "p-paula",
+    "startDate": "2026-06-01",
+    "managerId": "p-lucia",
+    "buddyId": "p-federico",
+    "hrId": "p-carla",
+    "templateId": "tpl-sales",
+    "progress": {
+      "doneThroughOffset": "all",
+      "notDone": [],
+      "inProgress": [],
+      "lateDays": {}
+    },
+    "checkins": {
+      "day30": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 5,
+          "comment": "Excelente bienvenida."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      },
+      "day60": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 4,
+          "comment": "Muy bien."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      },
+      "day90": {
+        "status": "completed",
+        "selfReview": {
+          "mood": 4,
+          "comment": "Conforme."
+        },
+        "results": [
+          "met",
+          "met",
+          "met"
+        ]
+      }
+    }
+  },
+  {
+    "id": "h-mateo",
+    "personId": "p-mateo",
+    "startDate": "2026-12-01",
+    "managerId": "p-lucia",
+    "buddyId": "p-federico",
+    "hrId": "p-carla",
+    "templateId": "tpl-sales",
+    "progress": {
+      "doneThroughOffset": null,
+      "notDone": [],
+      "inProgress": [],
+      "lateDays": {}
+    },
+    "checkins": {}
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "email": "joaquin.benitez@nortia.demo",
+    "failedCount": 5,
+    "locked": true,
+    "lockedAt": "2026-11-09T12:18:00.000Z",
+    "lastAttemptAt": "2026-11-09T12:18:00.000Z"
+  }
+]

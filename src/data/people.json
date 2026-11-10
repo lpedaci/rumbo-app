@@ -1,0 +1,160 @@
+[
+  {
+    "id": "p-carla",
+    "name": "Carla Méndez",
+    "role": "admin",
+    "jobTitle": "People Partner",
+    "area": "Personas",
+    "email": "carla@nortia.demo"
+  },
+  {
+    "id": "p-martin",
+    "name": "Martín Sosa",
+    "role": "manager",
+    "jobTitle": "Líder de Desarrollo",
+    "area": "Tecnología",
+    "email": "martin@nortia.demo"
+  },
+  {
+    "id": "p-sofia",
+    "name": "Sofía Ramírez",
+    "role": "hire",
+    "jobTitle": "Analista de Datos Jr.",
+    "area": "Tecnología",
+    "email": "sofia@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-diego",
+    "name": "Diego Ferreyra",
+    "role": "it_admin",
+    "jobTitle": "Mesa de ayuda IT",
+    "area": "Sistemas",
+    "email": "diego@nortia.demo"
+  },
+  {
+    "id": "p-lucia",
+    "name": "Lucía Fernández",
+    "role": "manager",
+    "jobTitle": "Líder Comercial",
+    "area": "Comercial",
+    "email": "lucia.fernandez@nortia.demo"
+  },
+  {
+    "id": "p-nicolas",
+    "name": "Nicolás Acosta",
+    "role": "hire",
+    "jobTitle": "Analista de Datos Sr.",
+    "area": "Tecnología",
+    "email": "nicolas.acosta@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-julieta",
+    "name": "Julieta Paz",
+    "role": "hire",
+    "jobTitle": "Desarrolladora Frontend Sr.",
+    "area": "Tecnología",
+    "email": "julieta.paz@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-federico",
+    "name": "Federico Luna",
+    "role": "hire",
+    "jobTitle": "Ejecutivo Comercial Sr.",
+    "area": "Comercial",
+    "email": "federico.luna@nortia.demo",
+    "managerId": "p-lucia"
+  },
+  {
+    "id": "p-lucas",
+    "name": "Lucas Ortiz",
+    "role": "hire",
+    "jobTitle": "Analista de Datos Jr.",
+    "area": "Tecnología",
+    "email": "lucas.ortiz@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-valentina",
+    "name": "Valentina Ruiz",
+    "role": "hire",
+    "jobTitle": "Desarrolladora Frontend",
+    "area": "Tecnología",
+    "email": "valentina.ruiz@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-tomas",
+    "name": "Tomás Herrera",
+    "role": "hire",
+    "jobTitle": "Desarrollador Frontend",
+    "area": "Tecnología",
+    "email": "tomas.herrera@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-agustina",
+    "name": "Agustina Vega",
+    "role": "hire",
+    "jobTitle": "Desarrolladora Frontend",
+    "area": "Tecnología",
+    "email": "agustina.vega@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-martina",
+    "name": "Martina López",
+    "role": "hire",
+    "jobTitle": "Analista de Datos",
+    "area": "Tecnología",
+    "email": "martina.lopez@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-bruno",
+    "name": "Bruno Castro",
+    "role": "hire",
+    "jobTitle": "Desarrollador Frontend",
+    "area": "Tecnología",
+    "email": "bruno.castro@nortia.demo",
+    "managerId": "p-martin"
+  },
+  {
+    "id": "p-camila",
+    "name": "Camila Torres",
+    "role": "hire",
+    "jobTitle": "Ejecutiva Comercial",
+    "area": "Comercial",
+    "email": "camila.torres@nortia.demo",
+    "managerId": "p-lucia"
+  },
+  {
+    "id": "p-joaquin",
+    "name": "Joaquín Benítez",
+    "role": "hire",
+    "jobTitle": "Ejecutivo Comercial",
+    "area": "Comercial",
+    "email": "joaquin.benitez@nortia.demo",
+    "managerId": "p-lucia"
+  },
+  {
+    "id": "p-paula",
+    "name": "Paula Giménez",
+    "role": "hire",
+    "jobTitle": "Ejecutiva Comercial",
+    "area": "Comercial",
+    "email": "paula.gimenez@nortia.demo",
+    "managerId": "p-lucia"
+  },
+  {
+    "id": "p-mateo",
+    "name": "Mateo Romero",
+    "role": "hire",
+    "jobTitle": "Ejecutivo Comercial",
+    "area": "Comercial",
+    "email": "mateo.romero@nortia.demo",
+    "managerId": "p-lucia"
+  }
+]

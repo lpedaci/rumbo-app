@@ -1,0 +1,601 @@
+[
+  {
+    "id": "tpl-data",
+    "name": "Analista de Datos",
+    "jobTitle": "Analista de Datos",
+    "area": "Tecnología",
+    "updatedAt": "2026-09-15",
+    "tasks": [
+      {
+        "id": "d1",
+        "stage": "preboarding",
+        "order": 1,
+        "title": "Firmar contrato y documentación de ingreso",
+        "description": "Revisa y firma el contrato, el acuerdo de confidencialidad y la ficha de datos personales.",
+        "type": "document",
+        "owner": "hire",
+        "offsetDays": -7,
+        "dependsOn": []
+      },
+      {
+        "id": "d2",
+        "stage": "preboarding",
+        "order": 2,
+        "title": "Crear cuenta corporativa y correo",
+        "description": "Alta de la cuenta en el directorio de la empresa y del correo corporativo.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": -5,
+        "dependsOn": []
+      },
+      {
+        "id": "d3",
+        "stage": "preboarding",
+        "order": 3,
+        "title": "Preparar computadora y periféricos",
+        "description": "Configurar la computadora con las herramientas base y dejarla lista para el primer día.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": -3,
+        "dependsOn": []
+      },
+      {
+        "id": "d4",
+        "stage": "preboarding",
+        "order": 4,
+        "title": "Enviar mensaje de bienvenida",
+        "description": "Mensaje del jefe directo con la agenda del primer día y a quién buscar al llegar.",
+        "type": "task",
+        "owner": "manager",
+        "offsetDays": -2,
+        "dependsOn": []
+      },
+      {
+        "id": "d5",
+        "stage": "week1",
+        "order": 1,
+        "title": "Reunión de bienvenida con RRHH",
+        "description": "Presentación de Nortia, beneficios, políticas y cómo funciona tu recorrido de ingreso.",
+        "type": "meeting",
+        "owner": "hr",
+        "offsetDays": 0,
+        "dependsOn": []
+      },
+      {
+        "id": "d6",
+        "stage": "week1",
+        "order": 2,
+        "title": "Entrega de puesto y credencial",
+        "description": "Asignación de escritorio, credencial de acceso y recorrido por la oficina.",
+        "type": "task",
+        "owner": "facilities",
+        "offsetDays": 0,
+        "dependsOn": []
+      },
+      {
+        "id": "d7",
+        "stage": "week1",
+        "order": 3,
+        "title": "Reunión 1:1 con tu jefe directo",
+        "description": "Conversación sobre expectativas del rol, forma de trabajo del equipo y objetivos de los primeros 90 días.",
+        "type": "meeting",
+        "owner": "manager",
+        "offsetDays": 1,
+        "dependsOn": []
+      },
+      {
+        "id": "d8",
+        "stage": "week1",
+        "order": 4,
+        "title": "Acceso a Jira y Confluence",
+        "description": "Alta en las herramientas de gestión de proyectos y documentación del equipo.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": 2,
+        "dependsOn": [
+          "d2"
+        ]
+      },
+      {
+        "id": "d9",
+        "stage": "week1",
+        "order": 5,
+        "title": "Curso: Seguridad de la información",
+        "description": "Curso obligatorio de 40 minutos sobre manejo de datos, contraseñas y phishing.",
+        "type": "course",
+        "owner": "hire",
+        "offsetDays": 2,
+        "dependsOn": [
+          "d2"
+        ]
+      },
+      {
+        "id": "d10",
+        "stage": "week1",
+        "order": 6,
+        "title": "Café con tu buddy",
+        "description": "Primer encuentro informal con tu buddy para conocer al equipo y resolver dudas del día a día.",
+        "type": "meeting",
+        "owner": "buddy",
+        "offsetDays": 3,
+        "dependsOn": []
+      },
+      {
+        "id": "d11",
+        "stage": "week1",
+        "order": 7,
+        "title": "Leer el manual de cultura de Nortia",
+        "description": "Lectura de 20 minutos sobre los valores, rituales y formas de trabajo de la empresa.",
+        "type": "reading",
+        "owner": "hire",
+        "offsetDays": 4,
+        "dependsOn": []
+      },
+      {
+        "id": "d12",
+        "stage": "month1",
+        "order": 1,
+        "title": "Acceso al data warehouse",
+        "description": "Permisos de lectura sobre los esquemas de datos del área.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": 8,
+        "dependsOn": [
+          "d8"
+        ]
+      },
+      {
+        "id": "d13",
+        "stage": "month1",
+        "order": 2,
+        "title": "Configurar el entorno de análisis",
+        "description": "Instala las herramientas de análisis y conéctate al data warehouse siguiendo la guía del equipo.",
+        "type": "task",
+        "owner": "hire",
+        "offsetDays": 10,
+        "dependsOn": [
+          "d12"
+        ]
+      },
+      {
+        "id": "d14",
+        "stage": "month1",
+        "order": 3,
+        "title": "Curso: Modelo de datos de Nortia",
+        "description": "Recorrido por las tablas principales, sus relaciones y las métricas oficiales.",
+        "type": "course",
+        "owner": "hire",
+        "offsetDays": 14,
+        "dependsOn": [
+          "d12"
+        ]
+      },
+      {
+        "id": "d15",
+        "stage": "month1",
+        "order": 4,
+        "title": "Primer análisis guiado",
+        "description": "Resuelve con tu buddy una consulta real del equipo, de punta a punta.",
+        "type": "task",
+        "owner": "hire",
+        "offsetDays": 28,
+        "dependsOn": [
+          "d13",
+          "d14"
+        ]
+      },
+      {
+        "id": "d16",
+        "stage": "month1",
+        "order": 5,
+        "title": "Presentar resultados al equipo",
+        "description": "Comparte en la reunión semanal qué encontraste en tu primer análisis.",
+        "type": "meeting",
+        "owner": "hire",
+        "offsetDays": 29,
+        "dependsOn": [
+          "d15"
+        ]
+      },
+      {
+        "id": "d17",
+        "stage": "days30to90",
+        "order": 1,
+        "title": "Proyecto propio: tablero de métricas",
+        "description": "Diseña y publica un tablero para un área interna, con la guía de tu jefe directo.",
+        "type": "task",
+        "owner": "hire",
+        "offsetDays": 60,
+        "dependsOn": [
+          "d16"
+        ]
+      },
+      {
+        "id": "d18",
+        "stage": "days30to90",
+        "order": 2,
+        "title": "Retrospectiva del recorrido de ingreso",
+        "description": "Conversación con RRHH sobre qué funcionó y qué mejorarías de tu ingreso.",
+        "type": "meeting",
+        "owner": "hr",
+        "offsetDays": 85,
+        "dependsOn": []
+      }
+    ]
+  },
+  {
+    "id": "tpl-frontend",
+    "name": "Desarrollador/a Frontend",
+    "jobTitle": "Desarrollador/a Frontend",
+    "area": "Tecnología",
+    "updatedAt": "2026-08-28",
+    "tasks": [
+      {
+        "id": "f1",
+        "stage": "preboarding",
+        "order": 1,
+        "title": "Firmar contrato y documentación de ingreso",
+        "description": "Revisa y firma el contrato, el acuerdo de confidencialidad y la ficha de datos personales.",
+        "type": "document",
+        "owner": "hire",
+        "offsetDays": -7,
+        "dependsOn": []
+      },
+      {
+        "id": "f2",
+        "stage": "preboarding",
+        "order": 2,
+        "title": "Crear cuenta corporativa y correo",
+        "description": "Alta de la cuenta en el directorio de la empresa y del correo corporativo.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": -5,
+        "dependsOn": []
+      },
+      {
+        "id": "f3",
+        "stage": "preboarding",
+        "order": 3,
+        "title": "Preparar computadora y periféricos",
+        "description": "Configurar la computadora con las herramientas base y dejarla lista para el primer día.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": -3,
+        "dependsOn": []
+      },
+      {
+        "id": "f4",
+        "stage": "preboarding",
+        "order": 4,
+        "title": "Enviar mensaje de bienvenida",
+        "description": "Mensaje del jefe directo con la agenda del primer día y a quién buscar al llegar.",
+        "type": "task",
+        "owner": "manager",
+        "offsetDays": -2,
+        "dependsOn": []
+      },
+      {
+        "id": "f5",
+        "stage": "week1",
+        "order": 1,
+        "title": "Reunión de bienvenida con RRHH",
+        "description": "Presentación de Nortia, beneficios, políticas y cómo funciona tu recorrido de ingreso.",
+        "type": "meeting",
+        "owner": "hr",
+        "offsetDays": 0,
+        "dependsOn": []
+      },
+      {
+        "id": "f6",
+        "stage": "week1",
+        "order": 2,
+        "title": "Entrega de puesto y credencial",
+        "description": "Asignación de escritorio, credencial de acceso y recorrido por la oficina.",
+        "type": "task",
+        "owner": "facilities",
+        "offsetDays": 0,
+        "dependsOn": []
+      },
+      {
+        "id": "f7",
+        "stage": "week1",
+        "order": 3,
+        "title": "Reunión 1:1 con tu jefe directo",
+        "description": "Expectativas del rol, forma de trabajo del equipo y objetivos de los primeros 90 días.",
+        "type": "meeting",
+        "owner": "manager",
+        "offsetDays": 1,
+        "dependsOn": []
+      },
+      {
+        "id": "f8",
+        "stage": "week1",
+        "order": 4,
+        "title": "Acceso a GitHub y al entorno de desarrollo",
+        "description": "Alta en la organización de GitHub, el gestor de paquetes y los ambientes de prueba.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": 1,
+        "dependsOn": [
+          "f2"
+        ]
+      },
+      {
+        "id": "f9",
+        "stage": "week1",
+        "order": 5,
+        "title": "Curso: Seguridad de la información",
+        "description": "Curso obligatorio de 40 minutos sobre manejo de datos, contraseñas y phishing.",
+        "type": "course",
+        "owner": "hire",
+        "offsetDays": 2,
+        "dependsOn": [
+          "f2"
+        ]
+      },
+      {
+        "id": "f10",
+        "stage": "week1",
+        "order": 6,
+        "title": "Leer la guía de estilo de código",
+        "description": "Convenciones del equipo para componentes, pruebas y revisiones de código.",
+        "type": "reading",
+        "owner": "hire",
+        "offsetDays": 3,
+        "dependsOn": [
+          "f8"
+        ]
+      },
+      {
+        "id": "f11",
+        "stage": "month1",
+        "order": 1,
+        "title": "Configurar el proyecto en tu computadora",
+        "description": "Clona el repositorio principal, instala las dependencias y corre las pruebas.",
+        "type": "task",
+        "owner": "hire",
+        "offsetDays": 8,
+        "dependsOn": [
+          "f8"
+        ]
+      },
+      {
+        "id": "f12",
+        "stage": "month1",
+        "order": 2,
+        "title": "Curso: Sistema de diseño de Nortia",
+        "description": "Componentes, tokens y reglas de accesibilidad del sistema de diseño.",
+        "type": "course",
+        "owner": "hire",
+        "offsetDays": 12,
+        "dependsOn": []
+      },
+      {
+        "id": "f13",
+        "stage": "month1",
+        "order": 3,
+        "title": "Primera tarea en pareja con tu buddy",
+        "description": "Resuelve una tarea chica del tablero trabajando en pareja con tu buddy.",
+        "type": "task",
+        "owner": "buddy",
+        "offsetDays": 15,
+        "dependsOn": [
+          "f11"
+        ]
+      },
+      {
+        "id": "f14",
+        "stage": "month1",
+        "order": 4,
+        "title": "Primer pull request aprobado",
+        "description": "Abre tu primer cambio, recibe la revisión del equipo y llévalo a producción.",
+        "type": "task",
+        "owner": "hire",
+        "offsetDays": 25,
+        "dependsOn": [
+          "f13"
+        ]
+      },
+      {
+        "id": "f15",
+        "stage": "days30to90",
+        "order": 1,
+        "title": "Liderar una mejora pequeña",
+        "description": "Elige con tu jefe directo una mejora del producto y llévala de la idea a producción.",
+        "type": "task",
+        "owner": "hire",
+        "offsetDays": 60,
+        "dependsOn": [
+          "f14"
+        ]
+      },
+      {
+        "id": "f16",
+        "stage": "days30to90",
+        "order": 2,
+        "title": "Retrospectiva del recorrido de ingreso",
+        "description": "Conversación con RRHH sobre qué funcionó y qué mejorarías de tu ingreso.",
+        "type": "meeting",
+        "owner": "hr",
+        "offsetDays": 85,
+        "dependsOn": []
+      }
+    ]
+  },
+  {
+    "id": "tpl-sales",
+    "name": "Ejecutivo/a Comercial",
+    "jobTitle": "Ejecutivo/a Comercial",
+    "area": "Comercial",
+    "updatedAt": "2026-07-20",
+    "tasks": [
+      {
+        "id": "c1",
+        "stage": "preboarding",
+        "order": 1,
+        "title": "Firmar contrato y documentación de ingreso",
+        "description": "Revisa y firma el contrato, el acuerdo de confidencialidad y la ficha de datos personales.",
+        "type": "document",
+        "owner": "hire",
+        "offsetDays": -7,
+        "dependsOn": []
+      },
+      {
+        "id": "c2",
+        "stage": "preboarding",
+        "order": 2,
+        "title": "Crear cuenta corporativa y correo",
+        "description": "Alta de la cuenta en el directorio de la empresa y del correo corporativo.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": -5,
+        "dependsOn": []
+      },
+      {
+        "id": "c3",
+        "stage": "preboarding",
+        "order": 3,
+        "title": "Preparar computadora y periféricos",
+        "description": "Configurar la computadora con las herramientas base y dejarla lista para el primer día.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": -3,
+        "dependsOn": []
+      },
+      {
+        "id": "c4",
+        "stage": "preboarding",
+        "order": 4,
+        "title": "Enviar mensaje de bienvenida",
+        "description": "Mensaje del jefe directo con la agenda del primer día y a quién buscar al llegar.",
+        "type": "task",
+        "owner": "manager",
+        "offsetDays": -2,
+        "dependsOn": []
+      },
+      {
+        "id": "c5",
+        "stage": "week1",
+        "order": 1,
+        "title": "Reunión de bienvenida con RRHH",
+        "description": "Presentación de Nortia, beneficios, políticas y cómo funciona tu recorrido de ingreso.",
+        "type": "meeting",
+        "owner": "hr",
+        "offsetDays": 0,
+        "dependsOn": []
+      },
+      {
+        "id": "c6",
+        "stage": "week1",
+        "order": 2,
+        "title": "Entrega de puesto y credencial",
+        "description": "Asignación de escritorio, credencial de acceso y recorrido por la oficina.",
+        "type": "task",
+        "owner": "facilities",
+        "offsetDays": 0,
+        "dependsOn": []
+      },
+      {
+        "id": "c7",
+        "stage": "week1",
+        "order": 3,
+        "title": "Acceso al CRM",
+        "description": "Alta en el CRM con tu cartera de prueba y los tableros comerciales.",
+        "type": "task",
+        "owner": "it",
+        "offsetDays": 1,
+        "dependsOn": [
+          "c2"
+        ]
+      },
+      {
+        "id": "c8",
+        "stage": "week1",
+        "order": 4,
+        "title": "Curso: Seguridad de la información",
+        "description": "Curso obligatorio de 40 minutos sobre manejo de datos, contraseñas y phishing.",
+        "type": "course",
+        "owner": "hire",
+        "offsetDays": 2,
+        "dependsOn": [
+          "c2"
+        ]
+      },
+      {
+        "id": "c9",
+        "stage": "week1",
+        "order": 5,
+        "title": "Leer el catálogo de servicios",
+        "description": "Servicios de Nortia, casos de clientes y preguntas frecuentes.",
+        "type": "reading",
+        "owner": "hire",
+        "offsetDays": 3,
+        "dependsOn": []
+      },
+      {
+        "id": "c10",
+        "stage": "month1",
+        "order": 1,
+        "title": "Curso: Metodología comercial de Nortia",
+        "description": "Etapas del proceso de venta, cómo calificar oportunidades y cómo registrar todo en el CRM.",
+        "type": "course",
+        "owner": "hire",
+        "offsetDays": 10,
+        "dependsOn": [
+          "c7"
+        ]
+      },
+      {
+        "id": "c11",
+        "stage": "month1",
+        "order": 2,
+        "title": "Acompañar tres reuniones con clientes",
+        "description": "Participa como oyente en reuniones de tu buddy y anota preguntas para después.",
+        "type": "meeting",
+        "owner": "buddy",
+        "offsetDays": 14,
+        "dependsOn": [
+          "c9"
+        ]
+      },
+      {
+        "id": "c12",
+        "stage": "month1",
+        "order": 3,
+        "title": "Primera propuesta comercial revisada",
+        "description": "Arma una propuesta para un caso real y revísala con tu jefe directo.",
+        "type": "document",
+        "owner": "hire",
+        "offsetDays": 25,
+        "dependsOn": [
+          "c10",
+          "c11"
+        ]
+      },
+      {
+        "id": "c13",
+        "stage": "days30to90",
+        "order": 1,
+        "title": "Asignar cartera propia",
+        "description": "El jefe directo asigna las primeras cuentas a cargo de la persona nueva.",
+        "type": "task",
+        "owner": "manager",
+        "offsetDays": 45,
+        "dependsOn": [
+          "c12"
+        ]
+      },
+      {
+        "id": "c14",
+        "stage": "days30to90",
+        "order": 2,
+        "title": "Retrospectiva del recorrido de ingreso",
+        "description": "Conversación con RRHH sobre qué funcionó y qué mejorarías de tu ingreso.",
+        "type": "meeting",
+        "owner": "hr",
+        "offsetDays": 85,
+        "dependsOn": []
+      }
+    ]
+  }
+]

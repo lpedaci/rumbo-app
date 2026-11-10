@@ -1,0 +1,84 @@
+[
+  {
+    "id": "IT-2026-0136",
+    "email": "lucas.ortiz@nortia.demo",
+    "personId": "p-lucas",
+    "createdAt": "2026-10-22T13:05:00.000Z",
+    "reason": "forgot_password",
+    "comment": "No recuerdo la contraseña después de las vacaciones.",
+    "status": "resolved",
+    "identityVerified": true,
+    "resolution": {
+      "action": "force_password_reset",
+      "by": "p-diego",
+      "at": "2026-10-22T14:40:00.000Z",
+      "note": "Identidad validada con el jefe directo."
+    }
+  },
+  {
+    "id": "IT-2026-0137",
+    "email": "soporte.prueba@nortia.demo",
+    "createdAt": "2026-10-27T18:22:00.000Z",
+    "reason": "other",
+    "comment": "Necesito acceso urgente.",
+    "status": "rejected",
+    "identityVerified": false,
+    "resolution": {
+      "action": "reject",
+      "by": "p-diego",
+      "at": "2026-10-28T12:10:00.000Z",
+      "note": "No fue posible verificar la identidad: el correo no corresponde a ninguna persona de Nortia."
+    }
+  },
+  {
+    "id": "IT-2026-0138",
+    "email": "camila.torres@nortia.demo",
+    "personId": "p-camila",
+    "createdAt": "2026-11-02T11:30:00.000Z",
+    "reason": "mfa_issue",
+    "comment": "Cambié de celular y no tengo la app autenticadora.",
+    "status": "resolved",
+    "identityVerified": true,
+    "resolution": {
+      "action": "reset_mfa",
+      "by": "p-diego",
+      "at": "2026-11-02T12:15:00.000Z",
+      "note": "Llamada al interno registrado."
+    }
+  },
+  {
+    "id": "IT-2026-0139",
+    "email": "valentina.ruiz@nortia.demo",
+    "personId": "p-valentina",
+    "createdAt": "2026-11-04T12:48:00.000Z",
+    "reason": "locked",
+    "status": "resolved",
+    "identityVerified": true,
+    "resolution": {
+      "action": "unlock",
+      "by": "p-diego",
+      "at": "2026-11-04T13:20:00.000Z",
+      "note": "Llamada al interno registrado."
+    }
+  },
+  {
+    "id": "IT-2026-0140",
+    "email": "agustina.vega@nortia.demo",
+    "personId": "p-agustina",
+    "createdAt": "2026-11-08T15:02:00.000Z",
+    "reason": "forgot_password",
+    "comment": "No puedo iniciar sesión desde el viernes.",
+    "status": "verifying",
+    "identityVerified": false
+  },
+  {
+    "id": "IT-2026-0141",
+    "email": "joaquin.benitez@nortia.demo",
+    "personId": "p-joaquin",
+    "createdAt": "2026-11-09T12:25:00.000Z",
+    "reason": "locked",
+    "comment": "Me aparece que la cuenta está bloqueada.",
+    "status": "new",
+    "identityVerified": false
+  }
+]

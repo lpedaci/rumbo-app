@@ -9,7 +9,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 0 | Documentación base | Hecho (revisado por Lourdes) | 10/11/2026 |
 | 1 | Setup (Vite, TS, Tailwind, shadcn/ui, router, i18n, deploy) | Hecho | 10/11/2026 |
 | 2 | Tokens M3, `<Icon />`, `<BentoCard />`, styleguide, test de desbordes | Hecho | 10/11/2026 |
-| 3 | Datos semilla, tipos, stores y cálculos con tests | Pendiente | |
+| 3 | Datos semilla, tipos, stores y cálculos con tests | Hecho | 10/11/2026 |
 | 4 | Seguridad base y layout (G1 a G7) | Pendiente | |
 | 5 | Nuevo ingreso: N1, N2 | Pendiente | |
 | 6 | Plantillas: A5, A6, A7 | Pendiente | |
@@ -20,6 +20,29 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
+
+## Paso 3: datos, reglas de negocio y store
+
+**Qué se hizo**
+- Tipos del modelo de datos de la fase A (`src/types/domain.ts`).
+- `lib/dates.ts`: `DEMO_TODAY = 2026-11-10`, cálculo de fechas, etapas según el plazo, formatos DD/MM/AAAA y números con punto y coma.
+- `lib/journey.ts`: `dueDate`, estados derivados (`blocked` y `overdue`, nunca guardados), tareas que bloquean, "Lo próximo", progreso general y por etapa, estado del ingreso, desbloqueo al completar y validación de dependencias del constructor (ciclos, dependencias con plazo posterior, referencias inexistentes).
+- `lib/metrics.ts`: KPIs, avance por ingreso y por cohorte, atrasos por responsable (atribuidos a quien bloquea, D-30), alertas y ánimo agregado.
+- Datos semilla en `src/data/`: 18 personas, 3 plantillas (18, 16 y 14 tareas), 11 ingresos, 52 eventos de auditoría, 6 solicitudes de acceso, una cuenta bloqueada y las políticas. `seed.ts` genera las tareas y los check-ins (D-29).
+- Store de Zustand persistido en `localStorage`, con versión de esquema, recuperación ante datos corruptos y `resetData()`. Por ahora tiene las acciones `logAudit` y `completeTask`; el resto se agrega con cada pantalla.
+
+**Cómo queda la demo con la semilla**
+- 6 ingresos activos, 2 próximos a ingresar y 3 finalizados.
+- 86 % de tareas a tiempo, 5 recorridos con atraso y 75 % de avance promedio.
+- IT es el cuello de botella: 7 tareas atrasadas, contra 3 de la persona nueva y 1 del jefe.
+- Alertas: el check-in escalado de Valentina, tareas bloqueadas de Lucas (42 días) y de Agustina (13 días), y los check-ins vencidos de Camila y Valentina.
+- Sofía, el día 28: 72 % de avance, una lectura vencida, "Primer análisis guiado" en curso, que vence hoy, y el check-in de 30 días pendiente para el 12/11/2026.
+
+**Verificación**
+- `npm test`: 133/133. Incluye un test de integridad que verifica cada requisito de "Datos semilla" de la sección 7: cantidades, Sofía en el mes 1, atrasos, bloqueos, escalamiento, auditoría, solicitudes y políticas.
+
+**Pendiente**
+- D-30: confirmar el criterio de atribución de atrasos.
 
 ## Paso 2: sistema de diseño
 

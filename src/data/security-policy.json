@@ -1,0 +1,10 @@
+{
+  "mfaRequiredFor": [
+    "admin",
+    "it_admin"
+  ],
+  "sessionIdleMinutes": 15,
+  "sessionWarningMinutes": 13,
+  "passwordMinLength": 12,
+  "lockoutAttempts": 5
+}

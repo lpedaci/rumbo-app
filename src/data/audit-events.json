@@ -1,0 +1,431 @@
+[
+  {
+    "id": "ev-001",
+    "at": "2026-10-08T16:20:00.000Z",
+    "actorId": "p-martin",
+    "action": "checkin.escalate",
+    "resource": "h-valentina-day30",
+    "result": "success",
+    "detail": "Hito \"Tiene un vínculo de trabajo con su buddy y el equipo\" no cumplido"
+  },
+  {
+    "id": "ev-002",
+    "at": "2026-10-15T12:02:00.000Z",
+    "actorId": "p-carla",
+    "action": "auth.login",
+    "result": "success",
+    "detail": "SSO Microsoft"
+  },
+  {
+    "id": "ev-003",
+    "at": "2026-10-15T12:02:30.000Z",
+    "actorId": "p-carla",
+    "action": "auth.mfa_verified",
+    "result": "success"
+  },
+  {
+    "id": "ev-004",
+    "at": "2026-10-15T12:20:00.000Z",
+    "actorId": "p-carla",
+    "action": "hire.create",
+    "resource": "h-agustina",
+    "result": "success",
+    "detail": "Agustina Vega · Desarrollador/a Frontend"
+  },
+  {
+    "id": "ev-005",
+    "at": "2026-10-15T13:05:00.000Z",
+    "actorId": "p-carla",
+    "action": "auth.logout",
+    "result": "success"
+  },
+  {
+    "id": "ev-006",
+    "at": "2026-10-19T11:40:00.000Z",
+    "actorId": "p-diego",
+    "action": "auth.login",
+    "result": "success",
+    "detail": "SSO Microsoft"
+  },
+  {
+    "id": "ev-007",
+    "at": "2026-10-19T11:40:20.000Z",
+    "actorId": "p-diego",
+    "action": "auth.mfa_verified",
+    "result": "success"
+  },
+  {
+    "id": "ev-008",
+    "at": "2026-10-20T14:10:00.000Z",
+    "actorId": "p-martin",
+    "action": "auth.login",
+    "result": "success",
+    "detail": "SSO Google Workspace"
+  },
+  {
+    "id": "ev-009",
+    "at": "2026-10-20T14:10:25.000Z",
+    "actorId": "p-martin",
+    "action": "auth.mfa_verified",
+    "result": "success"
+  },
+  {
+    "id": "ev-010",
+    "at": "2026-10-21T15:30:00.000Z",
+    "actorId": "p-martin",
+    "action": "checkin.complete",
+    "resource": "h-lucas-day30",
+    "result": "success"
+  },
+  {
+    "id": "ev-011",
+    "at": "2026-10-22T13:05:00.000Z",
+    "actorId": "anonymous",
+    "action": "access_request.create",
+    "resource": "IT-2026-0136",
+    "result": "success",
+    "detail": "Olvidé mi contraseña"
+  },
+  {
+    "id": "ev-012",
+    "at": "2026-10-22T14:38:00.000Z",
+    "actorId": "p-diego",
+    "action": "access_request.verify_identity",
+    "resource": "IT-2026-0136",
+    "result": "success",
+    "detail": "Validación con el jefe directo"
+  },
+  {
+    "id": "ev-013",
+    "at": "2026-10-22T14:40:00.000Z",
+    "actorId": "p-diego",
+    "action": "account.force_password_reset",
+    "resource": "lucas.ortiz@nortia.demo",
+    "result": "success"
+  },
+  {
+    "id": "ev-014",
+    "at": "2026-10-22T14:40:05.000Z",
+    "actorId": "p-diego",
+    "action": "access_request.resolve",
+    "resource": "IT-2026-0136",
+    "result": "success"
+  },
+  {
+    "id": "ev-015",
+    "at": "2026-10-23T12:15:00.000Z",
+    "actorId": "p-lucas",
+    "action": "auth.password_changed",
+    "result": "success"
+  },
+  {
+    "id": "ev-016",
+    "at": "2026-10-26T12:00:00.000Z",
+    "actorId": "p-carla",
+    "action": "auth.login",
+    "result": "success",
+    "detail": "Correo y contraseña"
+  },
+  {
+    "id": "ev-017",
+    "at": "2026-10-26T12:00:30.000Z",
+    "actorId": "p-carla",
+    "action": "auth.mfa_verified",
+    "result": "success"
+  },
+  {
+    "id": "ev-018",
+    "at": "2026-10-26T12:30:00.000Z",
+    "actorId": "p-carla",
+    "action": "template.update",
+    "resource": "tpl-data",
+    "result": "success",
+    "detail": "Analista de Datos: se editó \"Primer análisis guiado\""
+  },
+  {
+    "id": "ev-019",
+    "at": "2026-10-27T18:22:00.000Z",
+    "actorId": "anonymous",
+    "action": "access_request.create",
+    "resource": "IT-2026-0137",
+    "result": "success",
+    "detail": "Otro"
+  },
+  {
+    "id": "ev-020",
+    "at": "2026-10-28T12:10:00.000Z",
+    "actorId": "p-diego",
+    "action": "access_request.reject",
+    "resource": "IT-2026-0137",
+    "result": "success",
+    "detail": "No fue posible verificar la identidad"
+  },
+  {
+    "id": "ev-021",
+    "at": "2026-10-29T11:55:00.000Z",
+    "actorId": "p-sofia",
+    "action": "auth.login",
+    "result": "success",
+    "detail": "SSO Microsoft"
+  },
+  {
+    "id": "ev-022",
+    "at": "2026-10-29T11:55:20.000Z",
+    "actorId": "p-sofia",
+    "action": "auth.mfa_verified",
+    "result": "success"
+  },
+  {
+    "id": "ev-023",
+    "at": "2026-10-30T19:02:00.000Z",
+    "actorId": "anonymous",
+    "action": "auth.login_failed",
+    "resource": "pedro.gomez@nortia.demo",
+    "result": "failure",
+    "detail": "Correo o contraseña incorrectos"
+  },
+  {
+    "id": "ev-024",
+    "at": "2026-11-02T11:30:00.000Z",
+    "actorId": "anonymous",
+    "action": "access_request.create",
+    "resource": "IT-2026-0138",
+    "result": "success",
+    "detail": "No recibo el código de verificación"
+  },
+  {
+    "id": "ev-025",
+    "at": "2026-11-02T12:14:00.000Z",
+    "actorId": "p-diego",
+    "action": "access_request.verify_identity",
+    "resource": "IT-2026-0138",
+    "result": "success",
+    "detail": "Llamada al interno registrado"
+  },
+  {
+    "id": "ev-026",
+    "at": "2026-11-02T12:15:00.000Z",
+    "actorId": "p-diego",
+    "action": "account.reset_mfa",
+    "resource": "camila.torres@nortia.demo",
+    "result": "success"
+  },
+  {
+    "id": "ev-027",
+    "at": "2026-11-02T12:15:05.000Z",
+    "actorId": "p-diego",
+    "action": "access_request.resolve",
+    "resource": "IT-2026-0138",
+    "result": "success"
+  },
+  {
+    "id": "ev-028",
+    "at": "2026-11-03T13:40:00.000Z",
+    "actorId": "p-sofia",
+    "action": "auth.access_denied",
+    "resource": "/admin",
+    "result": "denied",
+    "detail": "Ruta reservada a RRHH"
+  },
+  {
+    "id": "ev-029",
+    "at": "2026-11-04T12:40:00.000Z",
+    "actorId": "anonymous",
+    "action": "auth.login_failed",
+    "resource": "valentina.ruiz@nortia.demo",
+    "result": "failure",
+    "detail": "Correo o contraseña incorrectos"
+  },
+  {
+    "id": "ev-030",
+    "at": "2026-11-04T12:46:00.000Z",
+    "actorId": "anonymous",
+    "action": "auth.account_locked",
+    "resource": "valentina.ruiz@nortia.demo",
+    "result": "failure",
+    "detail": "5 intentos fallidos"
+  },
+  {
+    "id": "ev-031",
+    "at": "2026-11-04T12:48:00.000Z",
+    "actorId": "anonymous",
+    "action": "access_request.create",
+    "resource": "IT-2026-0139",
+    "result": "success",
+    "detail": "Cuenta bloqueada"
+  },
+  {
+    "id": "ev-032",
+    "at": "2026-11-04T13:19:00.000Z",
+    "actorId": "p-diego",
+    "action": "access_request.verify_identity",
+    "resource": "IT-2026-0139",
+    "result": "success",
+    "detail": "Llamada al interno registrado"
+  },
+  {
+    "id": "ev-033",
+    "at": "2026-11-04T13:20:00.000Z",
+    "actorId": "p-diego",
+    "action": "account.unlock",
+    "resource": "valentina.ruiz@nortia.demo",
+    "result": "success"
+  },
+  {
+    "id": "ev-034",
+    "at": "2026-11-04T13:20:05.000Z",
+    "actorId": "p-diego",
+    "action": "access_request.resolve",
+    "resource": "IT-2026-0139",
+    "result": "success"
+  },
+  {
+    "id": "ev-035",
+    "at": "2026-11-05T14:00:00.000Z",
+    "actorId": "p-camila",
+    "action": "checkin.self_review",
+    "resource": "h-camila-day30",
+    "result": "success"
+  },
+  {
+    "id": "ev-036",
+    "at": "2026-11-05T16:45:00.000Z",
+    "actorId": "p-martin",
+    "action": "auth.logout",
+    "result": "success"
+  },
+  {
+    "id": "ev-037",
+    "at": "2026-11-06T12:10:00.000Z",
+    "actorId": "p-carla",
+    "action": "auth.login",
+    "result": "success",
+    "detail": "SSO Microsoft"
+  },
+  {
+    "id": "ev-038",
+    "at": "2026-11-06T12:10:20.000Z",
+    "actorId": "p-carla",
+    "action": "auth.mfa_verified",
+    "result": "success"
+  },
+  {
+    "id": "ev-039",
+    "at": "2026-11-06T12:40:00.000Z",
+    "actorId": "p-carla",
+    "action": "template.update",
+    "resource": "tpl-frontend",
+    "result": "success",
+    "detail": "Desarrollador/a Frontend: se reordenaron tareas de la Semana 1"
+  },
+  {
+    "id": "ev-040",
+    "at": "2026-11-08T15:02:00.000Z",
+    "actorId": "anonymous",
+    "action": "access_request.create",
+    "resource": "IT-2026-0140",
+    "result": "success",
+    "detail": "Olvidé mi contraseña"
+  },
+  {
+    "id": "ev-041",
+    "at": "2026-11-08T15:30:00.000Z",
+    "actorId": "p-diego",
+    "action": "access_request.start_verification",
+    "resource": "IT-2026-0140",
+    "result": "success"
+  },
+  {
+    "id": "ev-042",
+    "at": "2026-11-09T12:10:00.000Z",
+    "actorId": "anonymous",
+    "action": "auth.login_failed",
+    "resource": "joaquin.benitez@nortia.demo",
+    "result": "failure",
+    "detail": "Correo o contraseña incorrectos"
+  },
+  {
+    "id": "ev-043",
+    "at": "2026-11-09T12:12:00.000Z",
+    "actorId": "anonymous",
+    "action": "auth.login_failed",
+    "resource": "joaquin.benitez@nortia.demo",
+    "result": "failure",
+    "detail": "Correo o contraseña incorrectos"
+  },
+  {
+    "id": "ev-044",
+    "at": "2026-11-09T12:14:00.000Z",
+    "actorId": "anonymous",
+    "action": "auth.login_failed",
+    "resource": "joaquin.benitez@nortia.demo",
+    "result": "failure",
+    "detail": "Correo o contraseña incorrectos"
+  },
+  {
+    "id": "ev-045",
+    "at": "2026-11-09T12:16:00.000Z",
+    "actorId": "anonymous",
+    "action": "auth.login_failed",
+    "resource": "joaquin.benitez@nortia.demo",
+    "result": "failure",
+    "detail": "Correo o contraseña incorrectos"
+  },
+  {
+    "id": "ev-046",
+    "at": "2026-11-09T12:18:00.000Z",
+    "actorId": "anonymous",
+    "action": "auth.login_failed",
+    "resource": "joaquin.benitez@nortia.demo",
+    "result": "failure",
+    "detail": "Correo o contraseña incorrectos"
+  },
+  {
+    "id": "ev-047",
+    "at": "2026-11-09T12:18:01.000Z",
+    "actorId": "anonymous",
+    "action": "auth.account_locked",
+    "resource": "joaquin.benitez@nortia.demo",
+    "result": "failure",
+    "detail": "5 intentos fallidos"
+  },
+  {
+    "id": "ev-048",
+    "at": "2026-11-09T12:25:00.000Z",
+    "actorId": "anonymous",
+    "action": "access_request.create",
+    "resource": "IT-2026-0141",
+    "result": "success",
+    "detail": "Cuenta bloqueada"
+  },
+  {
+    "id": "ev-049",
+    "at": "2026-11-09T18:30:00.000Z",
+    "actorId": "p-carla",
+    "action": "auth.logout",
+    "result": "success"
+  },
+  {
+    "id": "ev-050",
+    "at": "2026-11-10T11:50:00.000Z",
+    "actorId": "p-martin",
+    "action": "auth.login",
+    "result": "success",
+    "detail": "SSO Google Workspace"
+  },
+  {
+    "id": "ev-051",
+    "at": "2026-11-10T11:50:30.000Z",
+    "actorId": "p-martin",
+    "action": "auth.mfa_failed",
+    "result": "failure",
+    "detail": "Código de verificación incorrecto"
+  },
+  {
+    "id": "ev-052",
+    "at": "2026-11-10T11:51:00.000Z",
+    "actorId": "p-martin",
+    "action": "auth.mfa_verified",
+    "result": "success"
+  }
+]
