@@ -7,7 +7,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | Paso | Descripción | Estado | Fecha |
 | --- | --- | --- | --- |
 | 0 | Documentación base | Hecho (revisado por Lourdes) | 10/11/2026 |
-| 1 | Setup (Vite, TS, Tailwind, shadcn/ui, router, i18n, deploy) | **Hecho en local**; falta el deploy | 10/11/2026 |
+| 1 | Setup (Vite, TS, Tailwind, shadcn/ui, router, i18n, deploy) | Hecho | 10/11/2026 |
 | 2 | Tokens M3, `<Icon />`, `<BentoCard />`, styleguide, test de desbordes | Pendiente | |
 | 3 | Datos semilla, tipos, stores y cálculos con tests | Pendiente | |
 | 4 | Seguridad base y layout (G1 a G7) | Pendiente | |
@@ -33,17 +33,18 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - ESLint 10 con `typescript-eslint` y `react-hooks`. Prohíbe `dangerouslySetInnerHTML` y `eval`.
 - Workflow `.github/workflows/deploy.yml`: `npm ci`, `npm audit --audit-level=high`, lint, tests, build y deploy a GitHub Pages.
 - Dependencias con versión exacta (`.npmrc` con `save-exact`) y `package-lock.json`.
-- Repositorio git local inicializado en la rama `main` (sin commits).
+- Repositorio público [lpedaci/rumbo-app](https://github.com/lpedaci/rumbo-app), rama `main`. `design-references/` queda fuera del repo (capturas de terceros, solo de uso local).
+- Demo publicada: https://lpedaci.github.io/rumbo-app/
 
 **Verificación**
 - `npm run lint`, `npm test` (6/6) y `npm run build` sin errores. JS inicial: 77 KB gzip.
 - Build de producción revisado en el navegador: inicio y 404 se ven bien, `lang="es"`, sin errores de consola y sin desborde horizontal a 320 px.
 
 **Pendiente**
-- Crear el repositorio en GitHub, subir el código y activar Pages (fuente: GitHub Actions) para confirmar el deploy.
 - CSP: paso 11 (D-20).
 
 **Problemas encontrados**
+- El primer deploy publicó la rama `main` sin compilar (página en blanco) porque Pages estaba en "Deploy from a branch". Se resolvió cambiando la fuente a GitHub Actions.
 - INC-001: vulnerabilidades moderadas en herramientas de lint (solo desarrollo).
 
 ## Paso 0: documentación base
