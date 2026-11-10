@@ -66,3 +66,16 @@ const NBSP = String.fromCharCode(0xa0);
 export function formatPercent(value: number): string {
   return `${formatNumber(Math.round(value))}${NBSP}%`;
 }
+
+export type RelativeDue =
+  | { key: 'today' | 'tomorrow' | 'yesterday' }
+  | { key: 'inDays' | 'daysAgo'; count: number };
+
+/** Due date relative to the demo's today, for texts such as "Vence en 3 días". */
+export function relativeDue(dueDate: string, today = DEMO_TODAY): RelativeDue {
+  const diff = daysBetween(today, dueDate);
+  if (diff === 0) return { key: 'today' };
+  if (diff === 1) return { key: 'tomorrow' };
+  if (diff === -1) return { key: 'yesterday' };
+  return diff > 1 ? { key: 'inDays', count: diff } : { key: 'daysAgo', count: -diff };
+}

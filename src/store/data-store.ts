@@ -13,7 +13,7 @@ import type { AccessRequest, AccountFlags, AuditEvent, AuthAttempts } from '@/ty
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape changes: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 2;
+export const DATA_SCHEMA_VERSION = 3;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */

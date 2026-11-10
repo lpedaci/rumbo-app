@@ -319,5 +319,129 @@
         "First guided analysis"
       ]
     }
+  },
+  "stages": {
+    "preboarding": "Pre-boarding",
+    "week1": "Week 1",
+    "month1": "Month 1",
+    "days30to90": "Days 30 to 90"
+  },
+  "taskTypes": {
+    "task": "Task",
+    "course": "Course",
+    "meeting": "Meeting",
+    "reading": "Reading",
+    "document": "Document"
+  },
+  "owners": {
+    "hire": "New hire",
+    "manager": "Manager",
+    "buddy": "Buddy",
+    "hr": "HR",
+    "it": "IT",
+    "facilities": "Facilities"
+  },
+  "taskStatus": {
+    "pending": "Pending",
+    "in_progress": "In progress",
+    "done": "Done",
+    "blocked": "Blocked",
+    "overdue": "Overdue"
+  },
+  "due": {
+    "today": "Due today",
+    "tomorrow": "Due tomorrow",
+    "inDays": "Due in {{count}} days",
+    "yesterday": "Was due yesterday",
+    "daysAgo": "Was due {{count}} days ago",
+    "doneOn": "Done on {{date}}",
+    "dueOn": "Due date: {{date}}"
+  },
+  "journey": {
+    "title": "My journey",
+    "greeting": "Hi, {{name}}",
+    "dayOf": "Day {{day}} of your onboarding journey · Current stage: {{stage}}",
+    "beforeStart": "You start on {{date}}. Meanwhile, you can get ahead with your pre-boarding tasks.",
+    "next": {
+      "title": "Up next",
+      "description": "Your 3 most urgent tasks",
+      "empty": "You don't have pending tasks right now. When a new one unlocks, it will show up here."
+    },
+    "progress": {
+      "title": "Your progress",
+      "overall": "Overall journey progress",
+      "tasksDone": "{{done}} of {{total}} tasks done",
+      "stage": "{{stage}} progress",
+      "current": "Current stage"
+    },
+    "checkin": {
+      "title": "Your next check-in",
+      "when": "{{days}}-day check-in · {{date}}",
+      "pending": "Before the meeting with your manager, share how you feel in a short self-review.",
+      "hireDone": "You sent your self-review. Your manager completes the check-in at the meeting.",
+      "respond": "Answer my self-review",
+      "review": "View my self-review",
+      "none": "You completed all your check-ins."
+    },
+    "contacts": {
+      "title": "Your key contacts",
+      "manager": "Manager",
+      "buddy": "Buddy",
+      "hr": "HR contact",
+      "email": "Email {{name}}"
+    },
+    "all": {
+      "title": "Full journey",
+      "description": "All your tasks, by stage",
+      "stageCount": "{{done}} of {{total}} done"
+    },
+    "complete": "Mark as done",
+    "completeTask": "Mark as done: {{title}}",
+    "completed": "Done",
+    "openCourse": "Open course",
+    "openTask": "View details",
+    "blockedBy": "First complete: {{tasks}}",
+    "ownerIs": "Owner: {{owner}}",
+    "yours": "It's on you",
+    "taskDone": "Task completed",
+    "stageDone": "You completed {{stage}}!",
+    "unlocked": "Unlocked: {{tasks}}",
+    "noHire": "You don't have an onboarding journey yet. HR will let you know when it's ready."
+  },
+  "task": {
+    "breadcrumb": "Breadcrumbs",
+    "back": "Back to My journey",
+    "about": "About this task",
+    "type": "Type",
+    "owner": "Owner",
+    "due": "Due date",
+    "stage": "Stage",
+    "status": "Status",
+    "blockedTitle": "This task isn't available yet",
+    "blockedBody": "First, these need to be completed:",
+    "otherOwner": "{{owner}} completes this task. It will show as done when they finish.",
+    "doneTitle": "You completed this task",
+    "doneBody": "You marked it as done on {{date}}.",
+    "doneByOther": "It was marked as done on {{date}}.",
+    "nextUnlocked": "Now you can do:",
+    "course": {
+      "title": "Course content",
+      "intro": "Simulated content for the demo. Go through the lessons, then mark the course as completed.",
+      "lessons": [
+        "Introduction and goals",
+        "Key concepts with Nortia examples",
+        "Review quiz"
+      ],
+      "minutes": "{{count}} min",
+      "complete": "Mark course as completed"
+    },
+    "material": {
+      "title": "Material",
+      "reading": "Simulated reading for the demo. In the real product, the intranet document opens here.",
+      "document": "Simulated document for the demo. In the real product, you download or sign the document here.",
+      "meeting": "The meeting is on your work calendar. Mark it as done when it has taken place.",
+      "task": "Follow the steps in the description and mark it as done when you finish."
+    },
+    "notFound": "We couldn't find this task in your journey."
   }
 }

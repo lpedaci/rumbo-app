@@ -30,7 +30,10 @@ export const PAGES: CheckedPage[] = [
   { id: 'g7-not-found', path: '/#/no-existe' },
   { id: 'home-admin', path: '/#/admin', role: 'admin' },
   { id: 'home-manager', path: '/#/manager', role: 'manager' },
-  { id: 'home-hire', path: '/#/me', role: 'hire' },
+  { id: 'n1-journey', path: '/#/me', role: 'hire' },
+  { id: 'n2-task-blocked', path: '/#/me/tasks/h-sofia-d17', role: 'hire' },
+  { id: 'n2-task-course', path: '/#/me/tasks/h-sofia-d9', role: 'hire' },
+  { id: 'n2-task-overdue', path: '/#/me/tasks/h-sofia-d11', role: 'hire' },
   { id: 'home-it', path: '/#/it/requests', role: 'it_admin' },
   { id: 'styleguide', path: '/#/styleguide' },
 ];

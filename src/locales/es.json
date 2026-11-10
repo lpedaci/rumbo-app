@@ -319,5 +319,129 @@
         "Primer análisis guiado"
       ]
     }
+  },
+  "stages": {
+    "preboarding": "Preingreso",
+    "week1": "Semana 1",
+    "month1": "Mes 1",
+    "days30to90": "Días 30 a 90"
+  },
+  "taskTypes": {
+    "task": "Tarea",
+    "course": "Curso",
+    "meeting": "Reunión",
+    "reading": "Lectura",
+    "document": "Documento"
+  },
+  "owners": {
+    "hire": "Nuevo ingreso",
+    "manager": "Jefe directo",
+    "buddy": "Buddy",
+    "hr": "RRHH",
+    "it": "Sistemas (IT)",
+    "facilities": "Facilities"
+  },
+  "taskStatus": {
+    "pending": "Pendiente",
+    "in_progress": "En curso",
+    "done": "Hecha",
+    "blocked": "Bloqueada",
+    "overdue": "Vencida"
+  },
+  "due": {
+    "today": "Vence hoy",
+    "tomorrow": "Vence mañana",
+    "inDays": "Vence en {{count}} días",
+    "yesterday": "Venció ayer",
+    "daysAgo": "Venció hace {{count}} días",
+    "doneOn": "Hecha el {{date}}",
+    "dueOn": "Fecha límite: {{date}}"
+  },
+  "journey": {
+    "title": "Mi recorrido",
+    "greeting": "Hola, {{name}}",
+    "dayOf": "Día {{day}} de tu recorrido de ingreso · Etapa actual: {{stage}}",
+    "beforeStart": "Empiezas el {{date}}. Mientras tanto, puedes avanzar con las tareas de preingreso.",
+    "next": {
+      "title": "Lo próximo",
+      "description": "Las 3 tareas más urgentes que dependen de ti",
+      "empty": "No tienes tareas pendientes por ahora. Cuando se desbloquee una nueva, va a aparecer acá."
+    },
+    "progress": {
+      "title": "Tu avance",
+      "overall": "Avance general del recorrido",
+      "tasksDone": "{{done}} de {{total}} tareas hechas",
+      "stage": "Avance de {{stage}}",
+      "current": "Etapa actual"
+    },
+    "checkin": {
+      "title": "Tu próximo check-in",
+      "when": "Check-in de {{days}} días · {{date}}",
+      "pending": "Antes de la reunión con tu jefe directo, cuéntale cómo te sientes en una autoevaluación breve.",
+      "hireDone": "Ya enviaste tu autoevaluación. Tu jefe directo completa el check-in en la reunión.",
+      "respond": "Responder mi autoevaluación",
+      "review": "Ver mi autoevaluación",
+      "none": "Completaste todos tus check-ins."
+    },
+    "contacts": {
+      "title": "Tus contactos clave",
+      "manager": "Jefe directo",
+      "buddy": "Buddy",
+      "hr": "Referente de RRHH",
+      "email": "Escribir a {{name}}"
+    },
+    "all": {
+      "title": "Recorrido completo",
+      "description": "Todas tus tareas, por etapa",
+      "stageCount": "{{done}} de {{total}} hechas"
+    },
+    "complete": "Marcar como hecha",
+    "completeTask": "Marcar como hecha: {{title}}",
+    "completed": "Hecha",
+    "openCourse": "Abrir curso",
+    "openTask": "Ver detalle",
+    "blockedBy": "Primero completa: {{tasks}}",
+    "ownerIs": "Responsable: {{owner}}",
+    "yours": "Te toca a ti",
+    "taskDone": "Tarea completada",
+    "stageDone": "¡Completaste {{stage}}!",
+    "unlocked": "Se desbloqueó: {{tasks}}",
+    "noHire": "Todavía no tienes un recorrido de ingreso asignado. RRHH te va a avisar cuando esté listo."
+  },
+  "task": {
+    "breadcrumb": "Migas de pan",
+    "back": "Volver a Mi recorrido",
+    "about": "Sobre esta tarea",
+    "type": "Tipo",
+    "owner": "Responsable",
+    "due": "Fecha límite",
+    "stage": "Etapa",
+    "status": "Estado",
+    "blockedTitle": "Esta tarea todavía no está disponible",
+    "blockedBody": "Primero hay que completar:",
+    "otherOwner": "Esta tarea la completa {{owner}}. Va a aparecer como hecha cuando la terminen.",
+    "doneTitle": "Completaste esta tarea",
+    "doneBody": "La marcaste como hecha el {{date}}.",
+    "doneByOther": "Se marcó como hecha el {{date}}.",
+    "nextUnlocked": "Ahora puedes hacer:",
+    "course": {
+      "title": "Contenido del curso",
+      "intro": "Contenido simulado para la demo. Recorre las lecciones y después marca el curso como completado.",
+      "lessons": [
+        "Introducción y objetivos",
+        "Conceptos clave con ejemplos de Nortia",
+        "Cuestionario de repaso"
+      ],
+      "minutes": "{{count}} min",
+      "complete": "Marcar curso como completado"
+    },
+    "material": {
+      "title": "Material",
+      "reading": "Lectura simulada para la demo. En el producto real, acá se abre el documento de la intranet.",
+      "document": "Documento simulado para la demo. En el producto real, acá se descarga o se firma el documento.",
+      "meeting": "La reunión aparece en tu calendario de trabajo. Márcala como hecha cuando haya terminado.",
+      "task": "Sigue los pasos de la descripción y márcala como hecha cuando la termines."
+    },
+    "notFound": "No encontramos esta tarea en tu recorrido."
   }
 }

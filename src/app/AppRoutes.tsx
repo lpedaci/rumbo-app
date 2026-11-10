@@ -18,6 +18,8 @@ const NewPasswordPage = lazy(() =>
 );
 const AccessHelpPage = lazy(() => import('@/features/auth/AccessHelpPage').then((m) => ({ default: m.AccessHelpPage })));
 const DemoHomePage = lazy(() => import('@/features/home/DemoHomePage').then((m) => ({ default: m.DemoHomePage })));
+const JourneyPage = lazy(() => import('@/features/journey/JourneyPage').then((m) => ({ default: m.JourneyPage })));
+const TaskDetailPage = lazy(() => import('@/features/journey/TaskDetailPage').then((m) => ({ default: m.TaskDetailPage })));
 const SecurityPage = lazy(() => import('@/features/account/SecurityPage').then((m) => ({ default: m.SecurityPage })));
 
 // Internal style guide: development only (CLAUDE.md 2.8). `import.meta.env.DEV` is
@@ -76,8 +78,8 @@ export function AppRoutes() {
           <Route path="/manager/hires/:id" element={<UpcomingPage screen="J2" />} />
           <Route path="/manager/hires/:id/checkin/:stage" element={<UpcomingPage screen="J3" />} />
 
-          <Route path="/me" element={<UpcomingPage screen="N1" />} />
-          <Route path="/me/tasks/:id" element={<UpcomingPage screen="N2" />} />
+          <Route path="/me" element={<JourneyPage />} />
+          <Route path="/me/tasks/:id" element={<TaskDetailPage />} />
           <Route path="/me/checkin" element={<NextCheckinRedirect />} />
           <Route path="/me/checkin/:stage" element={<UpcomingPage screen="N3" />} />
 

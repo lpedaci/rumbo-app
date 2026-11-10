@@ -57,14 +57,14 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| RF-021 | El sistema debe mostrar el recorrido agrupado por etapas: Preingreso, Semana 1, Mes 1, Días 30 a 90. | Nuevo ingreso | N1 | Must | Cada tarea aparece en una sola etapa. | Pendiente |
-| RF-022 | Cada tarea debe mostrar título, tipo, responsable, fecha límite y estado. | Nuevo ingreso, Jefe, RRHH | N1, J2, A4 | Must | Fecha en `DD/MM/AAAA`; estado en píldora con texto. | Pendiente |
-| RF-023 | El sistema debe permitir completar tareas propias y, en cursos, abrir el contenido y marcarlo completado. | Nuevo ingreso | N1, N2 | Must | La tarea pasa a hecha, persiste al recargar y se anima según 2.6. | Pendiente |
-| RF-024 | Las tareas bloqueadas por dependencias deben verse deshabilitadas con el motivo. | Nuevo ingreso | N1, N2 | Must | Texto del tipo "Primero completa: Acceso a Jira". | Pendiente |
-| RF-025 | Completar una tarea debe desbloquear las que dependen de ella. | Nuevo ingreso | N1 | Must | La dependiente cambia de bloqueada a pendiente y se resalta brevemente. | Pendiente |
-| RF-026 | El sistema debe mostrar el progreso general y por etapa. | Nuevo ingreso | N1 | Must | Los porcentajes coinciden con las tareas hechas. | Pendiente |
-| RF-027 | El sistema debe mostrar "Lo próximo" con las 3 tareas más urgentes. | Nuevo ingreso | N1 | Must | Ordenadas por vencidas primero y luego por fecha; excluye bloqueadas y hechas. | Pendiente |
-| RF-028 | El sistema debe mostrar los contactos clave: jefe directo, buddy y referente de RRHH. | Nuevo ingreso | N1 | Must | Con nombre, puesto y correo. | Pendiente |
+| RF-021 | El sistema debe mostrar el recorrido agrupado por etapas: Preingreso, Semana 1, Mes 1, Días 30 a 90. | Nuevo ingreso | N1 | Must | Cada tarea aparece en una sola etapa. | Hecho |
+| RF-022 | Cada tarea debe mostrar título, tipo, responsable, fecha límite y estado. | Nuevo ingreso, Jefe, RRHH | N1, J2, A4 | Must | Fecha en `DD/MM/AAAA`; estado en píldora con texto. | Hecho |
+| RF-023 | El sistema debe permitir completar tareas propias y, en cursos, abrir el contenido y marcarlo completado. | Nuevo ingreso | N1, N2 | Must | La tarea pasa a hecha, persiste al recargar y se anima según 2.6. | Hecho |
+| RF-024 | Las tareas bloqueadas por dependencias deben verse deshabilitadas con el motivo. | Nuevo ingreso | N1, N2 | Must | Texto del tipo "Primero completa: Acceso a Jira". | Hecho |
+| RF-025 | Completar una tarea debe desbloquear las que dependen de ella. | Nuevo ingreso | N1 | Must | La dependiente cambia de bloqueada a pendiente y se resalta brevemente. | Hecho |
+| RF-026 | El sistema debe mostrar el progreso general y por etapa. | Nuevo ingreso | N1 | Must | Los porcentajes coinciden con las tareas hechas. | Hecho |
+| RF-027 | El sistema debe mostrar "Lo próximo" con las 3 tareas más urgentes. | Nuevo ingreso | N1 | Must | Ordenadas por vencidas primero y luego por fecha; excluye bloqueadas y hechas. | Hecho |
+| RF-028 | El sistema debe mostrar los contactos clave: jefe directo, buddy y referente de RRHH. | Nuevo ingreso | N1 | Must | Con nombre, puesto y correo. | Hecho |
 
 ### F2. Constructor de plantillas (fase A)
 

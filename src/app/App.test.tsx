@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { switchRole } from '@/features/auth/auth-service';
 import en from '@/locales/en.json';
 import es from '@/locales/es.json';
+import templatesSeed from '@/data/templates.json';
 import { useDataStore } from '@/store/data-store';
 import { useSessionStore } from '@/store/session-store';
 import { AppProviders } from './AppProviders';
@@ -118,9 +119,15 @@ describe('locales', () => {
     const texts = valuesOf(es).join(' | ');
     expect(texts).not.toMatch(/—/);
     expect(texts).not.toMatch(/\b(vos|usted)\b/i);
-    expect(texts).not.toMatch(/\b(loguea|clave|password|dashboard|template|mail|móvil|ordenador)\b/i);
+    // "Clave" as password is banned; "contactos clave" (key contacts, F1) is fine.
+    expect(texts).not.toMatch(/\b(tu|la|una|su|nueva) clave\b/i);
+    expect(texts).not.toMatch(/\b(loguea|password|dashboard|template|mail|móvil|ordenador)\b/i);
     // Microsoft discourages "corporate account" next to its sign-in button (2.9, D-44).
     expect(texts).not.toMatch(/corporativ|empresarial/i);
+  });
+
+  it('seed task texts follow the fixed vocabulary too (D-44)', () => {
+    expect(JSON.stringify(templatesSeed)).not.toMatch(/corporativ|empresarial|—/i);
   });
 
   it('switches <html lang> when the language changes', async () => {

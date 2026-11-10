@@ -11,7 +11,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 2 | Tokens M3, `<Icon />`, `<BentoCard />`, styleguide, test de desbordes | Hecho | 10/11/2026 |
 | 3 | Datos semilla, tipos, stores y cálculos con tests | Hecho | 10/11/2026 |
 | 4 | Seguridad base y layout (G0 a G7) | Hecho (con el ajuste de G0) | 10/11/2026 |
-| 5 | Nuevo ingreso: N1, N2 | Pendiente | |
+| 5 | Nuevo ingreso: N1, N2 | Hecho | 10/11/2026 |
 | 6 | Plantillas: A5, A6, A7 | Pendiente | |
 | 7 | Ingresos: A2, A3, A4 | Pendiente | |
 | 8 | Jefe: J1, J2, J3 y N3 | Pendiente | |
@@ -20,6 +20,22 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
+
+## Paso 5: nuevo ingreso (N1 y N2)
+
+**Qué se hizo**
+- **N1 · Mi recorrido (`/me`):** grilla bento con "Lo próximo" (las 3 tareas más urgentes que dependen de la persona), "Tu avance" (porcentaje general y barra por etapa, con la etapa actual marcada), "Tu próximo check-in", "Tus contactos clave" (jefe directo, buddy y referente de RRHH, con correo) y el recorrido completo agrupado por etapa.
+- **Filas de tarea:** título, tipo, responsable ("Te toca a ti" o "Responsable: …"), fecha límite con texto relativo ("Vence mañana", "Venció hace 14 días") y estado en píldora con ícono y texto. Las bloqueadas muestran "Primero completa: …" y un candado en lugar del control. Los cursos llevan "Abrir curso" en lugar del check.
+- **Completar:** solo las tareas propias (`canCompleteTask` en `permissions.ts`). El check se dibuja con una transición de recorte; las tareas desbloqueadas se resaltan 1,6 s y se anuncian en un toast. Al cerrar una etapa, "¡Completaste …!" (única exclamación).
+- **N2 · Detalle (`/me/tasks/:id`):** descripción, contenido simulado (lecciones del curso o material según el tipo), aviso de bloqueo con enlaces a las tareas que bloquean, aviso cuando la tarea es de otra área y tarjeta de estado. Una tarea de otro recorrido muestra "No encontramos esta página" (mínimo privilegio).
+- **D-44 en los datos semilla:** la tarea de sistemas pasó a "Crear cuenta de trabajo y correo". Se subió la versión del esquema de datos a 3 para que los navegadores con datos guardados reciban el texto nuevo, y un test revisa también los datos semilla.
+
+**Verificación**
+- `tsc`, ESLint y 175 tests unitarios y de componentes en verde. Los tests nuevos cubren `canCompleteTask` y `relativeDue`, y en N1 y N2 el desbloqueo por dependencia, el bloqueo con enlace, el curso y el acceso a tareas ajenas.
+- Playwright: 162 casos en verde, con desbordes en los 6 anchos y axe sin errores, incluidas 4 pantallas nuevas (N1 y N2 bloqueada, curso y vencida). Capturas en `docs/screenshots/`.
+- Recorrido manual como Sofía a 1280 y 375 px: al completar "Primer análisis guiado" se desbloquea y resalta "Presentar resultados al equipo".
+
+**Pendiente:** la autoevaluación del check-in (N3) llega en el paso 8; hasta entonces, el botón del check-in abre la pantalla "en construcción".
 
 ## Paso 4, ajuste: inicio de la demo (G0) y login limpio
 

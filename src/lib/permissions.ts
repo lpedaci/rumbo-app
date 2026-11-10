@@ -1,4 +1,4 @@
-import type { Hire, Role } from '@/types/domain';
+import type { Hire, HireTask, Role } from '@/types/domain';
 
 /**
  * Single source of permissions (CLAUDE.md F0): a role × action matrix.
@@ -114,4 +114,26 @@ export function requiredPermission(pathname: string): Action | null {
     (a, b) => b.prefix.length - a.prefix.length,
   )[0];
   return match?.action ?? null;
+}
+
+/**
+ * Who can mark a journey task as done (CLAUDE.md section 4, D-09): HR any task
+ * (including buddy, IT and Facilities tasks), the manager only their own tasks in
+ * their team, the hire only their own tasks.
+ */
+export function canCompleteTask(
+  user: Subject | null | undefined,
+  hire: Pick<Hire, 'personId' | 'managerId'>,
+  task: Pick<HireTask, 'owner'>,
+): boolean {
+  switch (scopeOf(user, 'task:complete')) {
+    case 'all':
+      return true;
+    case 'team':
+      return hire.managerId === user!.personId && task.owner === 'manager';
+    case 'own':
+      return hire.personId === user!.personId && task.owner === 'hire';
+    default:
+      return false;
+  }
 }

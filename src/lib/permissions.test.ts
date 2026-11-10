@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { can, canViewHire, homePath, PERMISSIONS, requiredPermission, ROLES, scopeOf, visibleHires } from './permissions';
+import { can, canCompleteTask, canViewHire, homePath, PERMISSIONS, requiredPermission, ROLES, scopeOf, visibleHires } from './permissions';
 
 const carla = { personId: 'p-carla', role: 'admin' as const };
 const martin = { personId: 'p-martin', role: 'manager' as const };
@@ -66,5 +66,30 @@ describe('routes', () => {
 
   it('sends each role to its home', () => {
     expect([carla, martin, sofia, diego].map(homePath)).toEqual(['/admin', '/manager', '/me', '/it/requests']);
+  });
+});
+
+describe('who can mark a task as done (F1, CLAUDE.md section 4)', () => {
+  const hire = { personId: 'p-sofia', managerId: 'p-martin' };
+  const own = { owner: 'hire' as const };
+  const managerTask = { owner: 'manager' as const };
+  const itTask = { owner: 'it' as const };
+
+  it('the hire completes only their own tasks', () => {
+    expect(canCompleteTask(sofia, hire, own)).toBe(true);
+    expect(canCompleteTask(sofia, hire, itTask)).toBe(false);
+    expect(canCompleteTask(sofia, { ...hire, personId: 'p-camila' }, own)).toBe(false);
+  });
+
+  it('the manager completes only their own tasks in their team', () => {
+    expect(canCompleteTask(martin, hire, managerTask)).toBe(true);
+    expect(canCompleteTask(martin, hire, own)).toBe(false);
+    expect(canCompleteTask(martin, { ...hire, managerId: 'p-lucia' }, managerTask)).toBe(false);
+  });
+
+  it('HR marks tasks of other areas; IT has no journey access', () => {
+    expect(canCompleteTask(carla, hire, itTask)).toBe(true);
+    expect(canCompleteTask(diego, hire, itTask)).toBe(false);
+    expect(canCompleteTask(null, hire, own)).toBe(false);
   });
 });

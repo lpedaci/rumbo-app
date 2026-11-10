@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addDays, daysBetween, formatDate, formatNumber, formatPercent, stageForOffset } from './dates';
+import { addDays, daysBetween, formatDate, formatNumber, formatPercent, relativeDue, stageForOffset } from './dates';
 
 describe('dates', () => {
   it('adds calendar days across months and years', () => {
@@ -32,5 +32,15 @@ describe('dates', () => {
     expect(stageForOffset(29)).toBe('month1');
     expect(stageForOffset(30)).toBe('days30to90');
     expect(stageForOffset(90)).toBe('days30to90');
+  });
+});
+
+describe('relativeDue', () => {
+  it('names nearby days and counts the rest', () => {
+    expect(relativeDue('2026-11-10', '2026-11-10')).toEqual({ key: 'today' });
+    expect(relativeDue('2026-11-11', '2026-11-10')).toEqual({ key: 'tomorrow' });
+    expect(relativeDue('2026-11-09', '2026-11-10')).toEqual({ key: 'yesterday' });
+    expect(relativeDue('2026-11-15', '2026-11-10')).toEqual({ key: 'inDays', count: 5 });
+    expect(relativeDue('2026-10-27', '2026-11-10')).toEqual({ key: 'daysAgo', count: 14 });
   });
 });
