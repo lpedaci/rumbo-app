@@ -135,9 +135,9 @@
   },
   "accessHelp": {
     "title": "Trouble signing in",
-    "intro": "Rumbo accounts are work accounts, and access is managed by Nortia's IT team. For security, an account can't be recovered or unlocked from this screen.",
+    "intro": "Rumbo uses your Nortia work account, and IT manages those accounts. For security, an account can't be recovered or unlocked from this screen.",
     "ssoTitle": "If you sign in with Microsoft or Google",
-    "ssoBody": "Your password is your company account password. IT changes it, not this platform.",
+    "ssoBody": "Your password is your company work account password. IT changes it, not this platform.",
     "channelsTitle": "IT help desk",
     "portal": "Ticket portal: soporte.nortia.demo",
     "email": "Email: soporte.it@nortia.demo",

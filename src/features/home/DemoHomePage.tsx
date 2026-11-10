@@ -115,14 +115,12 @@ export function DemoHomePage() {
 
         <footer className="flex flex-col gap-4 border-t border-outline-variant pt-6 md:flex-row md:items-center md:justify-between">
           <nav aria-label={t('home.linksTitle')} className="flex flex-wrap gap-2">
-            {CASE_STUDY_URL && (
-              <Button asChild variant="outlined" trailingIcon="open_in_new">
-                <a href={CASE_STUDY_URL} target="_blank" rel="noopener noreferrer">
-                  {t('home.caseStudy')}
-                  <span className="sr-only"> {t('home.newTab')}</span>
-                </a>
-              </Button>
-            )}
+            <Button asChild variant="outlined" trailingIcon="open_in_new">
+              <a href={CASE_STUDY_URL} target="_blank" rel="noopener noreferrer">
+                {t('home.caseStudy')}
+                <span className="sr-only"> {t('home.newTab')}</span>
+              </a>
+            </Button>
             <Button asChild variant="outlined" trailingIcon="open_in_new">
               <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
                 {t('home.docs')}

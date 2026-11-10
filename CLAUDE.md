@@ -213,6 +213,7 @@ Usar **Motion** (Framer Motion) solo para estas animaciones, con duraciones de 1
 | --- | --- |
 | Iniciar sesión / Cerrar sesión | Ingresar, loguearse, salir |
 | Correo | Mail, email (en la interfaz) |
+| Cuenta de trabajo / correo de trabajo | Cuenta corporativa, cuenta empresarial, correo corporativo (Microsoft desaconseja estos términos junto a su botón de inicio de sesión; en sus interfaces en español usa "cuenta de trabajo o educativa" o "cuenta profesional o educativa") |
 | Contraseña | Clave, password |
 | Panel | Dashboard (en la interfaz) |
 | Recorrido de ingreso | Onboarding (en textos para el nuevo ingreso; RRHH y sistemas pueden ver "onboarding") |
@@ -239,7 +240,7 @@ Todos los textos viven en `src/locales/`. Antes de cerrar cada pantalla, revisar
 **Formularios: etiqueta, texto de ayuda y placeholder**
 - Cada campo tiene una **etiqueta visible y permanente** arriba del campo (`label-medium`). El placeholder **nunca** reemplaza a la etiqueta: desaparece al escribir y suele tener poco contraste.
 - **Debajo de cada campo va un texto de ayuda** (*supporting text* de M3, `body-small`, color `on-surface-variant`) que indica **exactamente qué hay que poner y en qué formato**, con un ejemplo. Por ejemplo:
-    - Correo: "Tu correo corporativo, por ejemplo: nombre.apellido@nortia.demo".
+    - Correo: "Tu correo de trabajo, por ejemplo: nombre.apellido@nortia.demo".
     - Fecha de ingreso: "Formato DD/MM/AAAA, por ejemplo: 13/10/2026".
     - Plazo de una tarea: "Días respecto del ingreso, entre -30 y 90. Usa números negativos para antes del ingreso, por ejemplo: -3".
     - Contraseña nueva: la lista de requisitos, que se tilda en vivo a medida que se cumplen.
@@ -367,7 +368,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     1. Logo y nombre de Rumbo, y una frase que diga qué es y qué problema resuelve (por ejemplo: "Cada persona sabe qué hacer, con quién y para cuándo").
     2. Breve explicación de la demo: es un prototipo con datos ficticios de una empresa inventada, Nortia S.A.
     3. **Elección del recorrido:** cuatro tarjetas, una por rol (Carla, RRHH; Martín, jefe directo; Sofía, nuevo ingreso; Diego, sistemas). Cada una con qué hace ese rol y qué va a poder recorrer (2 o 3 puntos concretos).
-    4. Enlaces "Ver el case study" (al portfolio) y "Ver la documentación" (al `docs/README.md` del repositorio).
+    4. Botones "Ver el case study" y "Ver la documentación" (al `docs/README.md` del repositorio). La URL del case study sale de una constante `CASE_STUDY_URL` en un único archivo de configuración; mientras el case study no esté publicado, apunta al portfolio: `https://lpedaci.github.io/portfolio/`. El botón se muestra siempre.
     5. "Restablecer demo".
 - Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
 - Diseño coherente con el resto del producto (bento, sin degradés, sin sombras); en mobile, las tarjetas en una columna.
@@ -406,10 +407,10 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
 **Problemas para iniciar sesión (derivación obligatoria a sistemas)**
 - No hay autogestión: ni "olvidé mi contraseña" con email, ni desbloqueo automático por tiempo.
 - El enlace del login se llama **"¿Problemas para iniciar sesión?"** y lleva a una pantalla que:
-    1. Explica que las cuentas son corporativas y que el acceso lo gestiona el área de sistemas.
+    1. Explica que las cuentas de trabajo las gestiona el área de sistemas.
     2. Si se ingresó con SSO, aclara que la contraseña es la de la cuenta de la empresa (Microsoft o Google) y que se cambia con sistemas, no en esta plataforma.
     3. Muestra los canales de la mesa de ayuda (ficticios): portal de tickets, `soporte.it@nortia.demo` e interno 4400, con horario de atención.
-    4. Ofrece un formulario breve **"Solicitar ayuda a sistemas"**: email corporativo, motivo (cuenta bloqueada, olvidé mi contraseña, no recibo el código de verificación, otro) y comentario opcional.
+    4. Ofrece un formulario breve **"Solicitar ayuda a sistemas"**: correo de trabajo, motivo (cuenta bloqueada, olvidé mi contraseña, no recibo el código de verificación, otro) y comentario opcional.
 - Al enviar, se genera una solicitud con número (ej.: `IT-2026-0142`) y un mensaje de confirmación que dice que sistemas va a **verificar la identidad** antes de restablecer el acceso. El mensaje es siempre el mismo, exista o no el email.
 - La solicitud aparece en la bandeja del admin de sistemas (F6). Cuando la resuelve, el usuario puede volver a ingresar; si se restableció la contraseña, al entrar se le pide crear una nueva con la **política visible y validada en vivo** (mínimo 12 caracteres, mayúscula, minúscula, número y símbolo, distinta de las anteriores, con indicador de fortaleza).
 - En la demo, la pantalla de confirmación incluye un enlace "Ver como sistemas (demo)" que entra como Diego directo a esa solicitud, para mostrar el flujo de punta a punta.
@@ -519,7 +520,7 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
 - Los datos semilla incluyen al menos un inicio de sesión inusual para Sofía, para poder mostrar el flujo.
 
 ### F12. Ciclo de vida de accesos: alta, cambio y baja
-- **Alta:** al crear un ingreso (F3), se generan automáticamente las tareas de accesos para sistemas según el puesto (cuenta corporativa, correo, herramientas del área). Sistemas las ve en su bandeja y las marca como otorgadas.
+- **Alta:** al crear un ingreso (F3), se generan automáticamente las tareas de accesos para sistemas según el puesto (cuenta de trabajo, correo, herramientas del área). Sistemas las ve en su bandeja y las marca como otorgadas.
 - **Cambio de puesto o área:** RRHH registra el cambio con fecha efectiva; se generan tareas para sistemas de otorgar los accesos nuevos y **revocar los que ya no corresponden**.
 - **Baja (offboarding de accesos):** RRHH registra la desvinculación con fecha y tipo; se genera un checklist de revocación para sistemas (cuenta, correo, herramientas, dispositivos asignados) y un recordatorio al jefe. A la fecha efectiva, la cuenta queda deshabilitada en la demo y sus sesiones se cierran.
 - Cada evento muestra su avance (accesos pendientes, otorgados, revocados) y queda en la auditoría.

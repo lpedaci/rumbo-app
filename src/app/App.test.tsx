@@ -119,6 +119,8 @@ describe('locales', () => {
     expect(texts).not.toMatch(/—/);
     expect(texts).not.toMatch(/\b(vos|usted)\b/i);
     expect(texts).not.toMatch(/\b(loguea|clave|password|dashboard|template|mail|móvil|ordenador)\b/i);
+    // Microsoft discourages "corporate account" next to its sign-in button (2.9, D-44).
+    expect(texts).not.toMatch(/corporativ|empresarial/i);
   });
 
   it('switches <html lang> when the language changes', async () => {

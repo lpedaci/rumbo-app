@@ -61,12 +61,12 @@ export function ValidationDemoForm() {
     <form className="flex flex-col gap-5" noValidate onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <TextField
-          label="Correo corporativo"
+          label="Correo de trabajo"
           type="email"
           autoComplete="email"
           required
           mask={noSpacesMask}
-          helperText="Tu correo corporativo, por ejemplo: nombre.apellido@nortia.demo"
+          helperText="Tu correo de trabajo, por ejemplo: nombre.apellido@nortia.demo"
           error={fieldError(errors.email)}
           {...register('email')}
         />
@@ -103,7 +103,7 @@ export function ValidationDemoForm() {
           type={showPassword ? 'text' : 'password'}
           autoComplete="current-password"
           required
-          helperText="La contraseña de tu cuenta corporativa"
+          helperText="La contraseña de tu cuenta de trabajo"
           error={fieldError(errors.password)}
           trailing={
             <IconButton

@@ -4,5 +4,5 @@
  */
 export const DOCS_URL = 'https://github.com/lpedaci/rumbo-app/blob/main/docs/README.md';
 
-/** Case study in Lourdes's portfolio. Pending: the link is hidden until the URL exists (D-41). */
-export const CASE_STUDY_URL: string | null = null;
+/** Case study in Lourdes's portfolio. Until it is published, it points to the portfolio home (D-41). */
+export const CASE_STUDY_URL = 'https://lpedaci.github.io/portfolio/';

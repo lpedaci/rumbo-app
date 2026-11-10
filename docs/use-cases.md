@@ -102,8 +102,8 @@ Hay una sesión activa con vencimiento por inactividad de 15 minutos y el evento
 | RF relacionados | RF-005, RF-008, RF-009, RF-010 |
 
 **Flujo principal**
-1. El sistema muestra G4: explica que las cuentas son corporativas, aclara qué contraseña usar si entra con SSO y muestra los canales de la mesa de ayuda con su horario.
-2. El usuario completa el formulario "Solicitar ayuda a sistemas": correo corporativo, motivo "Cuenta bloqueada" y comentario opcional.
+1. El sistema muestra G4: explica que las cuentas de trabajo las gestiona sistemas, aclara qué contraseña usar si entra con SSO y muestra los canales de la mesa de ayuda con su horario.
+2. El usuario completa el formulario "Solicitar ayuda a sistemas": correo de trabajo, motivo "Cuenta bloqueada" y comentario opcional.
 3. El sistema valida los campos.
 4. El sistema crea la solicitud con número (por ejemplo, `IT-2026-0142`), registra `access_request.create` y muestra la confirmación: sistemas va a verificar la identidad antes de restablecer el acceso.
 5. En la demo, la confirmación ofrece "Ver como sistemas (demo)", que continúa en CU-03.
