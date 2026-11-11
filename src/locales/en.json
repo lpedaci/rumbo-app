@@ -492,7 +492,7 @@
     "showcase": {
       "eyebrow": "Journeys",
       "title": "A journey for each role",
-      "subtitle": "Each person sees what they need to do their part. Choose where you want to explore Rumbo from.",
+      "subtitle": "Each person sees what they need to do their part.\nChoose where you want to explore Rumbo from.",
       "roles": {
         "admin": {
           "title": "Design the journeys and spot where they get stuck",
@@ -551,7 +551,7 @@
     "steps": {
       "eyebrow": "Getting started",
       "title": "Explore the demo in three steps",
-      "subtitle": "No accounts to create and no real data to enter: everything is preloaded so you only have to look.",
+      "subtitle": "Everything is preloaded to make it easy to explore the system.",
       "items": [
         {
           "title": "Choose a journey",

@@ -492,7 +492,7 @@
     "showcase": {
       "eyebrow": "Recorridos",
       "title": "Un recorrido para cada rol",
-      "subtitle": "Cada persona ve lo que necesita para hacer su parte. Elige desde dónde quieres recorrer Rumbo.",
+      "subtitle": "Cada persona ve lo que necesita para hacer su parte.\nElige desde dónde quieres recorrer Rumbo.",
       "roles": {
         "admin": {
           "title": "Diseña los recorridos y detecta dónde se traban",
@@ -551,7 +551,7 @@
     "steps": {
       "eyebrow": "Cómo empezar",
       "title": "Recorre la demo en tres pasos",
-      "subtitle": "Sin crear cuentas ni ingresar datos reales: todo está precargado para que solo tengas que mirar.",
+      "subtitle": "Todo está precargado para facilitar el recorrido por el sistema.",
       "items": [
         {
           "title": "Elige un recorrido",

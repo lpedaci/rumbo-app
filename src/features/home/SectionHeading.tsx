@@ -43,7 +43,7 @@ export const SectionHeading = forwardRef<HTMLHeadingElement, SectionHeadingProps
       >
         {withHighlight(title, highlight)}
       </h2>
-      {subtitle && <p className="max-w-2xl text-body-large text-pretty text-on-surface-variant">{subtitle}</p>}
+      {subtitle && <p className="max-w-2xl text-body-large text-pretty whitespace-pre-line text-on-surface-variant">{subtitle}</p>}
     </div>
   );
 });
