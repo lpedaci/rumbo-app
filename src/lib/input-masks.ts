@@ -48,6 +48,20 @@ export function digitsMask(maxLength: number): InputMask {
   return createMask((raw) => raw.replace(/\D/g, '').slice(0, maxLength), /[\d ]/);
 }
 
+/** Mobile numbers: a leading + and digits; spaces are kept for readability. 15 digits max (E.164). */
+export const phoneMask = createMask((raw) => {
+  const plus = raw.trimStart().startsWith('+') ? '+' : '';
+  let digits = 0;
+  const body = raw
+    .replace(/[^\d ]/g, '')
+    .replace(/\s+/g, ' ')
+    .split('')
+    .filter((char) => (char === ' ' ? true : ++digits <= 15))
+    .join('')
+    .trimStart();
+  return plus + body;
+}, /[\d+ ()-]/);
+
 /** Emails and user names cannot contain spaces. */
 export const noSpacesMask = createMask((raw) => raw.replace(/\s/g, ''), /\S/);
 

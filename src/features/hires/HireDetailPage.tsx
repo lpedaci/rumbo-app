@@ -11,6 +11,7 @@ import { TaskRow } from '@/features/journey/TaskRow';
 import { useCompleteTask } from '@/features/journey/use-complete-task';
 import { DEMO_TODAY, daysBetween, formatDate, formatPercent, STAGES } from '@/lib/dates';
 import { summarizeHire } from '@/lib/hires';
+import { maskPhone } from '@/lib/validation';
 import { CHECKIN_OFFSETS, checkinDueDate, progressByStage } from '@/lib/journey';
 import { can, canCompleteTask, canViewHire } from '@/lib/permissions';
 import { useDataStore } from '@/store/data-store';
@@ -196,6 +197,9 @@ export function HireDetailPage() {
                 <DetailRow label={t('hires.detail.hr')} value={nameOf(hire.hrId)} />
                 <DetailRow label={t('hires.detail.template')} value={s.template?.name ?? t('hires.detail.none')} />
                 <DetailRow label={t('hires.detail.email')} value={s.person?.email ?? ''} />
+                {s.person?.employeeId && <DetailRow label={t('hires.detail.employeeId')} value={s.person.employeeId} />}
+                {/* Only the last digits: personal data shown masked (F10) */}
+                {s.person?.mobile && <DetailRow label={t('hires.detail.mobile')} value={maskPhone(s.person.mobile)} />}
               </dl>
             </Card>
 

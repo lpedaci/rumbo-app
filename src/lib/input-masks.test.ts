@@ -81,3 +81,12 @@ describe('hasRejectedCharacters', () => {
     expect(hasRejectedCharacters(noSpacesMask, 'sofia @nortia.demo')).toBe(true);
   });
 });
+
+describe('phoneMask (D-78)', () => {
+  it('keeps a leading plus, digits and spaces, up to 15 digits', async () => {
+    const { phoneMask } = await import('./input-masks');
+    expect(phoneMask('+54 9 11 5555-5555')).toBe('+54 9 11 55555555');
+    expect(phoneMask('abc 11 2222')).toBe('11 2222');
+    expect(phoneMask('1234567890123456789').replace(/\D/g, '')).toHaveLength(15);
+  });
+});

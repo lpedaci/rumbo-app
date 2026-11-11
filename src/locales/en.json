@@ -30,7 +30,8 @@
     "dateInvalid": "That date doesn't exist. Check the day and month",
     "integer": "Enter a whole number, for example: -3 or 5",
     "offsetRange": "Enter a number of days between {{min}} and {{max}}",
-    "otp": "Enter the 6 digits of the code"
+    "otp": "Enter the 6 digits of the code",
+    "phone": "Enter the mobile with country and area code, for example: +54 9 11 5555 5555"
   },
   "roles": {
     "admin": "HR",
@@ -1105,8 +1106,12 @@
         "tasks_other": "{{count}} tasks, from {{from}} to {{to}}",
         "checkins": "30, 60 and 90 day check-ins: {{dates}}",
         "status": "Status when saved",
-        "pick": "Choose a template and the start date to see the journey."
-      }
+        "pick": "Choose a template and the start date to see the journey.",
+        "employeeId": "Employee number",
+        "generated": "The company creates the work account and the employee number."
+      },
+      "mobile": "Mobile",
+      "mobileHelp": "To verify their identity if they have trouble signing in. With country and area code, for example: +54 9 11 5555 5555"
     },
     "detail": {
       "back": "Back to Hires",
@@ -1154,7 +1159,9 @@
       "rescheduled": "Rescheduled for {{date}}",
       "managerComment": "Manager's comment",
       "checkinOverdue": "Overdue",
-      "needsAttention": "Needs attention"
+      "needsAttention": "Needs attention",
+      "employeeId": "Employee number",
+      "mobile": "Mobile"
     }
   }
 }

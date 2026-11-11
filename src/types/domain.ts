@@ -22,6 +22,10 @@ export interface Person {
   email: string;
   managerId?: string;
   avatarUrl?: string;
+  /** Employee number given by the company when the hire is created (D-78), for example NOR-1013. */
+  employeeId?: string;
+  /** Mobile used by IT to verify identity before restoring access (D-78). Fictitious in the demo. */
+  mobile?: string;
 }
 
 export interface Session {

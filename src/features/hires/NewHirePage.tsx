@@ -12,11 +12,11 @@ import { TextField } from '@/components/ui/TextField';
 import { toast } from '@/components/ui/toast-store';
 import milestones from '@/data/checkin-milestones.json';
 import { addDays, formatDate } from '@/lib/dates';
-import { createHire, workEmailFor } from '@/lib/hires';
-import { dateMask } from '@/lib/input-masks';
+import { createHire, nextEmployeeId, workEmailFor } from '@/lib/hires';
+import { dateMask, phoneMask } from '@/lib/input-masks';
 import { CHECKIN_OFFSETS, hireStatus } from '@/lib/journey';
 import { useFieldError } from '@/lib/use-field-error';
-import { dateField, parseDisplayDate, requiredText } from '@/lib/validation';
+import { dateField, parseDisplayDate, phoneField, requiredText } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import { HireStatusPill } from './HireStatusPill';
@@ -29,6 +29,7 @@ const schema = z.object({
   managerId: requiredText,
   buddyId: z.string(),
   templateId: requiredText,
+  mobile: phoneField,
 });
 type Values = z.infer<typeof schema>;
 
@@ -56,7 +57,16 @@ export function NewHirePage() {
   } = useForm<Values>({
     resolver: zodResolver(schema),
     mode: 'onTouched',
-    defaultValues: { name: '', jobTitle: '', area: '', startDate: '', managerId: '', buddyId: '', templateId: '' },
+    defaultValues: {
+      name: '',
+      jobTitle: '',
+      area: '',
+      startDate: '',
+      managerId: '',
+      buddyId: '',
+      templateId: '',
+      mobile: '',
+    },
   });
   const [name, startDate, templateId] = useWatch({ control, name: ['name', 'startDate', 'templateId'] });
 
@@ -199,6 +209,17 @@ export function NewHirePage() {
                 ]}
                 {...register('buddyId')}
               />
+              <TextField
+                label={t('hires.form.mobile')}
+                helperText={t('hires.form.mobileHelp')}
+                type="tel"
+                inputMode="tel"
+                autoComplete="off"
+                mask={phoneMask}
+                required
+                error={fieldError(errors.mobile)}
+                {...register('mobile')}
+              />
             </div>
           </Card>
 
@@ -218,13 +239,22 @@ export function NewHirePage() {
           <Card title={t('hires.form.summary.title')} className="lg:sticky lg:top-24">
             {summary ? (
               <ul className="flex flex-col gap-4 text-body-medium text-on-surface" aria-live="polite">
-                <li className="flex flex-col gap-0.5">
-                  <span className="text-label-medium text-on-surface-variant">{t('hires.form.summary.email')}</span>
-                  <span className="break-all">
-                    {workEmailFor(
-                      name || '',
-                      people.map((p) => p.email),
-                    )}
+                <li className="flex flex-col gap-2 rounded-md bg-surface-container p-3">
+                  <span className="text-body-small text-on-surface-variant">{t('hires.form.summary.generated')}</span>
+                  <span className="flex flex-col gap-0.5">
+                    <span className="text-label-medium text-on-surface-variant">{t('hires.form.summary.email')}</span>
+                    <span className="break-all">
+                      {workEmailFor(
+                        name || '',
+                        people.map((p) => p.email),
+                      )}
+                    </span>
+                  </span>
+                  <span className="flex flex-col gap-0.5">
+                    <span className="text-label-medium text-on-surface-variant">
+                      {t('hires.form.summary.employeeId')}
+                    </span>
+                    <span className="tabular-nums">{nextEmployeeId(people)}</span>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">

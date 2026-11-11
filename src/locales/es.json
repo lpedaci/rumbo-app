@@ -30,7 +30,8 @@
     "dateInvalid": "Esa fecha no existe. Revisa el día y el mes",
     "integer": "Ingresa un número entero, por ejemplo: -3 o 5",
     "offsetRange": "Ingresa un número de días entre {{min}} y {{max}}",
-    "otp": "Ingresa los 6 dígitos del código"
+    "otp": "Ingresa los 6 dígitos del código",
+    "phone": "Ingresa el celular con código de país y de área, por ejemplo: +54 9 11 5555 5555"
   },
   "roles": {
     "admin": "RRHH",
@@ -1105,8 +1106,12 @@
         "tasks_other": "{{count}} tareas, del {{from}} al {{to}}",
         "checkins": "Check-ins de 30, 60 y 90 días: {{dates}}",
         "status": "Estado al guardar",
-        "pick": "Elige una plantilla y la fecha de ingreso para ver el recorrido."
-      }
+        "pick": "Elige una plantilla y la fecha de ingreso para ver el recorrido.",
+        "employeeId": "Legajo",
+        "generated": "La empresa genera la cuenta de trabajo y el legajo."
+      },
+      "mobile": "Celular",
+      "mobileHelp": "Para verificar su identidad si tiene problemas para iniciar sesión. Con código de país y de área, por ejemplo: +54 9 11 5555 5555"
     },
     "detail": {
       "back": "Volver a Ingresos",
@@ -1154,7 +1159,9 @@
       "rescheduled": "Reprogramado para el {{date}}",
       "managerComment": "Comentario del jefe directo",
       "checkinOverdue": "Vencido",
-      "needsAttention": "Requiere atención"
+      "needsAttention": "Requiere atención",
+      "employeeId": "Legajo",
+      "mobile": "Celular"
     }
   }
 }

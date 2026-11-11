@@ -49,10 +49,13 @@ describe('creating a hire (A3, F3)', () => {
         startDate: start,
         managerId: 'p-martin',
         templateId: template.id,
+        mobile: '+54 9 11 5555 5555',
       },
       { template, hrId: 'p-carla', people: seed.people, hires: seed.hires, milestones },
     );
     expect(person.role).toBe('hire');
+    expect(person.employeeId).toMatch(/^NOR-\d{4}$/);
+    expect(person.mobile).toBe('+54 9 11 5555 5555');
     expect(hire.personId).toBe(person.id);
     expect(hire.status).toBe('upcoming');
     expect(hire.tasks).toHaveLength(template.tasks.length);

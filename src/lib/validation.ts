@@ -42,3 +42,15 @@ export const taskOffsetField = required(z.string())
 export const otpField = required(z.string()).regex(/^\d{6}$/, 'validation.otp');
 
 export const requiredText = required(z.string());
+
+/** Mobile with country and area code: 10 to 15 digits (D-78). */
+export const phoneField = required(z.string()).refine((value) => {
+  const digits = value.replace(/\D/g, '').length;
+  return digits >= 10 && digits <= 15;
+}, 'validation.phone');
+
+/** Shows only the last 4 digits of a phone number, for example "*** 5555". */
+export function maskPhone(value: string): string {
+  const digits = value.replace(/\D/g, '');
+  return digits.length > 4 ? `*** ${digits.slice(-4)}` : value;
+}

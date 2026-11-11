@@ -99,6 +99,13 @@ function uniqueId(prefix: string, name: string, takenIds: string[]): string {
   return id;
 }
 
+/** Next employee number of the company: NOR-1001, NOR-1002… (D-78). */
+export function nextEmployeeId(people: Person[]): string {
+  const numbers = people.map((p) => Number(p.employeeId?.replace(/\D/g, '') ?? 0));
+  const next = Math.max(1000 + people.length, ...numbers) + 1;
+  return `NOR-${next}`;
+}
+
 export interface NewHireInput {
   name: string;
   jobTitle: string;
@@ -108,6 +115,8 @@ export interface NewHireInput {
   managerId: string;
   buddyId?: string;
   templateId: string;
+  /** Mobile for identity verification. */
+  mobile: string;
 }
 
 /**
@@ -146,6 +155,8 @@ export function createHire(
       context.people.map((p) => p.email),
     ),
     managerId: input.managerId,
+    employeeId: nextEmployeeId(context.people),
+    mobile: input.mobile.trim(),
   };
   const checkins = generateCheckins(input.startDate, hireId, context.milestones);
   const hire: Hire = {

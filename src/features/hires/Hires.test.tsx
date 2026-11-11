@@ -51,6 +51,7 @@ describe('A3 · New hire', () => {
     fireEvent.change(screen.getByRole('textbox', { name: /Fecha de ingreso/ }), { target: { value: '01/12/2026' } });
     fireEvent.change(screen.getByRole('combobox', { name: /Plantilla/ }), { target: { value: 'tpl-data' } });
     fireEvent.change(screen.getByRole('combobox', { name: /Jefe directo/ }), { target: { value: 'p-martin' } });
+    fireEvent.change(screen.getByRole('textbox', { name: /Celular/ }), { target: { value: '+54 9 11 5555 5555' } });
     // The template fills in the job title and the area
     expect(screen.getByRole('textbox', { name: /Puesto/ })).not.toHaveValue('');
     fireEvent.click(screen.getByRole('button', { name: es.hires.form.submit }));
