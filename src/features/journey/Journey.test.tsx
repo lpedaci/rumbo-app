@@ -31,6 +31,11 @@ describe('N1 · Mi recorrido', () => {
     const h1 = await screen.findByRole('heading', { level: 1 });
     expect(h1).toHaveTextContent(/^(Buenos días|Buenas tardes|Buenas noches), Sofía$/);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    // Greeting header (D-67): today's date and the context as chips
+    expect(screen.getByText(/10 de noviembre/)).toBeInTheDocument();
+    expect(screen.getByText('Día 28 de 90')).toBeInTheDocument();
+    expect(screen.getByText('Mes 1 · etapa actual')).toBeInTheDocument();
+    expect(screen.getByText('Check-in en 2 días')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: es.journey.next.title })).toBeInTheDocument();
     expect(screen.getAllByRole('progressbar').length).toBeGreaterThan(1);
   });

@@ -396,8 +396,6 @@
   },
   "journey": {
     "title": "My journey",
-    "dayOf": "Day {{day}} of your onboarding journey · Current stage: {{stage}}",
-    "beforeStart": "You start on {{date}}. Meanwhile, you can get ahead with your pre-boarding tasks.",
     "next": {
       "title": "Up next",
       "description": "Your 3 most urgent tasks",
@@ -452,9 +450,9 @@
     "unlocked": "Unlocked: {{tasks}}",
     "noHire": "You don't have an onboarding journey yet. HR will let you know when it's ready.",
     "greetings": {
-      "morning": "Good morning, {{name}}",
-      "afternoon": "Good afternoon, {{name}}",
-      "evening": "Good evening, {{name}}"
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
     },
     "kpi": {
       "progress": "Journey progress",
@@ -507,7 +505,15 @@
     "row": {
       "doneOn": "Done on"
     },
-    "yoursShort": "You"
+    "yoursShort": "You",
+    "facts": {
+      "day": "Day {{day}} of {{total}}",
+      "stage": "{{stage}} · current stage",
+      "startsOn": "You start on {{date}}",
+      "checkin_one": "Check-in in {{count}} day",
+      "checkin_other": "Check-in in {{count}} days",
+      "checkinToday": "Check-in today"
+    }
   },
   "task": {
     "breadcrumb": "Breadcrumbs",

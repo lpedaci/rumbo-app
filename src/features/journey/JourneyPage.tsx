@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { PageHeader } from '@/components/layout/PageHeader';
+import { GreetingHeader } from '@/components/layout/GreetingHeader';
 import { BentoCard } from '@/components/ui/BentoCard';
 import { BentoGrid } from '@/components/ui/BentoGrid';
 import { Button } from '@/components/ui/Button';
@@ -9,7 +9,7 @@ import { IconTile } from '@/components/ui/IconTile';
 import { Icon } from '@/components/ui/Icon';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { KpiCard, KpiRow } from '@/components/ui/KpiCard';
-import { daysBetween, DEMO_TODAY, formatDate, formatNumber, formatPercent, STAGES } from '@/lib/dates';
+import { daysBetween, DEMO_TODAY, formatDate, formatLongDate, formatNumber, formatPercent, STAGES } from '@/lib/dates';
 import {
   CHECKIN_OFFSETS,
   checkinDueDate,
@@ -37,6 +37,9 @@ import { UNLOCK_HIGHLIGHT_MS } from './task-meta';
 import { useCompleteTask } from './use-complete-task';
 import { useOwnHire } from './use-own-hire';
 
+/** Length of the journey in days (end of the "Días 30 a 90" stage). */
+const JOURNEY_DAYS = 90;
+
 /**
  * N1 · Mi recorrido (CLAUDE.md F1): what to do, with whom and by when.
  * Redesign 2.2.1: greeting as title, KPI row with sparkline, journey card with segmented
@@ -44,7 +47,7 @@ import { useOwnHire } from './use-own-hire';
  * key contacts and the full journey by stage.
  */
 export function JourneyPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const user = useCurrentUser();
   const hire = useOwnHire();
   const people = useDataStore((s) => s.people);
@@ -57,12 +60,13 @@ export function JourneyPage() {
 
   const person = people.find((p) => p.id === user?.personId);
   const firstName = person?.name.split(' ')[0] ?? '';
-  const greeting = t(`journey.greetings.${greetingKey()}`, { name: firstName });
+  const greeting = t(`journey.greetings.${greetingKey()}`);
+  const today = formatLongDate(DEMO_TODAY, i18n.language === 'en' ? 'en' : 'es');
 
   if (!hire) {
     return (
       <>
-        <PageHeader title={greeting} />
+        <GreetingHeader date={today} greeting={greeting} name={firstName} facts={[]} />
         <InlineAlert tone="info">{t('journey.noHire')}</InlineAlert>
       </>
     );
@@ -105,13 +109,30 @@ export function JourneyPage() {
 
   return (
     <>
-      <PageHeader
-        title={greeting}
-        description={
+      <GreetingHeader
+        date={today}
+        greeting={greeting}
+        name={firstName}
+        facts={[
           day < 0
-            ? t('journey.beforeStart', { date: formatDate(hire.startDate) })
-            : t('journey.dayOf', { day, stage: t(`stages.${stage}`) })
-        }
+            ? { icon: 'route', label: t('journey.facts.startsOn', { date: formatDate(hire.startDate) }) }
+            : { icon: 'route', label: t('journey.facts.day', { day, total: JOURNEY_DAYS }) },
+          ...(day >= 0
+            ? [{ icon: 'flag' as const, label: t('journey.facts.stage', { stage: t(`stages.${stage}`) }) }]
+            : []),
+          ...(checkin && checkinIn !== null
+            ? [
+                {
+                  icon: 'event' as const,
+                  tone: 'accent' as const,
+                  label:
+                    checkinIn <= 0
+                      ? t('journey.facts.checkinToday')
+                      : t('journey.facts.checkin', { count: checkinIn }),
+                },
+              ]
+            : []),
+        ]}
       />
 
       <BentoGrid>

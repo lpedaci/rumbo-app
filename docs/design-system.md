@@ -245,6 +245,9 @@ Línea suave en `primary` o `tertiary` con relleno plano al 12 % y punto final. 
 ### SegmentedProgress
 Barritas finas (30 por defecto) que se llenan en proporción al avance; anuncia la cantidad real ("13 de 18 tareas hechas"). Se usa en las vistas previas de G0 y G1 y en la bienvenida guiada (D-56).
 
+### GreetingHeader
+Encabezado de inicio de cada rol (D-67): fecha de hoy con ícono, saludo con el nombre en `primary` (único `h1`) y chips de contexto con ícono y texto; el chip que pide atención va en `tertiary-container`.
+
 ### Fila de tarea (TaskRow)
 Patrón de lista estándar (D-65): control o ícono a la izquierda; título y "Tipo · Responsable" al medio (y el motivo si está bloqueada); fecha con "Vence en…" y estado a la derecha, en columnas fijas desde 640 px. Toda la fila es el enlace (enlace estirado) y el hover pinta un fondo dentro de sus márgenes, sin subrayado. El control de completar queda por encima del enlace.
 

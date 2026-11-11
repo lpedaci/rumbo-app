@@ -396,8 +396,6 @@
   },
   "journey": {
     "title": "Mi recorrido",
-    "dayOf": "Día {{day}} de tu recorrido de ingreso · Etapa actual: {{stage}}",
-    "beforeStart": "Empiezas el {{date}}. Mientras tanto, puedes avanzar con las tareas de preingreso.",
     "next": {
       "title": "Lo próximo",
       "description": "Las 3 tareas más urgentes que dependen de ti",
@@ -452,9 +450,9 @@
     "unlocked": "Se desbloqueó: {{tasks}}",
     "noHire": "Todavía no tienes un recorrido de ingreso asignado. RRHH te va a avisar cuando esté listo.",
     "greetings": {
-      "morning": "Buenos días, {{name}}",
-      "afternoon": "Buenas tardes, {{name}}",
-      "evening": "Buenas noches, {{name}}"
+      "morning": "Buenos días",
+      "afternoon": "Buenas tardes",
+      "evening": "Buenas noches"
     },
     "kpi": {
       "progress": "Avance del recorrido",
@@ -507,7 +505,15 @@
     "row": {
       "doneOn": "Hecha el"
     },
-    "yoursShort": "Tú"
+    "yoursShort": "Tú",
+    "facts": {
+      "day": "Día {{day}} de {{total}}",
+      "stage": "{{stage}} · etapa actual",
+      "startsOn": "Empiezas el {{date}}",
+      "checkin_one": "Check-in en {{count}} día",
+      "checkin_other": "Check-in en {{count}} días",
+      "checkinToday": "Check-in hoy"
+    }
   },
   "task": {
     "breadcrumb": "Migas de pan",

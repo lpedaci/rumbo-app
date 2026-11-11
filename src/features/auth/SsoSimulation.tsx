@@ -8,7 +8,8 @@ import { duration, easing, useShouldReduceMotion } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import type { Person } from '@/types/domain';
 
-const STEP_MS = 600;
+// Slow enough to read each step before it is checked (D-67).
+const STEP_MS = 1200;
 
 interface SsoSimulationProps {
   person: Person;
@@ -44,7 +45,7 @@ export function SsoSimulation({ person, providerName, onDone }: SsoSimulationPro
   useEffect(() => {
     const timer = window.setTimeout(
       () => (done < steps.length ? setDone(done + 1) : finish()),
-      done < steps.length ? STEP_MS : STEP_MS + 200,
+      done < steps.length ? STEP_MS : STEP_MS + 400,
     );
     return () => window.clearTimeout(timer);
   });
