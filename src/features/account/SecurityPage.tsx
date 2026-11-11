@@ -49,7 +49,7 @@ export function SecurityPage() {
       <div className="grid grid-cols-1 gap-(--space-bento-gap) lg:grid-cols-2">
         <Card title={t('security.accountTitle')}>
           <div className="flex min-w-0 items-center gap-3">
-            <Avatar name={person.name} size="lg" />
+            <Avatar name={person.name} role={person.role} size="lg" />
             <div className="flex min-w-0 flex-col">
               <span className="truncate text-title-medium text-on-surface">{person.name}</span>
               <span className="truncate text-body-medium text-on-surface-variant">{person.email}</span>

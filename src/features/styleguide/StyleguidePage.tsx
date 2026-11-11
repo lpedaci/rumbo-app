@@ -5,6 +5,7 @@
  */
 import { type ReactNode, useState } from 'react';
 import { PageShell } from '@/components/layout/PageShell';
+import { Avatar } from '@/components/ui/Avatar';
 import { BentoCard } from '@/components/ui/BentoCard';
 import { BentoGrid } from '@/components/ui/BentoGrid';
 import { Button } from '@/components/ui/Button';
@@ -12,10 +13,14 @@ import { ConfirmDialog, Dialog, DialogClose, DialogContent, DialogTrigger } from
 import { FilterChip } from '@/components/ui/FilterChip';
 import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
+import { IconTile } from '@/components/ui/IconTile';
+import { KpiCard } from '@/components/ui/KpiCard';
 import { type IconName, iconPaths } from '@/components/ui/icon-paths.generated';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { SegmentedButton } from '@/components/ui/SegmentedButton';
+import { SegmentedProgress } from '@/components/ui/SegmentedProgress';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { Sparkline } from '@/components/ui/Sparkline';
 import { StatusPill } from '@/components/ui/StatusPill';
 import {
   Table,
@@ -39,6 +44,7 @@ const sections = [
   ['campos', 'Campos'],
   ['chips', 'Chips y estados'],
   ['progreso', 'Progreso y carga'],
+  ['datos', 'Datos y personas'],
   ['bento', 'Grilla bento'],
   ['tabla', 'Tabla'],
   ['flotantes', 'Diálogos y avisos'],
@@ -59,7 +65,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 function Panel({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`min-w-0 rounded-lg border border-outline-variant bg-surface-container-lowest p-(--space-card-padding) ${className}`}
+      className={`min-w-0 rounded-xl border border-outline-variant bg-surface-container-lowest p-(--space-card-padding) ${className}`}
     >
       {children}
     </div>
@@ -106,7 +112,7 @@ const roleClasses: Record<string, { base: string; container: string }> = {
 };
 
 const surfaceTokens = [
-  ['md-sys-color-surface', 'bg-surface text-on-surface', 'surface: fondo de página'],
+  ['md-sys-color-surface', 'bg-surface text-on-surface', 'surface: fondo de página, tintado'],
   ['md-sys-color-surface-container-lowest', 'bg-surface-container-lowest text-on-surface', 'container-lowest: tarjetas'],
   ['md-sys-color-surface-container', 'bg-surface-container text-on-surface', 'container: sidebar, encabezados'],
   ['md-sys-color-surface-container-high', 'bg-surface-container-high text-on-surface', 'container-high: hover'],
@@ -114,12 +120,14 @@ const surfaceTokens = [
   ['md-sys-color-on-surface-variant', 'bg-on-surface-variant text-surface', 'on-surface-variant'],
   ['md-sys-color-outline', 'bg-outline text-on-surface', 'outline: bordes de controles'],
   ['md-sys-color-outline-variant', 'bg-outline-variant text-on-surface', 'outline-variant: divisores'],
+  ['md-sys-color-inverse-surface', 'bg-inverse-surface text-inverse-on-surface', 'inverse-surface: tooltip de gráficos'],
 ] as const;
 
 const chartClasses = ['bg-chart-1', 'bg-chart-2', 'bg-chart-3', 'bg-chart-4', 'bg-chart-5'];
 
 const typeRoles = [
-  ['text-display-small', 'display-small', '36 / 44 · 600', 'Solo números de KPIs: 1.248'],
+  ['text-display-medium', 'display-medium', '45 / 52 · 600', 'Titular del inicio de la demo'],
+  ['text-display-small', 'display-small', '36 / 44 · 600', 'Números de KPIs: 1.248'],
   ['text-headline-small', 'headline-small', '24 / 32 · 600', 'Título de página (h1)'],
   ['text-title-large', 'title-large', '22 / 28 · 600', 'Título de sección (h2)'],
   ['text-title-medium', 'title-medium', '16 / 24 · 600', 'Título de tarjeta o modal (h3)'],
@@ -136,7 +144,8 @@ const radii = [
   ['rounded-xs', 'xs · 4 px'],
   ['rounded-sm', 'sm · 8 px: botones, campos'],
   ['rounded-md', 'md · 12 px: menús, tooltips'],
-  ['rounded-lg', 'lg · 16 px: tarjetas, diálogos'],
+  ['rounded-lg', 'lg · 16 px: diálogos, paneles internos'],
+  ['rounded-xl', 'xl · 20 px: tarjetas'],
   ['rounded-full', 'full: píldoras'],
 ] as const;
 
@@ -374,6 +383,17 @@ export function StyleguidePage() {
         <Panel className="flex flex-col gap-4">
           <ProgressBar value={progress} label="Avance general del recorrido" valueText={`${progress} %`} />
           <ProgressBar value={100} label="Avance de Preingreso" valueText="100 %" tone="success" />
+          <ProgressBar value={progress} size="lg" label="Avance de Mes 1 (barra gruesa)" valueText={`${progress} %`} />
+          <div className="flex flex-col gap-2">
+            <p className="text-label-medium text-on-surface">Barra segmentada (referencia original-cf59fe35)</p>
+            <SegmentedProgress
+              done={progress}
+              total={100}
+              label="Avance del recorrido"
+              valueText={`${progress} de 100`}
+              className="max-w-md"
+            />
+          </div>
           <div>
             <Button variant="outlined" size="xs" onClick={() => setProgress((p) => (p >= 100 ? 10 : p + 15))}>
               Simular avance
@@ -387,22 +407,98 @@ export function StyleguidePage() {
         </Panel>
       </Section>
 
+      <Section id="datos" title="Datos y personas: íconos en contenedor, sparklines, avatares y tooltip">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <Panel className="flex flex-col gap-3">
+            <h3 className="text-title-medium text-on-surface">Íconos en contenedor</h3>
+            <div className="flex flex-wrap gap-2">
+              <IconTile icon="route" tone="brand" />
+              <IconTile icon="group" tone="primary" />
+              <IconTile icon="checklist" tone="secondary" />
+              <IconTile icon="event" tone="tertiary" />
+              <IconTile icon="error" tone="error" />
+              <IconTile icon="schedule" tone="warning" />
+              <IconTile icon="check_circle" tone="success" />
+              <IconTile icon="info" tone="info" />
+            </div>
+            <p className="text-body-small text-on-surface-variant">
+              Los tonos de estado solo cuando el ícono representa un estado; el ciruela para acentos y logros.
+            </p>
+          </Panel>
+          <Panel className="flex flex-col gap-3">
+            <h3 className="text-title-medium text-on-surface">Avatares por rol</h3>
+            <ul className="flex flex-col gap-2">
+              {(
+                [
+                  ['Carla Méndez', 'admin', 'RRHH: primary-container'],
+                  ['Martín Sosa', 'manager', 'Jefe directo: tertiary-container'],
+                  ['Sofía Ramírez', 'hire', 'Nuevo ingreso: secondary-container'],
+                  ['Diego Ferreyra', 'it_admin', 'Sistemas: info-container'],
+                ] as const
+              ).map(([name, role, note]) => (
+                <li key={role} className="flex items-center gap-3">
+                  <Avatar name={name} role={role} />
+                  <span className="flex flex-col">
+                    <span className="text-title-small text-on-surface">{name}</span>
+                    <span className="text-body-small text-on-surface-variant">{note}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Panel>
+          <Panel className="flex flex-col gap-3">
+            <h3 className="text-title-medium text-on-surface">Sparklines y tooltip de gráficos</h3>
+            <div className="flex items-center gap-4">
+              <Sparkline values={[3, 5, 4, 7, 6, 9, 11]} />
+              <Sparkline values={[9, 8, 8, 6, 7, 5, 4]} tone="tertiary" />
+            </div>
+            <span className="w-fit rounded-md bg-inverse-surface px-2 py-1 text-label-medium text-inverse-on-surface tabular-nums">
+              Semana 44 · 18 tareas
+            </span>
+            <p className="text-body-small text-on-surface-variant">
+              La línea es decorativa: el valor y su variación siempre van escritos al lado. Relleno plano al 12 %.
+            </p>
+          </Panel>
+        </div>
+      </Section>
+
       <Section id="bento" title="Grilla bento: 12 columnas, 6 en tablet, 1 en mobile">
         <BentoGrid>
-          {[
-            ['Ingresos activos', '12', 'trending_up', '+2 este mes'],
-            ['Tareas a tiempo', '84 %', 'trending_flat', 'Sin cambios'],
-            ['Recorridos con atraso', '3', 'trending_down', '-1 esta semana'],
-            ['Avance promedio', '57 %', 'trending_up', '+6 puntos'],
-          ].map(([title, value, icon, delta]) => (
-            <BentoCard key={title} size="sm" title={title!} headingLevel="h3">
-              <p className="text-display-small text-on-surface tabular-nums">{value}</p>
-              <p className="mt-1 flex items-center gap-1 text-body-small text-on-surface-variant">
-                <Icon name={icon as IconName} size={16} />
-                {delta}
-              </p>
-            </BentoCard>
-          ))}
+          <KpiCard
+            headingLevel="h3"
+            label="Ingresos activos"
+            value="12"
+            icon="group"
+            trend={{ tone: 'success', icon: 'trending_up', label: '+2 este mes' }}
+            series={[6, 7, 7, 9, 10, 10, 12]}
+          />
+          <KpiCard
+            headingLevel="h3"
+            label="Tareas a tiempo"
+            value="84 %"
+            icon="task_alt"
+            iconTone="tertiary"
+            trend={{ tone: 'neutral', icon: 'trending_flat', label: 'Sin cambios' }}
+            series={[80, 83, 82, 85, 84, 84]}
+            seriesTone="tertiary"
+          />
+          <KpiCard
+            headingLevel="h3"
+            label="Recorridos con atraso"
+            value="3"
+            icon="schedule"
+            iconTone="secondary"
+            trend={{ tone: 'error', icon: 'trending_up', label: '+1 esta semana' }}
+            caption="Con al menos una tarea vencida"
+          />
+          <KpiCard
+            headingLevel="h3"
+            label="Avance promedio"
+            value="57 %"
+            icon="query_stats"
+            trend={{ tone: 'success', icon: 'trending_up', label: '+6 puntos' }}
+            series={[40, 44, 47, 52, 55, 57]}
+          />
           <BentoCard
             size="lg"
             title="Avance por ingreso (lg)"

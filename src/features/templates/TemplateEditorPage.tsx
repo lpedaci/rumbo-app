@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { type FieldErrors, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, useBlocker, useNavigate, useParams } from 'react-router';
 import { z } from 'zod';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
@@ -31,7 +31,7 @@ import {
 import { useFieldError } from '@/lib/use-field-error';
 import { requiredText } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
-import { useCurrentUser } from '@/store/session-store';
+import { useCurrentUser, useSessionStore } from '@/store/session-store';
 import type { Stage, Template, TemplateTask } from '@/types/domain';
 import { StageSection } from './StageSection';
 import { TaskFormDialog } from './TaskFormDialog';
@@ -79,7 +79,6 @@ function TemplateEditor({ template }: { template?: Template }) {
     stage: 'preboarding',
   });
   const [toDelete, setToDelete] = useState<TemplateTask | null>(null);
-  const [leaveOpen, setLeaveOpen] = useState(false);
   const [summary, setSummary] = useState<SummaryItem[]>([]);
   const [announcement, setAnnouncement] = useState('');
   const summaryRef = useRef<HTMLDivElement>(null);
@@ -98,6 +97,19 @@ function TemplateEditor({ template }: { template?: Template }) {
   const details = useWatch({ control }) as DetailsValues;
 
   const dirty = JSON.stringify({ ...savedDetails, ...details, tasks }) !== baseline;
+  // Set right before navigating after a save, when `dirty` has not re-rendered yet.
+  const allowLeave = useRef(false);
+
+  // Any in-app navigation with unsaved changes asks first: back link, side navigation
+  // or browser back (D-50, D-53). A role switch already closed this session, so it is
+  // not held back (the next role could not see this screen anyway).
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      dirty &&
+      !allowLeave.current &&
+      currentLocation.pathname !== nextLocation.pathname &&
+      useSessionStore.getState().session?.personId === user?.personId,
+  );
   const usage = template ? templateUsage(template.id, hires) : 0;
 
   // Leaving the page with unsaved changes asks the browser to confirm (D-50).
@@ -193,7 +205,10 @@ function TemplateEditor({ template }: { template?: Template }) {
     useDataStore.getState().saveTemplate(saved, user.personId);
     setBaseline(JSON.stringify({ ...savedDetails, ...values, tasks }));
     toast.success(isNew ? t('templates.editor.created') : t('templates.editor.saved'));
-    if (isNew) navigate(`/admin/templates/${saved.id}`, { replace: true });
+    if (isNew) {
+      allowLeave.current = true;
+      navigate(`/admin/templates/${saved.id}`, { replace: true });
+    }
   };
 
   const onInvalid = (fieldErrors: FieldErrors<DetailsValues>) => {
@@ -262,17 +277,11 @@ function TemplateEditor({ template }: { template?: Template }) {
       ? t('templates.editor.previewUnsaved')
       : undefined;
 
-  const goBack = () => (dirty ? setLeaveOpen(true) : navigate('/admin/templates'));
-
   return (
     <>
       <nav aria-label={t('templates.editor.breadcrumb')} className="mb-2">
         <Link
           to="/admin/templates"
-          onClick={(event) => {
-            event.preventDefault();
-            goBack();
-          }}
           className="inline-flex min-h-12 items-center gap-1 rounded-sm text-label-large text-primary underline-offset-4 hover:underline md:min-h-0"
         >
           <Icon name="arrow_back" />
@@ -301,7 +310,7 @@ function TemplateEditor({ template }: { template?: Template }) {
                 <Link to={`/admin/templates/${template?.id}/preview`}>{t('templates.editor.preview')}</Link>
               </Button>
             )}
-            <Button leadingIcon="save" onClick={handleSubmit(save, onInvalid)}>
+            <Button leadingIcon="save" onClick={() => void handleSubmit(save, onInvalid)()}>
               {t('templates.editor.save')}
             </Button>
           </div>
@@ -332,7 +341,7 @@ function TemplateEditor({ template }: { template?: Template }) {
         <Card title={t('templates.editor.details.title')}>
           <form
             noValidate
-            onSubmit={handleSubmit(save, onInvalid)}
+            onSubmit={(event) => void handleSubmit(save, onInvalid)(event)}
             className="grid grid-cols-1 gap-5 md:grid-cols-3"
           >
             <TextField
@@ -415,12 +424,14 @@ function TemplateEditor({ template }: { template?: Template }) {
       />
 
       <ConfirmDialog
-        open={leaveOpen}
-        onOpenChange={setLeaveOpen}
+        open={blocker.state === 'blocked'}
+        onOpenChange={(open) => {
+          if (!open && blocker.state === 'blocked') blocker.reset();
+        }}
         title={t('templates.editor.leave.title')}
         description={t('templates.editor.leave.body')}
         confirmLabel={t('templates.editor.leave.confirm')}
-        onConfirm={() => navigate('/admin/templates')}
+        onConfirm={() => blocker.proceed?.()}
       />
     </>
   );

@@ -3,8 +3,11 @@ import type { HireTask, Template } from '@/types/domain';
 import {
   blockingTasks,
   completeTask,
+  completionSeries,
+  doneInLastDays,
   findCycle,
   generateHireTasks,
+  greetingKey,
   hireStatus,
   nextTasks,
   progressByStage,
@@ -144,5 +147,25 @@ describe('rootBlocker', () => {
     const tasks = fresh();
     expect(rootBlocker(byTpl(tasks, 'c'), tasks).templateTaskId).toBe('a');
     expect(rootBlocker(byTpl(tasks, 'd'), tasks).templateTaskId).toBe('d');
+  });
+});
+
+describe('home trends', () => {
+  const task = (id: string, completedAt?: string) =>
+    ({ id, status: completedAt ? 'done' : 'pending', completedAt }) as unknown as HireTask;
+  const tasks = [task('a', '2026-11-01T10:00:00Z'), task('b', '2026-11-08T10:00:00Z'), task('c', '2026-11-10T09:00:00Z'), task('d')];
+
+  it('builds a cumulative series of done tasks', () => {
+    expect(completionSeries(tasks, 4, '2026-11-10')).toEqual([1, 2, 2, 3]);
+  });
+
+  it('counts the tasks done in the last days', () => {
+    expect(doneInLastDays(tasks, 7, '2026-11-10')).toBe(2);
+  });
+
+  it('greets by the time of day', () => {
+    expect(greetingKey(9)).toBe('morning');
+    expect(greetingKey(15)).toBe('afternoon');
+    expect(greetingKey(22)).toBe('evening');
   });
 });

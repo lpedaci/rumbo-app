@@ -73,6 +73,10 @@
         "title": "You're signing in as {{name}}, {{role}}",
         "continue": "Continue as {{name}}",
         "change": "Change journey"
+      },
+      "showcase": {
+        "title": "Everyone knows what to do, with whom and by when.",
+        "body": "HR builds the journey, managers follow up and new hires track their progress in one place."
       }
     },
     "sso": {
@@ -189,7 +193,15 @@
     "sessionDemo": "Show the session warning (demo)",
     "resetDemo": "Reset demo",
     "signOut": "Sign out",
-    "userMenuSuffix": "user menu"
+    "userMenuSuffix": "user menu",
+    "home": "Go to home",
+    "shortcuts": "Shortcuts",
+    "workspace": {
+      "admin": "HR workspace",
+      "manager": "Manager workspace",
+      "hire": "New hire workspace",
+      "it_admin": "IT help desk"
+    }
   },
   "session": {
     "warningTitle": "Your session is about to expire",
@@ -310,15 +322,23 @@
     "resetBody": "All changes go back to their initial state and you're signed out.",
     "resetConfirm": "Reset demo",
     "preview": {
-      "label": "Preview of Sofía's journey",
+      "label": "Rumbo preview: the HR dashboard with active new hires, tasks on time and tasks completed per week, and Sofía’s journey card with her progress.",
       "journey": "Onboarding journey",
       "progress": "Month 1 progress",
       "tasks": [
         "Data warehouse access",
         "Set up the analysis environment",
         "First guided analysis"
-      ]
-    }
+      ],
+      "greeting": "Good afternoon, Carla",
+      "context": "HR tracking dashboard",
+      "period": "8 weeks",
+      "kpiActive": "Active new hires",
+      "kpiOnTime": "Tasks on time",
+      "chartTitle": "Tasks completed per week"
+    },
+    "ctaChoose": "Choose a journey",
+    "linksFooter": "Project links"
   },
   "stages": {
     "preboarding": "Pre-boarding",
@@ -359,7 +379,6 @@
   },
   "journey": {
     "title": "My journey",
-    "greeting": "Hi, {{name}}",
     "dayOf": "Day {{day}} of your onboarding journey · Current stage: {{stage}}",
     "beforeStart": "You start on {{date}}. Meanwhile, you can get ahead with your pre-boarding tasks.",
     "next": {
@@ -406,7 +425,42 @@
     "taskDone": "Task completed",
     "stageDone": "You completed {{stage}}!",
     "unlocked": "Unlocked: {{tasks}}",
-    "noHire": "You don't have an onboarding journey yet. HR will let you know when it's ready."
+    "noHire": "You don't have an onboarding journey yet. HR will let you know when it's ready.",
+    "greetings": {
+      "morning": "Good morning, {{name}}",
+      "afternoon": "Good afternoon, {{name}}",
+      "evening": "Good evening, {{name}}"
+    },
+    "kpi": {
+      "progress": "Journey progress",
+      "pending": "Tasks on you",
+      "pendingCaption": "Pending tasks that depend on you",
+      "overdue_one": "{{count}} overdue",
+      "overdue_other": "{{count}} overdue",
+      "upToDate": "Up to date",
+      "stage": "Current stage",
+      "stageCaption": "Day {{day}} of your journey",
+      "stageTrend": "{{done}} of {{total}}",
+      "checkin": "Next check-in",
+      "today": "Today",
+      "checkinCaption": "{{days}}-day check-in · {{date}}",
+      "none": "None",
+      "days_one": "{{count}} day",
+      "days_other": "{{count}} days",
+      "monthDone": "+{{count}} in 30 days",
+      "monthNone": "No changes",
+      "progressCaption": "{{done}} of {{total}} tasks · last 30 days"
+    },
+    "overview": {
+      "title": "Your onboarding journey",
+      "body": "You completed {{done}} of {{total}} tasks. {{left}} to go.",
+      "bodyDone": "You completed every task of your journey.",
+      "legendDone": "Done",
+      "legendPending": "Pending"
+    },
+    "stagesCard": {
+      "title": "Progress by stage"
+    }
   },
   "task": {
     "breadcrumb": "Breadcrumbs",
@@ -593,6 +647,33 @@
       "note": "Tasks can't be completed in the preview. Blocked tasks show what they depend on.",
       "summary": "{{count}} tasks, from {{from}} to {{to}}",
       "edit": "Edit template"
+    }
+  },
+  "welcome": {
+    "reopen": "See the welcome",
+    "close": "Close the welcome",
+    "skip": "Skip",
+    "previous": "Back",
+    "next": "Continue",
+    "stepOf": "Step {{current}} of {{total}}",
+    "hire": {
+      "finish": "Start my journey",
+      "unlocked": "Unlocked",
+      "checkinTitle": "30-day check-in",
+      "steps": [
+        {
+          "title": "Welcome, {{name}}",
+          "body": "This is your onboarding journey: what to do, with whom and by when, organized by stage."
+        },
+        {
+          "title": "Complete your tasks",
+          "body": "Mark each task when you finish it. Some tasks unlock when you complete others."
+        },
+        {
+          "title": "Get ready for your check-in",
+          "body": "Before each meeting with your manager, share how you feel in a short self-review."
+        }
+      ]
     }
   }
 }

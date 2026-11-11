@@ -1,5 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { act, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { switchRole } from '@/features/auth/auth-service';
 import en from '@/locales/en.json';
@@ -7,19 +6,9 @@ import es from '@/locales/es.json';
 import templatesSeed from '@/data/templates.json';
 import { useDataStore } from '@/store/data-store';
 import { useSessionStore } from '@/store/session-store';
-import { AppProviders } from './AppProviders';
-import { AppRoutes } from './AppRoutes';
+import { renderAt } from '@/test/render-app';
 import i18n from './i18n';
 
-function renderAt(path: string) {
-  return render(
-    <MemoryRouter initialEntries={[path]}>
-      <AppProviders>
-        <AppRoutes />
-      </AppProviders>
-    </MemoryRouter>,
-  );
-}
 
 beforeEach(() => {
   localStorage.clear();
@@ -79,6 +68,7 @@ describe('routing and access control', () => {
     act(() => {
       switchRole('hire');
     });
+    useSessionStore.getState().markWelcomeSeen('p-sofia');
     renderAt('/admin');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.forbidden.title);
     expect(useDataStore.getState().auditEvents.at(-1)).toMatchObject({

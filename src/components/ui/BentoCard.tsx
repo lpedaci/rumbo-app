@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 const bentoCardVariants = cva(
   // Cards are separated by surface and a subtle border, never by a shadow (2.5).
-  'flex min-w-0 flex-col gap-3 rounded-lg border border-outline-variant bg-surface-container-lowest p-(--space-card-padding)',
+  'flex min-w-0 flex-col gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-(--space-card-padding)',
   {
     variants: {
       size: {
@@ -29,6 +29,8 @@ export interface BentoCardProps extends VariantProps<typeof bentoCardVariants> {
   description?: string;
   /** Optional action in the top right, for example a "Ver detalle" text button. */
   action?: ReactNode;
+  /** Optional IconTile before the title (2.2.1). Decorative. */
+  icon?: ReactNode;
   children: ReactNode;
   className?: string;
 }
@@ -40,6 +42,7 @@ export function BentoCard({
   headingLevel: Heading = 'h2',
   description,
   action,
+  icon,
   children,
   className,
 }: BentoCardProps) {
@@ -60,11 +63,14 @@ export function BentoCard({
       }}
     >
       <header className="flex min-w-0 items-start justify-between gap-3">
-        <div className="min-w-0">
-          <Heading id={titleId} className="truncate text-title-medium text-on-surface">
-            {title}
-          </Heading>
-          {description && <p className="text-body-small text-on-surface-variant">{description}</p>}
+        <div className="flex min-w-0 items-center gap-3">
+          {icon}
+          <div className="min-w-0">
+            <Heading id={titleId} className="truncate text-title-medium text-on-surface">
+              {title}
+            </Heading>
+            {description && <p className="text-body-small text-on-surface-variant">{description}</p>}
+          </div>
         </div>
         {action && <div className="-my-1 shrink-0">{action}</div>}
       </header>

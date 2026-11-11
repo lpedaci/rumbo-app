@@ -16,11 +16,13 @@ const itemClass = cn(
 export function DropdownMenuContent({
   children,
   align = 'end',
+  side = 'bottom',
   className,
   label,
 }: {
   children: ReactNode;
   align?: 'start' | 'center' | 'end';
+  side?: 'top' | 'bottom';
   className?: string;
   label?: string;
 }) {
@@ -28,6 +30,7 @@ export function DropdownMenuContent({
     <Menu.Portal>
       <Menu.Content
         align={align}
+        side={side}
         sideOffset={6}
         collisionPadding={8}
         aria-label={label}

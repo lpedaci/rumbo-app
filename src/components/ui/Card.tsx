@@ -17,7 +17,7 @@ export function Card({ title, description, action, children, className, headingL
     <section
       aria-labelledby={title ? titleId : undefined}
       className={cn(
-        'flex min-w-0 flex-col gap-4 rounded-lg border border-outline-variant bg-surface-container-lowest p-(--space-card-padding)',
+        'flex min-w-0 flex-col gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-(--space-card-padding)',
         className,
       )}
     >

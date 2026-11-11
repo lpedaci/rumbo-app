@@ -224,3 +224,26 @@ export function wouldCreateCycle(
   const next = tasks.map((t) => (t.id === taskId ? { ...t, dependsOn: [...t.dependsOn, dependencyId] } : t));
   return findCycle(next) !== null;
 }
+
+// ---------- Trends for the home KPIs (2.2.1, pattern 3) ----------
+
+/** Done tasks per day, cumulative, for the `days` days that end on `today` (sparkline). */
+export function completionSeries(tasks: HireTask[], days = 30, today = DEMO_TODAY): number[] {
+  return Array.from({ length: days }, (_, i) => {
+    const day = addDays(today, i - days + 1);
+    return tasks.filter((t) => t.status === 'done' && t.completedAt && t.completedAt.slice(0, 10) <= day).length;
+  });
+}
+
+/** Tasks completed in the last `days` days, today included. */
+export function doneInLastDays(tasks: HireTask[], days = 30, today = DEMO_TODAY): number {
+  const from = addDays(today, -(days - 1));
+  return tasks.filter((t) => t.status === 'done' && t.completedAt && t.completedAt.slice(0, 10) >= from).length;
+}
+
+/** Greeting by local hour: morning until 12, afternoon until 19, evening after. */
+export function greetingKey(hour = new Date().getHours()): 'morning' | 'afternoon' | 'evening' {
+  if (hour >= 5 && hour < 12) return 'morning';
+  if (hour >= 12 && hour < 19) return 'afternoon';
+  return 'evening';
+}

@@ -1,23 +1,12 @@
-import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { AppProviders } from '@/app/AppProviders';
-import { AppRoutes } from '@/app/AppRoutes';
 import { switchRole } from '@/features/auth/auth-service';
 import { tasksOfStage } from '@/lib/templates';
 import es from '@/locales/es.json';
 import { useDataStore } from '@/store/data-store';
 import { useSessionStore } from '@/store/session-store';
+import { renderAt } from '@/test/render-app';
 
-function renderAt(path: string) {
-  return render(
-    <MemoryRouter initialEntries={[path]}>
-      <AppProviders>
-        <AppRoutes />
-      </AppProviders>
-    </MemoryRouter>,
-  );
-}
 
 const template = (id: string) => useDataStore.getState().templates.find((t) => t.id === id)!;
 
@@ -112,6 +101,29 @@ describe('A6 · Template builder', () => {
     fireEvent.change(offset, { target: { value: '-1' } });
     const jira = within(dialog).getByRole('checkbox', { name: /Acceso a Jira y Confluence/ });
     expect(jira).toBeDisabled();
+  });
+
+  it('asks before leaving with unsaved changes, also from the side navigation (D-53)', async () => {
+    const { router } = renderAt('/admin/templates/tpl-data');
+    await screen.findByRole('heading', { level: 1 });
+    const name = screen.getByLabelText(/Nombre de la plantilla/);
+    fireEvent.change(name, { target: { value: 'Analista de Datos 2' } });
+
+    act(() => {
+      void router.navigate('/admin');
+    });
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toHaveTextContent(es.templates.editor.leave.title);
+    fireEvent.click(within(dialog).getByRole('button', { name: es.ui.cancel }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(router.state.location.pathname).toBe('/admin/templates/tpl-data');
+    expect(name).toHaveValue('Analista de Datos 2');
+
+    act(() => {
+      void router.navigate('/admin');
+    });
+    fireEvent.click(within(await screen.findByRole('dialog')).getByRole('button', { name: es.templates.editor.leave.confirm }));
+    await waitFor(() => expect(router.state.location.pathname).toBe('/admin'));
   });
 
   it('shows a summary with the problems instead of saving an incomplete template', async () => {

@@ -15,6 +15,8 @@ export interface CheckedPage {
   role?: Role;
   /** Simulated sign-in in progress (for G3). */
   pendingMfaFor?: Role;
+  /** Show the guided welcome of the role (first visit). Seen by default. */
+  welcome?: boolean;
 }
 
 export const PAGES: CheckedPage[] = [
@@ -35,6 +37,7 @@ export const PAGES: CheckedPage[] = [
   { id: 'a7-template-preview', path: '/#/admin/templates/tpl-data/preview', role: 'admin' },
   { id: 'home-manager', path: '/#/manager', role: 'manager' },
   { id: 'n1-journey', path: '/#/me', role: 'hire' },
+  { id: 'n1-welcome', path: '/#/me', role: 'hire', welcome: true },
   { id: 'n2-task-blocked', path: '/#/me/tasks/h-sofia-d17', role: 'hire' },
   { id: 'n2-task-course', path: '/#/me/tasks/h-sofia-d9', role: 'hire' },
   { id: 'n2-task-overdue', path: '/#/me/tasks/h-sofia-d11', role: 'hire' },
@@ -73,6 +76,7 @@ export async function prepareSession(page: Page, target: CheckedPage) {
     returnTo: null,
     rememberedDevices: {},
     mfaOptOut: [],
+    welcomeSeen: target.welcome ? [] : Object.values(PERSON),
   };
   await page.addInitScript((value) => {
     window.localStorage.setItem('rumbo-session', JSON.stringify({ state: value, version: 1 }));

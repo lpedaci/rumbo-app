@@ -45,7 +45,8 @@
   --md-custom-color-on-info-container: #0f2a66;
 
   /* Surfaces and neutrals: depth by tonal elevation, not shadows. */
-  --md-sys-color-surface: #f6f8f9;
+  /* Tinted with petrol so white cards stand out, as in the references (2.2.1). */
+  --md-sys-color-surface: #edf3f4;
   --md-sys-color-surface-container-lowest: #ffffff;
   --md-sys-color-surface-container: #eef2f4;
   --md-sys-color-surface-container-high: #e4e9ec;
@@ -54,8 +55,9 @@
   --md-sys-color-outline: #7d8793;
   --md-sys-color-outline-variant: #d5dbe0;
   --md-sys-color-scrim: #000000;
-  --md-sys-color-inverse-surface: #1f2937;
-  --md-sys-color-inverse-on-surface: #f3f4f6;
+  /* Dark floating tooltips of charts (2.2.1, pattern 4). */
+  --md-sys-color-inverse-surface: #1f2a30;
+  --md-sys-color-inverse-on-surface: #ffffff;
 
   /* Chart series, in order (CLAUDE.md 2.1.1). Area fills use 12 % opacity. */
   --chart-1: #1f6f78;
@@ -72,7 +74,8 @@
   --md-sys-shape-extra-small: 0.25rem; /* 4px: chips inner elements, checkboxes */
   --md-sys-shape-small: 0.5rem; /* 8px: buttons, fields, chips, pills */
   --md-sys-shape-medium: 0.75rem; /* 12px: menus, tooltips, small cards */
-  --md-sys-shape-large: 1rem; /* 16px: bento cards, dialogs */
+  --md-sys-shape-large: 1rem; /* 16px: dialogs, inner panels */
+  --md-sys-shape-extra-large: 1.25rem; /* 20px: bento cards and page cards (2.2.1) */
   --md-sys-shape-full: 9999px; /* status pills, avatars, progress */
 
   /* ---------- Spacing (layout tokens; component spacing uses the 4px Tailwind scale) ---------- */
@@ -115,6 +118,7 @@
   :root {
     --space-gutter: 2rem;
     --space-bento-gap: 1.25rem;
+    --space-card-padding: 1.5rem;
   }
 }
 

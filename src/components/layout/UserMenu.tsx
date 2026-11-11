@@ -13,13 +13,14 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { Icon } from '@/components/ui/Icon';
 import { findDemoPerson, resetDemo, signOut } from '@/features/auth/auth-service';
+import { hasGuidedWelcome } from '@/features/welcome/welcome-steps';
 import { can } from '@/lib/permissions';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
 
 /** User menu (CLAUDE.md F0): name, role, "Mi seguridad", demo controls and "Cerrar sesión". */
-export function UserMenu() {
+export function UserMenu({ placement = 'header' }: { placement?: 'header' | 'sidebar' }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useCurrentUser();
@@ -41,21 +42,41 @@ export function UserMenu() {
           {/* Accessible name starts with the visible text (WCAG 2.5.3, label in name). */}
           <button
             type="button"
-            className={cn('flex h-10 min-w-0 items-center gap-2 rounded-full pr-1 pl-1 md:pr-2', interactive)}
+            className={cn(
+              'flex min-w-0 items-center gap-2',
+              placement === 'sidebar'
+                ? 'w-full rounded-lg p-2 text-left hover:bg-surface-container'
+                : 'h-10 rounded-full pr-1 pl-1 md:pr-2',
+              interactive,
+            )}
           >
-            <Avatar name={name} size="sm" />
-            <span className="sr-only lg:hidden">{name}</span>
-            <span className="hidden min-w-0 flex-col text-left lg:flex">
+            <Avatar name={name} role={user.role} size={placement === 'sidebar' ? 'md' : 'sm'} />
+            <span className={cn('sr-only', placement === 'header' && 'lg:hidden', placement === 'sidebar' && 'hidden')}>
+              {name}
+            </span>
+            <span
+              className={cn(
+                'min-w-0 flex-1 flex-col text-left',
+                placement === 'sidebar' ? 'flex' : 'hidden lg:flex',
+              )}
+            >
               <span className="truncate text-label-large text-on-surface">{name}</span>
               <span className="truncate text-body-small text-on-surface-variant">{t(`roles.${user.role}`)}</span>
             </span>
             <span className="sr-only">, {t('layout.userMenuSuffix')}</span>
-            <Icon name="keyboard_arrow_down" className="hidden text-on-surface-variant md:block" />
+            <Icon
+              name={placement === 'sidebar' ? 'more_vert' : 'keyboard_arrow_down'}
+              className="hidden shrink-0 text-on-surface-variant md:block"
+            />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent label={t('layout.userMenu', { name })}>
+        <DropdownMenuContent
+          label={t('layout.userMenu', { name })}
+          align={placement === 'sidebar' ? 'start' : 'end'}
+          side={placement === 'sidebar' ? 'top' : 'bottom'}
+        >
           <div className="flex items-center gap-3 px-3 py-2">
-            <Avatar name={name} />
+            <Avatar name={name} role={user.role} />
             <div className="flex min-w-0 flex-col">
               <span className="truncate text-label-large text-on-surface">{name}</span>
               <span className="truncate text-body-small text-on-surface-variant">
@@ -67,6 +88,11 @@ export function UserMenu() {
           {can(user, 'account:security_own') && (
             <DropdownMenuItem icon="verified_user" onSelect={() => navigate('/account/security')}>
               {t('layout.mySecurity')}
+            </DropdownMenuItem>
+          )}
+          {hasGuidedWelcome(user.role) && (
+            <DropdownMenuItem icon="help" onSelect={() => useSessionStore.getState().setWelcomeOpen(true)}>
+              {t('welcome.reopen')}
             </DropdownMenuItem>
           )}
           <DropdownMenuItem icon="schedule" onSelect={showSessionWarning}>

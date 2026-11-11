@@ -56,7 +56,7 @@ export function SsoPage() {
       <form noValidate onSubmit={onSubmit} className="flex flex-col gap-4">
         {preselected ? (
           <p className="flex min-w-0 items-center gap-3 text-body-medium text-on-surface">
-            <Avatar name={preselected.name} size="sm" />
+            <Avatar name={preselected.name} role={preselected.role} size="sm" />
             <span className="min-w-0 truncate">
               {preselected.name} · {preselected.email}
             </span>

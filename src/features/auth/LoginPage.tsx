@@ -17,6 +17,7 @@ import { useDataStore } from '@/store/data-store';
 import { useSessionStore } from '@/store/session-store';
 import { findDemoPerson, personIdForDemoKey, signInWithPassword } from './auth-service';
 import { AuthLayout } from './AuthLayout';
+import { LoginShowcase } from './LoginShowcase';
 import { SsoButton } from './SsoButton';
 
 const schema = z.object({ email: emailField, password: requiredText });
@@ -97,7 +98,7 @@ export function LoginPage() {
     lastLogout === 'manual' || lastLogout === 'expired' ? t(`auth.login.logout.${lastLogout}`) : null;
 
   return (
-    <AuthLayout>
+    <AuthLayout showcase={<LoginShowcase />}>
       <header className="flex flex-col gap-1">
         <h1 className="text-headline-small text-on-surface">{t('auth.login.title')}</h1>
         <p className="text-body-large text-on-surface-variant">{t('auth.login.subtitle')}</p>
@@ -115,7 +116,7 @@ export function LoginPage() {
           className="flex flex-col gap-4 rounded-lg border border-outline-variant bg-surface-container p-4"
         >
           <div className="flex min-w-0 items-center gap-3">
-            <Avatar name={preselected.name} />
+            <Avatar name={preselected.name} role={preselected.role} />
             <h2 id="preselected-title" className="min-w-0 text-title-medium text-on-surface">
               {t('auth.login.preselected.title', {
                 name: preselected.name.split(' ')[0],

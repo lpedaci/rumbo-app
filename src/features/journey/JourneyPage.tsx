@@ -7,22 +7,31 @@ import { BentoCard } from '@/components/ui/BentoCard';
 import { BentoGrid } from '@/components/ui/BentoGrid';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
+import { IconTile } from '@/components/ui/IconTile';
 import { InlineAlert } from '@/components/ui/InlineAlert';
+import { KpiCard } from '@/components/ui/KpiCard';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { daysBetween, DEMO_TODAY, formatDate, formatPercent, STAGES } from '@/lib/dates';
+import { SegmentedProgress } from '@/components/ui/SegmentedProgress';
+import { StatusPill } from '@/components/ui/StatusPill';
+import { daysBetween, DEMO_TODAY, formatDate, formatNumber, formatPercent, STAGES } from '@/lib/dates';
 import {
   CHECKIN_OFFSETS,
   checkinDueDate,
+  completionSeries,
   currentStage,
+  doneInLastDays,
+  greetingKey,
   nextCheckin,
   nextTasks,
   progressByStage,
   progressOf,
+  taskStatus,
 } from '@/lib/journey';
 import { canCompleteTask } from '@/lib/permissions';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { HireTask, Person } from '@/types/domain';
+import { NextStepRow } from './NextStepRow';
 import { TaskRow } from './TaskRow';
 import { UNLOCK_HIGHLIGHT_MS } from './task-meta';
 import { useCompleteTask } from './use-complete-task';
@@ -30,8 +39,9 @@ import { useOwnHire } from './use-own-hire';
 
 /**
  * N1 · Mi recorrido (CLAUDE.md F1): what to do, with whom and by when.
- * Bento layout (2.4): next tasks first, then progress, check-in, contacts and the
- * full journey by stage (reference original-cf59fe35 for the progress checklist).
+ * Redesign 2.2.1: greeting as title, KPI row with sparkline, journey card with segmented
+ * progress and next steps (reference original-cf59fe35), progress by stage, check-in,
+ * key contacts and the full journey by stage.
  */
 export function JourneyPage() {
   const { t } = useTranslation();
@@ -45,11 +55,12 @@ export function JourneyPage() {
 
   const person = people.find((p) => p.id === user?.personId);
   const firstName = person?.name.split(' ')[0] ?? '';
+  const greeting = t(`journey.greetings.${greetingKey()}`, { name: firstName });
 
   if (!hire) {
     return (
       <>
-        <PageHeader title={t('journey.title')} eyebrow={t('journey.greeting', { name: firstName })} />
+        <PageHeader title={greeting} />
         <InlineAlert tone="info">{t('journey.noHire')}</InlineAlert>
       </>
     );
@@ -70,6 +81,10 @@ export function JourneyPage() {
   const stage = currentStage(hire.startDate);
   const upNext = nextTasks(hire.tasks);
   const checkin = nextCheckin(hire);
+  const ownPending = hire.tasks.filter((x) => x.owner === 'hire' && taskStatus(x, hire.tasks) !== 'done');
+  const ownOverdue = ownPending.filter((x) => taskStatus(x, hire.tasks) === 'overdue').length;
+  const monthDone = doneInLastDays(hire.tasks);
+  const checkinIn = checkin ? daysBetween(DEMO_TODAY, checkinDueDate(checkin)) : null;
   const findPerson = (id?: string) => people.find((p) => p.id === id);
   const contacts: { role: 'manager' | 'buddy' | 'hr'; person?: Person }[] = [
     { role: 'manager', person: findPerson(hire.managerId) },
@@ -88,8 +103,7 @@ export function JourneyPage() {
   return (
     <>
       <PageHeader
-        eyebrow={t('journey.greeting', { name: firstName })}
-        title={t('journey.title')}
+        title={greeting}
         description={
           day < 0
             ? t('journey.beforeStart', { date: formatDate(hire.startDate) })
@@ -98,49 +112,141 @@ export function JourneyPage() {
       />
 
       <BentoGrid>
-        <BentoCard size="lg" title={t('journey.next.title')} description={t('journey.next.description')}>
-          {upNext.length > 0 ? (
-            <ul className="flex flex-col divide-y divide-outline-variant">
-              {upNext.map((task) => (
-                <TaskRow key={task.id} {...rowProps(task)} />
-              ))}
-            </ul>
-          ) : (
-            <p className="text-body-medium text-on-surface-variant">{t('journey.next.empty')}</p>
-          )}
+        {/* KPI row (2.2.1, pattern 3) */}
+        <KpiCard
+          label={t('journey.kpi.progress')}
+          value={formatPercent(overall.percent)}
+          icon="route"
+          caption={t('journey.kpi.progressCaption', { done: overall.done, total: overall.total })}
+          trend={
+            monthDone > 0
+              ? { tone: 'success', icon: 'trending_up', label: t('journey.kpi.monthDone', { count: monthDone }) }
+              : { tone: 'neutral', icon: 'trending_flat', label: t('journey.kpi.monthNone') }
+          }
+          series={completionSeries(hire.tasks)}
+        />
+        <KpiCard
+          label={t('journey.kpi.pending')}
+          value={formatNumber(ownPending.length)}
+          icon="checklist"
+          iconTone="secondary"
+          caption={t('journey.kpi.pendingCaption')}
+          trend={
+            ownOverdue > 0
+              ? { tone: 'error', icon: 'error', label: t('journey.kpi.overdue', { count: ownOverdue }) }
+              : { tone: 'success', icon: 'check_circle', label: t('journey.kpi.upToDate') }
+          }
+        />
+        <KpiCard
+          label={t('journey.kpi.stage')}
+          value={t(`stages.${stage}`)}
+          icon="flag"
+          iconTone="secondary"
+          caption={t('journey.kpi.stageCaption', { day: Math.max(day, 0) })}
+          trend={{
+            tone: 'primary',
+            icon: 'task_alt',
+            label: t('journey.kpi.stageTrend', { done: byStage[stage].done, total: byStage[stage].total }),
+          }}
+        />
+        <KpiCard
+          label={t('journey.kpi.checkin')}
+          value={
+            checkinIn === null
+              ? t('journey.kpi.none')
+              : checkinIn <= 0
+                ? t('journey.kpi.today')
+                : t('journey.kpi.days', { count: checkinIn })
+          }
+          icon="event"
+          iconTone="tertiary"
+          caption={
+            checkin
+              ? t('journey.kpi.checkinCaption', {
+                  days: CHECKIN_OFFSETS[checkin.stage],
+                  date: formatDate(checkinDueDate(checkin)),
+                })
+              : undefined
+          }
+        />
+
+        {/* Journey overview: segmented progress and next steps (2.2.1, pattern 10) */}
+        <BentoCard
+          size="lg"
+          title={t('journey.overview.title')}
+          icon={<IconTile icon="route" tone="brand" size="lg" />}
+          description={
+            overall.done === overall.total
+              ? t('journey.overview.bodyDone')
+              : t('journey.overview.body', {
+                  done: overall.done,
+                  total: overall.total,
+                  left: overall.total - overall.done,
+                })
+          }
+        >
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <SegmentedProgress
+                done={overall.done}
+                total={overall.total}
+                label={t('journey.progress.overall')}
+                valueText={t('journey.progress.tasksDone', { done: overall.done, total: overall.total })}
+              />
+              <div aria-hidden className="flex flex-wrap gap-x-4 gap-y-1 text-body-small text-on-surface-variant">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="size-2.5 rounded-full bg-primary" />
+                  {t('journey.overview.legendDone')}
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="size-2.5 rounded-full bg-outline-variant" />
+                  {t('journey.overview.legendPending')}
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <h3 className="text-title-small text-on-surface">{t('journey.next.title')}</h3>
+              {upNext.length > 0 ? (
+                <ul className="flex flex-col divide-y divide-outline-variant overflow-hidden rounded-lg border border-outline-variant">
+                  {upNext.map((task) => (
+                    <NextStepRow key={task.id} task={task} allTasks={hire.tasks} />
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-body-medium text-on-surface-variant">{t('journey.next.empty')}</p>
+              )}
+            </div>
+          </div>
         </BentoCard>
 
-        <BentoCard size="md" title={t('journey.progress.title')}>
-          <div className="flex flex-col gap-4">
-            <div>
-              <p className="text-display-small text-on-surface tabular-nums">{formatPercent(overall.percent)}</p>
-              <p className="text-body-small text-on-surface-variant">
-                {t('journey.progress.tasksDone', { done: overall.done, total: overall.total })}
-              </p>
-            </div>
-            <ProgressBar value={overall.percent} label={t('journey.progress.overall')} />
-            <ul className="flex flex-col gap-3">
-              {STAGES.map((s) => (
-                <li key={s} className="flex flex-col gap-1">
-                  <span className="flex items-center justify-between gap-2 text-label-medium text-on-surface">
+        <BentoCard size="md" title={t('journey.stagesCard.title')}>
+          <ul className="flex flex-col gap-4">
+            {STAGES.map((s) => {
+              const isCurrent = s === stage && day >= 0;
+              return (
+                <li key={s} className="flex flex-col gap-1.5">
+                  <span className="flex min-h-6 items-center justify-between gap-2 text-label-large text-on-surface">
                     {t(`stages.${s}`)}
-                    {s === stage && day >= 0 && (
-                      <span className="text-label-small text-primary">{t('journey.progress.current')}</span>
-                    )}
+                    {isCurrent && <StatusPill tone="primary" icon="flag" label={t('journey.progress.current')} />}
                   </span>
                   <ProgressBar
+                    size="lg"
                     value={byStage[s].percent}
                     label={t('journey.progress.stage', { stage: t(`stages.${s}`) })}
                     valueText={`${byStage[s].done}/${byStage[s].total}`}
                     tone={byStage[s].percent === 100 ? 'success' : 'primary'}
                   />
                 </li>
-              ))}
-            </ul>
-          </div>
+              );
+            })}
+          </ul>
         </BentoCard>
 
-        <BentoCard size="md" title={t('journey.checkin.title')}>
+        <BentoCard
+          size="md"
+          title={t('journey.checkin.title')}
+          icon={<IconTile icon="event" tone="tertiary" />}
+        >
           {checkin ? (
             <div className="flex h-full flex-col gap-3">
               <p className="text-title-small text-on-surface">
@@ -167,9 +273,12 @@ export function JourneyPage() {
           <ul className="flex flex-col divide-y divide-outline-variant">
             {contacts.map(({ role, person: contact }) =>
               contact ? (
-                <li key={role} className="flex min-w-0 flex-col gap-2 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:gap-4">
+                <li
+                  key={role}
+                  className="flex min-w-0 flex-col gap-2 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:gap-4"
+                >
                   <div className="flex min-w-0 flex-1 items-center gap-3">
-                    <Avatar name={contact.name} />
+                    <Avatar name={contact.name} role={contact.role} />
                     <div className="flex min-w-0 flex-col">
                       <span className="text-label-medium text-on-surface-variant">{t(`journey.contacts.${role}`)}</span>
                       <span className="truncate text-title-small text-on-surface">{contact.name}</span>

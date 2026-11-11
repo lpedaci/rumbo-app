@@ -73,6 +73,10 @@
         "title": "Vas a entrar como {{name}}, {{role}}",
         "continue": "Continuar como {{name}}",
         "change": "Cambiar recorrido"
+      },
+      "showcase": {
+        "title": "Cada persona sabe qué hacer, con quién y para cuándo.",
+        "body": "RRHH arma el recorrido, el jefe directo acompaña y quien ingresa sigue su avance en un solo lugar."
       }
     },
     "sso": {
@@ -189,7 +193,15 @@
     "sessionDemo": "Ver el aviso de sesión (demo)",
     "resetDemo": "Restablecer demo",
     "signOut": "Cerrar sesión",
-    "userMenuSuffix": "menú de usuario"
+    "userMenuSuffix": "menú de usuario",
+    "home": "Ir al inicio",
+    "shortcuts": "Accesos rápidos",
+    "workspace": {
+      "admin": "Espacio de RRHH",
+      "manager": "Espacio del jefe directo",
+      "hire": "Espacio del nuevo ingreso",
+      "it_admin": "Mesa de ayuda de sistemas"
+    }
   },
   "session": {
     "warningTitle": "Tu sesión está por vencer",
@@ -310,15 +322,23 @@
     "resetBody": "Todos los cambios vuelven a su estado inicial y se cierra la sesión.",
     "resetConfirm": "Restablecer demo",
     "preview": {
-      "label": "Vista previa del recorrido de Sofía",
+      "label": "Vista previa de Rumbo: el panel de RRHH con ingresos activos, tareas a tiempo y tareas completadas por semana, y la tarjeta de recorrido de Sofía con su avance.",
       "journey": "Recorrido de ingreso",
       "progress": "Avance del mes 1",
       "tasks": [
         "Acceso al data warehouse",
         "Configurar el entorno de análisis",
         "Primer análisis guiado"
-      ]
-    }
+      ],
+      "greeting": "Buenas tardes, Carla",
+      "context": "Panel de seguimiento de RRHH",
+      "period": "8 semanas",
+      "kpiActive": "Ingresos activos",
+      "kpiOnTime": "Tareas a tiempo",
+      "chartTitle": "Tareas completadas por semana"
+    },
+    "ctaChoose": "Elegir un recorrido",
+    "linksFooter": "Enlaces del proyecto"
   },
   "stages": {
     "preboarding": "Preingreso",
@@ -359,7 +379,6 @@
   },
   "journey": {
     "title": "Mi recorrido",
-    "greeting": "Hola, {{name}}",
     "dayOf": "Día {{day}} de tu recorrido de ingreso · Etapa actual: {{stage}}",
     "beforeStart": "Empiezas el {{date}}. Mientras tanto, puedes avanzar con las tareas de preingreso.",
     "next": {
@@ -406,7 +425,42 @@
     "taskDone": "Tarea completada",
     "stageDone": "¡Completaste {{stage}}!",
     "unlocked": "Se desbloqueó: {{tasks}}",
-    "noHire": "Todavía no tienes un recorrido de ingreso asignado. RRHH te va a avisar cuando esté listo."
+    "noHire": "Todavía no tienes un recorrido de ingreso asignado. RRHH te va a avisar cuando esté listo.",
+    "greetings": {
+      "morning": "Buenos días, {{name}}",
+      "afternoon": "Buenas tardes, {{name}}",
+      "evening": "Buenas noches, {{name}}"
+    },
+    "kpi": {
+      "progress": "Avance del recorrido",
+      "pending": "Tareas que te tocan",
+      "pendingCaption": "Pendientes que dependen de ti",
+      "overdue_one": "{{count}} vencida",
+      "overdue_other": "{{count}} vencidas",
+      "upToDate": "Al día",
+      "stage": "Etapa actual",
+      "stageCaption": "Día {{day}} de tu recorrido",
+      "stageTrend": "{{done}} de {{total}}",
+      "checkin": "Próximo check-in",
+      "today": "Hoy",
+      "checkinCaption": "Check-in de {{days}} días · {{date}}",
+      "none": "Ninguno",
+      "days_one": "{{count}} día",
+      "days_other": "{{count}} días",
+      "monthDone": "+{{count}} en 30 días",
+      "monthNone": "Sin cambios",
+      "progressCaption": "{{done}} de {{total}} tareas · últimos 30 días"
+    },
+    "overview": {
+      "title": "Tu recorrido de ingreso",
+      "body": "Completaste {{done}} de {{total}} tareas. Te faltan {{left}} para terminar.",
+      "bodyDone": "Completaste todas las tareas de tu recorrido.",
+      "legendDone": "Hechas",
+      "legendPending": "Pendientes"
+    },
+    "stagesCard": {
+      "title": "Avance por etapa"
+    }
   },
   "task": {
     "breadcrumb": "Migas de pan",
@@ -593,6 +647,33 @@
       "note": "En la vista previa las tareas no se pueden completar. Las bloqueadas muestran de qué dependen.",
       "summary": "{{count}} tareas, del {{from}} al {{to}}",
       "edit": "Editar plantilla"
+    }
+  },
+  "welcome": {
+    "reopen": "Ver la bienvenida",
+    "close": "Cerrar la bienvenida",
+    "skip": "Saltar",
+    "previous": "Anterior",
+    "next": "Continuar",
+    "stepOf": "Paso {{current}} de {{total}}",
+    "hire": {
+      "finish": "Empezar mi recorrido",
+      "unlocked": "Se desbloqueó",
+      "checkinTitle": "Check-in de 30 días",
+      "steps": [
+        {
+          "title": "Te damos la bienvenida, {{name}}",
+          "body": "Este es tu recorrido de ingreso: qué hacer, con quién y para cuándo, ordenado por etapas."
+        },
+        {
+          "title": "Completa tus tareas",
+          "body": "Marca cada tarea cuando la termines. Algunas se desbloquean cuando completas otras."
+        },
+        {
+          "title": "Prepara tu check-in",
+          "body": "Antes de cada reunión con tu jefe directo, cuéntale cómo te sientes en una autoevaluación breve."
+        }
+      ]
     }
   }
 }

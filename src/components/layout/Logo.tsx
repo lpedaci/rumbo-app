@@ -5,7 +5,16 @@ import { cn } from '@/lib/utils';
  * Rumbo mark: a path that turns towards a point, drawn with tokens.
  * Product logo + fictitious company name (CLAUDE.md F0). No third-party brands.
  */
-export function Logo({ showCompany = true, className }: { showCompany?: boolean; className?: string }) {
+export function Logo({
+  showCompany = true,
+  markOnly = false,
+  className,
+}: {
+  showCompany?: boolean;
+  /** Only the square mark (navigation rail). */
+  markOnly?: boolean;
+  className?: string;
+}) {
   const { t } = useTranslation();
   return (
     <span className={cn('inline-flex min-w-0 items-center gap-2.5', className)}>
@@ -20,10 +29,12 @@ export function Logo({ showCompany = true, className }: { showCompany?: boolean;
         />
         <path d="M19 10.5 23 14l-4 3.5" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="stroke-on-primary" />
       </svg>
+      {!markOnly && (
       <span className="flex min-w-0 flex-col leading-none">
         <span className="text-title-medium text-on-surface">{t('app.name')}</span>
         {showCompany && <span className="truncate text-body-small text-on-surface-variant">{t('app.company')}</span>}
       </span>
+      )}
     </span>
   );
 }

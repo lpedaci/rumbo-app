@@ -9,7 +9,9 @@ interface ProgressBarProps {
   label: string;
   /** Optional visible text next to the bar, for example "60 %". */
   valueText?: string;
-  tone?: 'primary' | 'success';
+  tone?: 'primary' | 'success' | 'tertiary';
+  /** `md` (8 px) in lists, `lg` (12 px) for the main progress of a screen (2.2.1, pattern 8). */
+  size?: 'md' | 'lg';
   className?: string;
 }
 
@@ -17,7 +19,7 @@ interface ProgressBarProps {
  * Linear progress. Fills from 0 on mount and animates changes (2.6);
  * with reduced motion it renders the final value directly.
  */
-export function ProgressBar({ value, label, valueText, tone = 'primary', className }: ProgressBarProps) {
+export function ProgressBar({ value, label, valueText, tone = 'primary', size = 'md', className }: ProgressBarProps) {
   const reduce = useShouldReduceMotion();
   const clamped = Math.min(100, Math.max(0, value));
 
@@ -30,10 +32,16 @@ export function ProgressBar({ value, label, valueText, tone = 'primary', classNa
         aria-valuemax={100}
         aria-valuenow={Math.round(clamped)}
         aria-valuetext={valueText}
-        className="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-surface-container-high"
+        className={cn(
+          'min-w-0 flex-1 overflow-hidden rounded-full bg-surface-container-high',
+          size === 'lg' ? 'h-3' : 'h-2',
+        )}
       >
         <motion.div
-          className={cn('h-full origin-left rounded-full', tone === 'success' ? 'bg-success' : 'bg-primary')}
+          className={cn(
+            'h-full origin-left rounded-full',
+            tone === 'success' ? 'bg-success' : tone === 'tertiary' ? 'bg-tertiary' : 'bg-primary',
+          )}
           initial={reduce ? false : { scaleX: 0 }}
           animate={{ scaleX: clamped / 100 }}
           transition={{ duration: reduce ? 0 : duration.long, ease: easing.emphasizedDecelerate }}

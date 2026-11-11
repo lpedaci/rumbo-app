@@ -67,6 +67,10 @@
   --font-sans: var(--md-ref-typeface);
 
   --text-*: initial;
+  --text-display-medium: 2.8125rem;
+  --text-display-medium--line-height: 3.25rem;
+  --text-display-medium--font-weight: 600;
+  --text-display-medium--letter-spacing: -0.02em;
   --text-display-small: 2.25rem;
   --text-display-small--line-height: 2.75rem;
   --text-display-small--font-weight: 600;
@@ -109,6 +113,7 @@
   --radius-sm: var(--md-sys-shape-small);
   --radius-md: var(--md-sys-shape-medium);
   --radius-lg: var(--md-sys-shape-large);
+  --radius-xl: var(--md-sys-shape-extra-large);
   --radius-full: var(--md-sys-shape-full);
 
   /* Elevation: two levels only */

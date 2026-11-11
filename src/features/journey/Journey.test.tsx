@@ -1,23 +1,12 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { AppProviders } from '@/app/AppProviders';
-import { AppRoutes } from '@/app/AppRoutes';
 import { switchRole } from '@/features/auth/auth-service';
 import { taskStatus } from '@/lib/journey';
 import es from '@/locales/es.json';
 import { useDataStore } from '@/store/data-store';
 import { useSessionStore } from '@/store/session-store';
+import { renderAt } from '@/test/render-app';
 
-function renderAt(path: string) {
-  return render(
-    <MemoryRouter initialEntries={[path]}>
-      <AppProviders>
-        <AppRoutes />
-      </AppProviders>
-    </MemoryRouter>,
-  );
-}
 
 const sofiaTasks = () => useDataStore.getState().hires.find((h) => h.personId === 'p-sofia')!.tasks;
 const statusOf = (id: string) => {
@@ -32,13 +21,15 @@ beforeEach(() => {
   act(() => {
     switchRole('hire');
   });
+  // The guided welcome has its own test below; here it is already seen.
+  useSessionStore.getState().markWelcomeSeen('p-sofia');
 });
 
 describe('N1 · Mi recorrido', () => {
   it('shows the journey with a single h1, progress and the next tasks', async () => {
     renderAt('/me');
     const h1 = await screen.findByRole('heading', { level: 1 });
-    expect(h1).toHaveTextContent(es.journey.title);
+    expect(h1).toHaveTextContent(/^(Buenos días|Buenas tardes|Buenas noches), Sofía$/);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getByRole('heading', { name: es.journey.next.title })).toBeInTheDocument();
     expect(screen.getAllByRole('progressbar').length).toBeGreaterThan(1);
@@ -93,5 +84,33 @@ describe('N2 · Task detail', () => {
     const other = useDataStore.getState().hires.find((h) => h.personId !== 'p-sofia')!;
     renderAt(`/me/tasks/${other.tasks[0]!.id}`);
     expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(es.notFound.title);
+  });
+});
+
+describe('Guided welcome (F16, 2.2.1)', () => {
+  it('opens on the first visit, moves between steps and is not shown again', async () => {
+    useSessionStore.setState({ welcomeSeen: [] });
+    renderAt('/me');
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByRole('heading', { name: 'Te damos la bienvenida, Sofía' })).toBeInTheDocument();
+    // First step: nothing to go back to.
+    expect(within(dialog).queryByRole('button', { name: es.welcome.previous })).not.toBeInTheDocument();
+
+    fireEvent.click(within(dialog).getByRole('button', { name: es.welcome.next }));
+    expect(await within(dialog).findByRole('heading', { name: es.welcome.hire.steps[1]!.title })).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole('button', { name: es.welcome.next }));
+    fireEvent.click(await within(dialog).findByRole('button', { name: es.welcome.hire.finish }));
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(useSessionStore.getState().welcomeSeen).toContain('p-sofia');
+  });
+
+  it('can be skipped', async () => {
+    useSessionStore.setState({ welcomeSeen: [] });
+    renderAt('/me');
+    const dialog = await screen.findByRole('dialog');
+    fireEvent.click(within(dialog).getByRole('button', { name: es.welcome.skip }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(useSessionStore.getState().welcomeSeen).toContain('p-sofia');
   });
 });

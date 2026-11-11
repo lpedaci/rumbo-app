@@ -21,6 +21,25 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
 
+## Rediseño visual (2.2.1): piloto, pendiente de aprobación
+
+**Por qué:** Lourdes pidió el rediseño de la sección 2.2.1 antes del paso 7: la primera versión se veía básica y no tomaba lo de `/design-references/`.
+
+**Qué se hizo**
+- **Auditoría:** `docs/visual-audit.md`, referencia por referencia, con lo que hay que cambiar. Capturas en `docs/redesign/before/` y `docs/redesign/after/`.
+- **Tokens:** `surface` tintado (`#EDF3F4`), `inverse-surface` `#1F2A30` para los tooltips de gráficos, radio de tarjeta de 20 px, padding de tarjeta de 24 px en desktop y rol tipográfico `display-medium`.
+- **Componentes nuevos:** `IconTile`, `Sparkline`, `KpiCard`, `SegmentedProgress`; avatares con color por rol; barra de progreso gruesa (`size="lg"`); ícono opcional en `BentoCard`. Todos en `/styleguide`.
+- **G6:** navegación de escritorio en dos niveles (riel con logo, bienvenida, "Mi seguridad" y "Cerrar sesión"; menú del espacio del rol con la persona abajo); en tablet, riel de íconos; ítem activo en píldora `primary-container`.
+- **G0:** hero a dos columnas con titular grande, botones y vista previa compuesta con datos reales (KPIs con sparkline, gráfico de tareas por semana con tooltip oscuro y tarjeta de recorrido con barra segmentada); tarjetas de rol con banda de color; enlaces al case study y la documentación en el encabezado.
+- **G1:** login en dos columnas con panel tintado, frase de valor y la vista previa del producto (solo desde 1024 px).
+- **N1:** saludo como título, fila de 4 KPIs, tarjeta "Tu recorrido de ingreso" con barra segmentada y "Lo próximo" como checklist con chevron, avance por etapa con barras gruesas, check-in con acento ciruela y contactos con avatar por rol.
+- **Bienvenida guiada de Sofía:** 3 pasos con ilustraciones hechas con componentes reales, puntos de progreso, "Saltar", "Anterior" y "Continuar", y cierre "Empezar mi recorrido".
+- **Router:** migración a `createHashRouter` y `useBlocker` en el editor de plantillas (D-53).
+
+**Verificación:** `tsc`, ESLint, 203 tests y 207 casos de Playwright en verde (desbordes en los 6 anchos y axe, incluida la bienvenida abierta).
+
+**Pendiente:** aprobación de Lourdes. Después, aplicar el estilo a A5 (catálogo de tarjetas), A6, A7, N2 y G2 a G5, y seguir con el paso 7.
+
 ## Paso 6: plantillas (A5, A6 y A7)
 
 **Qué se hizo**

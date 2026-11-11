@@ -8,6 +8,11 @@ interface AuthLayoutProps {
   children: ReactNode;
   /** Right column on large screens (help channels in G4). Hidden below 1024 px. */
   aside?: ReactNode;
+  /**
+   * Product showcase on the right (G1, reference e97bf4eb): flat tinted panel with a
+   * value sentence and the product preview. Hidden below 1024 px (form only on mobile).
+   */
+  showcase?: ReactNode;
 }
 
 /**
@@ -15,11 +20,17 @@ interface AuthLayoutProps {
  * company sign-in. An optional right column holds supporting content (G4).
  * Flat surfaces, no gradients.
  */
-export function AuthLayout({ children, aside }: AuthLayoutProps) {
+export function AuthLayout({ children, aside, showcase }: AuthLayoutProps) {
   const { t } = useTranslation();
 
   return (
-    <div className={cn('grid min-h-dvh grid-cols-1 bg-surface-container-lowest', aside && 'lg:grid-cols-2')}>
+    <div
+      className={cn(
+        'grid min-h-dvh grid-cols-1 bg-surface-container-lowest',
+        aside && 'lg:grid-cols-2',
+        showcase && 'lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:p-3',
+      )}
+    >
       <a
         href="#main-content"
         className="sr-only rounded-sm bg-surface-container-lowest px-4 py-3 text-label-large text-primary focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:shadow-elevation-1"
@@ -29,7 +40,10 @@ export function AuthLayout({ children, aside }: AuthLayoutProps) {
       <main
         id="main-content"
         tabIndex={-1}
-        className="flex min-w-0 flex-col items-center px-(--space-gutter) py-8 focus:outline-none lg:py-12"
+        className={cn(
+          'flex min-w-0 flex-col items-center px-(--space-gutter) py-8 focus:outline-none lg:py-12',
+          showcase && 'lg:justify-center',
+        )}
       >
         <div className="flex w-full max-w-md min-w-0 flex-col gap-6">
           {/* The logo goes back to the demo start (G0). */}
@@ -39,6 +53,11 @@ export function AuthLayout({ children, aside }: AuthLayoutProps) {
           {children}
         </div>
       </main>
+      {showcase && (
+        <aside className="hidden min-w-0 overflow-hidden rounded-xl bg-primary-container px-10 py-12 lg:flex lg:flex-col lg:justify-center xl:px-16">
+          {showcase}
+        </aside>
+      )}
       {aside && (
         <aside className="hidden min-w-0 border-l border-outline-variant bg-surface-container px-10 py-12 lg:flex lg:items-center lg:justify-center">
           <div className="w-full max-w-md">{aside}</div>

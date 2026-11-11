@@ -176,7 +176,7 @@ export function TemplatesPage() {
               return (
                 <li
                   key={template.id}
-                  className="flex min-w-0 items-start gap-2 rounded-lg border border-outline-variant bg-surface-container-lowest p-4"
+                  className="flex min-w-0 items-start gap-2 rounded-xl border border-outline-variant bg-surface-container-lowest p-4"
                 >
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <Link

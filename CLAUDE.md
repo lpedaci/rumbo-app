@@ -56,7 +56,7 @@ Los colores se nombran y usan con los **roles de Material 3** (cada rol tiene su
 
 | Rol M3 | Color | Uso |
 | --- | --- | --- |
-| `surface` | `#F6F8F9` | Fondo de la página |
+| `surface` | `#EDF3F4` | Fondo de la página: levemente tintado de petróleo para que las tarjetas blancas se despeguen, como en las referencias |
 | `surface-container-lowest` | `#FFFFFF` | Tarjetas bento, tablas, formularios |
 | `surface-container` | `#EEF2F4` | Sidebar, encabezados de tabla, zonas agrupadas |
 | `surface-container-high` | `#E4E9EC` | Hover de filas, elementos seleccionados neutros |
@@ -131,14 +131,52 @@ Material 3 Expressive (la actualización vigente de M3) mantiene los cinco estil
 | `ad2d9e23` | Dashboard con sidebar de íconos, KPIs con sparklines, gráfico con tooltip oscuro flotante y tabla de uso | Dashboards en general, tooltips de gráficos, navegación lateral compacta |
 | `e97bf4eb` | Login en dos columnas: formulario a la izquierda (SSO arriba, email y contraseña) y vista previa del producto a la derecha | Login (G1) |
 | `e3243345` | Gestión de usuarios: KPIs arriba y tabla con avatar, email, fecha, ubicación y estados en píldoras de color | Listados (A2, A9, S1), píldoras de estado |
-| `original-cf59fe35` | Tarjeta "You're almost there!" con barra de progreso y checklist de pasos | Mi recorrido (N1), bloque "Lo próximo", progreso por etapa |
+| `original-cf59fe35` | Tarjeta flotante "You're almost there!": ícono de marca arriba, título, texto breve, **barra de progreso segmentada** (muchas barritas verticales que se van completando) y checklist de pasos en filas con ícono de estado y chevron | Bloque de bienvenida y progreso de Mi recorrido (N1), "Lo próximo", progreso por etapa |
 | `original-d624f662` (video) | Modal de configuración de perfil con pasos, checks, indicador de puntos y botones Anterior / Continuar, con transición entre pasos | Recorrido guiado (F16), aviso de privacidad (G8), flujos por pasos y referencia de animación |
+| `7fa40cfb` | App con **doble barra lateral** (riel de íconos + menú expandido con secciones y submenús), encabezado con buscador y acción principal, migas de pan, botón "Filtros" y **catálogo de plantillas en grilla de tarjetas**: título, etiquetas en chips, objetivo con ícono, descripción y botón "Ver plantilla"; la primera tarjeta es "Crear plantilla" con borde punteado | Listado de plantillas (A5) como catálogo de tarjetas, navegación lateral, encabezado de las pantallas de admin, chips de categoría |
 
 - **Rasgos comunes a respetar:** mucho espacio en blanco, superficies claras, un color de acento usado con moderación, gráficos de líneas suaves, tipografía sin serifa limpia, tablas aireadas con estados en píldoras.
 - **Qué tomar de las referencias:** las funcionalidades y la modalidad visual (estructura de dashboards, tarjetas de KPI, tablas, navegación lateral, estados de progreso, pantallas de login y de onboarding).
 - **Qué NO tomar:** **fondos con degradé.** Los fondos van en colores planos (superficies de M3). Si se necesita separar zonas, usar diferencias de superficie, bordes sutiles o elevación, nunca degradés.
 - **Gráficos de área:** varias referencias rellenan el área bajo la línea con degradé. Acá el relleno va en un color plano con baja opacidad (por ejemplo, el color de la serie al 12 %), coherente con la regla de no usar degradés.
 - No copiar ilustraciones, íconos ni textos de los shots de referencia: son de sus autores.
+- **Sin fotos de personas:** las referencias usan fotos y emojis en los avatares; Rumbo usa iniciales sobre contenedores de color (ver 2.2.1). Los colores de botones de las referencias (azul, violeta) se reemplazan por los roles de 2.1.1.
+
+### 2.2.1 Dirección visual: que se vea propio, no genérico
+
+La primera versión quedó demasiado básica y con aspecto de plantilla genérica. Las reglas de sobriedad (sin degradés, pocas sombras, paleta fría) **no significan una interfaz plana y sin personalidad**: la riqueza visual tiene que venir de la jerarquía, los datos, el color de acento y la composición, como en las referencias.
+
+**Detalle del video `original-d624f662`** (8 segundos, flujo de 3 pasos dentro de un modal centrado sobre la app atenuada):
+- Cada paso tiene arriba una **zona ilustrativa armada con mini piezas de interfaz** (un campo con un check que aparece, una tarjeta de perfil que se completa con filas que se van tildando, una tarjeta de resultado con elementos que flotan alrededor), debajo un **indicador de puntos**, el título, una descripción de dos líneas y los botones "Anterior" (outlined) y "Continuar" (filled). En el último paso el botón cambia a una frase de cierre ("Let's go!").
+- La transición entre pasos: la ilustración del paso nuevo entra con fundido y leve escala, sus elementos aparecen escalonados (los checks hacen un pequeño rebote) y el texto cambia con fundido.
+- "Anterior" está atenuado en el primer paso.
+
+**Patrones concretos a incorporar** (tomados de `/design-references/`):
+1. **Capas visibles:** fondo de página tintado (`surface`) con tarjetas blancas encima; la diferencia tiene que verse a simple vista.
+2. **Jerarquía tipográfica marcada:** saludo grande en los inicios de cada rol ("Buenas tardes, Carla", `headline-small` o mayor) con una línea de contexto; números de KPI grandes (`display-small`).
+3. **KPIs con vida:** cada tarjeta de KPI lleva ícono en un contenedor de color, número grande, variación en píldora de color (sube / baja) y una **mini línea de tendencia (sparkline)**.
+4. **Gráficos protagonistas:** el gráfico principal ocupa una tarjeta grande, con relleno plano suave, ejes discretos y **tooltip oscuro** (`inverse-surface` de M3, `#1F2A30` con texto blanco).
+5. **Navegación lateral con identidad:** íconos de Material Symbols, ítem activo con píldora tintada de `primary-container`, sección de usuario abajo con avatar.
+6. **Personas con color:** avatares con iniciales sobre contenedores de color distintos por rol (`primary-container` para RRHH, `tertiary-container` para jefes, `secondary-container` para nuevos ingresos, `info` container para sistemas), usados igual en todo el producto.
+7. **Tablas aireadas:** avatar + nombre + dato secundario en la primera columna, estados en píldoras de color con ícono, filas con hover.
+8. **Progreso visible:** barras de progreso gruesas y redondeadas, checklist con íconos de estado, como en la tarjeta "You're almost there!".
+9. **Bienvenida guiada como la del video:** al primer ingreso de cada rol, un modal de 3 o 4 pasos con zona ilustrativa hecha con **componentes reales de Rumbo en miniatura** (por ejemplo, para Sofía: su tarjeta de recorrido, una tarea que se tilda y su check-in), puntos de progreso, "Anterior" / "Continuar" y un cierre ("Empezar mi recorrido"). Se puede saltar y volver a ver desde el menú (F16). En "Anterior" del primer paso: oculto o deshabilitado con texto que no dependa solo del color. Respeta reducir animaciones.
+10. **Tarjeta de progreso con barra segmentada:** como `original-cf59fe35`, una barra hecha de barritas verticales (una por tarea o por porcentaje), en colores planos (`primary` las completas, `outline-variant` las pendientes, nunca degradé). Debajo, la checklist en filas con ícono de estado y chevron. Usar en N1 para el bienvenido y el avance.
+11. **Catálogo de tarjetas para plantillas:** como `7fa40cfb`, A5 se muestra por defecto como **grilla de tarjetas** (nombre, puesto y área en chips, cantidad de tareas con ícono, ingresos que la usan, estado borrador o publicada, botón "Ver plantilla"), con la primera tarjeta "Crear plantilla" con borde punteado, y un selector para cambiar a vista de tabla.
+12. **Doble navegación lateral en desktop:** riel de íconos fijo y menú expandido con secciones agrupadas y la persona usuaria abajo, como `7fa40cfb`; en tablet solo el riel; en mobile, menú inferior (ya implementado).
+13. **Acento con intención:** el `tertiary` (ciruela) aparece en logros, destacados y la segunda serie de gráficos para dar contraste; no todo es petróleo.
+
+**Pantallas que más lo necesitan:**
+- **G0, inicio de la demo:** hero a dos columnas con titular grande (`display-small` o `display-medium`), texto breve y botones; a la derecha, una **vista previa grande y compuesta del producto** (tarjetas de KPI con sparklines, un gráfico y la checklist de recorrido, armadas con componentes reales, superpuestas en una composición tipo bento). Debajo, las tarjetas de roles con avatar de color, más grandes y con más contraste. Enlaces "Ver el case study" y "Ver la documentación" también en el encabezado.
+- **G1, login:** dos columnas como la referencia `e97bf4eb`: formulario a la izquierda y, a la derecha, un panel con fondo tintado (sin degradé) con una vista previa del producto y una frase de valor. En mobile, solo el formulario.
+- **Inicios de cada rol (A1, J1, N1, S1):** saludo + fila de KPIs + gráfico o bloque principal + lista o tabla, en bento.
+
+**Proceso obligatorio antes de seguir con el paso 7:**
+1. Abrir y mirar cada archivo de `/design-references/` (el video, por sus fotogramas o su descripción en 2.2).
+2. Escribir `docs/visual-audit.md`: por cada referencia, los patrones visuales concretos (composición, tamaños, color, densidad, componentes) y, al lado, cómo está hoy la pantalla equivalente de Rumbo (con su captura) y qué hay que cambiar.
+3. Actualizar tokens y componentes en `/styleguide` y rediseñar **G0, G1 y N1** como piloto (N1 con la bienvenida guiada del patrón 9 y la tarjeta de progreso del patrón 10).
+4. Mostrar capturas antes y después a Lourdes y **esperar su aprobación** antes de aplicar el estilo al resto de las pantallas ya hechas (A5 como catálogo de tarjetas, A6, A7, N2) y a las siguientes.
+5. Mantener todas las reglas de 2.1 a 2.10 (sin degradés, sombras mínimas, contraste AA, voz y tono).
 
 ### 2.3 Íconos: Material Symbols personalizados
 - Usar **Material Symbols** (la familia de íconos de Material 3, de código abierto) en formato SVG importado por ícono, para no cargar la fuente completa.

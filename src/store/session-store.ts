@@ -34,6 +34,10 @@ interface SessionState {
   mfaOptOut: string[];
   /** Session warning dialog is open (idle timer). Not persisted. */
   warningOpen: boolean;
+  /** People who already saw (or skipped) the guided welcome of their role (F16, 2.2.1). */
+  welcomeSeen: string[];
+  /** The guided welcome is open. Not persisted. */
+  welcomeOpen: boolean;
 
   setPending: (pending: PendingAuth | null) => void;
   setReturnTo: (path: string | null) => void;
@@ -46,6 +50,8 @@ interface SessionState {
   forgetDevice: (personId: string) => void;
   setMfaOptOut: (personId: string, optOut: boolean) => void;
   resetSessionState: () => void;
+  setWelcomeOpen: (open: boolean) => void;
+  markWelcomeSeen: (personId: string) => void;
 }
 
 export const SESSION_STORAGE_KEY = 'rumbo-session';
@@ -60,6 +66,8 @@ export const useSessionStore = create<SessionState>()(
       rememberedDevices: {},
       mfaOptOut: [],
       warningOpen: false,
+      welcomeSeen: [],
+      welcomeOpen: false,
 
       setPending: (pending) => set({ pending }),
       setReturnTo: (returnTo) => set({ returnTo }),
@@ -84,18 +92,31 @@ export const useSessionStore = create<SessionState>()(
           mfaOptOut: optOut ? [...new Set([...state.mfaOptOut, personId])] : state.mfaOptOut.filter((id) => id !== personId),
         })),
       resetSessionState: () =>
-        set({ session: null, pending: null, returnTo: null, rememberedDevices: {}, mfaOptOut: [], warningOpen: false }),
+        set({
+          session: null,
+          pending: null,
+          returnTo: null,
+          rememberedDevices: {},
+          mfaOptOut: [],
+          warningOpen: false,
+          welcomeSeen: [],
+          welcomeOpen: false,
+        }),
+      setWelcomeOpen: (welcomeOpen) => set({ welcomeOpen }),
+      markWelcomeSeen: (personId) =>
+        set((state) => ({ welcomeSeen: [...new Set([...state.welcomeSeen, personId])], welcomeOpen: false })),
     }),
     {
       name: SESSION_STORAGE_KEY,
       version: 1,
       storage: createJSONStorage(() => localStorage),
-      partialize: ({ session, pending, returnTo, rememberedDevices, mfaOptOut }) => ({
+      partialize: ({ session, pending, returnTo, rememberedDevices, mfaOptOut, welcomeSeen }) => ({
         session,
         pending,
         returnTo,
         rememberedDevices,
         mfaOptOut,
+        welcomeSeen,
       }),
     },
   ),
