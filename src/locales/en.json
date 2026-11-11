@@ -1161,7 +1161,112 @@
       "checkinOverdue": "Overdue",
       "needsAttention": "Needs attention",
       "employeeId": "Employee number",
-      "mobile": "Mobile"
+      "mobile": "Mobile",
+      "doCheckin": "Run check-in",
+      "backTeam": "Back to My team"
     }
+  },
+  "team": {
+    "facts": {
+      "people_one": "{{count}} person in onboarding",
+      "people_other": "{{count}} people in onboarding",
+      "soon_one": "{{count}} check-in this week",
+      "soon_other": "{{count}} check-ins this week"
+    },
+    "kpis": {
+      "active": "In onboarding",
+      "soon": "Upcoming check-ins",
+      "ready": "Self-reviews ready",
+      "myTasks": "Your pending tasks"
+    },
+    "kpiCaption": {
+      "soon": "In the next 7 days",
+      "ready": "To talk about in the meeting",
+      "myTasks": "As direct manager"
+    },
+    "title": "Your team",
+    "description": "The new hires on your team, their progress and their next check-in.",
+    "empty": "There are no new hires on your team right now. When HR adds one, they will show up here.",
+    "progressLabel": "{{name}}'s progress",
+    "checkinIn_one": "{{days}} day check-in in {{count}} day",
+    "checkinIn_other": "{{days}} day check-in in {{count}} days",
+    "checkinToday": "{{days}} day check-in today",
+    "checkinLate_one": "{{days}} day check-in overdue by {{count}} day",
+    "checkinLate_other": "{{days}} day check-in overdue by {{count}} days",
+    "noCheckin": "All check-ins done",
+    "selfReviewReady": "Self-review ready",
+    "viewJourney": "View journey",
+    "doCheckin": "Run check-in",
+    "upcoming": "Starts on {{date}}",
+    "upcomingTitle": "Starting soon",
+    "activeTitle": "In progress"
+  },
+  "managerCheckin": {
+    "title": "{{days}} day check-in",
+    "description": "Review the stage milestones with {{name}}. If one was not met, decide whether to reschedule or escalate it to HR.",
+    "back": "Back to {{name}}'s journey",
+    "breadcrumb": "Breadcrumb",
+    "due": "Due {{date}}",
+    "selfReview": "Their self-review",
+    "selfReviewMissing": "They have not sent their self-review yet. You can run the check-in anyway.",
+    "mood": "How they feel: {{mood}} of 5",
+    "milestones": "Stage milestones",
+    "milestonesHelp": "Choose the result of each milestone.",
+    "result": {
+      "met": "Met",
+      "partial": "Partial",
+      "not_met": "Not met"
+    },
+    "resultRequired": "Choose a result for this milestone.",
+    "comment": "Comments",
+    "commentHelp": "The key points of the conversation, for example: the dashboard is going well and they need more business context.",
+    "nextSteps": "Next steps",
+    "nextStepsHelp": "What was agreed for the next stage, for example: present the first analysis to the team.",
+    "notMet": "Some milestones were not met",
+    "notMetHelp": "Decide what to do: reschedule the check-in or escalate it to HR.",
+    "action": "What do you want to do",
+    "actionHelp": "Rescheduling moves the date; escalating creates an alert on the HR dashboard.",
+    "reschedule": "Reschedule the check-in",
+    "escalate": "Escalate to HR",
+    "newDate": "New date",
+    "newDateHelp": "DD/MM/YYYY format, after today, for example: 26/11/2026",
+    "newDatePast": "Choose a date after today.",
+    "note": "Reason for HR",
+    "noteHelp": "What happened and what help you need, for example: they still do not have the access they need to work.",
+    "submit": "Complete check-in",
+    "submitting": "Saving…",
+    "cancel": "Cancel",
+    "done": "Check-in completed",
+    "escalated": "Check-in completed and escalated to HR",
+    "alreadyDone": "This check-in is already completed.",
+    "errors": "Check these points before saving"
+  },
+  "selfReview": {
+    "title": "Your {{days}} day self-review",
+    "description": "Before your meeting with {{manager}}, tell them how you feel and how it is going. Only your direct manager and HR see it.",
+    "due": "Meeting: {{date}}",
+    "mood": "How do you feel right now?",
+    "moodHelp": "Choose the option closest to how you are.",
+    "moods": {
+      "1": "Very bad",
+      "2": "Bad",
+      "3": "So-so",
+      "4": "Good",
+      "5": "Very good"
+    },
+    "comment": "How is it going?",
+    "commentHelp": "What goes well, what is hard or what you need, for example: I need to know the business data better.",
+    "milestones": "What you will talk about",
+    "submit": "Send self-review",
+    "submitting": "Sending…",
+    "sent": "Self-review sent",
+    "sentTitle": "You sent your self-review",
+    "sentBody": "Your direct manager will see it before the meeting. You can change it until the check-in is done.",
+    "edit": "Edit my self-review",
+    "completedTitle": "This check-in is done",
+    "completedBody": "Your direct manager completed the check-in on {{date}}.",
+    "back": "Back to My journey",
+    "notFound": "We could not find this check-in.",
+    "moodRequired": "Choose how you feel."
   }
 }

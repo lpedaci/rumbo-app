@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
+import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { KpiCard, KpiRow } from '@/components/ui/KpiCard';
@@ -42,7 +43,8 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 }
 
 /**
- * A4 · Hire record (CLAUDE.md F3, F5): data, journey with statuses and check-in history.
+ * A4 · Hire record (CLAUDE.md F3, F5), also J2 for the direct manager: data, journey with
+ * statuses and check-in history. The manager completes their own tasks and opens J3.
  * HR can mark as done tasks of any owner (IT, Facilities, buddy), as section 4 requires.
  * The self-review is visible here because HR may see it (least privilege, F0).
  */
@@ -63,17 +65,20 @@ export function HireDetailPage() {
   const nameOf = (personId?: string) => people.find((p) => p.id === personId)?.name ?? t('hires.detail.none');
   const byStage = progressByStage(hire.tasks);
   const canSeeSelfReview = can(user, 'checkin:view_self_review');
+  // Same record for HR (A4) and for the direct manager (J2): the way back and the check-in action change.
+  const isManager = can(user, 'checkin:fill');
+  const backTo = isManager ? '/manager' : '/admin/hires';
   const checkinIn = s.nextCheckin ? daysBetween(DEMO_TODAY, checkinDueDate(s.nextCheckin)) : null;
 
   return (
     <>
       <nav aria-label={t('hires.detail.breadcrumb')} className="mb-4 md:mb-6">
         <Link
-          to="/admin/hires"
+          to={backTo}
           className="inline-flex min-h-12 items-center gap-1 rounded-sm text-label-large text-primary underline-offset-4 hover:underline md:min-h-0"
         >
           <Icon name="arrow_back" />
-          {t('hires.detail.back')}
+          {isManager ? t('hires.detail.backTeam') : t('hires.detail.back')}
         </Link>
       </nav>
 
@@ -263,6 +268,13 @@ export function HireDetailPage() {
                         <Icon name="schedule" size={16} className="mt-px shrink-0" />
                         {t('hires.detail.rescheduled', { date: formatDate(checkin.action.newDate) })}
                       </p>
+                    )}
+                    {isManager && checkin.status !== 'completed' && (
+                      <Button asChild variant="tonal" size="xs" leadingIcon="fact_check" className="w-fit">
+                        <Link to={`/manager/hires/${hire.id}/checkin/${checkin.stage}`}>
+                          {t('hires.detail.doCheckin')}
+                        </Link>
+                      </Button>
                     )}
                   </li>
                 ))}

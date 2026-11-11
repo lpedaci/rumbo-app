@@ -1161,7 +1161,112 @@
       "checkinOverdue": "Vencido",
       "needsAttention": "Requiere atención",
       "employeeId": "Legajo",
-      "mobile": "Celular"
+      "mobile": "Celular",
+      "doCheckin": "Hacer check-in",
+      "backTeam": "Volver a Mi equipo"
     }
+  },
+  "team": {
+    "facts": {
+      "people_one": "{{count}} persona en onboarding",
+      "people_other": "{{count}} personas en onboarding",
+      "soon_one": "{{count}} check-in esta semana",
+      "soon_other": "{{count}} check-ins esta semana"
+    },
+    "kpis": {
+      "active": "En onboarding",
+      "soon": "Check-ins próximos",
+      "ready": "Autoevaluaciones listas",
+      "myTasks": "Tus tareas pendientes"
+    },
+    "kpiCaption": {
+      "soon": "En los próximos 7 días",
+      "ready": "Para conversar en la reunión",
+      "myTasks": "Como jefe directo"
+    },
+    "title": "Tu equipo",
+    "description": "Las personas nuevas de tu equipo, su avance y su próximo check-in.",
+    "empty": "No tienes personas nuevas en tu equipo por ahora. Cuando RRHH dé de alta un ingreso, va a aparecer acá.",
+    "progressLabel": "Avance de {{name}}",
+    "checkinIn_one": "Check-in de {{days}} días en {{count}} día",
+    "checkinIn_other": "Check-in de {{days}} días en {{count}} días",
+    "checkinToday": "Check-in de {{days}} días hoy",
+    "checkinLate_one": "Check-in de {{days}} días vencido hace {{count}} día",
+    "checkinLate_other": "Check-in de {{days}} días vencido hace {{count}} días",
+    "noCheckin": "Completó todos sus check-ins",
+    "selfReviewReady": "Autoevaluación lista",
+    "viewJourney": "Ver recorrido",
+    "doCheckin": "Hacer check-in",
+    "upcoming": "Ingresa el {{date}}",
+    "upcomingTitle": "Próximos a ingresar",
+    "activeTitle": "En curso"
+  },
+  "managerCheckin": {
+    "title": "Check-in de {{days}} días",
+    "description": "Evalúa los hitos de la etapa con {{name}}. Si alguno no se cumplió, decide si reprogramarlo o escalarlo a RRHH.",
+    "back": "Volver al recorrido de {{name}}",
+    "breadcrumb": "Migas de pan",
+    "due": "Vence el {{date}}",
+    "selfReview": "Su autoevaluación",
+    "selfReviewMissing": "Todavía no envió su autoevaluación. Puedes hacer el check-in igual.",
+    "mood": "Cómo se siente: {{mood}} de 5",
+    "milestones": "Hitos de la etapa",
+    "milestonesHelp": "Marca el resultado de cada hito.",
+    "result": {
+      "met": "Cumplido",
+      "partial": "Parcial",
+      "not_met": "No cumplido"
+    },
+    "resultRequired": "Elige un resultado para este hito.",
+    "comment": "Comentarios",
+    "commentHelp": "Lo más importante de la conversación, por ejemplo: avanza bien con el tablero y necesita más contexto del negocio.",
+    "nextSteps": "Próximos pasos",
+    "nextStepsHelp": "Qué se acordó para la próxima etapa, por ejemplo: presentar el primer análisis al equipo.",
+    "notMet": "Hay hitos no cumplidos",
+    "notMetHelp": "Decide qué hacer: reprogramar el check-in o escalarlo a RRHH.",
+    "action": "Qué quieres hacer",
+    "actionHelp": "Reprogramar mueve la fecha; escalar genera una alerta en el panel de RRHH.",
+    "reschedule": "Reprogramar el check-in",
+    "escalate": "Escalar a RRHH",
+    "newDate": "Nueva fecha",
+    "newDateHelp": "Formato DD/MM/AAAA, posterior a hoy, por ejemplo: 26/11/2026",
+    "newDatePast": "Elige una fecha posterior a hoy.",
+    "note": "Motivo para RRHH",
+    "noteHelp": "Qué pasó y qué ayuda necesitas, por ejemplo: todavía no tiene los accesos para trabajar.",
+    "submit": "Completar check-in",
+    "submitting": "Guardando…",
+    "cancel": "Cancelar",
+    "done": "Check-in completado",
+    "escalated": "Check-in completado y escalado a RRHH",
+    "alreadyDone": "Este check-in ya está completado.",
+    "errors": "Revisa estos puntos antes de guardar"
+  },
+  "selfReview": {
+    "title": "Tu autoevaluación de los {{days}} días",
+    "description": "Antes de la reunión con {{manager}}, cuéntale cómo te sientes y cómo te va. Solo la ven tu jefe directo y RRHH.",
+    "due": "Reunión: {{date}}",
+    "mood": "¿Cómo te sientes en este momento?",
+    "moodHelp": "Elige la opción que más se parece a cómo estás.",
+    "moods": {
+      "1": "Muy mal",
+      "2": "Mal",
+      "3": "Más o menos",
+      "4": "Bien",
+      "5": "Muy bien"
+    },
+    "comment": "¿Cómo te va?",
+    "commentHelp": "Lo que va bien, lo que te cuesta o lo que necesitas, por ejemplo: me falta conocer mejor los datos del negocio.",
+    "milestones": "Lo que se va a conversar",
+    "submit": "Enviar autoevaluación",
+    "submitting": "Enviando…",
+    "sent": "Autoevaluación enviada",
+    "sentTitle": "Ya enviaste tu autoevaluación",
+    "sentBody": "Tu jefe directo la va a ver antes de la reunión. Puedes cambiarla hasta que se haga el check-in.",
+    "edit": "Editar mi autoevaluación",
+    "completedTitle": "Este check-in ya se hizo",
+    "completedBody": "Tu jefe directo completó el check-in el {{date}}.",
+    "back": "Volver a Mi recorrido",
+    "notFound": "No encontramos este check-in.",
+    "moodRequired": "Elige cómo te sientes."
   }
 }

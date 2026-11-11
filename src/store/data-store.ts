@@ -2,8 +2,19 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
 import { demoNow } from '@/lib/dates';
+import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '@/lib/checkins';
 import { completeTask as completeTaskRule } from '@/lib/journey';
-import type { AccessRequest, AccountFlags, AuditEvent, AuthAttempts, Hire, Person, Template } from '@/types/domain';
+import type {
+  AccessRequest,
+  AccountFlags,
+  AuditEvent,
+  AuthAttempts,
+  CheckinStage,
+  Hire,
+  Mood,
+  Person,
+  Template,
+} from '@/types/domain';
 
 /**
  * Demo data store, persisted in localStorage so changes survive a reload
@@ -32,6 +43,15 @@ interface DataActions {
   deleteTemplate: (templateId: string, actorId: string) => void;
   /** Adds a new hire and their journey (A3, F3) and records hire.create. */
   addHire: (person: Person, hire: Hire, actorId: string) => void;
+  /** N3: the hire sends the self-review of a check-in. */
+  submitSelfReview: (
+    hireId: string,
+    stage: CheckinStage,
+    review: { mood: Mood; comment: string },
+    actorId: string,
+  ) => void;
+  /** J3: the manager completes a check-in; an escalation is recorded as checkin.escalate (F5). */
+  completeCheckin: (hireId: string, stage: CheckinStage, input: ManagerCheckinInput, actorId: string) => void;
   /** Restores the seed data ("Restablecer demo"). The session is cleared by the session store. */
   resetData: () => void;
 }
@@ -156,6 +176,51 @@ export const useDataStore = create<DataState>()(
             },
           ],
         })),
+
+      submitSelfReview: (hireId, stage, review, actorId) =>
+        set((state) => ({
+          hires: state.hires.map((h) => (h.id === hireId ? applySelfReview(h, stage, review, demoNow()) : h)),
+          auditEvents: [
+            ...state.auditEvents,
+            {
+              id: nextAuditId(),
+              at: demoNow(),
+              actorId,
+              action: 'checkin.self_review',
+              resource: `${hireId}-${stage}`,
+              result: 'success',
+            },
+          ],
+        })),
+
+      completeCheckin: (hireId, stage, input, actorId) =>
+        set((state) => {
+          const events: AuditEvent[] = [
+            {
+              id: nextAuditId(),
+              at: demoNow(),
+              actorId,
+              action: 'checkin.complete',
+              resource: `${hireId}-${stage}`,
+              result: 'success',
+            },
+          ];
+          if (input.action?.type === 'escalate' && input.results.includes('not_met')) {
+            events.push({
+              id: nextAuditId(),
+              at: demoNow(),
+              actorId,
+              action: 'checkin.escalate',
+              resource: `${hireId}-${stage}`,
+              result: 'success',
+              detail: input.action.note,
+            });
+          }
+          return {
+            hires: state.hires.map((h) => (h.id === hireId ? applyManagerCheckin(h, stage, input, demoNow()) : h)),
+            auditEvents: [...state.auditEvents, ...events],
+          };
+        }),
 
       resetData: () => set(buildSeed()),
     }),

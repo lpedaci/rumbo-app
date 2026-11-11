@@ -1,3 +1,6 @@
+import { ManagerCheckinPage } from '@/features/checkins/ManagerCheckinPage';
+import { SelfReviewPage } from '@/features/checkins/SelfReviewPage';
+import { TeamPage } from '@/features/team/TeamPage';
 import { HireDetailPage } from '@/features/hires/HireDetailPage';
 import { HiresPage } from '@/features/hires/HiresPage';
 import { NewHirePage } from '@/features/hires/NewHirePage';
@@ -92,14 +95,14 @@ export function AppRoutes() {
           <Route path="/admin/templates/:id" element={<TemplateEditorPage />} />
           <Route path="/admin/templates/:id/preview" element={<TemplatePreviewPage />} />
 
-          <Route path="/manager" element={<UpcomingPage screen="J1" />} />
-          <Route path="/manager/hires/:id" element={<UpcomingPage screen="J2" />} />
-          <Route path="/manager/hires/:id/checkin/:stage" element={<UpcomingPage screen="J3" />} />
+          <Route path="/manager" element={<TeamPage />} />
+          <Route path="/manager/hires/:id" element={<HireDetailPage />} />
+          <Route path="/manager/hires/:id/checkin/:stage" element={<ManagerCheckinPage />} />
 
           <Route path="/me" element={<JourneyPage />} />
           <Route path="/me/tasks/:id" element={<TaskDetailPage />} />
           <Route path="/me/checkin" element={<NextCheckinRedirect />} />
-          <Route path="/me/checkin/:stage" element={<UpcomingPage screen="N3" />} />
+          <Route path="/me/checkin/:stage" element={<SelfReviewPage />} />
 
           <Route path="/it/requests" element={<UpcomingPage screen="S1" />} />
           <Route path="/it/requests/:id" element={<UpcomingPage screen="S2" />} />
