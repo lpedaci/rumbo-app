@@ -43,11 +43,11 @@ export function SsoPage() {
 
   return (
     <AuthLayout>
-      <header className="flex flex-col gap-1">
+      <header className="flex flex-col gap-2">
         <h1 className="text-headline-small text-on-surface">{t('auth.sso.title', { provider: providerName })}</h1>
       </header>
 
-      <div className="flex flex-col gap-3 rounded-lg border border-dashed border-outline bg-surface-container p-5">
+      <div className="flex flex-col gap-3 rounded-lg border border-dashed border-outline bg-surface-container p-5 md:p-6">
         <span className="flex size-10 items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant">
           <Icon name="open_in_new" />
         </span>
@@ -62,7 +62,7 @@ export function SsoPage() {
           onDone={() => go(signInWithSso(preselected.id, method, demo))}
         />
       ) : (
-        <form noValidate onSubmit={onSubmit} className="flex flex-col gap-4">
+        <form noValidate onSubmit={onSubmit} className="flex flex-col gap-6">
           <RadioGroup
               legend={t('auth.sso.accountLegend')}
               helperText={t('auth.sso.accountHelp')}

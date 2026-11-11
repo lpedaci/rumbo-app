@@ -283,7 +283,7 @@
     "it_admin": "IT"
   },
   "home": {
-    "eyebrow": "Rumbo · Onboarding journeys",
+    "eyebrow": "Portfolio prototype · Onboarding journeys",
     "title": "Everyone knows what to do, with whom and by when.",
     "intro": "Rumbo is a platform where HR designs the onboarding journey for each role, managers support it with check-ins and new hires always know what comes next. HR tracks progress and spots where journeys get stuck.",
     "demoTitle": "About this demo",
@@ -355,7 +355,38 @@
       "chartTitle": "Tasks completed per week"
     },
     "ctaChoose": "Choose a journey",
-    "linksFooter": "Project links"
+    "linksFooter": "Project links",
+    "meta": [
+      "4 navigable roles",
+      "Fictitious data from Nortia S.A.",
+      "WCAG 2.2 AA accessibility",
+      "Saved only in your browser"
+    ],
+    "metaLabel": "About this demo",
+    "previewFrame": "Product preview",
+    "features": {
+      "title": "What the prototype shows",
+      "subtitle": "The key flows of a corporate onboarding journey, end to end.",
+      "items": [
+        {
+          "title": "Journeys by stage",
+          "body": "Preboarding, Week 1, Month 1 and Days 30 to 90, with tasks that unlock through dependencies."
+        },
+        {
+          "title": "Template builder",
+          "body": "HR builds the journey for each role with drag and drop and deadlines relative to the start date."
+        },
+        {
+          "title": "30, 60 and 90 day check-ins",
+          "body": "The direct manager reviews milestones and, if one is not met, reschedules or escalates to HR."
+        },
+        {
+          "title": "Security and access",
+          "body": "SSO sign-in, two-step verification, role-based permissions and audit log, simulated."
+        }
+      ]
+    },
+    "roleLabel": "Role"
   },
   "stages": {
     "preboarding": "Pre-boarding",
@@ -525,7 +556,6 @@
     "stage": "Stage",
     "status": "Status",
     "blockedTitle": "This task isn't available yet",
-    "blockedBody": "First, these need to be completed:",
     "otherOwner": "{{owner}} completes this task. It will show as done when they finish.",
     "doneTitle": "You completed this task",
     "doneBody": "You marked it as done on {{date}}.",
@@ -551,7 +581,14 @@
     },
     "notFound": "We couldn't find this task in your journey.",
     "details": "Details",
-    "facts": "Task facts"
+    "facts": "Task facts",
+    "blockedBody_one": "It opens once this task is done:",
+    "blockedBody_other": "It opens once these {{count}} tasks are done:",
+    "blockerYours": "Your task",
+    "blockerOwner": "Owner: {{owner}}",
+    "blockerDue": "Due {{date}}",
+    "blockerGo": "Go to task",
+    "blockerSee": "See task"
   },
   "templates": {
     "list": {

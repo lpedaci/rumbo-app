@@ -46,7 +46,18 @@
 
   /* Surfaces and neutrals: depth by tonal elevation, not shadows. */
   /* Tinted with petrol so white cards stand out, as in the references (2.2.1). */
-  --md-sys-color-surface: #edf3f4;
+  /* Role colors (D-69): one hue per role for avatars, never for states. */
+  --rumbo-role-hr: #1f6f78;
+  --rumbo-role-hr-container: #d8eef0;
+  --rumbo-role-manager: #9c3d74;
+  --rumbo-role-manager-container: #f6dcea;
+  --rumbo-role-hire: #6a4fc4;
+  --rumbo-role-hire-container: #e8e1fb;
+  --rumbo-role-it: #2457c5;
+  --rumbo-role-it-container: #dce6fb;
+
+  /* Neutral cool gray page background (D-69), no brand tint. */
+  --md-sys-color-surface: #f1f3f5;
   --md-sys-color-surface-container-lowest: #ffffff;
   --md-sys-color-surface-container: #eef2f4;
   --md-sys-color-surface-container-high: #e4e9ec;
@@ -163,7 +174,16 @@
   --md-custom-color-info-container: #1d43a0;
   --md-custom-color-on-info-container: #dce6fb;
 
-  --md-sys-color-surface: #0f1416;
+  --rumbo-role-hr: #82d3dd;
+  --rumbo-role-hr-container: #004f56;
+  --rumbo-role-manager: #ffaed7;
+  --rumbo-role-manager-container: #7c2559;
+  --rumbo-role-hire: #cdbdff;
+  --rumbo-role-hire-container: #4b33a3;
+  --rumbo-role-it: #b1c5ff;
+  --rumbo-role-it-container: #1d43a0;
+
+  --md-sys-color-surface: #111416;
   --md-sys-color-surface-container-lowest: #0a0f11;
   --md-sys-color-surface-container: #1b2123;
   --md-sys-color-surface-container-high: #252b2d;

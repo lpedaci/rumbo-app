@@ -283,7 +283,7 @@
     "it_admin": "sistemas"
   },
   "home": {
-    "eyebrow": "Rumbo · Recorridos de ingreso",
+    "eyebrow": "Prototipo de portfolio · Recorridos de ingreso",
     "title": "Cada persona sabe qué hacer, con quién y para cuándo.",
     "intro": "Rumbo es una plataforma donde RRHH diseña el recorrido de ingreso de cada puesto, el jefe directo acompaña con check-ins y la persona nueva sabe en todo momento qué le toca hacer. RRHH ve el avance y detecta dónde se traban los recorridos.",
     "demoTitle": "Sobre esta demo",
@@ -355,7 +355,38 @@
       "chartTitle": "Tareas completadas por semana"
     },
     "ctaChoose": "Elegir un recorrido",
-    "linksFooter": "Enlaces del proyecto"
+    "linksFooter": "Enlaces del proyecto",
+    "meta": [
+      "4 roles navegables",
+      "Datos ficticios de Nortia S.A.",
+      "Accesibilidad WCAG 2.2 AA",
+      "Se guarda solo en tu navegador"
+    ],
+    "metaLabel": "Sobre esta demo",
+    "previewFrame": "Vista previa del producto",
+    "features": {
+      "title": "Qué muestra el prototipo",
+      "subtitle": "Los flujos clave de un recorrido de ingreso en una empresa, de punta a punta.",
+      "items": [
+        {
+          "title": "Recorridos por etapa",
+          "body": "Preingreso, Semana 1, Mes 1 y Días 30 a 90, con tareas que se desbloquean por dependencias."
+        },
+        {
+          "title": "Constructor de plantillas",
+          "body": "RRHH arma el recorrido de cada puesto con arrastrar y soltar y plazos relativos al ingreso."
+        },
+        {
+          "title": "Check-ins 30, 60 y 90",
+          "body": "El jefe directo evalúa hitos y, si algo no se cumple, reprograma o escala a RRHH."
+        },
+        {
+          "title": "Seguridad y accesos",
+          "body": "Inicio de sesión con SSO, verificación en dos pasos, permisos por rol y auditoría, simulados."
+        }
+      ]
+    },
+    "roleLabel": "Rol"
   },
   "stages": {
     "preboarding": "Preingreso",
@@ -525,7 +556,6 @@
     "stage": "Etapa",
     "status": "Estado",
     "blockedTitle": "Esta tarea todavía no está disponible",
-    "blockedBody": "Primero hay que completar:",
     "otherOwner": "Esta tarea la completa {{owner}}. Va a aparecer como hecha cuando la terminen.",
     "doneTitle": "Completaste esta tarea",
     "doneBody": "La marcaste como hecha el {{date}}.",
@@ -551,7 +581,14 @@
     },
     "notFound": "No encontramos esta tarea en tu recorrido.",
     "details": "Detalles",
-    "facts": "Datos de la tarea"
+    "facts": "Datos de la tarea",
+    "blockedBody_one": "Se habilita cuando esté hecha esta tarea:",
+    "blockedBody_other": "Se habilita cuando estén hechas estas {{count}} tareas:",
+    "blockerYours": "Te toca a ti",
+    "blockerOwner": "Responsable: {{owner}}",
+    "blockerDue": "Vence el {{date}}",
+    "blockerGo": "Ir a la tarea",
+    "blockerSee": "Ver tarea"
   },
   "templates": {
     "list": {

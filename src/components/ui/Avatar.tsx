@@ -12,17 +12,48 @@ export function initials(name: string): string {
 }
 
 /**
- * One container color per role, used the same way everywhere (2.2.1, pattern 6):
- * HR primary, managers tertiary, new hires secondary, IT info.
+ * Portraits of the four demo personas (D-69), chosen by Lourdes. Files go in
+ * src/assets/avatars/ named after the persona (carla, martin, sofia, diego) as .webp,
+ * .jpg or .png; anyone without a file keeps their initials. See SOURCE.md there.
+ */
+const FILES = import.meta.glob<string>('../../assets/avatars/*.{webp,jpg,jpeg,png}', {
+  eager: true,
+  import: 'default',
+});
+const PERSONA_FILE: Record<string, string> = {
+  'Carla Méndez': 'carla',
+  'Martín Sosa': 'martin',
+  'Sofía Ramírez': 'sofia',
+  'Diego Ferreyra': 'diego',
+};
+function photoFor(name: string): string | undefined {
+  const stem = PERSONA_FILE[name];
+  if (!stem) return undefined;
+  const key = Object.keys(FILES).find((path) => path.split('/').pop()?.split('.')[0] === stem);
+  return key ? FILES[key] : undefined;
+}
+
+/**
+ * One color per role, used the same way everywhere (2.2.1, pattern 6; D-69):
+ * HR petrol, managers plum, new hires violet, IT blue. Initials sit on the container;
+ * photos get a ring in the role color.
  */
 export const ROLE_AVATAR_TONE: Record<Role, string> = {
-  admin: 'bg-primary-container text-on-primary-container',
-  manager: 'bg-tertiary-container text-on-tertiary-container',
-  hire: 'bg-secondary-container text-on-secondary-container',
-  it_admin: 'bg-info-container text-on-info-container',
+  admin: 'bg-role-hr-container text-on-surface ring-role-hr',
+  manager: 'bg-role-manager-container text-on-surface ring-role-manager',
+  hire: 'bg-role-hire-container text-on-surface ring-role-hire',
+  it_admin: 'bg-role-it-container text-on-surface ring-role-it',
 };
 
-/** Initials avatar (no photos of real people, 2.2). Decorative: the name is always next to it. */
+/** Role accent for cards and chips (D-69): solid bar, tinted chip and icon color. */
+export const ROLE_ACCENT: Record<Role, { bar: string; chip: string; icon: string }> = {
+  admin: { bar: 'bg-role-hr', chip: 'bg-role-hr-container text-on-surface', icon: 'text-role-hr' },
+  manager: { bar: 'bg-role-manager', chip: 'bg-role-manager-container text-on-surface', icon: 'text-role-manager' },
+  hire: { bar: 'bg-role-hire', chip: 'bg-role-hire-container text-on-surface', icon: 'text-role-hire' },
+  it_admin: { bar: 'bg-role-it', chip: 'bg-role-it-container text-on-surface', icon: 'text-role-it' },
+};
+
+/** Decorative avatar: the name is always next to it, so the image has an empty alt. */
 export function Avatar({
   name,
   role,
@@ -30,22 +61,42 @@ export function Avatar({
   className,
 }: {
   name: string;
-  /** Platform role of the person: sets the container color. */
+  /** Platform role of the person: sets the color. */
   role?: Role;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
 }) {
-  const tone = role ? ROLE_AVATAR_TONE[role] : 'bg-surface-container-high text-on-surface';
+  const tone = role ? ROLE_AVATAR_TONE[role] : 'bg-surface-container-high text-on-surface ring-outline-variant';
+  const photo = photoFor(name);
+  const sizeClass = cn(
+    size === 'sm' && 'size-8 text-label-medium',
+    size === 'md' && 'size-10 text-label-large',
+    size === 'lg' && 'size-12 text-title-medium',
+    size === 'xl' && 'size-14 text-title-large',
+  );
+  if (photo) {
+    return (
+      <img
+        src={photo}
+        alt=""
+        aria-hidden
+        className={cn(
+          'shrink-0 rounded-full object-cover ring-2 ring-offset-2 ring-offset-surface-container-lowest',
+          sizeClass,
+          tone,
+          className,
+        )}
+      />
+    );
+  }
   return (
     <span
       aria-hidden
       className={cn(
         'inline-flex shrink-0 items-center justify-center rounded-full font-semibold',
-        size === 'sm' && 'size-8 text-label-medium',
-        size === 'md' && 'size-10 text-label-large',
-        size === 'lg' && 'size-12 text-title-medium',
-        size === 'xl' && 'size-14 text-title-large',
+        sizeClass,
         tone,
+        'ring-0',
         className,
       )}
     >

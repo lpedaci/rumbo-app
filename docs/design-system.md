@@ -37,7 +37,7 @@ Carácter frío, limpio y profesional, con fondos blancos y grises fríos. Sin c
 
 | Superficie o neutro | Valor | Uso |
 | --- | --- | --- |
-| `surface` | `#EDF3F4` | Fondo de la página, tintado de petróleo para que las tarjetas blancas se despeguen (2.2.1) |
+| `surface` | `#F1F3F5` | Fondo de la página, gris frío neutro (D-69); las tarjetas blancas se despegan con su borde |
 | `surface-container-lowest` | `#FFFFFF` | Tarjetas, tablas, formularios, relleno de campos |
 | `surface-container` | `#EEF2F4` | Sidebar, encabezados de tabla |
 | `surface-container-high` | `#E4E9EC` | Hover de filas, selección neutra |
@@ -305,3 +305,19 @@ Google. (s.f.). *Material Design 3*. https://m3.material.io/
 Google. (s.f.). *Material Symbols* [Conjunto de íconos]. https://fonts.google.com/icons
 
 World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
+
+### Colores por rol, avatares y barra superior (D-69)
+
+| Rol | Token base | Contenedor | Uso |
+| --- | --- | --- | --- |
+| RRHH | `role-hr` #1F6F78 | `role-hr-container` #D8EEF0 | Anillo de la foto, barra y chip de la tarjeta de rol |
+| Jefe directo | `role-manager` #9C3D74 | `role-manager-container` #F6DCEA | Ídem |
+| Nuevo ingreso | `role-hire` #6A4FC4 | `role-hire-container` #E8E1FB | Ídem |
+| Sistemas | `role-it` #2457C5 | `role-it-container` #DCE6FB | Ídem |
+
+- Los colores de rol identifican personas; nunca indican estados.
+- **Avatar:** foto si existe en `src/assets/avatars/` (anillo de 2 px del color del rol, separado 2 px); si no, iniciales sobre el contenedor del rol. Siempre decorativo (`alt=""`), con el nombre al lado.
+- **Barra superior:** barra blanca flotante con borde y radio `xl`, con botones de utilidad sobre `surface-container`, divisores verticales y la persona con foto, nombre y correo desde 1024 px.
+- **Ritmo vertical de los flujos de acceso:** 32 px entre secciones, 8 a 16 px dentro de cada una.
+- **Aviso de tarea bloqueada (N2):** sección en `warning-container` con candado, explicación y una fila por tarea previa (tipo, título enlazado, responsable en chip, vencimiento, "Ir a la tarea").
+

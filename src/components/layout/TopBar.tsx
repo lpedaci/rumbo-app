@@ -38,6 +38,9 @@ function MenuButton() {
   );
 }
 
+/** Utility buttons on a neutral container, like the reference (D-69), with the product's single shape. */
+const TOOL_BUTTON = 'bg-surface-container text-on-surface';
+
 /** Help in the same place on every screen (WCAG 3.2.6): guided welcome and project docs. */
 function HelpMenu() {
   const { t } = useTranslation();
@@ -46,7 +49,7 @@ function HelpMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <IconButton icon="help" label={t('layout.help.title')} />
+        <IconButton icon="help" label={t('layout.help.title')} className={TOOL_BUTTON} />
       </DropdownMenuTrigger>
       <DropdownMenuContent label={t('layout.help.title')}>
         <DropdownMenuLabel>{t('layout.help.title')}</DropdownMenuLabel>
@@ -71,7 +74,7 @@ function NotificationsMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <IconButton icon="notifications" label={t('layout.notifications.title')} />
+        <IconButton icon="notifications" label={t('layout.notifications.title')} className={TOOL_BUTTON} />
       </DropdownMenuTrigger>
       <DropdownMenuContent label={t('layout.notifications.title')} className="w-80">
         <DropdownMenuLabel>{t('layout.notifications.title')}</DropdownMenuLabel>
@@ -97,9 +100,9 @@ export function TopBar() {
   if (!user) return null;
 
   return (
-    // Flat on the tinted page (reference ad2d9e23); controls keep the product's single shape (2.1.3).
-    <header className="sticky top-0 z-40 bg-surface">
-      <div className="flex h-16 min-w-0 items-center gap-3 px-(--space-gutter) sm:gap-4 md:h-[4.5rem] md:pl-4">
+    // White floating bar on the gray page, like the sidebar (D-69, reference of the top bar).
+    <header className="sticky top-0 z-40 bg-surface px-2 pt-2 md:pr-(--space-gutter) md:pl-4 md:pt-3">
+      <div className="flex h-16 min-w-0 items-center gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest px-2 sm:gap-4 sm:px-4">
         <MenuButton />
         <Link to={homePath(user)} className="shrink-0 rounded-sm">
           <Logo markOnly className="sm:hidden" />
@@ -114,10 +117,14 @@ export function TopBar() {
         <div className="ml-1 flex min-w-0 shrink justify-end">
           <RoleSwitcher />
         </div>
-        <HelpMenu />
-        <div className="hidden sm:block">
-          <NotificationsMenu />
+        <span aria-hidden className="hidden h-8 w-px bg-outline-variant sm:block" />
+        <div className="flex items-center gap-2">
+          <HelpMenu />
+          <div className="hidden sm:block">
+            <NotificationsMenu />
+          </div>
         </div>
+        <span aria-hidden className="hidden h-8 w-px bg-outline-variant sm:block" />
         <UserMenu />
       </div>
     </header>

@@ -9,6 +9,7 @@ import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { formatDate } from '@/lib/dates';
 import { blockingTasks, taskStatus } from '@/lib/journey';
 import { canCompleteTask } from '@/lib/permissions';
+import { cn } from '@/lib/utils';
 import { useCurrentUser } from '@/store/session-store';
 import { DueText } from './DueText';
 import { TASK_TYPE_ICON } from './task-meta';
@@ -45,7 +46,7 @@ export function TaskDetailPage() {
 
   return (
     <>
-      <nav aria-label={t('task.breadcrumb')} className="mb-2">
+      <nav aria-label={t('task.breadcrumb')} className="mb-4 md:mb-6">
         <Link
           to="/me"
           className="inline-flex min-h-12 items-center gap-1 rounded-sm text-label-large text-primary underline-offset-4 hover:underline md:min-h-0"
@@ -55,7 +56,7 @@ export function TaskDetailPage() {
         </Link>
       </nav>
 
-      <header className="mb-(--space-section) flex min-w-0 flex-col gap-3">
+      <header className="mb-(--space-section) flex min-w-0 flex-col gap-4">
         <h1 className="text-headline-small text-balance text-on-surface">{task.title}</h1>
         {/* Key facts as chips (D-65): status, type and stage */}
         <ul aria-label={t('task.facts')} className="flex flex-wrap items-center gap-2">
@@ -99,19 +100,64 @@ export function TaskDetailPage() {
           )}
 
           {blockers.length > 0 && (
-            <InlineAlert tone="warning" title={t('task.blockedTitle')}>
-              <p>{t('task.blockedBody')}</p>
-              <ul className="mt-1 flex flex-col gap-1">
-                {blockers.map((b) => (
-                  <li key={b.id}>
-                    <Link to={`/me/tasks/${b.id}`} className="underline underline-offset-4">
-                      {b.title}
-                    </Link>{' '}
-                    · {t('journey.ownerIs', { owner: t(`owners.${b.owner}`) })}
-                  </li>
-                ))}
+            // Blocked (D-69): what has to happen first, who does it and a way to get there.
+            <section
+              aria-labelledby="blocked-title"
+              className="flex flex-col gap-4 rounded-xl border border-warning/40 bg-warning-container p-4 text-on-warning-container md:p-5"
+            >
+              <div className="flex items-start gap-3">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-surface-container-lowest text-warning">
+                  <Icon name="lock" size={24} />
+                </span>
+                <div className="flex min-w-0 flex-col gap-0.5">
+                  <h2 id="blocked-title" className="text-title-medium">
+                    {t('task.blockedTitle')}
+                  </h2>
+                  <p className="text-body-medium">{t('task.blockedBody', { count: blockers.length })}</p>
+                </div>
+              </div>
+              <ul className="flex flex-col gap-2">
+                {blockers.map((b) => {
+                  const mine = b.owner === 'hire';
+                  return (
+                    <li
+                      key={b.id}
+                      className="relative flex min-w-0 items-center gap-3 rounded-lg border border-outline-variant bg-surface-container-lowest p-3 text-on-surface hover:bg-surface-container focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary"
+                    >
+                      <Icon name={TASK_TYPE_ICON[b.type]} size={24} className="shrink-0 text-on-surface-variant" />
+                      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+                        <Link
+                          to={`/me/tasks/${b.id}`}
+                          className="text-title-small outline-none after:absolute after:inset-0 after:content-['']"
+                        >
+                          {b.title}
+                        </Link>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-body-small text-on-surface-variant">
+                          <span
+                            className={cn(
+                              'inline-flex h-6 items-center gap-1 rounded-full pr-2.5 pl-1.5 text-label-medium',
+                              mine ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container-high text-on-surface',
+                            )}
+                          >
+                            <Icon name="person" size={16} />
+                            {mine ? t('task.blockerYours') : t('task.blockerOwner', { owner: t(`owners.${b.owner}`) })}
+                          </span>
+                          <span className="inline-flex items-center gap-1 tabular-nums">
+                            <Icon name="calendar_today" size={16} />
+                            {t('task.blockerDue', { date: formatDate(b.dueDate) })}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="hidden shrink-0 items-center gap-1 text-label-large text-primary sm:inline-flex" aria-hidden>
+                        {mine ? t('task.blockerGo') : t('task.blockerSee')}
+                        <Icon name="chevron_right" size={20} />
+                      </span>
+                      <Icon name="chevron_right" size={20} className="shrink-0 text-on-surface-variant sm:hidden" />
+                    </li>
+                  );
+                })}
               </ul>
-            </InlineAlert>
+            </section>
           )}
 
           {!ownTask && status !== 'done' && (

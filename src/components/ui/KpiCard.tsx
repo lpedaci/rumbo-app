@@ -51,7 +51,7 @@ export function KpiCard({
       className={cn(
         // Reference ad2d9e23: icon and sparkline on top, then the label, then the number
         // with its change pill on the same line. Compact in every width (2 per row on mobile).
-        'flex min-w-0 flex-col gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-4 md:p-3 lg:p-4 xl:p-(--space-card-padding)',
+        '@container flex min-w-0 flex-col gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-3 sm:p-4 md:p-3 lg:p-4 xl:p-(--space-card-padding)',
         className,
       )}
       variants={{
@@ -65,7 +65,10 @@ export function KpiCard({
     >
       <div className="flex min-w-0 items-start justify-between gap-2">
         <IconTile icon={icon} tone={iconTone} size="sm" />
-        {series && <Sparkline values={series} tone={seriesTone} className="h-8 w-16 xl:w-24" />}
+        {/* Only when the card is wide enough to read it (D-69): a squeezed chart says nothing. */}
+        {series && (
+          <Sparkline values={series} tone={seriesTone} className="hidden h-8 w-16 @[10.5rem]:block max-[22.5rem]:hidden! xl:w-24" />
+        )}
       </div>
       {/* Data pinned to the bottom so cards of one row line up even if a label wraps. */}
       <div className="mt-auto flex min-w-0 flex-col gap-0.5">
@@ -75,7 +78,15 @@ export function KpiCard({
         {/* The pill always goes under the number, so every card of a row has the same shape. */}
         <div className="flex min-w-0 flex-col items-start gap-1.5">
           <p className="text-headline-small text-on-surface tabular-nums xl:text-display-small">{value}</p>
-          {trend && <StatusPill tone={trend.tone} icon={trend.icon} label={trend.label} />}
+          {/* The pill wraps instead of truncating in narrow cards (D-69). */}
+          {trend && (
+            <StatusPill
+              tone={trend.tone}
+              icon={trend.icon}
+              label={trend.label}
+              className="h-auto min-h-6 rounded-[0.75rem] py-0.5 [&>span]:whitespace-normal"
+            />
+          )}
         </div>
         {caption && <p className="text-body-small text-on-surface-variant">{caption}</p>}
       </div>
@@ -84,14 +95,14 @@ export function KpiCard({
 }
 
 /**
- * Row of KPI cards inside a bento grid, full width (D-68): 2 per row on mobile; from 768 px
+ * Row of KPI cards inside a bento grid, full width (D-68, D-69): at every width,
  * as many per row as fit with at least `minCardWidth` each, so 4 short KPIs share one line
  * on tablet and desktop, and cards with more content wrap to a second line on their own.
  */
-export function KpiRow({ children, minCardWidth = '9rem' }: { children: ReactNode; minCardWidth?: string }) {
+export function KpiRow({ children, minCardWidth = '8.5rem' }: { children: ReactNode; minCardWidth?: string }) {
   return (
     <div
-      className="col-span-full grid grid-cols-2 gap-(--space-bento-gap) md:grid-cols-[repeat(auto-fit,minmax(min(100%,var(--kpi-min)),1fr))]"
+      className="col-span-full grid grid-cols-[repeat(auto-fit,minmax(min(100%,var(--kpi-min)),1fr))] gap-(--space-bento-gap)"
       style={{ '--kpi-min': minCardWidth } as CSSProperties}
     >
       {children}

@@ -80,7 +80,7 @@ export function VerifyPage() {
 
   return (
     <AuthLayout>
-      <header className="flex flex-col gap-1">
+      <header className="flex flex-col gap-2">
         <h1 className="text-headline-small text-on-surface">{t('auth.mfa.title')}</h1>
         <p className="text-body-large text-on-surface-variant">{t('auth.mfa.subtitle')}</p>
         {person && <p className="text-body-medium text-on-surface-variant">{t('auth.mfa.signingAs', { name: person.name })}</p>}
@@ -94,7 +94,7 @@ export function VerifyPage() {
           : t(pending.demo ? 'auth.mfa.demoCode' : 'auth.mfa.demoCodeManual', { code: DEMO_MFA_CODE })}
       </InlineAlert>
 
-      <form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <TextField
           key={backup ? 'backup' : 'app'}
           label={backup ? t('auth.mfa.backupLabel') : t('auth.mfa.codeLabel')}
@@ -103,7 +103,6 @@ export function VerifyPage() {
           mask={backup ? backupMask : appMask}
           helperText={backup ? t('auth.mfa.backupHelp') : t('auth.mfa.codeHelp')}
           error={fieldError(errors.code)}
-          className="max-w-xs"
           {...register('code')}
         />
         <Checkbox
@@ -116,7 +115,7 @@ export function VerifyPage() {
         </Button>
       </form>
 
-      <div className="flex flex-col items-start gap-1 border-t border-outline-variant pt-4">
+      <div className="flex flex-col items-start gap-1 border-t border-outline-variant pt-6">
         <Button variant="text" className="-ml-3" onClick={toggleBackup}>
           {backup ? t('auth.mfa.useApp') : t('auth.mfa.useBackup')}
         </Button>

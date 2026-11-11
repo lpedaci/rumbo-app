@@ -108,8 +108,10 @@ describe('N2 · Task detail', () => {
   it('explains why a blocked task is not available, with a link to the blocker', async () => {
     renderAt('/me/tasks/h-sofia-d17');
     await screen.findByRole('heading', { level: 1, name: 'Proyecto propio: tablero de métricas' });
-    const alert = screen.getByText(es.task.blockedTitle).closest('div')!.parentElement!;
-    expect(within(alert).getByRole('link', { name: 'Presentar resultados al equipo' })).toBeInTheDocument();
+    // D-69: what to do first, who does it and when it is due
+    const blocked = screen.getByRole('region', { name: es.task.blockedTitle });
+    expect(within(blocked).getByRole('link', { name: 'Presentar resultados al equipo' })).toBeInTheDocument();
+    expect(within(blocked).getByText(es.task.blockerYours)).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: es.journey.complete })).not.toBeInTheDocument();
   });
 

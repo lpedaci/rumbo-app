@@ -51,7 +51,7 @@ export function SsoSimulation({ person, providerName, onDone }: SsoSimulationPro
   });
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-6">
       {/* The fictitious account used for this sign-in */}
       <div className="flex min-w-0 items-center gap-3 rounded-lg border border-outline-variant bg-surface-container-lowest p-4">
         <Avatar name={person.name} role={person.role} />
@@ -61,7 +61,7 @@ export function SsoSimulation({ person, providerName, onDone }: SsoSimulationPro
         </div>
       </div>
 
-      <ol className="flex flex-col gap-3" aria-label={t('auth.sso.stepsLabel', { provider: providerName })}>
+      <ol className="flex flex-col gap-4" aria-label={t('auth.sso.stepsLabel', { provider: providerName })}>
         {steps.map((step, i) => {
           const checked = i < done;
           return (

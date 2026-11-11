@@ -28,3 +28,8 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Original portraits (large); the app uses the crops in src/assets/avatars (D-69)
+design-references/*.avif
+design-references/2148928793.jpg
+design-references/close-up-*.jpg

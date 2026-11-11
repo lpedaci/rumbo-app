@@ -44,6 +44,15 @@
   --color-info-container: var(--md-custom-color-info-container);
   --color-on-info-container: var(--md-custom-color-on-info-container);
 
+  --color-role-hr: var(--rumbo-role-hr);
+  --color-role-hr-container: var(--rumbo-role-hr-container);
+  --color-role-manager: var(--rumbo-role-manager);
+  --color-role-manager-container: var(--rumbo-role-manager-container);
+  --color-role-hire: var(--rumbo-role-hire);
+  --color-role-hire-container: var(--rumbo-role-hire-container);
+  --color-role-it: var(--rumbo-role-it);
+  --color-role-it-container: var(--rumbo-role-it-container);
+
   --color-surface: var(--md-sys-color-surface);
   --color-surface-container-lowest: var(--md-sys-color-surface-container-lowest);
   --color-surface-container: var(--md-sys-color-surface-container);

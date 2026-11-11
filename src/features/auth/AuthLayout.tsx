@@ -45,7 +45,8 @@ export function AuthLayout({ children, aside, showcase }: AuthLayoutProps) {
           showcase && 'lg:justify-center',
         )}
       >
-        <div className="flex w-full max-w-md min-w-0 flex-col gap-6">
+        {/* 8-pt rhythm (D-69): 32 px between sections, 8 to 16 px inside each one. */}
+        <div className="flex w-full max-w-md min-w-0 flex-col gap-8">
           {/* The logo goes back to the demo start (G0). */}
           <Link to="/" className="w-fit rounded-sm">
             <Logo />

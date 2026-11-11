@@ -45,22 +45,25 @@ export function UserMenu({ placement = 'header' }: { placement?: 'header' | 'sid
               'flex min-w-0 items-center gap-2',
               placement === 'sidebar'
                 ? 'w-full rounded-lg p-2 text-left hover:bg-surface-container'
-                : 'h-11 rounded-sm px-1',
+                : 'h-12 rounded-md py-1 pr-1 pl-1 lg:pr-2',
               interactive,
             )}
           >
             <Avatar name={name} role={user.role} size={placement === 'sidebar' ? 'md' : 'sm'} />
-            <span className={cn('sr-only', placement === 'sidebar' && 'hidden')}>
+            <span className={cn('sr-only', placement === 'sidebar' && 'hidden', 'lg:hidden')}>
               {name}
             </span>
             <span
               className={cn(
                 'min-w-0 flex-1 flex-col text-left',
-                placement === 'sidebar' ? 'flex' : 'hidden',
+                // Header (D-69, reference): name and work email next to the photo from 1024 px.
+                placement === 'sidebar' ? 'flex' : 'hidden max-w-48 lg:flex',
               )}
             >
               <span className="truncate text-label-large text-on-surface">{name}</span>
-              <span className="truncate text-body-small text-on-surface-variant">{t(`roles.${user.role}`)}</span>
+              <span className="truncate text-body-small text-on-surface-variant">
+                {placement === 'sidebar' ? t(`roles.${user.role}`) : person?.email}
+              </span>
             </span>
             <span className="sr-only">, {t('layout.userMenuSuffix')}</span>
             <Icon
