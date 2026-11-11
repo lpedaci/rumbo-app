@@ -44,7 +44,7 @@ describe('routing and access control', () => {
     const stats = screen.getByRole('region', { name: es.home.stats.title });
     const templates = useDataStore.getState().templates.length;
     expect(within(stats).getByText(es.home.stats.templates).previousElementSibling).toHaveTextContent(String(templates));
-    const question = screen.getByRole('button', { name: new RegExp(es.home.faq.items[0]!.q.replace('?', '\?')) });
+    const question = screen.getByRole('button', { name: (name) => name.includes(es.home.faq.items[0]!.q) });
     expect(question).toHaveAttribute('aria-expanded', 'false');
     fireEvent.click(question);
     expect(question).toHaveAttribute('aria-expanded', 'true');
