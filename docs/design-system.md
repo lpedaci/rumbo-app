@@ -377,6 +377,7 @@ Reemplaza las bandas de color de D-72.
 
 ### Pie de formulario, línea de tiempo de check-ins y escala responsiva (D-85)
 
-- **`FormFooter`** (`src/components/ui/FormFooter.tsx`): franja `surface-container` con borde superior `outline-variant`, que llega a los bordes de la tarjeta y redondea sus esquinas inferiores. A la izquierda, una nota opcional (`body-small` con ícono); a la derecha, las acciones (secundaria y luego principal). En mobile, botones a ancho completo con la principal arriba. Se usa en N3, J3 y A3.
+- **`FormFooter`** (`src/components/ui/FormFooter.tsx`): franja blanca (`surface-container-lowest`, D-86) con borde superior `outline-variant`, que llega a los bordes de la tarjeta y redondea sus esquinas inferiores. A la izquierda, una nota opcional (`body-small` con ícono); a la derecha, las acciones (secundaria y luego principal). En mobile, botones a ancho completo con la principal arriba. Se usa en N3, J3 y A3.
 - **`CheckinTimeline`** (`src/features/hires/CheckinTimeline.tsx`): marcadores de 32 px (hecho en `success-container`, próximo en `primary`, más adelante en `surface-container`) unidos por una línea `outline-variant`. El próximo va en un bloque `surface-container` con el estado de la autoevaluación y la acción; los hechos, con una línea de resultado y el detalle en un `details` nativo ("Ver detalle", accesible por teclado).
 - **`ChoiceGroup` en escala:** con container query; lista vertical de opciones con ícono, texto y check por debajo de 32 rem de ancho del formulario, cinco columnas desde ahí.
+- **Barra de desplazamiento de la página** (D-86): oculta por debajo de 1024 px; visible en desktop.
