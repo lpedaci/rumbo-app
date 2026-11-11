@@ -918,6 +918,7 @@ Después de cada paso, verificar que el build compila, que los tests pasan y que
 
 ## 12. Cómo trabajar y registrar dudas
 
+- **Idioma de trabajo:** respondé siempre en **español** (informes, resúmenes, preguntas, decisiones y documentación en `docs/`), aunque el código, los nombres de variables y los commits vayan en inglés.
 - **No resolver dudas en silencio.** Si algo de este documento es ambiguo, contradictorio o no se puede hacer como está escrito, elegí la opción más razonable, seguí trabajando y anotalo en `docs/decisions.md` con: fecha, qué duda había, qué decidiste, por qué y si conviene que Lourdes lo confirme.
 - Si una decisión cambia algo importante (alcance, modelo de datos, flujo de un rol), preguntá antes de avanzar.
 - Mantené `docs/progress.md` actualizado al terminar cada paso de la sección 10: qué se hizo, qué quedó pendiente y problemas encontrados.

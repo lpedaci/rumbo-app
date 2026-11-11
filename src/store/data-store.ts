@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
 import { demoNow } from '@/lib/dates';
 import { completeTask as completeTaskRule } from '@/lib/journey';
-import type { AccessRequest, AccountFlags, AuditEvent, AuthAttempts } from '@/types/domain';
+import type { AccessRequest, AccountFlags, AuditEvent, AuthAttempts, Template } from '@/types/domain';
 
 /**
  * Demo data store, persisted in localStorage so changes survive a reload
@@ -26,6 +26,10 @@ interface DataActions {
   setAccountFlags: (personId: string, flags: AccountFlags) => void;
   /** Adds an access request created from "¿Problemas para iniciar sesión?". */
   addAccessRequest: (request: AccessRequest) => void;
+  /** Creates or replaces a template (F2) and records template.create or template.update. */
+  saveTemplate: (template: Template, actorId: string) => void;
+  /** Deletes a template that no journey uses (D-49) and records template.delete. */
+  deleteTemplate: (templateId: string, actorId: string) => void;
   /** Restores the seed data ("Restablecer demo"). The session is cleared by the session store. */
   resetData: () => void;
 }
@@ -89,6 +93,49 @@ export const useDataStore = create<DataState>()(
         set((state) => ({ accountFlags: { ...state.accountFlags, [personId]: flags } })),
 
       addAccessRequest: (request) => set((state) => ({ accessRequests: [...state.accessRequests, request] })),
+
+      saveTemplate: (template, actorId) =>
+        set((state) => {
+          const exists = state.templates.some((t) => t.id === template.id);
+          return {
+            templates: exists
+              ? state.templates.map((t) => (t.id === template.id ? template : t))
+              : [...state.templates, template],
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at: demoNow(),
+                actorId,
+                action: exists ? 'template.update' : 'template.create',
+                resource: template.id,
+                result: 'success',
+                detail: template.name,
+              },
+            ],
+          };
+        }),
+
+      deleteTemplate: (templateId, actorId) =>
+        set((state) => {
+          const template = state.templates.find((t) => t.id === templateId);
+          if (!template || state.hires.some((h) => h.templateId === templateId)) return state;
+          return {
+            templates: state.templates.filter((t) => t.id !== templateId),
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at: demoNow(),
+                actorId,
+                action: 'template.delete',
+                resource: templateId,
+                result: 'success',
+                detail: template.name,
+              },
+            ],
+          };
+        }),
 
       resetData: () => set(buildSeed()),
     }),

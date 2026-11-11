@@ -70,13 +70,13 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| RF-029 | El sistema debe listar plantillas con puesto, cantidad de tareas y cantidad de ingresos que la usan. | RRHH | A5 | Must | Los números se calculan desde los datos. | Pendiente |
-| RF-030 | El sistema debe permitir crear, duplicar, editar y eliminar plantillas, con confirmación al eliminar. | RRHH | A5, A6 | Must | El diálogo dice "¿Eliminar esta plantilla?" y el botón "Eliminar plantilla". | Pendiente |
-| RF-031 | El sistema debe permitir agregar, editar, eliminar y reordenar tareas con arrastrar y soltar y, como alternativa, con "Subir", "Bajar" y "Mover a etapa…". | RRHH | A6 | Must | El orden persiste; la alternativa funciona con teclado y con un solo clic, y el cambio se anuncia a lectores de pantalla. | Pendiente |
-| RF-032 | Cada tarea debe definir título, descripción, tipo, responsable, plazo relativo y dependencias. | RRHH | A6 | Must | Formulario validado con Zod y etiquetas visibles. | Pendiente |
-| RF-033 | El sistema debe impedir dependencias circulares con un mensaje claro. | RRHH | A6 | Must | Intentar A→B→A muestra el error y no guarda. | Pendiente |
-| RF-034 | El sistema debe impedir que una dependencia tenga un plazo posterior al de la tarea que depende de ella. | RRHH | A6 | Must | El error indica ambas tareas y sus plazos. | Pendiente |
-| RF-035 | El sistema debe mostrar una vista previa del recorrido con una fecha de ingreso de ejemplo editable. | RRHH | A7 | Must | Las fechas se recalculan al cambiar la fecha de ejemplo. | Pendiente |
+| RF-029 | El sistema debe listar plantillas con puesto, cantidad de tareas y cantidad de ingresos que la usan. | RRHH | A5 | Must | Los números se calculan desde los datos. | Hecho |
+| RF-030 | El sistema debe permitir crear, duplicar, editar y eliminar plantillas, con confirmación al eliminar. | RRHH | A5, A6 | Must | El diálogo dice "¿Eliminar esta plantilla?" y el botón "Eliminar plantilla". | Hecho |
+| RF-031 | El sistema debe permitir agregar, editar, eliminar y reordenar tareas con arrastrar y soltar y, como alternativa, con "Subir", "Bajar" y "Mover a etapa…". | RRHH | A6 | Must | El orden persiste; la alternativa funciona con teclado y con un solo clic, y el cambio se anuncia a lectores de pantalla. | Hecho |
+| RF-032 | Cada tarea debe definir título, descripción, tipo, responsable, plazo relativo y dependencias. | RRHH | A6 | Must | Formulario validado con Zod y etiquetas visibles. | Hecho |
+| RF-033 | El sistema debe impedir dependencias circulares con un mensaje claro. | RRHH | A6 | Must | Intentar A→B→A muestra el error y no guarda. | Hecho |
+| RF-034 | El sistema debe impedir que una dependencia tenga un plazo posterior al de la tarea que depende de ella. | RRHH | A6 | Must | El error indica ambas tareas y sus plazos. | Hecho |
+| RF-035 | El sistema debe mostrar una vista previa del recorrido con una fecha de ingreso de ejemplo editable. | RRHH | A7 | Must | Las fechas se recalculan al cambiar la fecha de ejemplo. | Hecho |
 
 ### F3. Alta de ingresos (fase A)
 

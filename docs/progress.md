@@ -12,7 +12,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 3 | Datos semilla, tipos, stores y cálculos con tests | Hecho | 10/11/2026 |
 | 4 | Seguridad base y layout (G0 a G7) | Hecho (con el ajuste de G0) | 10/11/2026 |
 | 5 | Nuevo ingreso: N1, N2 | Hecho | 10/11/2026 |
-| 6 | Plantillas: A5, A6, A7 | Pendiente | |
+| 6 | Plantillas: A5, A6, A7 | Hecho | 10/11/2026 |
 | 7 | Ingresos: A2, A3, A4 | Pendiente | |
 | 8 | Jefe: J1, J2, J3 y N3 | Pendiente | |
 | 9 | Panel A1 con alertas | Pendiente | |
@@ -20,6 +20,25 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
+
+## Paso 6: plantillas (A5, A6 y A7)
+
+**Qué se hizo**
+- **A5 · Plantillas (`/admin/templates`):** tabla con plantilla y puesto, área, cantidad de tareas, cantidad de ingresos que la usan y última edición; en mobile, una tarjeta por plantilla. Menú por fila: editar, ver vista previa, duplicar y eliminar. Eliminar pide confirmación y no está disponible para plantillas en uso, con el motivo en el mismo menú (D-49). Estado vacío con la acción para empezar.
+- **A6 · Editor (`/admin/templates/:id` y `/admin/templates/new`):** datos de la plantilla (nombre, puesto y área) y tareas por etapa, con el rango de días de cada una. Las tareas se reordenan arrastrando su manija (mouse, touch o teclado, con anuncios para lectores de pantalla) y, como alternativa de un solo clic (WCAG 2.5.7), desde el menú de la tarea: "Subir", "Bajar" y "Mover a etapa…". Al mover a otra etapa, el plazo se ajusta al día más cercano de esa etapa y se avisa (D-47).
+- **Formulario de tarea:** título, descripción, tipo, responsable, etapa, plazo (máscara de enteros con signo, rango -30 a 90 y además el rango de la etapa) y dependencias. Las opciones que formarían una dependencia circular aparecen deshabilitadas con el motivo; las que vencen después también. Si al cambiar el plazo una dependencia elegida queda posterior, se marca como error y no se borra.
+- **Guardar:** valida los datos y las reglas de la plantilla (al menos una tarea, plazos dentro de su etapa, sin ciclos ni dependencias posteriores) y, si algo falla, muestra un resumen arriba con enlaces a cada problema y mueve el foco ahí. Guardar registra `template.create` o `template.update` en la auditoría. Los recorridos existentes no cambian, porque cada ingreso copia las tareas (D-51).
+- **Cambios sin guardar:** aviso visible, confirmación al volver al listado y aviso del navegador al cerrar o recargar (D-50).
+- **A7 · Vista previa (`/admin/templates/:id/preview`):** el recorrido como lo ve el nuevo ingreso, con fechas calculadas desde una fecha de ingreso de ejemplo editable (13/10/2026 por defecto) y las tareas bloqueadas con su motivo. No se puede completar nada.
+- **Recorridos nuevos:** se ordenan por etapa y por el orden que define RRHH en el constructor (D-52). Con los datos semilla el resultado es el mismo que antes.
+- **Componentes:** `Select` nativo con etiqueta y texto de ayuda; los ítems de menú deshabilitados ahora pueden explicar por qué. Se agregó dnd-kit (versiones fijas) y los íconos `drive_file_move`, `link`, `save` y `layers`.
+
+**Verificación**
+- `tsc`, ESLint y 197 tests en verde. Los nuevos cubren las reglas del constructor (`templates.ts`) y, en pantalla, el listado, la eliminación bloqueada, el duplicado, "Bajar" y guardar, el error de rango de la etapa, la dependencia circular deshabilitada, el resumen de errores y la vista previa.
+- Playwright: 198 casos en verde (desbordes en los 6 anchos y axe), con 4 pantallas nuevas.
+- En el navegador: arrastre con teclado (Espacio, flechas, Espacio) con anuncio de posición, y formulario de tarea con máscara y error de rango que desaparece al cambiar de etapa.
+
+**Pendiente:** el arrastre entre etapas se hace desde el menú (D-48). Falta la prueba con lector de pantalla real (NVDA) del constructor, prevista en el pulido de fase A.
 
 ## Paso 5: nuevo ingreso (N1 y N2)
 

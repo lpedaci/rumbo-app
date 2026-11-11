@@ -49,16 +49,37 @@ export function DropdownMenuItem({
   children,
   onSelect,
   destructive,
+  disabled,
+  description,
 }: {
   icon?: IconName;
   children: ReactNode;
   onSelect?: (event: Event) => void;
   destructive?: boolean;
+  /** Unavailable items stay in the menu and say why in `description` (2.1.3). */
+  disabled?: boolean;
+  description?: string;
 }) {
   return (
-    <Menu.Item onSelect={onSelect} className={cn(itemClass, destructive && 'text-error')}>
-      {icon && <Icon name={icon} size={20} className={destructive ? 'text-error' : 'text-on-surface-variant'} />}
-      <span className="min-w-0 flex-1 truncate">{children}</span>
+    <Menu.Item
+      onSelect={onSelect}
+      disabled={disabled}
+      className={cn(itemClass, destructive && !disabled && 'text-error')}
+    >
+      {icon && (
+        <Icon
+          name={icon}
+          size={20}
+          className={disabled ? 'text-on-surface/38' : destructive ? 'text-error' : 'text-on-surface-variant'}
+        />
+      )}
+      <span className="flex min-w-0 flex-1 flex-col py-1">
+        <span className="truncate">{children}</span>
+        {description && (
+          // Full contrast even when disabled: it is the explanation (2.1.3).
+          <span className="text-body-small whitespace-normal text-on-surface-variant">{description}</span>
+        )}
+      </span>
     </Menu.Item>
   );
 }

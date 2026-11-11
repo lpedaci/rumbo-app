@@ -355,7 +355,7 @@
     "yesterday": "Was due yesterday",
     "daysAgo": "Was due {{count}} days ago",
     "doneOn": "Done on {{date}}",
-    "dueOn": "Due date: {{date}}"
+    "dueOn": "Due "
   },
   "journey": {
     "title": "My journey",
@@ -443,5 +443,156 @@
       "task": "Follow the steps in the description and mark it as done when you finish."
     },
     "notFound": "We couldn't find this task in your journey."
+  },
+  "templates": {
+    "list": {
+      "title": "Templates",
+      "description": "Onboarding journeys by job title. Each new hire copies the tasks of their template.",
+      "create": "Create template",
+      "tableLabel": "Journey templates",
+      "columns": {
+        "name": "Template",
+        "area": "Area",
+        "tasks": "Tasks",
+        "usage": "New hires",
+        "updated": "Last edited",
+        "actions": "Actions"
+      },
+      "tasks_one": "{{count}} task",
+      "tasks_other": "{{count}} tasks",
+      "usage_one": "{{count}} new hire",
+      "usage_other": "{{count}} new hires",
+      "usageNone": "No new hires",
+      "menu": "Actions for {{name}}",
+      "edit": "Edit template",
+      "preview": "See preview",
+      "duplicate": "Duplicate template",
+      "delete": "Delete template",
+      "deleteInUse_one": "It can't be deleted: {{count}} new hire uses this template.",
+      "deleteInUse_other": "It can't be deleted: {{count}} new hires use this template.",
+      "deleteTitle": "Delete this template?",
+      "deleteBody": "“{{name}}” and all its tasks will be deleted. This can't be undone.",
+      "deleted": "Template deleted",
+      "duplicated": "Template duplicated",
+      "copyName": "{{name}} (copy)",
+      "empty": "There are no templates yet. Create the first one to assign it to a new hire.",
+      "updatedOn": "Edited on {{date}}"
+    },
+    "editor": {
+      "back": "Back to Templates",
+      "breadcrumb": "Breadcrumb",
+      "eyebrow": "Template",
+      "titleNew": "New template",
+      "notFound": "We couldn't find this template.",
+      "usageNote_one": "{{count}} new hire uses this template. Their journey doesn't change when you save: each new hire keeps the tasks it was created with.",
+      "usageNote_other": "{{count}} new hires use this template. Their journeys don't change when you save: each new hire keeps the tasks it was created with.",
+      "details": {
+        "title": "Template details",
+        "name": "Template name",
+        "nameHelp": "How you'll recognize it in the list, for example: Data Analyst",
+        "jobTitle": "Job title",
+        "jobTitleHelp": "The job title it's used for, for example: Junior Data Analyst",
+        "area": "Area",
+        "areaHelp": "The area of the job, for example: Technology"
+      },
+      "tasks": {
+        "title": "Tasks by stage",
+        "description": "Drag a task by its handle to change its order within the stage, or use the task menu to move it up, down or to another stage.",
+        "addTo": "Add task to {{stage}}",
+        "add": "Add task",
+        "empty": "There are no tasks in this stage yet. Add the first one.",
+        "range": "Days {{min}} to {{max}}",
+        "rangeBefore": "Days {{min}} to {{max}}, before the start date",
+        "count_one": "{{count}} task",
+        "count_other": "{{count}} tasks"
+      },
+      "row": {
+        "drag": "Move {{title}}",
+        "menu": "Actions for task {{title}}",
+        "edit": "Edit task",
+        "up": "Move up",
+        "down": "Move down",
+        "moveTo": "Move to stage…",
+        "delete": "Delete task",
+        "day": "Day {{day}}",
+        "dependsOn": "Depends on: {{tasks}}"
+      },
+      "dnd": {
+        "instructions": "To move a task with the keyboard, focus its handle and press Space. Use the arrow keys to change its place and Space again to drop it, or Escape to cancel.",
+        "start": "You picked up {{title}}. Position {{position}} of {{total}}.",
+        "over": "{{title}} is in position {{position}} of {{total}}.",
+        "end": "You dropped {{title}} in position {{position}} of {{total}}.",
+        "cancel": "Move canceled. {{title}} went back to its place."
+      },
+      "moved": "{{title}} is now in position {{position}} of {{total}} in {{stage}}.",
+      "movedStage": "{{title}} moved to {{stage}}.",
+      "movedStageOffset": "{{title}} moved to {{stage}}. Its due day changed to day {{day}} to fit the stage.",
+      "save": "Save template",
+      "saved": "Template saved",
+      "created": "Template created",
+      "unsaved": "You have unsaved changes.",
+      "preview": "See preview",
+      "previewUnsaved": "Save your changes to see the preview.",
+      "previewNew": "Save the template to see the preview.",
+      "issues": {
+        "title": "Check these points before saving",
+        "fields": "Complete the template details.",
+        "no_tasks": "Add at least one task.",
+        "stage_range": "“{{task}}”: the due day doesn't match the {{stage}} stage.",
+        "cycle": "There is a circular dependency: {{path}}.",
+        "later_dependency": "“{{task}}” depends on “{{dependency}}”, which is due later.",
+        "missing": "“{{task}}” depends on a task that no longer exists."
+      },
+      "deleteTask": {
+        "title": "Delete this task?",
+        "body": "“{{title}}” will be removed from the template.",
+        "bodyDependents": "“{{title}}” will be removed and will no longer be required by: {{tasks}}.",
+        "confirm": "Delete task",
+        "done": "Task deleted"
+      },
+      "leave": {
+        "title": "Leave without saving?",
+        "body": "The changes you made to the template will be lost.",
+        "confirm": "Leave without saving"
+      }
+    },
+    "taskForm": {
+      "titleNew": "Add task",
+      "titleEdit": "Edit task",
+      "title": "Title",
+      "titleHelp": "What needs to be done, starting with a verb, for example: Sign the contract",
+      "description": "Description",
+      "descriptionHelp": "What it's for and how to do it, in one or two sentences.",
+      "type": "Type",
+      "typeHelp": "Sets the icon and the content the new hire sees.",
+      "owner": "Owner",
+      "ownerHelp": "Who has to complete it. HR marks tasks owned by other areas.",
+      "stage": "Stage",
+      "stageHelp": "Journey stage where it appears. The due day has to fall within it.",
+      "offset": "Due day",
+      "offsetHelp": "Days from the start date, from -30 to 90. Use negative numbers for before the start date, for example: -3",
+      "offsetStage": "For {{stage}}, enter a day from {{min}} to {{max}}.",
+      "deps": "Dependencies (optional)",
+      "depsHelp": "Tasks that must be done before this one. You can only pick tasks due on the same day or earlier.",
+      "depsEmpty": "There are no other tasks in the template yet.",
+      "depLater": "Due on day {{day}}, after this task.",
+      "depCycle": "Not available: it already depends on this task and would create a circular dependency.",
+      "submitNew": "Add task",
+      "submitEdit": "Save task",
+      "added": "Task added",
+      "updated": "Task updated",
+      "titleMax": "Use {{max}} characters at most.",
+      "depLaterError": "“{{task}}” is due on day {{day}}, after this task. Remove it from the dependencies or change the due day."
+    },
+    "preview": {
+      "eyebrow": "Template preview",
+      "description": "This is how the new hire sees the journey. Dates are calculated from a sample start date.",
+      "back": "Back to the editor",
+      "startDate": "Sample start date",
+      "startDateHelp": "Format DD/MM/YYYY, for example: 13/10/2026",
+      "note": "Tasks can't be completed in the preview. Blocked tasks show what they depend on.",
+      "summary": "{{count}} tasks, from {{from}} to {{to}}",
+      "edit": "Edit template"
+    }
   }
 }

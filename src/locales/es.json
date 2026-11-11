@@ -355,7 +355,7 @@
     "yesterday": "Venció ayer",
     "daysAgo": "Venció hace {{count}} días",
     "doneOn": "Hecha el {{date}}",
-    "dueOn": "Fecha límite: {{date}}"
+    "dueOn": "Vence el "
   },
   "journey": {
     "title": "Mi recorrido",
@@ -443,5 +443,156 @@
       "task": "Sigue los pasos de la descripción y márcala como hecha cuando la termines."
     },
     "notFound": "No encontramos esta tarea en tu recorrido."
+  },
+  "templates": {
+    "list": {
+      "title": "Plantillas",
+      "description": "Recorridos de ingreso por puesto. Cada ingreso nuevo copia las tareas de su plantilla.",
+      "create": "Crear plantilla",
+      "tableLabel": "Plantillas de recorrido",
+      "columns": {
+        "name": "Plantilla",
+        "area": "Área",
+        "tasks": "Tareas",
+        "usage": "Ingresos",
+        "updated": "Última edición",
+        "actions": "Acciones"
+      },
+      "tasks_one": "{{count}} tarea",
+      "tasks_other": "{{count}} tareas",
+      "usage_one": "{{count}} ingreso",
+      "usage_other": "{{count}} ingresos",
+      "usageNone": "Sin ingresos",
+      "menu": "Acciones de {{name}}",
+      "edit": "Editar plantilla",
+      "preview": "Ver vista previa",
+      "duplicate": "Duplicar plantilla",
+      "delete": "Eliminar plantilla",
+      "deleteInUse_one": "No se puede eliminar: {{count}} ingreso usa esta plantilla.",
+      "deleteInUse_other": "No se puede eliminar: {{count}} ingresos usan esta plantilla.",
+      "deleteTitle": "¿Eliminar esta plantilla?",
+      "deleteBody": "Se elimina «{{name}}» con todas sus tareas. Esta acción no se puede deshacer.",
+      "deleted": "Plantilla eliminada",
+      "duplicated": "Plantilla duplicada",
+      "copyName": "{{name}} (copia)",
+      "empty": "Todavía no hay plantillas. Crea la primera para asignarla a un nuevo ingreso.",
+      "updatedOn": "Editada el {{date}}"
+    },
+    "editor": {
+      "back": "Volver a Plantillas",
+      "breadcrumb": "Migas de pan",
+      "eyebrow": "Plantilla",
+      "titleNew": "Nueva plantilla",
+      "notFound": "No encontramos esta plantilla.",
+      "usageNote_one": "{{count}} ingreso usa esta plantilla. Su recorrido no cambia al guardar: cada ingreso conserva las tareas con las que se creó.",
+      "usageNote_other": "{{count}} ingresos usan esta plantilla. Sus recorridos no cambian al guardar: cada ingreso conserva las tareas con las que se creó.",
+      "details": {
+        "title": "Datos de la plantilla",
+        "name": "Nombre de la plantilla",
+        "nameHelp": "Cómo la vas a reconocer en el listado, por ejemplo: Analista de Datos",
+        "jobTitle": "Puesto",
+        "jobTitleHelp": "El puesto para el que se usa, por ejemplo: Analista de Datos Jr.",
+        "area": "Área",
+        "areaHelp": "El área del puesto, por ejemplo: Tecnología"
+      },
+      "tasks": {
+        "title": "Tareas por etapa",
+        "description": "Arrastra una tarea por su manija para cambiar el orden dentro de la etapa, o usa el menú de la tarea para subirla, bajarla o moverla a otra etapa.",
+        "addTo": "Agregar tarea a {{stage}}",
+        "add": "Agregar tarea",
+        "empty": "Todavía no hay tareas en esta etapa. Agrega la primera.",
+        "range": "Días {{min}} a {{max}}",
+        "rangeBefore": "Días {{min}} a {{max}}, antes del ingreso",
+        "count_one": "{{count}} tarea",
+        "count_other": "{{count}} tareas"
+      },
+      "row": {
+        "drag": "Mover {{title}}",
+        "menu": "Acciones de la tarea {{title}}",
+        "edit": "Editar tarea",
+        "up": "Subir",
+        "down": "Bajar",
+        "moveTo": "Mover a etapa…",
+        "delete": "Eliminar tarea",
+        "day": "Día {{day}}",
+        "dependsOn": "Depende de: {{tasks}}"
+      },
+      "dnd": {
+        "instructions": "Para mover una tarea con el teclado, enfoca su manija y presiona Espacio. Usa las flechas para cambiar de lugar y Espacio de nuevo para soltarla, o Escape para cancelar.",
+        "start": "Tomaste {{title}}. Posición {{position}} de {{total}}.",
+        "over": "{{title}} está en la posición {{position}} de {{total}}.",
+        "end": "Soltaste {{title}} en la posición {{position}} de {{total}}.",
+        "cancel": "Se canceló el movimiento. {{title}} volvió a su lugar."
+      },
+      "moved": "{{title}} quedó en la posición {{position}} de {{total}} en {{stage}}.",
+      "movedStage": "{{title}} pasó a {{stage}}.",
+      "movedStageOffset": "{{title}} pasó a {{stage}}. Su plazo cambió al día {{day}} para quedar dentro de la etapa.",
+      "save": "Guardar plantilla",
+      "saved": "Plantilla guardada",
+      "created": "Plantilla creada",
+      "unsaved": "Tienes cambios sin guardar.",
+      "preview": "Ver vista previa",
+      "previewUnsaved": "Guarda los cambios para ver la vista previa.",
+      "previewNew": "Guarda la plantilla para ver la vista previa.",
+      "issues": {
+        "title": "Revisa estos puntos antes de guardar",
+        "fields": "Completa los datos de la plantilla.",
+        "no_tasks": "Agrega al menos una tarea.",
+        "stage_range": "«{{task}}»: el plazo no corresponde a la etapa {{stage}}.",
+        "cycle": "Hay una dependencia circular: {{path}}.",
+        "later_dependency": "«{{task}}» depende de «{{dependency}}», que vence después.",
+        "missing": "«{{task}}» depende de una tarea que ya no existe."
+      },
+      "deleteTask": {
+        "title": "¿Eliminar esta tarea?",
+        "body": "Se elimina «{{title}}» de la plantilla.",
+        "bodyDependents": "Se elimina «{{title}}» y deja de ser requisito de: {{tasks}}.",
+        "confirm": "Eliminar tarea",
+        "done": "Tarea eliminada"
+      },
+      "leave": {
+        "title": "¿Salir sin guardar?",
+        "body": "Los cambios que hiciste en la plantilla se van a perder.",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "taskForm": {
+      "titleNew": "Agregar tarea",
+      "titleEdit": "Editar tarea",
+      "title": "Título",
+      "titleHelp": "Qué hay que hacer, empezando con un verbo, por ejemplo: Firmar el contrato",
+      "description": "Descripción",
+      "descriptionHelp": "Para qué sirve y cómo se hace, en una o dos oraciones.",
+      "type": "Tipo",
+      "typeHelp": "Define el ícono y el contenido que ve el nuevo ingreso.",
+      "owner": "Responsable",
+      "ownerHelp": "Quién tiene que completarla. Las tareas de otras áreas las marca RRHH.",
+      "stage": "Etapa",
+      "stageHelp": "Etapa del recorrido en la que aparece. El plazo tiene que caer dentro de ella.",
+      "offset": "Plazo",
+      "offsetHelp": "Días respecto del ingreso, entre -30 y 90. Usa números negativos para antes del ingreso, por ejemplo: -3",
+      "offsetStage": "Para {{stage}}, ingresa un día entre {{min}} y {{max}}.",
+      "deps": "Dependencias (opcional)",
+      "depsHelp": "Tareas que tienen que estar hechas antes de esta. Solo puedes elegir las que vencen el mismo día o antes.",
+      "depsEmpty": "Todavía no hay otras tareas en la plantilla.",
+      "depLater": "Vence el día {{day}}, después de esta tarea.",
+      "depCycle": "No disponible: ya depende de esta tarea y se formaría una dependencia circular.",
+      "submitNew": "Agregar tarea",
+      "submitEdit": "Guardar tarea",
+      "added": "Tarea agregada",
+      "updated": "Tarea actualizada",
+      "titleMax": "Usa como máximo {{max}} caracteres.",
+      "depLaterError": "«{{task}}» vence el día {{day}}, después de esta tarea. Quítala de las dependencias o cambia el plazo."
+    },
+    "preview": {
+      "eyebrow": "Vista previa de la plantilla",
+      "description": "Así ve el recorrido el nuevo ingreso. Las fechas se calculan desde una fecha de ingreso de ejemplo.",
+      "back": "Volver al editor",
+      "startDate": "Fecha de ingreso de ejemplo",
+      "startDateHelp": "Formato DD/MM/AAAA, por ejemplo: 13/10/2026",
+      "note": "En la vista previa las tareas no se pueden completar. Las bloqueadas muestran de qué dependen.",
+      "summary": "{{count}} tareas, del {{from}} al {{to}}",
+      "edit": "Editar plantilla"
+    }
   }
 }

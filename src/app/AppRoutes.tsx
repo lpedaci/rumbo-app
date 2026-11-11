@@ -20,6 +20,15 @@ const AccessHelpPage = lazy(() => import('@/features/auth/AccessHelpPage').then(
 const DemoHomePage = lazy(() => import('@/features/home/DemoHomePage').then((m) => ({ default: m.DemoHomePage })));
 const JourneyPage = lazy(() => import('@/features/journey/JourneyPage').then((m) => ({ default: m.JourneyPage })));
 const TaskDetailPage = lazy(() => import('@/features/journey/TaskDetailPage').then((m) => ({ default: m.TaskDetailPage })));
+const TemplatesPage = lazy(() =>
+  import('@/features/templates/TemplatesPage').then((m) => ({ default: m.TemplatesPage })),
+);
+const TemplateEditorPage = lazy(() =>
+  import('@/features/templates/TemplateEditorPage').then((m) => ({ default: m.TemplateEditorPage })),
+);
+const TemplatePreviewPage = lazy(() =>
+  import('@/features/templates/TemplatePreviewPage').then((m) => ({ default: m.TemplatePreviewPage })),
+);
 const SecurityPage = lazy(() => import('@/features/account/SecurityPage').then((m) => ({ default: m.SecurityPage })));
 
 // Internal style guide: development only (CLAUDE.md 2.8). `import.meta.env.DEV` is
@@ -70,9 +79,9 @@ export function AppRoutes() {
           <Route path="/admin/hires" element={<UpcomingPage screen="A2" />} />
           <Route path="/admin/hires/new" element={<UpcomingPage screen="A3" />} />
           <Route path="/admin/hires/:id" element={<UpcomingPage screen="A4" />} />
-          <Route path="/admin/templates" element={<UpcomingPage screen="A5" />} />
-          <Route path="/admin/templates/:id" element={<UpcomingPage screen="A6" />} />
-          <Route path="/admin/templates/:id/preview" element={<UpcomingPage screen="A7" />} />
+          <Route path="/admin/templates" element={<TemplatesPage />} />
+          <Route path="/admin/templates/:id" element={<TemplateEditorPage />} />
+          <Route path="/admin/templates/:id/preview" element={<TemplatePreviewPage />} />
 
           <Route path="/manager" element={<UpcomingPage screen="J1" />} />
           <Route path="/manager/hires/:id" element={<UpcomingPage screen="J2" />} />

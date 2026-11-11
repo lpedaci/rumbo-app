@@ -52,8 +52,9 @@ export function blockedDays(task: HireTask, allTasks: HireTask[], today = DEMO_T
 
 /** Copies the template tasks into a hire journey with real dates. */
 export function generateHireTasks(template: Template, startDate: string, hireId: string): HireTask[] {
+  // Template order (stage, then the order set by HR in the builder, F2).
   return [...template.tasks]
-    .sort((a, b) => a.offsetDays - b.offsetDays || a.order - b.order)
+    .sort((a, b) => STAGES.indexOf(a.stage) - STAGES.indexOf(b.stage) || a.order - b.order)
     .map(({ offsetDays, ...task }) => ({
       ...task,
       id: `${hireId}-${task.id}`,

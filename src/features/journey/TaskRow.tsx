@@ -12,13 +12,17 @@ import { TaskStatusPill } from './TaskStatusPill';
 interface TaskRowProps {
   task: HireTask;
   allTasks: HireTask[];
-  /** Detail route of the task. */
-  to: string;
+  /** Detail route of the task. Without it the title is plain text (template preview). */
+  to?: string;
   /** The current user may mark it as done (from permissions.ts). */
   canComplete: boolean;
   onComplete: (task: HireTask) => void;
   /** Briefly highlighted because it was just unlocked (CLAUDE.md 2.6). */
   highlighted?: boolean;
+  /** Template preview (A7): statuses as of the start of the journey, no relative dates. */
+  preview?: boolean;
+  /** Reference day for the status. Defaults to the demo "today". */
+  today?: string;
 }
 
 /**
@@ -26,9 +30,18 @@ interface TaskRowProps {
  * owner, due date, status, and the reason when it is blocked ("Primero completa: …").
  * Shared by N1 and, in later steps, J2 and A4.
  */
-export function TaskRow({ task, allTasks, to, canComplete, onComplete, highlighted }: TaskRowProps) {
+export function TaskRow({
+  task,
+  allTasks,
+  to,
+  canComplete,
+  onComplete,
+  highlighted,
+  preview = false,
+  today,
+}: TaskRowProps) {
   const { t } = useTranslation();
-  const status = taskStatus(task, allTasks);
+  const status = taskStatus(task, allTasks, today);
   const blockers = status === 'blocked' ? blockingTasks(task, allTasks) : [];
   // Courses are completed from their detail page, after going through the content.
   const showComplete = canComplete && task.type !== 'course' && status !== 'blocked';
@@ -51,15 +64,19 @@ export function TaskRow({ task, allTasks, to, canComplete, onComplete, highlight
 
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
-          <Link
-            to={to}
-            className={cn(
-              'line-clamp-2 min-w-0 rounded-xs text-title-small text-on-surface underline-offset-4 hover:underline',
-              status === 'done' && 'text-on-surface-variant',
-            )}
-          >
-            {task.title}
-          </Link>
+          {to ? (
+            <Link
+              to={to}
+              className={cn(
+                'line-clamp-2 min-w-0 rounded-xs text-title-small text-on-surface underline-offset-4 hover:underline',
+                status === 'done' && 'text-on-surface-variant',
+              )}
+            >
+              {task.title}
+            </Link>
+          ) : (
+            <span className="line-clamp-2 min-w-0 text-title-small text-on-surface">{task.title}</span>
+          )}
           <TaskStatusPill status={status} className="w-fit" />
         </div>
         <p className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-body-small text-on-surface-variant">
@@ -67,8 +84,8 @@ export function TaskRow({ task, allTasks, to, canComplete, onComplete, highlight
             <Icon name={TASK_TYPE_ICON[task.type]} size={16} />
             {t(`taskTypes.${task.type}`)}
           </span>
-          <span>{task.owner === 'hire' ? t('journey.yours') : t('journey.ownerIs', { owner: t(`owners.${task.owner}`) })}</span>
-          <DueText task={task} status={status} />
+          <span>{task.owner === 'hire' && !preview ? t('journey.yours') : t('journey.ownerIs', { owner: t(`owners.${task.owner}`) })}</span>
+          <DueText task={task} status={status} dateOnly={preview} />
         </p>
         {blockers.length > 0 && (
           <p className="flex items-start gap-1 text-body-small text-on-warning-container">
@@ -76,7 +93,7 @@ export function TaskRow({ task, allTasks, to, canComplete, onComplete, highlight
             {t('journey.blockedBy', { tasks: blockers.map((b) => b.title).join(', ') })}
           </p>
         )}
-        {canComplete && task.type === 'course' && status !== 'done' && status !== 'blocked' && (
+        {to && canComplete && task.type === 'course' && status !== 'done' && status !== 'blocked' && (
           <Link to={to} className="w-fit text-label-large text-primary underline-offset-4 hover:underline">
             {t('journey.openCourse')}
           </Link>
