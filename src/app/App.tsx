@@ -1,6 +1,7 @@
 import { createHashRouter, RouterProvider } from 'react-router';
 import { AppProviders } from './AppProviders';
 import { AppRoutes } from './AppRoutes';
+import { RouteErrorPage } from '@/features/system/RouteErrorPage';
 
 /** One catch-all route: the screens keep their <Routes> in AppRoutes. */
 export const appRoutes = [
@@ -11,6 +12,8 @@ export const appRoutes = [
         <AppRoutes />
       </AppProviders>
     ),
+    // Any render error shows a page with a way out instead of the raw stack (D-71).
+    errorElement: <RouteErrorPage />,
   },
 ];
 

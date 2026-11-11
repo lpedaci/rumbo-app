@@ -489,7 +489,94 @@
     },
     "photoCredit": "People photos: Magnific",
     "footerTagline": "Clear onboarding journeys for every new hire, their direct manager and HR.",
-    "author": "Design: Lourdes Pedaci, Learning Experience Designer"
+    "author": "Design: Lourdes Pedaci, Experience Designer",
+    "showcase": {
+      "eyebrow": "Journeys",
+      "title": "A journey for each role",
+      "subtitle": "Each person sees what they need to do their part. Choose where you want to explore Rumbo from.",
+      "roles": {
+        "admin": {
+          "title": "Design the journeys and spot where they get stuck",
+          "body": "HR builds the template for each role, adds new hires and tracks everyone's progress on a dashboard with alerts."
+        },
+        "manager": {
+          "title": "Support your team with timely check-ins",
+          "body": "The direct manager sees their team in onboarding, reviews the 30, 60 and 90 day milestones and escalates to HR what is not met."
+        },
+        "hire": {
+          "title": "Always know what to do, with whom and by when",
+          "body": "The new hire follows their journey by stage, completes tasks that unlock others and prepares their check-in."
+        },
+        "it_admin": {
+          "title": "Handle access with identity verification",
+          "body": "IT resolves locked accounts and passwords, reviews the audit log and checks the security policies."
+        }
+      },
+      "preview": {
+        "hireTasks": [
+          "Read the culture handbook",
+          "First guided analysis",
+          "Present results"
+        ],
+        "team": "My team in onboarding",
+        "checkin": "30 day check-in",
+        "requests": "Access requests",
+        "requestRows": [
+          {
+            "id": "IT-2026-0142",
+            "reason": "Locked account",
+            "status": "New"
+          },
+          {
+            "id": "IT-2026-0139",
+            "reason": "Forgot my password",
+            "status": "Verifying"
+          },
+          {
+            "id": "IT-2026-0131",
+            "reason": "No verification code",
+            "status": "Resolved"
+          }
+        ],
+        "next": "Up next",
+        "dueToday": "Due today",
+        "overdue": "Overdue",
+        "blocked": "Blocked",
+        "active": "Active hires",
+        "onTime": "Tasks on time",
+        "delayed": "Delayed",
+        "dashboard": "Tracking dashboard"
+      }
+    },
+    "steps": {
+      "eyebrow": "Getting started",
+      "title": "Explore the demo in three steps",
+      "subtitle": "No sign-ups and no real data: everything is preloaded so you only have to look.",
+      "items": [
+        {
+          "title": "Choose a journey",
+          "body": "Carla from HR, Martín as direct manager, Sofía as new hire or Diego from IT."
+        },
+        {
+          "title": "Sign in with one click",
+          "body": "Microsoft or Google sign-in is simulated and the verification code is already filled in."
+        },
+        {
+          "title": "Switch roles anytime",
+          "body": "With the \"View as\" selector in the top bar you see the same process from another perspective."
+        }
+      ]
+    },
+    "footer": {
+      "explore": "Explore",
+      "project": "The project",
+      "demo": "The demo",
+      "problem": "The problem",
+      "solution": "The solution",
+      "journeys": "Journeys",
+      "faq": "FAQ",
+      "rights": "Portfolio prototype with fictitious data."
+    }
   },
   "stages": {
     "preboarding": "Pre-boarding",
@@ -870,5 +957,14 @@
         }
       ]
     }
+  },
+  "errorPage": {
+    "title": "We could not show this screen",
+    "body": "An unexpected error occurred. The demo data is still saved in this browser.",
+    "reload": "Reload the page",
+    "home": "Go to the start",
+    "resetHint": "If the error repeats, reset the demo: the data goes back to its initial state and you are signed out.",
+    "reset": "Reset demo",
+    "details": "Technical detail"
   }
 }

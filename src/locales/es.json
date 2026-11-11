@@ -489,7 +489,94 @@
     },
     "photoCredit": "Fotos de personas: Magnific",
     "footerTagline": "Recorridos de ingreso claros para cada persona nueva, su jefe directo y RRHH.",
-    "author": "Diseño: Lourdes Pedaci, Learning Experience Designer"
+    "author": "Diseño: Lourdes Pedaci, Experience Designer",
+    "showcase": {
+      "eyebrow": "Recorridos",
+      "title": "Un recorrido para cada rol",
+      "subtitle": "Cada persona ve lo que necesita para hacer su parte. Elige desde dónde quieres recorrer Rumbo.",
+      "roles": {
+        "admin": {
+          "title": "Diseña los recorridos y detecta dónde se traban",
+          "body": "RRHH arma la plantilla de cada puesto, da de alta los ingresos y sigue el avance de todos en un panel con alertas."
+        },
+        "manager": {
+          "title": "Acompaña a tu equipo con check-ins a tiempo",
+          "body": "El jefe directo ve a su equipo en onboarding, evalúa los hitos de 30, 60 y 90 días y escala a RRHH lo que no se cumple."
+        },
+        "hire": {
+          "title": "Sabe siempre qué hacer, con quién y para cuándo",
+          "body": "La persona nueva sigue su recorrido por etapas, completa tareas que desbloquean otras y prepara su check-in."
+        },
+        "it_admin": {
+          "title": "Atiende los accesos con verificación de identidad",
+          "body": "Sistemas resuelve cuentas bloqueadas y contraseñas, revisa la auditoría y consulta las políticas de seguridad."
+        }
+      },
+      "preview": {
+        "hireTasks": [
+          "Leer el manual de cultura",
+          "Primer análisis guiado",
+          "Presentar resultados"
+        ],
+        "team": "Mi equipo en onboarding",
+        "checkin": "Check-in 30",
+        "requests": "Solicitudes de acceso",
+        "requestRows": [
+          {
+            "id": "IT-2026-0142",
+            "reason": "Cuenta bloqueada",
+            "status": "Nueva"
+          },
+          {
+            "id": "IT-2026-0139",
+            "reason": "Olvidé mi contraseña",
+            "status": "En verificación"
+          },
+          {
+            "id": "IT-2026-0131",
+            "reason": "No recibo el código",
+            "status": "Resuelta"
+          }
+        ],
+        "next": "Lo próximo",
+        "dueToday": "Vence hoy",
+        "overdue": "Vencida",
+        "blocked": "Bloqueada",
+        "active": "Ingresos activos",
+        "onTime": "Tareas a tiempo",
+        "delayed": "Con atraso",
+        "dashboard": "Panel de seguimiento"
+      }
+    },
+    "steps": {
+      "eyebrow": "Cómo empezar",
+      "title": "Recorre la demo en tres pasos",
+      "subtitle": "Sin registros ni datos reales: todo está precargado para que solo tengas que mirar.",
+      "items": [
+        {
+          "title": "Elige un recorrido",
+          "body": "Carla de RRHH, Martín como jefe directo, Sofía como nuevo ingreso o Diego de sistemas."
+        },
+        {
+          "title": "Inicia sesión en un clic",
+          "body": "El inicio de sesión con Microsoft o Google está simulado y el código de verificación ya viene cargado."
+        },
+        {
+          "title": "Cambia de rol cuando quieras",
+          "body": "Con el selector «Ver como» de la barra superior ves el mismo proceso desde otra perspectiva."
+        }
+      ]
+    },
+    "footer": {
+      "explore": "Explorar",
+      "project": "El proyecto",
+      "demo": "La demo",
+      "problem": "El problema",
+      "solution": "La solución",
+      "journeys": "Recorridos",
+      "faq": "Preguntas frecuentes",
+      "rights": "Prototipo de portfolio con datos ficticios."
+    }
   },
   "stages": {
     "preboarding": "Preingreso",
@@ -870,5 +957,14 @@
         }
       ]
     }
+  },
+  "errorPage": {
+    "title": "No pudimos mostrar esta pantalla",
+    "body": "Ocurrió un error inesperado. Los datos de la demo siguen guardados en este navegador.",
+    "reload": "Recargar la página",
+    "home": "Volver al inicio",
+    "resetHint": "Si el error se repite, restablece la demo: los datos vuelven a su estado inicial y se cierra la sesión.",
+    "reset": "Restablecer demo",
+    "details": "Detalle técnico"
   }
 }

@@ -1,7 +1,7 @@
 # Rumbo · Plataforma de onboarding corporativo (MVP)
 
 > Nombre de trabajo: **Rumbo** (provisorio, se puede cambiar).
-> Autora: Lourdes Pedaci, Learning Experience Designer.
+> Autora: Lourdes Pedaci, Experience Designer.
 > Este archivo es la especificación completa del proyecto. Leelo entero antes de empezar y volvé a consultarlo en cada paso.
 > Proyecto de portfolio: prototipo navegable de alta fidelidad (nivel 2), con datos simulados y sin backend.
 
@@ -426,15 +426,16 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     4. Botones "Ver el case study" y "Ver la documentación" (al `docs/README.md` del repositorio). La URL del case study sale de una constante `CASE_STUDY_URL` en un único archivo de configuración; mientras el case study no esté publicado, apunta al portfolio: `https://lpedaci.github.io/portfolio/`. El botón se muestra siempre.
     5. "Restablecer demo".
 - Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
-- **Estructura de página de producto B2B** (D-70, a partir de una referencia de Lourdes):
+- **Estructura de página de producto B2B** (D-70 y D-71, a partir de dos referencias de Lourdes):
     1. Barra superior flotante con el logo, enlaces a las secciones ("Cómo funciona", "Recorridos", "Preguntas") y la acción principal "Elegir un recorrido".
     2. Hero centrado: etiqueta, titular, texto, "Elegir un recorrido" y "Ver el case study", los datos de la demo (4 roles, datos ficticios, WCAG 2.2 AA, se guarda en el navegador) y el producto dentro de un marco neutro.
     3. **El problema:** tres tarjetas con una escena hecha con piezas de Rumbo.
     4. **La solución:** bento de cinco tarjetas (recorridos por etapa, constructor de plantillas, check-ins, panel de seguimiento, seguridad y accesos), cada una con una mini interfaz.
-    5. **Banda de cifras** en `primary` plano con tarjetas blancas; los números salen de los datos de demo, nunca escritos a mano (salvo las 24 pantallas de la fase A, que son un dato de la spec).
-    6. Elección del recorrido (punto 3).
-    7. **Preguntas frecuentes** en acordeón accesible.
-    8. Pie con logo, aviso de demo, enlaces, "Restablecer demo", autoría, crédito de las fotos y la marca "Rumbo" grande como SVG decorativo.
+    5. **Un recorrido para cada rol:** una sección por rol que alterna lados desde 1024 px: de un lado la foto, el chip del rol, un título, qué hace, qué se puede recorrer y "Recorrer como…"; del otro, una miniatura de su pantalla dentro de un marco, sobre el contenedor plano del color del rol. Las miniaturas usan los datos de demo cuando se puede.
+    6. **Banda de cifras** en `primary` plano con tarjetas blancas; los números salen de los datos de demo, nunca escritos a mano (salvo las 24 pantallas de la fase A, que son un dato de la spec).
+    7. **Recorre la demo en tres pasos:** elegir, iniciar sesión en un clic y cambiar de rol con «Ver como».
+    8. **Preguntas frecuentes** en acordeón accesible.
+    9. **Pie organizado por tareas:** marca con su frase y el aviso de demo; columnas "Explorar" (secciones de la página), "El proyecto" (case study y documentación) y "La demo" (elegir un recorrido, restablecer); abajo, autoría, aviso de prototipo y crédito de las fotos; y la marca "Rumbo" grande como SVG decorativo.
 - **No se usan** logos de otras empresas ("empresas que confían") ni testimonios: serían inventados.
 - Sin degradés ni sombras en tarjetas en reposo; en mobile, todo en una columna (las cifras, de a dos).
 
@@ -632,6 +633,7 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
 | G5 | Mi seguridad (MFA, dispositivos recordados y sesiones activas) | `/account/security` | F0, F11 (sesiones: fase B) |
 | G6 | Layout con header, selector de rol, menú de usuario, modal de sesión por vencer y navegación lateral | (layout) | La navegación cambia según el rol |
 | G7 | Acceso no permitido / 404 | `*` | Con link para volver al inicio del rol |
+| G7b | Error inesperado | (de la app) | Si una pantalla falla, muestra qué pasó sin culpar, que los datos siguen guardados, "Recargar la página", "Volver al inicio", "Restablecer demo" y el detalle técnico plegado, nunca el error crudo (D-71) |
 | G8 | Aviso de privacidad y consentimiento (primer ingreso) | `/consent` | F10 · Fase B |
 | G9 | Centro de notificaciones | `/notifications` | F7 · Fase B (el panel desplegable vive en el layout) |
 | G10 | Mi privacidad (aviso, datos propios, solicitudes) | `/account/privacy` | F10 · Fase B |
@@ -1084,4 +1086,4 @@ Documentar el sistema de diseño implementado, como referencia para el case stud
 
 ## 15. README del repositorio
 
-El README debe incluir: descripción del problema, roles, capturas de las pantallas principales, link a la demo, link al case study en el portfolio, enlace a `docs/README.md` (documentación), stack, cómo correrlo (`npm install`, `npm run dev`) y autoría: **Lourdes Pedaci, Learning Experience Designer**.
+El README debe incluir: descripción del problema, roles, capturas de las pantallas principales, link a la demo, link al case study en el portfolio, enlace a `docs/README.md` (documentación), stack, cómo correrlo (`npm install`, `npm run dev`) y autoría: **Lourdes Pedaci, Experience Designer**.

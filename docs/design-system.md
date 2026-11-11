@@ -329,3 +329,10 @@ World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 
 - **Banda de cifras:** bloque `primary` plano con tarjetas blancas (ícono, número y etiqueta). Es la única zona de color fuerte de la página. Números calculados desde los datos.
 - **Preguntas frecuentes:** acordeón de Radix, filas numeradas, una abierta a la vez.
 - **Pie:** tarjeta blanca con logo, aviso de demo, enlaces, "Restablecer demo", autoría, crédito de las fotos y la marca "Rumbo" en `primary-container` como SVG decorativo, cortada por el borde.
+
+### G0 reconstruida y página de error (D-71)
+
+- **Sección por rol:** grilla de 2 columnas desde 1024 px que alterna lados; texto (foto `lg`, chip del rol, `h3` en `headline-small`, `body-large`, puntos como chips con check del color del rol, botón outlined "Recorrer como…") y miniatura en un marco (`AppFrame`: riel de íconos, borde, `--elevation-1` porque representa una ventana flotante) sobre el contenedor plano del rol.
+- **Pasos numerados:** cuadrado `primary` de 36 px con el número, título `title-medium` y texto.
+- **Pie:** columnas con título `label-large` en `on-surface-variant` y enlaces de texto `body-medium` de 44 px de alto en mobile (36 px desde 768 px); barra inferior en `body-small`.
+- **Página de error:** tarjeta centrada con ícono en `error-container`, `h1`, texto sin culpar, "Recargar la página" (filled) y "Volver al inicio" (outlined), "Restablecer demo" (text) con su explicación, y el detalle técnico en un `<details>` plegado.
