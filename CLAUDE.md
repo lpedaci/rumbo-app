@@ -428,7 +428,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
 - Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
 - **Estructura de página de producto B2B** (D-70 y D-71, a partir de dos referencias de Lourdes):
     1. Barra superior flotante con el logo, enlaces a las secciones ("Cómo funciona", "Recorridos", "Preguntas") y la acción principal "Elegir un recorrido".
-    2. Hero centrado: etiqueta, titular, texto, "Elegir un recorrido" y "Ver el case study", los datos de la demo (4 roles, datos ficticios, WCAG 2.2 AA) y el producto dentro de un marco neutro.
+    2. Hero centrado: etiqueta, titular, texto, "Elegir un recorrido" y "Ver el case study", y el producto dentro de un marco neutro.
     3. **El problema:** tres tarjetas con una escena hecha con piezas de Rumbo.
     4. **La solución:** bento de cinco tarjetas (recorridos por etapa, constructor de plantillas, check-ins, panel de seguimiento, seguridad y accesos), cada una con una mini interfaz.
     5. **Un recorrido para cada rol:** una sección por rol que alterna lados desde 1024 px: de un lado la foto, el chip del rol, un título, qué hace, qué se puede recorrer y "Recorrer como…"; del otro, una miniatura de su pantalla dentro de un marco, sobre el contenedor plano del color del rol. Las miniaturas usan los datos de demo cuando se puede.

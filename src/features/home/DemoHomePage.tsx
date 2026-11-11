@@ -5,7 +5,7 @@ import { CASE_STUDY_URL, DOCS_URL } from '@/app/links';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/Dialog';
-import { Icon, type IconName } from '@/components/ui/Icon';
+import { Icon } from '@/components/ui/Icon';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { resetDemo } from '@/features/auth/auth-service';
 import { useShouldReduceMotion } from '@/lib/motion';
@@ -19,7 +19,6 @@ import { SolutionSection } from './SolutionSection';
 import { StatsBand } from './StatsBand';
 import { StepsSection } from './StepsSection';
 
-const META_ICONS: IconName[] = ['groups', 'apartment', 'verified_user'];
 const FOOTER_LINK =
   'inline-flex min-h-11 items-center gap-1.5 rounded-sm text-left text-body-medium text-on-surface hover:text-primary hover:underline underline-offset-4 md:min-h-9';
 
@@ -65,7 +64,6 @@ export function DemoHomePage() {
     { label: t('home.nav.journeys'), ref: chooseRef },
     { label: t('home.nav.faq'), ref: faqRef },
   ];
-  const meta = t('home.meta', { returnObjects: true }) as string[];
 
   return (
     <div className="min-h-dvh bg-surface">
@@ -128,14 +126,6 @@ export function DemoHomePage() {
                 </a>
               </Button>
             </div>
-            <ul aria-label={t('home.metaLabel')} className="flex flex-wrap justify-center gap-x-5 gap-y-2">
-              {meta.map((item, i) => (
-                <li key={item} className="inline-flex items-center gap-1.5 text-body-medium text-on-surface-variant">
-                  <Icon name={META_ICONS[i] ?? 'check_circle'} size={18} className="shrink-0 text-primary" />
-                  {item}
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* The product in a frame: neutral container, no gradient (2.2). Decorative from 768 px. */}

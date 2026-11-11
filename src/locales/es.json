@@ -356,12 +356,6 @@
     },
     "ctaChoose": "Elegir un recorrido",
     "linksFooter": "Enlaces del proyecto",
-    "meta": [
-      "4 roles navegables",
-      "Datos ficticios de Nortia S.A.",
-      "Accesibilidad WCAG 2.2 AA"
-    ],
-    "metaLabel": "Sobre esta demo",
     "previewFrame": "Vista previa del producto",
     "roleLabel": "Rol",
     "nav": {

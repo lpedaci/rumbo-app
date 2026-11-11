@@ -356,12 +356,6 @@
     },
     "ctaChoose": "Choose a journey",
     "linksFooter": "Project links",
-    "meta": [
-      "4 navigable roles",
-      "Fictitious data from Nortia S.A.",
-      "WCAG 2.2 AA accessibility"
-    ],
-    "metaLabel": "About this demo",
     "previewFrame": "Product preview",
     "roleLabel": "Role",
     "nav": {
