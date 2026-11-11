@@ -12,7 +12,7 @@ interface PageHeaderProps {
 /** Page title zone: the single h1 of the screen (CLAUDE.md 2.10). */
 export function PageHeader({ title, description, actions, eyebrow }: PageHeaderProps) {
   return (
-    <header className="mb-(--space-section) flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <header className="mb-(--space-section) flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         {eyebrow && <div className="text-body-medium text-on-surface-variant">{eyebrow}</div>}
         <h1 className="text-headline-small text-balance text-on-surface">{title}</h1>
