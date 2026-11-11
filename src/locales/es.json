@@ -1014,7 +1014,8 @@
       "results_one": "{{count}} ingreso",
       "results_other": "{{count}} ingresos",
       "startedOn": "Ingresó el {{date}}",
-      "startsOn": "Ingresa el {{date}}"
+      "startsOn": "Ingresa el {{date}}",
+      "status": "Estado"
     },
     "form": {
       "title": "Dar de alta un ingreso",
