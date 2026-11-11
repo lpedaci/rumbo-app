@@ -2,6 +2,7 @@ import { type ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { DESIGN_SYSTEM_MD_URL, REPO_URL } from '@/app/links';
+import { AuthorLinks } from '@/components/brand/AuthorLinks';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
 import { FilterMenu } from '@/components/ui/FilterMenu';
@@ -39,9 +40,10 @@ function DsSection({ id, children }: { id: SectionId; children: ReactNode }) {
   const { t } = useTranslation();
   return (
     <section id={`ds-${id}`} aria-labelledby={`ds-${id}-title`} className="flex scroll-mt-28 flex-col gap-6">
-      <div className="flex max-w-3xl flex-col gap-2">
+      {/* Intro uses the full width of the content, like the rest of the product (D-103) */}
+      <div className="flex flex-col gap-2">
         <p className="text-label-large text-primary">{t(`designSystem.sections.${id}.eyebrow`)}</p>
-        <h2 id={`ds-${id}-title`} className="text-headline-small text-balance text-on-surface md:text-display-small">
+        <h2 id={`ds-${id}-title`} className="text-headline-small text-pretty text-on-surface md:text-display-small">
           {t(`designSystem.sections.${id}.title`)}
         </h2>
         <p className="text-body-large text-pretty text-on-surface-variant">{t(`designSystem.sections.${id}.intro`)}</p>
@@ -194,10 +196,10 @@ export function DesignSystemPage() {
           {/* Hero */}
           <section className="bg-texture-grid -mx-(--space-gutter) flex flex-col items-center gap-6 px-(--space-gutter) py-16 text-center lg:py-24">
             <p className="text-label-large text-balance text-primary">{t('designSystem.hero.eyebrow')}</p>
-            <h1 className="max-w-4xl text-display-small text-balance text-on-surface lg:text-display-medium">
+            <h1 className="text-display-small text-pretty text-on-surface lg:text-display-medium">
               {withHighlight(t('designSystem.hero.title'), t('designSystem.hero.highlight'))}
             </h1>
-            <p className="max-w-3xl text-body-large text-pretty text-on-surface-variant">
+            <p className="text-body-large text-pretty text-on-surface-variant">
               {t('designSystem.hero.intro')}
             </p>
             <ul
@@ -385,14 +387,13 @@ export function DesignSystemPage() {
       </main>
 
       <footer className="border-t border-outline-variant px-(--space-gutter) py-8">
-        <div className="mx-auto flex w-full max-w-[max(80rem,80%)] flex-col gap-4 text-body-small text-on-surface-variant lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-col gap-1">
-            <p>{t('designSystem.footer.by')}</p>
-            <p>{t('designSystem.footer.credits')}</p>
-          </div>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+        {/* Same authorship line as the G0 footer (D-103); then credits and links */}
+        <div className="mx-auto flex w-full max-w-[max(80rem,80%)] flex-col gap-5">
+          <AuthorLinks />
+          <p className="text-body-small text-on-surface-variant">{t('designSystem.footer.credits')}</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 border-t border-outline-variant pt-5">
             <li>
-              <Link to="/" className="text-label-large text-primary hover:underline">
+              <Link to="/" className="inline-flex min-h-12 items-center gap-1 text-label-large text-primary hover:underline sm:min-h-10">
                 {t('designSystem.footer.demo')}
               </Link>
             </li>
@@ -401,7 +402,7 @@ export function DesignSystemPage() {
                 href={DESIGN_SYSTEM_MD_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-label-large text-primary hover:underline"
+                className="inline-flex min-h-12 items-center gap-1 text-label-large text-primary hover:underline sm:min-h-10"
               >
                 {t('designSystem.footer.md')}
               </a>
@@ -411,12 +412,15 @@ export function DesignSystemPage() {
                 href={REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-label-large text-primary hover:underline"
+                className="inline-flex min-h-12 items-center gap-1 text-label-large text-primary hover:underline sm:min-h-10"
               >
                 {t('designSystem.footer.repo')}
               </a>
             </li>
           </ul>
+          <p className="text-center text-body-small text-on-surface-variant">
+            {t('home.footer.copyright', { year: new Date().getFullYear() })}
+          </p>
         </div>
       </footer>
     </div>

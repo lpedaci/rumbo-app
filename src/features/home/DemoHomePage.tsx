@@ -1,8 +1,12 @@
 import { type ReactNode, type RefObject, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate } from 'react-router';
-import { CASE_STUDY_URL, DESIGN_SYSTEM_PATH, DOCS_URL, LINKEDIN_URL, PORTFOLIO_URL } from '@/app/links';
-import { LinkedInMark } from '@/components/brand/LinkedInMark';
+import {
+  CASE_STUDY_URL,
+  DESIGN_SYSTEM_PATH,
+  DOCS_URL,
+} from '@/app/links';
+import { AuthorLinks } from '@/components/brand/AuthorLinks';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
 import {
@@ -31,9 +35,6 @@ import { SolutionSection } from './SolutionSection';
 import { StatsBand } from './StatsBand';
 import { StepsSection } from './StepsSection';
 
-/** Profile link of the footer: outlined, soft corners, like the rest of the buttons (2.1.3). */
-const PROFILE_LINK =
-  'inline-flex h-10 items-center gap-2 rounded-sm border border-outline px-3 text-label-large text-on-surface transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
 
 const FOOTER_LINK =
   'inline-flex min-h-11 items-center gap-1.5 rounded-sm text-left text-body-medium whitespace-nowrap text-on-surface-variant hover:text-primary hover:underline underline-offset-4 md:min-h-9';
@@ -260,23 +261,6 @@ export function DemoHomePage() {
                       {t('home.demoBody')}
                     </span>
                   </p>
-                  {/* Who made it (D-92): LinkedIn and portfolio */}
-                  <ul className="flex flex-wrap gap-3" aria-label={t('home.footer.author')}>
-                    <li>
-                      <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={PROFILE_LINK}>
-                        <LinkedInMark className="size-5 shrink-0" />
-                        {t('home.footer.linkedin')}
-                        <span className="sr-only"> {t('home.newTab')}</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer" className={PROFILE_LINK}>
-                        <Icon name="palette" size={20} className="text-primary" />
-                        {t('home.footer.portfolio')}
-                        <span className="sr-only"> {t('home.newTab')}</span>
-                      </a>
-                    </li>
-                  </ul>
                 </div>
                 <FooterColumn id="footer-explore" title={t('home.footer.explore')}>
                   <li>
@@ -337,11 +321,12 @@ export function DemoHomePage() {
                 </FooterColumn>
               </div>
 
-              <div className="flex flex-col gap-2 border-t border-outline-variant pt-5 text-body-small text-on-surface-variant lg:flex-row lg:justify-between lg:gap-x-8">
-                <p>{t('home.author')}</p>
-                <p>{t('home.footer.copyright', { year: new Date().getFullYear() })}</p>
-                <p>{t('home.footer.rights')}</p>
-              </div>
+              {/* Who made it (D-92, D-102): one line across the footer, name and role, then the profiles */}
+              <AuthorLinks className="border-t border-outline-variant pt-5" />
+
+              <p className="border-t border-outline-variant pt-5 text-center text-body-small text-on-surface-variant">
+                {t('home.footer.copyright', { year: new Date().getFullYear() })}
+              </p>
 
               {/* Decorative wordmark, flat color and cut by the card edge, as in the reference */}
               <svg aria-hidden focusable="false" viewBox="0 0 1000 210" className="-mb-2 w-full text-primary-container">

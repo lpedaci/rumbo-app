@@ -58,7 +58,7 @@ export function TaskRow({
       : t('journey.ownerIs', { owner: t(`owners.${task.owner}`) });
 
   return (
-    <li className="py-1">
+    <li className="@container py-1">
       <div
         className={cn(
           'relative flex min-w-0 items-start gap-3 rounded-md px-2 py-2.5 transition-colors duration-300 ease-standard',
@@ -77,7 +77,7 @@ export function TaskRow({
           )}
         </div>
 
-        <div className="flex min-w-0 flex-1 flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-4">
+        <div className="flex min-w-0 flex-1 flex-col gap-2.5 @lg:flex-row @lg:items-center @lg:gap-4">
           {/* Main: title and its context */}
           <div className="flex min-w-0 flex-1 flex-col gap-1.5">
             {to ? (
@@ -110,10 +110,10 @@ export function TaskRow({
             )}
           </div>
 
-          {/* Trailing: due date and status, in fixed columns from 640 px */}
-          <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end">
+          {/* Trailing: due date and status, in fixed columns when the row is 32 rem or wider (D-103) */}
+          <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1.5 @lg:flex-nowrap @lg:justify-end">
             <DueColumn task={task} status={status} dateOnly={preview} />
-            <TaskStatusPill status={status} className="w-fit sm:w-28 sm:justify-center" />
+            <TaskStatusPill status={status} className="w-fit @lg:w-28 @lg:justify-center" />
           </div>
         </div>
       </div>
@@ -123,14 +123,14 @@ export function TaskRow({
 
 /**
  * Due information with a clear hierarchy (D-84): what to act on first ("Vence hoy",
- * label-medium, red when overdue) and the exact date as secondary text. Below 640 px only
- * the relative label goes next to the status (the row is too narrow for both); from 640 px
- * both are stacked and right-aligned.
+ * label-medium, red when overdue) and the exact date as secondary text. In rows narrower than
+ * 32 rem only the relative label goes next to the status; from 32 rem both are stacked and
+ * right-aligned. Measured on the row, not the screen (D-103).
  */
 function DueColumn({ task, status, dateOnly }: { task: HireTask; status: TaskStatus; dateOnly: boolean }) {
   const { t } = useTranslation();
   const wrap =
-    'flex min-w-0 flex-1 flex-wrap items-baseline gap-x-1.5 sm:w-32 sm:flex-none sm:flex-col sm:items-end sm:text-right';
+    'flex min-w-0 grow flex-wrap items-baseline gap-x-1.5 @lg:w-32 @lg:flex-none @lg:flex-col @lg:items-end @lg:text-right';
   if (status === 'done' && task.completedAt) {
     return (
       <span className={cn(wrap, 'text-body-small text-on-surface-variant')}>
@@ -143,7 +143,7 @@ function DueColumn({ task, status, dateOnly }: { task: HireTask; status: TaskSta
   }
   if (dateOnly) {
     return (
-      <time dateTime={task.dueDate} className="text-label-medium text-on-surface tabular-nums sm:w-32 sm:text-right">
+      <time dateTime={task.dueDate} className="text-label-medium text-on-surface tabular-nums @lg:w-32 @lg:text-right">
         {formatDate(task.dueDate)}
       </time>
     );
@@ -152,9 +152,12 @@ function DueColumn({ task, status, dateOnly }: { task: HireTask; status: TaskSta
   const label = 'count' in rel ? t(`due.${rel.key}`, { count: rel.count }) : t(`due.${rel.key}`);
   return (
     <span className={wrap}>
-      <span className={cn('text-label-medium', status === 'overdue' ? 'text-error' : 'text-on-surface')}>{label}</span>
+      {/* Kept on one line: if it does not fit next to the status, the status wraps below */}
+      <span className={cn('whitespace-nowrap text-label-medium', status === 'overdue' ? 'text-error' : 'text-on-surface')}>
+        {label}
+      </span>
       {/* The exact date only where it fits next to the status; always in the detail (N2) */}
-      <time dateTime={task.dueDate} className="hidden text-body-small text-on-surface-variant tabular-nums sm:inline">
+      <time dateTime={task.dueDate} className="hidden text-body-small text-on-surface-variant tabular-nums @lg:inline">
         {formatDate(task.dueDate)}
       </time>
     </span>

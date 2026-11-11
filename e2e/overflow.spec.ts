@@ -4,6 +4,8 @@ import { PAGES, prepareSession, WIDTHS } from './pages';
 /**
  * CLAUDE.md 2.7: zero horizontal overflow of the page at every width, and no
  * element marked with `data-overflow-container` overflowing its box.
+ * Also fails when a text is squeezed into a narrow column, one or two words per line
+ * (D-103): a sign that a component lays out by the screen width instead of its container.
  * Saves a full-page screenshot per screen and width in docs/screenshots/.
  */
 for (const page of PAGES) {
@@ -28,7 +30,46 @@ for (const page of PAGES) {
           })
           .slice(0, 5)
           .map((el) => `${el.tagName.toLowerCase()}.${[...el.classList].slice(0, 3).join('.')}`);
-        return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, overflowing, offenders };
+        // Squeezed texts: a text box narrower than 5 rem that wraps to 3 lines or more.
+        const squeezed = [...document.body.querySelectorAll<HTMLElement>('main *')]
+          .filter((el) => {
+            const text = [...el.childNodes]
+              .filter((n) => n.nodeType === Node.TEXT_NODE)
+              .map((n) => n.textContent ?? '')
+              .join('')
+              .trim();
+            if (text.length < 12 || !text.includes(' ')) return false;
+            const rect = el.getBoundingClientRect();
+            const style = getComputedStyle(el);
+            if (!rect.width || style.visibility === 'hidden' || el.closest('.sr-only, [aria-hidden="true"]')) return false;
+            const lineHeight = parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.4;
+            return rect.width < 80 && rect.height >= lineHeight * 2.9;
+          })
+          .slice(0, 5)
+          .map((el) => `"${(el.textContent ?? '').trim().slice(0, 30)}" (${Math.round(el.getBoundingClientRect().width)}px)`);
+        // Buttons sticking out of their container (D-103): the page does not overflow, but the
+        // button crosses the edge of the card that holds it.
+        const visible = (el: Element) => {
+          const st = getComputedStyle(el);
+          return parseFloat(st.borderTopWidth) > 0 || st.backgroundColor !== 'rgba(0, 0, 0, 0)';
+        };
+        const stickingOut = [...document.body.querySelectorAll<HTMLElement>('main button, main a')]
+          .filter((el) => {
+            if (!visible(el) || el.closest('[data-overflow-container], .sr-only')) return false;
+            const rect = el.getBoundingClientRect();
+            if (!rect.width) return false;
+            // The nearest bordered box around it (a card or panel)
+            let box = el.parentElement;
+            while (box && box !== document.body && parseFloat(getComputedStyle(box).borderTopWidth) === 0) {
+              box = box.parentElement;
+            }
+            if (!box || box === document.body) return false;
+            const card = box.getBoundingClientRect();
+            return rect.right > card.right + 1 || rect.left < card.left - 1;
+          })
+          .slice(0, 5)
+          .map((el) => `"${(el.textContent ?? '').trim().slice(0, 30)}"`);
+        return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, overflowing, offenders, squeezed, stickingOut };
       });
 
       // Sections that appear on scroll (G0, D-92) only show once they enter the viewport:
@@ -63,6 +104,8 @@ for (const page of PAGES) {
         result.clientWidth,
       );
       expect(result.overflowing, 'marked containers overflow').toEqual([]);
+      expect(result.squeezed, 'texts squeezed into a narrow column').toEqual([]);
+      expect(result.stickingOut, 'buttons or links crossing the edge of their container').toEqual([]);
     });
   }
 }

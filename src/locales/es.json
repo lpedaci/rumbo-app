@@ -538,7 +538,7 @@
       "titleHighlight": "frecuentes"
     },
     "footerTagline": "Recorridos de ingreso claros para cada persona nueva, su jefe directo y RRHH.",
-    "author": "Diseño: Lourdes Pedaci, Experience Designer (Learning y UX/UI)",
+    "author": "Diseño y desarrollo: Lourdes Pedaci, Experience Designer (Learning y UX/UI)",
     "showcase": {
       "eyebrow": "Recorridos",
       "title": "Un recorrido para cada rol",
@@ -626,10 +626,10 @@
       "solution": "La solución",
       "journeys": "Recorridos",
       "faq": "Preguntas frecuentes",
-      "rights": "Prototipo de portfolio con datos ficticios.",
       "author": "La autora",
-      "linkedin": "LinkedIn",
-      "portfolio": "Portfolio",
+      "linkedin": "LinkedIn de Lourdes Pedaci",
+      "portfolio": "Portfolio de Lourdes Pedaci",
+      "github": "GitHub de Lourdes Pedaci",
       "designSystem": "Sistema de diseño",
       "copyright": "© {{year}} Lourdes Pedaci"
     },
@@ -2084,7 +2084,7 @@
       "short": "Corta",
       "medium": "Media",
       "long": "Larga",
-      "replay": "Reproducir la entrada escalonada",
+      "replay": "Reproducir de nuevo",
       "uses": [
         "Tareas completadas: el check se dibuja",
         "Barras de progreso: se llenan al entrar",
@@ -2282,7 +2282,6 @@
       ]
     },
     "footer": {
-      "by": "Diseño y desarrollo: Lourdes Pedaci, Experience Designer (Learning y UX/UI).",
       "md": "Documentación en Markdown",
       "repo": "Repositorio",
       "demo": "Volver a Rumbo",

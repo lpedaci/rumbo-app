@@ -30,7 +30,7 @@ El objetivo del proyecto es **mostrar en un portfolio** flujos complejos con var
 ### 2.1 Base: Material Design 3, personalizado
 - El sistema visual se basa en **Material Design 3** (Google): roles de color, escala tipográfica, elevación, estados (hover, foco, presionado) y patrones de componentes. Es público y se puede usar sin problemas de licencia.
 - **Se implementa con Tailwind + shadcn/ui**, no con una librería de Material: los fundamentos de M3 se traducen a tokens propios. Así el resultado no se ve como una app de Google por defecto.
-- **Personalización obligatoria:** paleta y tipografía propias (definidas en 2.1.1), radios y densidad propios. Nada de logos, nombres ni elementos de marca de otras empresas, con dos excepciones: los logos oficiales de Microsoft y Google en los botones de inicio de sesión (ver F0) y la marca "in" de LinkedIn junto al enlace al perfil de Lourdes en el pie de G0 (D-92).
+- **Personalización obligatoria:** paleta y tipografía propias (definidas en 2.1.1), radios y densidad propios. Nada de logos, nombres ni elementos de marca de otras empresas, con dos excepciones: los logos oficiales de Microsoft y Google en los botones de inicio de sesión (ver F0) y las marcas de LinkedIn y GitHub en los enlaces a los perfiles de Lourdes en el pie de G0 (D-92, D-102).
 - **Densidad:** interfaz de herramienta corporativa, con información densa pero clara y jerarquía fuerte, apta para trabajar muchas horas (tablas, listas, dashboards).
 - Modo claro como principal; preparar los tokens para modo oscuro aunque no se implemente en la fase A.
 
@@ -249,7 +249,8 @@ Usar **Motion** (Framer Motion) solo para estas animaciones, con duraciones de 1
 - Sin barra de desplazamiento visible en la página por debajo de 1024 px (D-86): se desplaza con el dedo, el panel táctil o la rueda.
 - Navegación: barra lateral flotante expandida en desktop, plegada a íconos por debajo de 1280 px (se puede expandir), y en mobile menú inferior de íconos más un panel lateral desde el botón de menú (D-58, D-60).
 - Áreas táctiles de al menos 48 × 48 px en mobile (igual que 2.1.3 y 2.10).
-- **Verificación automatizada:** test con Playwright que recorre las pantallas principales de cada rol en los 6 anchos, saca capturas en `docs/screenshots/` y falla si `document.documentElement.scrollWidth > clientWidth` o si algún elemento marcado como contenedor desborda. Correrlo antes de cada revisión.
+- **Verificación automatizada:** test con Playwright que recorre las pantallas principales de cada rol en los 6 anchos, saca capturas en `docs/screenshots/` y falla si `document.documentElement.scrollWidth > clientWidth`, si algún elemento marcado como contenedor desborda, si un texto queda aplastado en una columna de menos de 5 rem con tres líneas o más, o si un botón con borde o fondo cruza el borde de su tarjeta (D-103). Correrlo antes de cada revisión.
+- **Componentes que se reacomodan por su contenedor, no por la pantalla** (D-103): los que se usan en tarjetas de distinto ancho (fila de tarea, pie de formulario) cambian de diseño con container queries (`@container`), no con los cortes de la pantalla.
 
 ### 2.8 Reglas de uso
 - Si una pantalla del MVP no tiene referencia, construirla siguiendo el mismo sistema visual de las que sí la tienen.
@@ -453,7 +454,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     7. **Recorre la demo en tres pasos:** elegir, iniciar sesión en un clic y cambiar de rol con «Ver como».
     8. **Preguntas frecuentes** en acordeón accesible.
     La página es blanca y continua: las secciones se separan por espacio, sin bandas de color; el hero tiene una cuadrícula muy tenue, que se repite en algunas secciones de cifras y llamados (en número, los tres pasos y la franja final en su versión `primary-container`), nunca detrás de textos largos (D-92). Los encabezados van centrados: una etiqueta de texto simple en `primary` (sin píldora), el `h2` con las palabras clave en `primary` y sin punto final, y una línea de contexto (D-73, D-74). Sin texturas de puntos: dificultan la lectura. Antes del pie, una franja `primary-container` con "Elegir un recorrido".
-    9. **Pie organizado por tareas:** marca con su frase y el aviso de demo; enlaces a LinkedIn (con su marca) y al portfolio de Lourdes; columnas "Explorar" (secciones de la página), "El proyecto" (case study, documentación y el sitio del sistema de diseño) y "La demo" (elegir un recorrido, restablecer); abajo, autoría, copyright con el año actual y el aviso "Prototipo de portfolio con datos ficticios."; y la marca "Rumbo" grande como SVG decorativo (D-92).
+    9. **Pie organizado por tareas:** marca con su frase y el aviso de demo; columnas "Explorar" (secciones de la página), "El proyecto" (case study, documentación y el sitio del sistema de diseño) y "La demo" (elegir un recorrido, restablecer); abajo, en una línea a todo el ancho, "Diseño y desarrollo: Lourdes Pedaci, Experience Designer (Learning y UX/UI)" con botones de ícono con tooltip a su LinkedIn, su portfolio y su GitHub (`AuthorLinks`, igual en el pie del sitio del sistema de diseño; D-102, D-103), y debajo el copyright con el año actual, centrado; y la marca "Rumbo" grande como SVG decorativo (D-92).
 - **No se usan** logos de otras empresas ("empresas que confían") ni testimonios: serían inventados.
 - Sin degradés ni sombras en tarjetas en reposo; en mobile, todo en una columna (las cifras, de a dos).
 

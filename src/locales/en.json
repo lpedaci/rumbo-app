@@ -538,7 +538,7 @@
       "titleHighlight": "questions"
     },
     "footerTagline": "Clear onboarding journeys for every new hire, their direct manager and HR.",
-    "author": "Design: Lourdes Pedaci, Experience Designer (Learning and UX/UI)",
+    "author": "Design and development: Lourdes Pedaci, Experience Designer (Learning and UX/UI)",
     "showcase": {
       "eyebrow": "Journeys",
       "title": "A journey for each role",
@@ -626,10 +626,10 @@
       "solution": "The solution",
       "journeys": "Journeys",
       "faq": "FAQ",
-      "rights": "Portfolio prototype with fictitious data.",
       "author": "The author",
-      "linkedin": "LinkedIn",
-      "portfolio": "Portfolio",
+      "linkedin": "Lourdes Pedaci on LinkedIn",
+      "portfolio": "Lourdes Pedaci's portfolio",
+      "github": "Lourdes Pedaci's GitHub",
       "designSystem": "Design system",
       "copyright": "© {{year}} Lourdes Pedaci"
     },
@@ -2084,7 +2084,7 @@
       "short": "Short",
       "medium": "Medium",
       "long": "Long",
-      "replay": "Replay the staggered entrance",
+      "replay": "Play it again",
       "uses": [
         "Completed tasks: the check draws itself",
         "Progress bars: fill when they appear",
@@ -2282,7 +2282,6 @@
       ]
     },
     "footer": {
-      "by": "Design and development: Lourdes Pedaci, Experience Designer (Learning and UX/UI).",
       "md": "Markdown documentation",
       "repo": "Repository",
       "demo": "Back to Rumbo",

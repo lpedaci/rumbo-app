@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const ICONS = [
   // Navigation and layout
-  'menu', 'home', 'dashboard', 'group', 'groups', 'person', 'badge', 'apartment', 'route',
+  'menu', 'home', 'work', 'dashboard', 'group', 'groups', 'person', 'badge', 'apartment', 'route',
   'description', 'assignment', 'fact_check', 'security', 'admin_panel_settings', 'policy',
   'notifications', 'help', 'search', 'settings', 'logout', 'account_circle', 'swap_horiz',
   // Actions

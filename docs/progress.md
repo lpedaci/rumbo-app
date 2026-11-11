@@ -332,3 +332,13 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 ## Encabezado de la barra lateral, 11/11/2026 (D-101)
 
 - Rótulo "Menú" arriba de la barra lateral expandida, junto al botón de plegar. El logo se mantiene en la barra superior.
+
+## Pie de G0 con la autoría y los perfiles, 11/11/2026 (D-102)
+
+- "Diseño y desarrollo: Lourdes Pedaci…" con botones de ícono a LinkedIn, portfolio y GitHub; copyright centrado abajo.
+
+## Componentes por contenedor y pies con autoría, 11/11/2026 (D-103)
+
+- `FormFooter` y `TaskRow` con container queries; el test de Playwright detecta textos aplastados y botones fuera de su tarjeta.
+- Autoría en una línea con LinkedIn, portfolio y GitHub (`AuthorLinks`) en el pie de G0 y del sitio del sistema de diseño.
+- Títulos e introducciones del sitio del sistema de diseño a todo el ancho.

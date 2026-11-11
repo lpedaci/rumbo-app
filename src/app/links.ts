@@ -16,4 +16,5 @@ export const REPO_URL = 'https://github.com/lpedaci/rumbo-app';
 
 /** Lourdes's portfolio and LinkedIn profile, in the G0 footer (D-92). */
 export const PORTFOLIO_URL = 'https://lpedaci.github.io/portfolio/';
+export const GITHUB_PROFILE_URL = 'https://github.com/lpedaci';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/lourdes-pedaci/';
