@@ -19,7 +19,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 10 | Sistemas: S1, S2, S3 | Hecho | 11/11/2026 |
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Hecho | 11/11/2026 |
 | 12 | Pulido de fase A | Hecho | 11/11/2026 |
-| 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
+| 13 | Revisión intermedia (`docs/review-fase-a.md`) | Hecho | 11/11/2026 |
 
 ## Rediseño visual (2.2.1): piloto
 
@@ -315,3 +315,9 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - **Requerimientos:** los de la fase A construidos y verificados pasan a "Hecho" en `requirements.md`; lo que necesita prueba manual (lector de pantalla, navegadores, Lighthouse) queda para la revisión intermedia.
 
 **Pendiente:** paso 13 (revisión intermedia, `docs/review-fase-a.md`).
+
+## Paso 13: revisión intermedia, 11/11/2026
+
+- `docs/review-fase-a.md` con la estructura de la sección 13: fase A al 95 % (funciones completas), fase B al 10 %.
+- Pendientes de la fase A: wireflows con capturas y verificaciones manuales (teclado, lector de pantalla, Lighthouse, Firefox y Safari).
+- Confirmaciones pendientes de Lourdes: licencia de las fotos nuevas (D-93), crédito en el case study (D-92), criterios de D-53, D-95 y D-99.
