@@ -83,6 +83,22 @@ describe('N1 · Compact contacts and folded done tasks', () => {
   });
 });
 
+describe('N1 · Journey timeline', () => {
+  it('shows each stage with its progress, today marker and a table alternative', async () => {
+    renderAt('/me');
+    await screen.findByRole('heading', { level: 1 });
+    expect(screen.getByText('Tienes 1 tarea vencida. Revísala en Lo próximo.')).toBeInTheDocument();
+    expect(screen.getByText('Hoy · día 28')).toBeInTheDocument();
+    const month = screen.getByRole('progressbar', { name: 'Avance de Mes 1' });
+    expect(month).toHaveAttribute('aria-valuetext', '3 de 5');
+
+    fireEvent.click(screen.getByRole('button', { name: es.journey.timeline.viewTable }));
+    const table = screen.getByRole('table', { name: es.journey.timeline.caption });
+    expect(within(table).getAllByRole('row')).toHaveLength(5);
+    expect(within(table).getByRole('rowheader', { name: 'Mes 1' })).toBeInTheDocument();
+  });
+});
+
 describe('N2 · Task detail', () => {
   it('explains why a blocked task is not available, with a link to the blocker', async () => {
     renderAt('/me/tasks/h-sofia-d17');

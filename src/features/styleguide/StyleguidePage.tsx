@@ -14,7 +14,7 @@ import { FilterChip } from '@/components/ui/FilterChip';
 import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
 import { IconTile } from '@/components/ui/IconTile';
-import { KpiCard } from '@/components/ui/KpiCard';
+import { KpiCard, KpiRow } from '@/components/ui/KpiCard';
 import { type IconName, iconPaths } from '@/components/ui/icon-paths.generated';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { SegmentedButton } from '@/components/ui/SegmentedButton';
@@ -464,6 +464,7 @@ export function StyleguidePage() {
 
       <Section id="bento" title="Grilla bento: 12 columnas, 6 en tablet, 1 en mobile">
         <BentoGrid>
+          <KpiRow>
           <KpiCard
             headingLevel="h3"
             label="Ingresos activos"
@@ -489,7 +490,6 @@ export function StyleguidePage() {
             icon="schedule"
             iconTone="secondary"
             trend={{ tone: 'error', icon: 'trending_up', label: '+1 esta semana' }}
-            caption="Con al menos una tarea vencida"
           />
           <KpiCard
             headingLevel="h3"
@@ -499,6 +499,7 @@ export function StyleguidePage() {
             trend={{ tone: 'success', icon: 'trending_up', label: '+6 puntos' }}
             series={[40, 44, 47, 52, 55, 57]}
           />
+          </KpiRow>
           <BentoCard
             size="lg"
             title="Avance por ingreso (lg)"

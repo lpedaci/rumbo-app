@@ -45,7 +45,7 @@ export function UserMenu({ placement = 'header' }: { placement?: 'header' | 'sid
               'flex min-w-0 items-center gap-2',
               placement === 'sidebar'
                 ? 'w-full rounded-lg p-2 text-left hover:bg-surface-container'
-                : 'h-10 rounded-full pr-1 pl-1 md:pr-2',
+                : 'h-11 rounded-sm pr-1 pl-1 md:pr-2',
               interactive,
             )}
           >

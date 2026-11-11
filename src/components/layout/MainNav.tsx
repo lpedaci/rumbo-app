@@ -31,10 +31,10 @@ export function useNavCollapsed(): boolean {
 
 const itemClass = (collapsed: boolean, active: boolean) =>
   cn(
-    'flex items-center rounded-lg text-label-large transition-colors duration-150',
+    'flex items-center rounded-md text-label-large transition-colors duration-150',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
-    collapsed ? 'mx-auto size-12 justify-center' : 'min-h-11 w-full gap-3 px-3',
-    // Active item: solid primary pill, white text and filled icon (reference 9d0f172e, D-57).
+    collapsed ? 'mx-auto size-11 justify-center' : 'min-h-11 w-full gap-3 px-3',
+    // Active item: solid primary, white icon, same soft corners as buttons (2.1.3, D-57).
     active ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface',
   );
 
@@ -123,7 +123,7 @@ function NavContent({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
 
       <div className="flex-1" />
 
-      <ul aria-label={t('layout.account')} className="flex flex-col gap-1 border-t border-outline-variant pt-3">
+      <ul aria-label={t('layout.account')} className="flex flex-col gap-1 rounded-lg bg-surface-container p-1">
         {can(user, 'account:security_own') && (
           <li>
             <SideLink
@@ -156,26 +156,47 @@ function NavContent({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
 }
 
 /**
- * Side navigation from 768 px (2.2.1 pattern 5, reference 9d0f172e), under the top bar.
- * Expanded (icon + label) or folded to icons with the menu button of the top bar;
- * folded by default below 1280 px. The viewer's choice is remembered.
+ * Side navigation from 768 px (reference ad2d9e23, D-60): a floating white panel that
+ * runs the full height of the screen, with its fold toggle on top, the role items and the
+ * account items at the bottom (the logo is in the top bar). Folded to icons (circles) or expanded with labels from
+ * the menu button of the top bar; folded by default below 1280 px, choice remembered.
  */
 export function SideNav() {
   const { t } = useTranslation();
   const collapsed = useNavCollapsed();
 
   return (
-    <nav
-      id={SIDEBAR_ID}
-      aria-label={t('layout.mainNav')}
-      className={cn(
-        'sticky top-16 hidden h-[calc(100dvh-4rem)] shrink-0 flex-col overflow-x-hidden overflow-y-auto border-r border-outline-variant bg-surface-container-lowest py-4 md:flex',
-        'transition-[width] duration-200 ease-standard motion-reduce:transition-none',
-        collapsed ? 'w-20 px-2' : 'w-64 px-3',
-      )}
-    >
-      <NavContent collapsed={collapsed} />
-    </nav>
+    <div className="sticky top-0 hidden h-dvh shrink-0 py-3 pl-3 md:block">
+      <nav
+        id={SIDEBAR_ID}
+        aria-label={t('layout.mainNav')}
+        className={cn(
+          'flex h-full flex-col gap-4 overflow-x-hidden overflow-y-auto rounded-xl border border-outline-variant bg-surface-container-lowest py-3',
+          'transition-[width] duration-200 ease-standard motion-reduce:transition-none',
+          collapsed ? 'w-[4.5rem] px-2' : 'w-60 px-3',
+        )}
+      >
+        {/* Toggle that folds or expands this panel (the logo lives in the top bar). */}
+        <div className={cn('flex shrink-0', collapsed ? 'justify-center' : 'justify-end')}>
+          <Tooltip content={collapsed ? t('layout.menu.expand') : t('layout.menu.collapse')} side="right">
+            <button
+              type="button"
+              aria-label={collapsed ? t('layout.menu.expand') : t('layout.menu.collapse')}
+              aria-expanded={!collapsed}
+              aria-controls={SIDEBAR_ID}
+              onClick={() => useUiStore.getState().setNavCollapsed(!collapsed)}
+              className={cn(
+                'flex size-11 shrink-0 items-center justify-center rounded-md text-on-surface-variant transition-colors duration-150',
+                'hover:bg-surface-container hover:text-on-surface focus-visible:outline-2 focus-visible:outline-primary',
+              )}
+            >
+              <Icon name={collapsed ? 'menu' : 'menu_open'} size={24} />
+            </button>
+          </Tooltip>
+        </div>
+        <NavContent collapsed={collapsed} />
+      </nav>
+    </div>
   );
 }
 

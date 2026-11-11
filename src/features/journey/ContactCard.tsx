@@ -7,8 +7,9 @@ import { cn } from '@/lib/utils';
 import type { Person } from '@/types/domain';
 
 /**
- * One key contact in compact form: avatar, name and relation (jefe directo, buddy,
- * referente de RRHH). Tapping it opens the full card with job title and email.
+ * One key contact in compact form: a left-aligned row with avatar, name, relation
+ * (jefe directo, buddy, referente de RRHH) and a chevron. Tapping it opens the full
+ * card with job title and email.
  */
 export function ContactCard({ person, relation }: { person: Person; relation: string }) {
   const { t } = useTranslation();
@@ -18,28 +19,20 @@ export function ContactCard({ person, relation }: { person: Person; relation: st
       <Popover>
         <PopoverTrigger
           className={cn(
-            'group flex w-full min-w-0 flex-col items-center gap-2 rounded-lg px-1 py-2 text-center transition-colors duration-150',
+            'flex min-h-14 w-full min-w-0 items-center gap-3 rounded-md border border-outline-variant px-3 py-2 text-left transition-colors duration-150',
             'hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-primary',
-            'data-[state=open]:bg-surface-container',
+            'data-[state=open]:border-primary data-[state=open]:bg-surface-container',
           )}
         >
-          <span className="relative">
-            <Avatar name={person.name} role={person.role} size="lg" />
-            {/* Hint that the avatar opens more information */}
-            <span
-              aria-hidden
-              className="absolute -right-1 -bottom-1 flex size-5 items-center justify-center rounded-full border-2 border-surface-container-lowest bg-primary text-on-primary"
-            >
-              <Icon name="info" size={16} />
-            </span>
+          <Avatar name={person.name} role={person.role} />
+          <span className="flex min-w-0 flex-1 flex-col">
+            <span className="truncate text-title-small text-on-surface">{person.name}</span>
+            <span className="truncate text-body-small text-on-surface-variant">{relation}</span>
           </span>
-          <span className="flex w-full min-w-0 flex-col">
-            <span className="line-clamp-2 text-title-small text-on-surface">{person.name}</span>
-            <span className="line-clamp-2 text-body-small text-on-surface-variant">{relation}</span>
-          </span>
+          <Icon name="chevron_right" className="shrink-0 text-on-surface-variant" />
           <span className="sr-only">{t('journey.contacts.more')}</span>
         </PopoverTrigger>
-        <PopoverContent label={t('journey.contacts.detailsOf', { name: person.name })}>
+        <PopoverContent label={t('journey.contacts.detailsOf', { name: person.name })} align="start">
           <div className="flex flex-col gap-3">
             <div className="flex items-start gap-3">
               <Avatar name={person.name} role={person.role} size="lg" />

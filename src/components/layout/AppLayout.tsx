@@ -35,19 +35,21 @@ export function AppLayout() {
       >
         {t('app.skipToContent')}
       </a>
-      {/* Top bar across the page, sidebar under it (reference 9d0f172e) */}
-      <TopBar />
+      {/* Floating side panel at full height, and the column with the top bar and the page (ad2d9e23) */}
       <div className="flex min-w-0">
         <SideNav />
-        <main
-          id="main-content"
-          tabIndex={-1}
-          className="min-w-0 flex-1 px-(--space-gutter) pt-6 pb-20 focus:outline-none md:pb-10"
-        >
-          <div className="mx-auto w-full max-w-7xl min-w-0">
-            <Outlet />
-          </div>
-        </main>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <TopBar />
+          <main
+            id="main-content"
+            tabIndex={-1}
+            className="min-w-0 flex-1 px-(--space-gutter) pt-2 pb-20 focus:outline-none md:pb-10 md:pl-4"
+          >
+            <div className="mx-auto w-full max-w-7xl min-w-0">
+              <Outlet />
+            </div>
+          </main>
+        </div>
       </div>
       <BottomNav />
       <MobileNavDrawer />

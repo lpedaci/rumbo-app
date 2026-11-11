@@ -13,41 +13,27 @@ import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
 import { hasGuidedWelcome } from '@/features/welcome/welcome-steps';
 import { homePath } from '@/lib/permissions';
-import { useMediaQuery } from '@/lib/use-media-query';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
 import { useUiStore } from '@/store/ui-store';
 import { Logo } from './Logo';
-import { MENU_BUTTON_ID, SIDEBAR_ID, useNavCollapsed } from './MainNav';
+import { MENU_BUTTON_ID, SIDEBAR_ID } from './MainNav';
 import { RoleSwitcher } from './RoleSwitcher';
 import { UserMenu } from './UserMenu';
 
-/** Menu button: folds the sidebar to icons (from 768 px) or opens the drawer (mobile). */
+/** Mobile only (< 768 px): opens the navigation drawer. From 768 px the panel has its own toggle. */
 function MenuButton() {
   const { t } = useTranslation();
-  const isTabletUp = useMediaQuery('(min-width: 768px)');
-  const collapsed = useNavCollapsed();
   const drawerOpen = useUiStore((s) => s.navDrawerOpen);
-
-  if (!isTabletUp) {
-    return (
-      <IconButton
-        id={MENU_BUTTON_ID}
-        icon="menu"
-        label={t('layout.menu.open')}
-        aria-expanded={drawerOpen}
-        aria-controls={`${SIDEBAR_ID}-drawer`}
-        aria-haspopup="dialog"
-        onClick={() => useUiStore.getState().setNavDrawerOpen(true)}
-      />
-    );
-  }
   return (
     <IconButton
-      icon={collapsed ? 'menu' : 'menu_open'}
-      label={collapsed ? t('layout.menu.expand') : t('layout.menu.collapse')}
-      aria-expanded={!collapsed}
-      aria-controls={SIDEBAR_ID}
-      onClick={() => useUiStore.getState().setNavCollapsed(!collapsed)}
+      id={MENU_BUTTON_ID}
+      icon="menu"
+      label={t('layout.menu.open')}
+      aria-expanded={drawerOpen}
+      aria-controls={`${SIDEBAR_ID}-drawer`}
+      aria-haspopup="dialog"
+      className="md:hidden"
+      onClick={() => useUiStore.getState().setNavDrawerOpen(true)}
     />
   );
 }
@@ -111,13 +97,16 @@ export function TopBar() {
   if (!user) return null;
 
   return (
-    <header className="sticky top-0 z-40 h-16 border-b border-outline-variant bg-surface-container-lowest">
-      <div className="flex h-full min-w-0 items-center gap-0.5 px-2 sm:gap-2 md:px-4">
+    // Flat on the tinted page (reference ad2d9e23); controls keep the product's single shape (2.1.3).
+    <header className="sticky top-0 z-40 bg-surface">
+      <div className="flex h-16 min-w-0 items-center gap-1.5 px-(--space-gutter) sm:gap-3 md:h-[4.5rem] md:pl-4">
         <MenuButton />
-        <Link to={homePath(user)} className="ml-1 shrink-0 rounded-sm">
+        <Link to={homePath(user)} className="shrink-0 rounded-sm">
           <Logo markOnly className="sm:hidden" />
           {/* Mark only on small screens: the link keeps a name for assistive tech. */}
-          <span className="sr-only sm:hidden">{t('layout.homeLogo', { name: t('app.name'), company: t('app.company') })}</span>
+          <span className="sr-only sm:hidden">
+            {t('layout.homeLogo', { name: t('app.name'), company: t('app.company') })}
+          </span>
           <Logo className="hidden sm:inline-flex" />
         </Link>
         <div className="min-w-2 flex-1" />

@@ -31,12 +31,22 @@ for (const page of PAGES) {
         return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, overflowing, offenders };
       });
 
-      await browserPage.screenshot({
-        path: `docs/screenshots/${page.id}-${width}.jpg`,
-        fullPage: true,
-        type: 'jpeg',
-        quality: 70,
-      });
+      // On Windows another process (a viewer, the indexer) can hold the file for a moment:
+      // retry the capture before failing (INC-012). The checks above do not depend on it.
+      for (let attempt = 1; ; attempt += 1) {
+        try {
+          await browserPage.screenshot({
+            path: `docs/screenshots/${page.id}-${width}.jpg`,
+            fullPage: true,
+            type: 'jpeg',
+            quality: 70,
+          });
+          break;
+        } catch (error) {
+          if (attempt >= 3) throw error;
+          await browserPage.waitForTimeout(300 * attempt);
+        }
+      }
 
       expect(result.scrollWidth, `page overflows; first offenders: ${result.offenders.join(', ')}`).toBeLessThanOrEqual(
         result.clientWidth,

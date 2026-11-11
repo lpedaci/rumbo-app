@@ -413,7 +413,8 @@
       "hireDone": "You sent your self-review. Your manager completes the check-in at the meeting.",
       "respond": "Answer my self-review",
       "review": "View my self-review",
-      "none": "You completed all your check-ins."
+      "none": "You completed all your check-ins.",
+      "milestones": "What you will talk about"
     },
     "contacts": {
       "title": "Your key contacts",
@@ -478,8 +479,26 @@
       "legendDone": "Done",
       "legendPending": "Pending"
     },
-    "stagesCard": {
-      "title": "Progress by stage"
+    "timeline": {
+      "today": "Today · day {{day}}",
+      "count": "{{done}} of {{total}}",
+      "caption": "Journey progress by stage",
+      "colStage": "Stage",
+      "colDays": "Days",
+      "colDone": "Tasks done",
+      "colState": "Status",
+      "state": {
+        "done": "Complete",
+        "current": "Current stage",
+        "behind": "Pending tasks",
+        "upcoming": "Upcoming"
+      },
+      "onTrack": "You are up to date: no overdue tasks.",
+      "overdue_one": "You have {{count}} overdue task. Check it in Up next.",
+      "overdue_other": "You have {{count}} overdue tasks. Check them in Up next.",
+      "viewTable": "View as table",
+      "viewChart": "View as chart",
+      "range": "{{min}} to {{max}}"
     }
   },
   "task": {

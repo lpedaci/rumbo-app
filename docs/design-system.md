@@ -37,7 +37,7 @@ Carácter frío, limpio y profesional, con fondos blancos y grises fríos. Sin c
 
 | Superficie o neutro | Valor | Uso |
 | --- | --- | --- |
-| `surface` | `#F6F8F9` | Fondo de la página |
+| `surface` | `#EDF3F4` | Fondo de la página, tintado de petróleo para que las tarjetas blancas se despeguen (2.2.1) |
 | `surface-container-lowest` | `#FFFFFF` | Tarjetas, tablas, formularios, relleno de campos |
 | `surface-container` | `#EEF2F4` | Sidebar, encabezados de tabla |
 | `surface-container-high` | `#E4E9EC` | Hover de filas, selección neutra |
@@ -45,7 +45,7 @@ Carácter frío, limpio y profesional, con fondos blancos y grises fríos. Sin c
 | `on-surface-variant` | `#4B5563` | Texto secundario, íconos |
 | `outline` | `#7D8793` | Bordes de campos y controles |
 | `outline-variant` | `#D5DBE0` | Bordes de tarjetas y divisores |
-| `inverse-surface` / `inverse-on-surface` | `#1F2937` / `#F3F4F6` | Tooltips y toasts |
+| `inverse-surface` / `inverse-on-surface` | `#1F2A30` / `#FFFFFF` | Tooltips, toasts y tooltip oscuro de gráficos |
 | `scrim` | `#000000` al 32 % | Fondo detrás de los diálogos |
 
 **Reglas de uso verificadas por el test de contraste** (`src/styles/tokens.test.ts`, 51 casos):
@@ -102,7 +102,8 @@ Una sola familia de esquinas suaves, coherente con las referencias:
 | `rounded-xs` | 4 px | Elementos internos pequeños |
 | `rounded-sm` | 8 px | Botones (forma cuadrada con esquinas suaves de M3 Expressive), campos, chips |
 | `rounded-md` | 12 px | Menús, tooltips, toasts, contenedores de tabla |
-| `rounded-lg` | 16 px | Tarjetas bento y diálogos |
+| `rounded-lg` | 16 px | Diálogos y paneles internos |
+| `rounded-xl` | 20 px | Tarjetas bento, tarjetas de página y panel lateral (2.2.1) |
 | `rounded-full` | | Píldoras de estado, barras de progreso |
 
 ### 2.5 Elevación
@@ -229,6 +230,34 @@ Bloque con pulso de opacidad, oculto para lectores de pantalla.
 
 ### Toast
 `toast.success()`, `toast.info()` y `toast.error()` desde cualquier lugar. Usan Radix Toast, que los anuncia con `aria-live`. Fondo `inverse-surface` con `shadow-elevation-2`, abajo a la derecha (centrado en mobile), con 5 s de duración y botón de cerrar. Los mensajes de éxito van en pasado y son breves ("Plantilla publicada").
+
+### IconTile, KpiCard y KpiRow (rediseño 2.2.1)
+- **IconTile:** ícono dentro de un contenedor de color (`primary`, `secondary`, `tertiary`, `brand` y los tonos de estado solo para estados). Decorativo.
+- **KpiCard:** ícono y sparkline arriba, etiqueta (hasta dos líneas), número y debajo su píldora de variación o estado. Datos alineados abajo para que las tarjetas de una fila queden parejas. Número en `display-small` desde 768 px y `headline-small` en mobile (D-63).
+- **KpiRow:** fila de KPIs a todo el ancho de la grilla: 2 por fila en mobile y tablet, 4 desde 1280 px.
+
+### Sparkline
+Línea suave en `primary` o `tertiary` con relleno plano al 12 % y punto final. Decorativa: el valor y su variación siempre van escritos al lado.
+
+### SegmentedProgress
+Barritas finas (30 por defecto) que se llenan en proporción al avance; anuncia la cantidad real ("13 de 18 tareas hechas"). Se usa en las vistas previas de G0 y G1 y en la bienvenida guiada (D-56).
+
+### Línea de tiempo del recorrido (N1)
+Un tramo por etapa relleno según sus tareas hechas, marcador "Hoy · día N" en `tertiary`, y bajo cada tramo nombre, "N de M" y estado con ícono y texto. Cada tramo es un `progressbar` con nombre y valor; "Ver como tabla" muestra los mismos datos en una tabla (D-61).
+
+### Avatar
+Iniciales sobre el contenedor del rol: RRHH `primary-container`, jefes `tertiary-container`, nuevos ingresos `secondary-container`, sistemas `info-container`. Sin fotos.
+
+### Popover
+Panel flotante anclado a su disparador (`--elevation-1`). Al abrir, el foco va al panel (que se anuncia con su nombre); cierra con Escape o clic afuera y devuelve el foco. Se usa en los contactos clave.
+
+### Navegación (G6)
+- **Barra lateral (desde 768 px):** panel blanco flotante a todo el alto, con el botón de plegar arriba. Expandida: ícono + texto; plegada: solo íconos con tooltip y nombre accesible. El ítem activo va en `primary` con ícono relleno. La preferencia se guarda en el navegador.
+- **Barra superior:** sobre el fondo, sin franja: logo, "Ver como", Ayuda, Notificaciones y la persona. Controles con la forma única de 2.1.3, sin círculos ni píldoras con borde (D-62).
+- **Mobile:** el botón de menú abre un panel lateral (foco al primer ítem, vuelve al botón al cerrar); barra superior y menú inferior solo con íconos.
+
+### Bienvenida guiada
+Diálogo de 3 pasos con ilustración hecha con componentes reales, puntos de progreso, "Saltar", "Anterior" (oculto en el primer paso) y "Continuar". Transición lateral; solo opacidad con movimiento reducido.
 
 ### Tooltip
 Radix Tooltip: se abre con hover y con foco de teclado. Fondo `inverse-surface`, texto `body-small`, `shadow-elevation-1`.

@@ -413,7 +413,8 @@
       "hireDone": "Ya enviaste tu autoevaluación. Tu jefe directo completa el check-in en la reunión.",
       "respond": "Responder mi autoevaluación",
       "review": "Ver mi autoevaluación",
-      "none": "Completaste todos tus check-ins."
+      "none": "Completaste todos tus check-ins.",
+      "milestones": "Lo que se va a conversar"
     },
     "contacts": {
       "title": "Tus contactos clave",
@@ -478,8 +479,26 @@
       "legendDone": "Hechas",
       "legendPending": "Pendientes"
     },
-    "stagesCard": {
-      "title": "Avance por etapa"
+    "timeline": {
+      "today": "Hoy · día {{day}}",
+      "count": "{{done}} de {{total}}",
+      "caption": "Avance por etapa del recorrido",
+      "colStage": "Etapa",
+      "colDays": "Días",
+      "colDone": "Tareas hechas",
+      "colState": "Estado",
+      "state": {
+        "done": "Completa",
+        "current": "Etapa actual",
+        "behind": "Con pendientes",
+        "upcoming": "Próxima"
+      },
+      "onTrack": "Vas al día: no tienes tareas vencidas.",
+      "overdue_one": "Tienes {{count}} tarea vencida. Revísala en Lo próximo.",
+      "overdue_other": "Tienes {{count}} tareas vencidas. Revísalas en Lo próximo.",
+      "viewTable": "Ver como tabla",
+      "viewChart": "Ver como gráfico",
+      "range": "{{min}} a {{max}}"
     }
   },
   "task": {

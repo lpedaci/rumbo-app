@@ -6,11 +6,9 @@ import { BentoCard } from '@/components/ui/BentoCard';
 import { BentoGrid } from '@/components/ui/BentoGrid';
 import { Button } from '@/components/ui/Button';
 import { IconTile } from '@/components/ui/IconTile';
+import { Icon } from '@/components/ui/Icon';
 import { InlineAlert } from '@/components/ui/InlineAlert';
-import { KpiCard } from '@/components/ui/KpiCard';
-import { ProgressBar } from '@/components/ui/ProgressBar';
-import { SegmentedProgress } from '@/components/ui/SegmentedProgress';
-import { StatusPill } from '@/components/ui/StatusPill';
+import { KpiCard, KpiRow } from '@/components/ui/KpiCard';
 import { daysBetween, DEMO_TODAY, formatDate, formatNumber, formatPercent, STAGES } from '@/lib/dates';
 import {
   CHECKIN_OFFSETS,
@@ -26,11 +24,13 @@ import {
   taskStatus,
 } from '@/lib/journey';
 import { canCompleteTask } from '@/lib/permissions';
+import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { HireTask, Person } from '@/types/domain';
 import { ContactCard } from './ContactCard';
 import { FoldedDoneTasks } from './FoldedDoneTasks';
+import { JourneyTimeline } from './JourneyTimeline';
 import { NextStepRow } from './NextStepRow';
 import { TaskRow } from './TaskRow';
 import { UNLOCK_HIGHLIGHT_MS } from './task-meta';
@@ -115,63 +115,59 @@ export function JourneyPage() {
       />
 
       <BentoGrid>
-        {/* KPI row (2.2.1, pattern 3) */}
-        <KpiCard
-          label={t('journey.kpi.progress')}
-          value={formatPercent(overall.percent)}
-          icon="route"
-          caption={t('journey.kpi.progressCaption', { done: overall.done, total: overall.total })}
-          trend={
-            monthDone > 0
-              ? { tone: 'success', icon: 'trending_up', label: t('journey.kpi.monthDone', { count: monthDone }) }
-              : { tone: 'neutral', icon: 'trending_flat', label: t('journey.kpi.monthNone') }
-          }
-          series={completionSeries(hire.tasks)}
-        />
-        <KpiCard
-          label={t('journey.kpi.pending')}
-          value={formatNumber(ownPending.length)}
-          icon="checklist"
-          iconTone="secondary"
-          caption={t('journey.kpi.pendingCaption')}
-          trend={
-            ownOverdue > 0
-              ? { tone: 'error', icon: 'error', label: t('journey.kpi.overdue', { count: ownOverdue }) }
-              : { tone: 'success', icon: 'check_circle', label: t('journey.kpi.upToDate') }
-          }
-        />
-        <KpiCard
-          label={t('journey.kpi.stage')}
-          value={t(`stages.${stage}`)}
-          icon="flag"
-          iconTone="secondary"
-          caption={t('journey.kpi.stageCaption', { day: Math.max(day, 0) })}
-          trend={{
-            tone: 'primary',
-            icon: 'task_alt',
-            label: t('journey.kpi.stageTrend', { done: byStage[stage].done, total: byStage[stage].total }),
-          }}
-        />
-        <KpiCard
-          label={t('journey.kpi.checkin')}
-          value={
-            checkinIn === null
-              ? t('journey.kpi.none')
-              : checkinIn <= 0
-                ? t('journey.kpi.today')
-                : t('journey.kpi.days', { count: checkinIn })
-          }
-          icon="event"
-          iconTone="tertiary"
-          caption={
-            checkin
-              ? t('journey.kpi.checkinCaption', {
-                  days: CHECKIN_OFFSETS[checkin.stage],
-                  date: formatDate(checkinDueDate(checkin)),
-                })
-              : undefined
-          }
-        />
+        {/* KPI row (2.2.1 pattern 3, reference ad2d9e23) */}
+        <KpiRow>
+          <KpiCard
+            label={t('journey.kpi.progress')}
+            value={formatPercent(overall.percent)}
+            icon="route"
+            trend={
+              monthDone > 0
+                ? { tone: 'success', icon: 'trending_up', label: t('journey.kpi.monthDone', { count: monthDone }) }
+                : { tone: 'neutral', icon: 'trending_flat', label: t('journey.kpi.monthNone') }
+            }
+            series={completionSeries(hire.tasks)}
+          />
+          <KpiCard
+            label={t('journey.kpi.pending')}
+            value={formatNumber(ownPending.length)}
+            icon="checklist"
+            iconTone="secondary"
+            trend={
+              ownOverdue > 0
+                ? { tone: 'error', icon: 'error', label: t('journey.kpi.overdue', { count: ownOverdue }) }
+                : { tone: 'success', icon: 'check_circle', label: t('journey.kpi.upToDate') }
+            }
+          />
+          <KpiCard
+            label={t('journey.kpi.stage')}
+            value={t(`stages.${stage}`)}
+            icon="flag"
+            iconTone="secondary"
+            trend={{
+              tone: 'primary',
+              icon: 'task_alt',
+              label: t('journey.kpi.stageTrend', { done: byStage[stage].done, total: byStage[stage].total }),
+            }}
+          />
+          <KpiCard
+            label={t('journey.kpi.checkin')}
+            value={
+              checkinIn === null
+                ? t('journey.kpi.none')
+                : checkinIn <= 0
+                  ? t('journey.kpi.today')
+                  : t('journey.kpi.days', { count: checkinIn })
+            }
+            icon="event"
+            iconTone="tertiary"
+            trend={
+              checkin
+                ? { tone: 'neutral', icon: 'calendar_today', label: formatDate(checkinDueDate(checkin)) }
+                : undefined
+            }
+          />
+        </KpiRow>
 
         {/* Journey overview: segmented progress and next steps (2.2.1, pattern 10) */}
         <BentoCard
@@ -189,24 +185,20 @@ export function JourneyPage() {
           }
         >
           <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-2">
-              <SegmentedProgress
-                done={overall.done}
-                total={overall.total}
-                label={t('journey.progress.overall')}
-                valueText={t('journey.progress.tasksDone', { done: overall.done, total: overall.total })}
+            <p
+              className={cn(
+                'flex items-start gap-2 text-body-medium',
+                ownOverdue > 0 ? 'text-on-surface' : 'text-on-surface-variant',
+              )}
+            >
+              <Icon
+                name={ownOverdue > 0 ? 'error' : 'check_circle'}
+                filled={ownOverdue === 0}
+                className={cn('mt-px shrink-0', ownOverdue > 0 ? 'text-error' : 'text-success')}
               />
-              <div aria-hidden className="flex flex-wrap gap-x-4 gap-y-1 text-body-small text-on-surface-variant">
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="size-2.5 rounded-full bg-primary" />
-                  {t('journey.overview.legendDone')}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="size-2.5 rounded-full bg-outline-variant" />
-                  {t('journey.overview.legendPending')}
-                </span>
-              </div>
-            </div>
+              {ownOverdue > 0 ? t('journey.timeline.overdue', { count: ownOverdue }) : t('journey.timeline.onTrack')}
+            </p>
+            <JourneyTimeline byStage={byStage} stage={stage} day={day} />
             <div className="flex flex-col gap-2">
               <h3 className="text-title-small text-on-surface">{t('journey.next.title')}</h3>
               {upNext.length > 0 ? (
@@ -220,29 +212,6 @@ export function JourneyPage() {
               )}
             </div>
           </div>
-        </BentoCard>
-
-        <BentoCard size="md" title={t('journey.stagesCard.title')}>
-          <ul className="flex flex-col gap-4">
-            {STAGES.map((s) => {
-              const isCurrent = s === stage && day >= 0;
-              return (
-                <li key={s} className="flex flex-col gap-1.5">
-                  <span className="flex min-h-6 items-center justify-between gap-2 text-label-large text-on-surface">
-                    {t(`stages.${s}`)}
-                    {isCurrent && <StatusPill tone="primary" icon="flag" label={t('journey.progress.current')} />}
-                  </span>
-                  <ProgressBar
-                    size="lg"
-                    value={byStage[s].percent}
-                    label={t('journey.progress.stage', { stage: t(`stages.${s}`) })}
-                    valueText={`${byStage[s].done}/${byStage[s].total}`}
-                    tone={byStage[s].percent === 100 ? 'success' : 'primary'}
-                  />
-                </li>
-              );
-            })}
-          </ul>
         </BentoCard>
 
         <BentoCard
@@ -261,6 +230,19 @@ export function JourneyPage() {
               <p className="text-body-medium text-on-surface-variant">
                 {checkin.status === 'pending' ? t('journey.checkin.pending') : t('journey.checkin.hireDone')}
               </p>
+              {checkin.milestones.length > 0 && (
+                <div className="flex flex-col gap-1.5">
+                  <h3 className="text-title-small text-on-surface">{t('journey.checkin.milestones')}</h3>
+                  <ul className="flex flex-col gap-1.5">
+                    {checkin.milestones.map((milestone) => (
+                      <li key={milestone.id} className="flex items-start gap-2 text-body-small text-on-surface-variant">
+                        <Icon name="flag" size={16} className="mt-px shrink-0 text-tertiary" />
+                        <span>{milestone.label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <Button asChild variant={checkin.status === 'pending' ? 'tonal' : 'outlined'} className="mt-auto w-fit">
                 <Link to={`/me/checkin/${checkin.stage}`}>
                   {checkin.status === 'pending' ? t('journey.checkin.respond') : t('journey.checkin.review')}
@@ -273,12 +255,12 @@ export function JourneyPage() {
         </BentoCard>
 
         <BentoCard
-          size="lg"
+          size="wide"
           title={t('journey.contacts.title')}
           description={t('journey.contacts.hint')}
         >
           {/* Compact: avatar, name and relation; tapping opens job title and email. */}
-          <ul className="grid grid-cols-3 gap-2">
+          <ul className="grid grid-cols-1 gap-2 sm:grid-cols-3">
             {contacts.map(({ role, person: contact }) =>
               contact ? <ContactCard key={role} person={contact} relation={t(`journey.contacts.${role}`)} /> : null,
             )}
