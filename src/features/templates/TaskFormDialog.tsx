@@ -236,13 +236,14 @@ export function TaskFormDialog({ open, onOpenChange, task, stage, tasks, onSubmi
             {others.length === 0 ? (
               <p className="text-body-medium text-on-surface-variant">{t('templates.taskForm.depsEmpty')}</p>
             ) : (
-              <div className="flex max-h-64 flex-col overflow-y-auto rounded-md border border-outline-variant px-3 py-1">
+              <div className="flex max-h-72 flex-col overflow-y-auto rounded-md border border-outline-variant px-4 py-1">
                 {STAGES.map((s) => {
                   const ofStage = others.filter((x) => x.stage === s).sort((a, b) => a.order - b.order);
                   if (ofStage.length === 0) return null;
                   return (
-                    <div key={s} className="flex flex-col border-b border-outline-variant py-1 last:border-b-0">
-                      <span className="pt-1 text-label-medium text-on-surface-variant">{t(`stages.${s}`)}</span>
+                    <div key={s} className="flex flex-col gap-2 border-b border-outline-variant py-3 last:border-b-0">
+                      {/* More air between options and stages (D-88) */}
+                      <span className="text-label-medium text-on-surface-variant">{t(`stages.${s}`)}</span>
                       {ofStage.map((candidate) => {
                         const state = optionState(candidate);
                         const checked = dependsOn?.includes(candidate.id) ?? false;

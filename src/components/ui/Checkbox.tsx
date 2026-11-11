@@ -29,7 +29,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
         className="mt-0.5 size-5 shrink-0 cursor-pointer rounded-xs accent-primary"
         {...props}
       />
-      <div className="flex min-w-0 flex-col">
+      <div className="flex min-w-0 flex-col gap-0.5">
         <label htmlFor={inputId} className="cursor-pointer text-body-medium text-on-surface">
           {label}
         </label>
