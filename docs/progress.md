@@ -14,7 +14,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 5 | Nuevo ingreso: N1, N2 | Hecho | 10/11/2026 |
 | 6 | Plantillas: A5, A6, A7 | Hecho | 10/11/2026 |
 | 7 | Ingresos: A2, A3, A4 | Hecho | 11/11/2026 |
-| 8 | Jefe: J1, J2, J3 y N3 | Pendiente | |
+| 8 | Jefe: J1, J2, J3 y N3 | Hecho | 11/11/2026 |
 | 9 | Panel A1 con alertas | Pendiente | |
 | 10 | Sistemas: S1, S2, S3 | Pendiente | |
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
@@ -246,3 +246,13 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 
 **Pendiente**
 - Paso 8: J1, J2, J3 y N3.
+
+## Paso 8: jefe directo y check-ins (J1, J2, J3, N3), 11/11/2026
+
+- **J1 Mi equipo:** saludo con contexto, KPIs (en onboarding, check-ins próximos, autoevaluaciones listas, tareas propias), tarjetas por persona con avance, atrasos y próximo check-in con cuenta regresiva, y "Hacer check-in" cuando corresponde.
+- **J2 Detalle del ingreso:** la ficha de A4 adaptada al jefe (vuelta a su equipo, solo sus tareas, acceso al check-in).
+- **J3 Check-in:** hitos con resultado, comentarios y próximos pasos; un hito no cumplido pide reprogramar o escalar a RRHH, que genera la alerta del panel y queda en la auditoría.
+- **N3 Autoevaluación:** cómo se siente y un comentario breve; editable hasta el check-in.
+- Lógica en `src/lib/checkins.ts`, acciones `submitSelfReview` y `completeCheckin` en el store, componente `ChoiceGroup`, tests de componentes y J1 a N3 en las pruebas de desbordes y axe.
+
+**Pendiente:** paso 9 (A1, panel de seguimiento con alertas) y paso 10 (S1 a S3).

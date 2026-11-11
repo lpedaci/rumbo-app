@@ -135,7 +135,7 @@ export function TeamPage() {
 
       <div className="flex flex-col gap-(--space-section)">
         <KpiRow>
-          <KpiCard label={t('team.kpis.active')} value={String(active.length)} icon="groups" />
+          <KpiCard label={t('team.kpis.active')} value={String(team.length)} icon="groups" />
           <KpiCard
             label={t('team.kpis.soon')}
             value={String(soon)}
