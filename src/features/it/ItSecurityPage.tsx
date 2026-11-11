@@ -59,7 +59,7 @@ export function ItSecurityPage() {
             <Tabs.Trigger
               key={item.value}
               value={item.value}
-              className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-center text-label-large text-on-surface transition-colors hover:bg-surface-container focus-visible:outline-2 sm:min-h-10 sm:justify-start focus-visible:outline-offset-2 focus-visible:outline-primary data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-on-primary"
+              className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-sm whitespace-nowrap border border-outline-variant bg-surface-container-lowest px-3 py-2 text-center text-label-large text-on-surface transition-colors hover:bg-surface-container focus-visible:outline-2 sm:min-h-10 sm:justify-start focus-visible:outline-offset-2 focus-visible:outline-primary data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-on-primary"
             >
               <Icon name={item.icon} size={20} filled={tab === item.value} />
               {t(`it.security.tabs.${item.value}`)}
@@ -253,7 +253,12 @@ function AuditLog() {
             <p className="text-body-small text-on-surface-variant">{t('it.audit.description')}</p>
           </div>
           {can(user, 'audit:export') && (
-            <Button variant="outlined" leadingIcon="download" onClick={exportCsv} disabled={shown.length === 0}>
+            <Button
+              variant="outlined"
+              leadingIcon="download"
+              onClick={exportCsv}
+              disabledReason={shown.length === 0 ? t('it.audit.empty') : undefined}
+            >
               {t('it.audit.export')}
             </Button>
           )}

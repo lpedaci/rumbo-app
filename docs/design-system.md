@@ -397,3 +397,10 @@ Reemplaza las bandas de color de D-72.
 - **`KpiCard`:** la frase acompaña al número en la misma línea cuando entra.
 - **`GreetingHeader`:** chips `label-medium` de 28 px en celulares; acción a ancho completo.
 - **Toasts:** uno a la vez; en celulares, 80 px por encima del borde para no tapar el menú inferior.
+
+### Revisión de botones y tarjeta de cuenta (D-91)
+
+- **Escala aplicada:** XS 32 px (filas y barras densas), S 40 px (por defecto y en desktop de las pantallas de acceso), M 56 px (acción principal de las pantallas de acceso en celulares). No se usan otras alturas.
+- **Separación:** 12 px entre botones de una fila de acciones (diálogos, formularios, aviso de sesión).
+- **Deshabilitado:** siempre con el motivo a la vista o con `disabledReason`, que deja el botón enfocable y muestra el motivo en un tooltip.
+- **Tarjeta de cuenta (G5):** encabezado de persona con chip de rol y filas de etiqueta y valor con ícono; en celulares se apilan.

@@ -273,7 +273,11 @@ export function RequestDetailPage() {
                   <Button variant="outlined" leadingIcon="block" onClick={() => setRejecting(true)}>
                     {t('it.detail.reject')}
                   </Button>
-                  <Button leadingIcon="check" disabled={!request.identityVerified} onClick={restore}>
+                  <Button
+                    leadingIcon="check"
+                    disabledReason={request.identityVerified ? undefined : t('it.detail.lockedStep')}
+                    onClick={restore}
+                  >
                     {t('it.detail.apply')}
                   </Button>
                 </FormFooter>

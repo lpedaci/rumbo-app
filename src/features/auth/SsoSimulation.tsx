@@ -96,7 +96,7 @@ export function SsoSimulation({ person, providerName, onDone }: SsoSimulationPro
         {done >= steps.length ? t('auth.sso.allDone', { provider: providerName }) : ''}
       </p>
 
-      <Button fullWidth size="m" className="md:h-12" trailingIcon="arrow_forward" onClick={finish}>
+      <Button fullWidth size="m" className="md:h-10 md:px-4 md:text-label-large" trailingIcon="arrow_forward" onClick={finish}>
         {t('auth.sso.continue')}
       </Button>
     </div>

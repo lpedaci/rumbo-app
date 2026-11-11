@@ -117,7 +117,7 @@ export function ValidationDemoForm() {
         />
         <TextField label="Área" disabled defaultValue="Datos" helperText="Se completa según el puesto elegido" />
       </div>
-      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+      <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
         <Button type="submit" loading={isSubmitting} loadingText="Validando…">
           Validar datos
         </Button>

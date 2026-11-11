@@ -163,11 +163,11 @@ function HireWelcome({ personId }: { personId: string }) {
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex w-full flex-col-reverse gap-2 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex w-full flex-col-reverse gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
               <Button variant="text" onClick={close} fullWidth className="sm:w-auto">
                 {t('welcome.skip')}
               </Button>
-              <div className="flex flex-col-reverse gap-2 sm:flex-row">
+              <div className="flex flex-col-reverse gap-3 sm:flex-row">
                 {/* Hidden on the first step (2.2.1): nothing to go back to. */}
                 {index > 0 && (
                   <Button variant="outlined" onClick={() => go(-1)} fullWidth className="sm:w-auto">

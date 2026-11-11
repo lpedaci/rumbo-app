@@ -77,7 +77,7 @@ export function SsoPage() {
               value={accountId}
               onChange={(e) => setAccountId(e.target.value)}
             />
-          <Button type="submit" fullWidth size="m" className="md:h-12" trailingIcon="arrow_forward">
+          <Button type="submit" fullWidth size="m" className="md:h-10 md:px-4 md:text-label-large" trailingIcon="arrow_forward">
             {t('auth.sso.continue')}
           </Button>
         </form>

@@ -22,7 +22,7 @@ export function SsoButton({ provider, label, onClick }: SsoButtonProps) {
       type="button"
       onClick={onClick}
       className={cn(
-        'inline-flex h-14 w-full items-center justify-center gap-3 rounded-sm border border-outline bg-surface-container-lowest px-4 text-label-large text-on-surface md:h-12',
+        'inline-flex h-14 w-full items-center justify-center gap-3 rounded-sm border border-outline bg-surface-container-lowest px-4 text-label-large text-on-surface md:h-10',
         interactive,
       )}
     >

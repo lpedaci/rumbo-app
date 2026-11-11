@@ -34,14 +34,14 @@ describe('S2 · Request detail', () => {
     const request = useDataStore.getState().accessRequests.find((r) => r.status === 'new' && r.reason === 'locked')!;
     renderAt(`/it/requests/${request.id}`);
     const apply = await screen.findByRole('button', { name: es.it.detail.apply });
-    expect(apply).toBeDisabled();
+    expect(apply).toHaveAttribute('aria-disabled', 'true');
 
     fireEvent.click(screen.getByRole('button', { name: es.it.detail.confirmIdentity }));
     expect(await screen.findByText(es.it.detail.checkRequired)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('radio', { name: new RegExp(es.it.detail.checks.manager) }));
     fireEvent.click(screen.getByRole('button', { name: es.it.detail.confirmIdentity }));
-    expect(screen.getByRole('button', { name: es.it.detail.apply })).toBeEnabled();
+    expect(screen.getByRole('button', { name: es.it.detail.apply })).not.toHaveAttribute('aria-disabled', 'true');
 
     fireEvent.click(screen.getByRole('button', { name: es.it.detail.apply }));
     expect((await screen.findAllByText(es.it.outcomes.unlock)).length).toBeGreaterThan(0);

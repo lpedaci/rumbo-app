@@ -248,7 +248,10 @@
     "deviceUntil": "No code needed until {{date}}",
     "noDevices": "No remembered devices. When you verify the code, you can choose to remember this computer for 30 days.",
     "forget": "Forget device",
-    "forgotten": "Device forgotten"
+    "forgotten": "Device forgotten",
+    "jobTitle": "Role",
+    "method": "Signed in with",
+    "startedAt": "Session started"
   },
   "forbidden": {
     "title": "You don't have access to this section",
@@ -1498,7 +1501,7 @@
       "description": "Locked accounts, event log, permissions by role and organization policies.",
       "tabsLabel": "Security sections",
       "tabs": {
-        "locked": "Locked accounts",
+        "locked": "Lockouts",
         "audit": "Audit log",
         "permissions": "Permissions",
         "policies": "Policies"

@@ -110,7 +110,7 @@ export function VerifyPage() {
           description={t('auth.mfa.rememberHelp', { date: formatDate(addDays(DEMO_TODAY, REMEMBER_DEVICE_DAYS)) })}
           {...register('remember')}
         />
-        <Button type="submit" fullWidth size="m" className="md:h-12" loading={isSubmitting} loadingText={t('auth.login.submitting')}>
+        <Button type="submit" fullWidth size="m" className="md:h-10 md:px-4 md:text-label-large" loading={isSubmitting} loadingText={t('auth.login.submitting')}>
           {t('auth.mfa.submit')}
         </Button>
       </form>

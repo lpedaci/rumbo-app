@@ -199,7 +199,7 @@ export function AccessHelpPage() {
               <Icon name="info" size={16} className="mt-px" />
               {t('accessHelp.demoTip')}
             </p>
-            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <Button asChild variant="outlined">
                 <Link to="/login">{t('accessHelp.backToLogin')}</Link>
               </Button>

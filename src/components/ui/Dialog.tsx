@@ -49,7 +49,7 @@ export function DialogContent({ title, description, children, actions, className
           <DialogPrimitive.Description className="sr-only">{title}</DialogPrimitive.Description>
         )}
         {children}
-        {actions && <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">{actions}</div>}
+        {actions && <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">{actions}</div>}
       </DialogPrimitive.Content>
     </DialogPrimitive.Portal>
   );

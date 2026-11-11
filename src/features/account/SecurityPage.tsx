@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '@/components/layout/PageHeader';
-import { Avatar } from '@/components/ui/Avatar';
+import { Avatar, ROLE_ACCENT } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icon';
 import { StatusPill } from '@/components/ui/StatusPill';
 import { toast } from '@/components/ui/toast-store';
 import { findDemoPerson, mfaRequired } from '@/features/auth/auth-service';
-import { formatDate } from '@/lib/dates';
+import { formatDate, formatDateTime } from '@/lib/dates';
+import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
 
@@ -48,20 +49,45 @@ export function SecurityPage() {
       <PageHeader title={t('security.title')} description={t('security.subtitle')} />
       <div className="grid grid-cols-1 gap-(--space-bento-gap) lg:grid-cols-2">
         <Card title={t('security.accountTitle')}>
-          <div className="flex min-w-0 items-center gap-3">
+          {/* Who is signed in, then the facts as label and value rows (D-91) */}
+          <div className="flex min-w-0 items-center gap-4">
             <Avatar name={person.name} role={person.role} size="lg" />
-            <div className="flex min-w-0 flex-col">
+            <div className="flex min-w-0 flex-col gap-1.5">
               <span className="truncate text-title-medium text-on-surface">{person.name}</span>
               <span className="truncate text-body-medium text-on-surface-variant">{person.email}</span>
-              <span className="text-body-small text-on-surface-variant">
-                {t(`roles.${user.role}`)} · {person.jobTitle}
+              <span
+                className={cn(
+                  'inline-flex h-6 w-fit items-center rounded-full px-2.5 text-label-medium',
+                  ROLE_ACCENT[person.role].chip,
+                )}
+              >
+                {t(`roles.${user.role}`)}
               </span>
             </div>
           </div>
-          <p className="flex items-center gap-2 text-body-medium text-on-surface-variant">
-            <Icon name="key" />
-            {t('security.signedInWith', { method: t(`auth.methods.${user.method}`) })}
-          </p>
+          <dl className="flex flex-col border-t border-outline-variant">
+            {[
+              { icon: 'badge' as const, label: t('security.jobTitle'), value: `${person.jobTitle} · ${person.area}` },
+              { icon: 'key' as const, label: t('security.method'), value: t(`auth.methods.${user.method}`) },
+              { icon: 'schedule' as const, label: t('security.startedAt'), value: formatDateTime(user.startedAt) },
+            ].map((row) => (
+              <div
+                key={row.label}
+                className="flex min-w-0 flex-col gap-1 border-b border-outline-variant py-3 last:border-b-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+              >
+                <dt className="flex shrink-0 items-center gap-2 text-body-medium text-on-surface-variant">
+                  <Icon name={row.icon} size={20} />
+                  {row.label}
+                </dt>
+                <dd
+                  className="min-w-0 pl-7 text-body-medium break-words text-on-surface tabular-nums sm:truncate sm:pl-0 sm:text-right"
+                  title={row.value}
+                >
+                  {row.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </Card>
 
         <Card

@@ -190,7 +190,7 @@ export function LoginPage() {
               variant={preselected ? 'tonal' : 'filled'}
               fullWidth
               size="m"
-              className="md:h-12"
+              className="md:h-10 md:px-4 md:text-label-large"
               loading={isSubmitting}
               loadingText={t('auth.login.submitting')}
             >

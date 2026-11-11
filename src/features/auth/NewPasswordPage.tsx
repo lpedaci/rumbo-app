@@ -107,7 +107,7 @@ export function NewPasswordPage() {
           </div>
         </div>
 
-        <Button type="submit" fullWidth size="m" className="md:h-12">
+        <Button type="submit" fullWidth size="m" className="md:h-10 md:px-4 md:text-label-large">
           {t('auth.newPassword.submit')}
         </Button>
       </form>

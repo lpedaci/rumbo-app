@@ -93,7 +93,7 @@ export function SessionTimeout() {
               {t('session.countdown', { time: formatRemaining(remaining) })}
             </span>
           </AlertDialog.Description>
-          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             {/* Radix focuses Cancel by default: it is the safe option, "Seguir conectado". */}
             <AlertDialog.Action asChild>
               <Button

@@ -279,7 +279,7 @@ export function TaskFormDialog({ open, onOpenChange, task, stage, tasks, onSubmi
             )}
           </fieldset>
 
-          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <DialogClose asChild>
               <Button variant="outlined" fullWidth className="sm:w-auto">
                 {t('ui.cancel')}

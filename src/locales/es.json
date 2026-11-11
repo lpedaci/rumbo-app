@@ -248,7 +248,10 @@
     "deviceUntil": "No pide el código hasta el {{date}}",
     "noDevices": "No hay dispositivos recordados. Al verificar el código, puedes elegir recordar esta computadora por 30 días.",
     "forget": "Olvidar dispositivo",
-    "forgotten": "Dispositivo olvidado"
+    "forgotten": "Dispositivo olvidado",
+    "jobTitle": "Puesto",
+    "method": "Inicio de sesión",
+    "startedAt": "Sesión iniciada"
   },
   "forbidden": {
     "title": "No tienes acceso a esta sección",
@@ -1498,7 +1501,7 @@
       "description": "Cuentas bloqueadas, registro de eventos, permisos por rol y políticas de la organización.",
       "tabsLabel": "Secciones de seguridad",
       "tabs": {
-        "locked": "Cuentas bloqueadas",
+        "locked": "Bloqueos",
         "audit": "Auditoría",
         "permissions": "Permisos",
         "policies": "Políticas"
