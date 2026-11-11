@@ -99,7 +99,7 @@ export function TopBar() {
   return (
     // Flat on the tinted page (reference ad2d9e23); controls keep the product's single shape (2.1.3).
     <header className="sticky top-0 z-40 bg-surface">
-      <div className="flex h-16 min-w-0 items-center gap-1.5 px-(--space-gutter) sm:gap-3 md:h-[4.5rem] md:pl-4">
+      <div className="flex h-16 min-w-0 items-center gap-3 px-(--space-gutter) sm:gap-4 md:h-[4.5rem] md:pl-4">
         <MenuButton />
         <Link to={homePath(user)} className="shrink-0 rounded-sm">
           <Logo markOnly className="sm:hidden" />

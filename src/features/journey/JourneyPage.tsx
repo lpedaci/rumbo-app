@@ -235,13 +235,15 @@ export function JourneyPage() {
           </div>
         </BentoCard>
 
+        {/* Full row on tablet with two inner columns, so there is no empty half row (D-68). */}
         <BentoCard
           size="md"
+          className="md:col-span-6 xl:col-span-4"
           title={t('journey.checkin.title')}
           icon={<IconTile icon="event" tone="tertiary" />}
         >
           {checkin ? (
-            <div className="flex h-full flex-col gap-3">
+            <div className="flex h-full flex-col gap-3 md:grid md:grid-cols-2 md:content-start md:gap-x-8 xl:flex">
               <p className="text-title-small text-on-surface">
                 {t('journey.checkin.when', {
                   days: CHECKIN_OFFSETS[checkin.stage],
@@ -252,7 +254,7 @@ export function JourneyPage() {
                 {checkin.status === 'pending' ? t('journey.checkin.pending') : t('journey.checkin.hireDone')}
               </p>
               {checkin.milestones.length > 0 && (
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-1.5 md:col-start-2 md:row-span-3 md:row-start-1">
                   <h3 className="text-title-small text-on-surface">{t('journey.checkin.milestones')}</h3>
                   <ul className="flex flex-col gap-1.5">
                     {checkin.milestones.map((milestone) => (
@@ -264,7 +266,7 @@ export function JourneyPage() {
                   </ul>
                 </div>
               )}
-              <Button asChild variant={checkin.status === 'pending' ? 'tonal' : 'outlined'} className="mt-auto w-fit">
+              <Button asChild variant={checkin.status === 'pending' ? 'tonal' : 'outlined'} className="mt-auto w-fit md:mt-0 xl:mt-auto">
                 <Link to={`/me/checkin/${checkin.stage}`}>
                   {checkin.status === 'pending' ? t('journey.checkin.respond') : t('journey.checkin.review')}
                 </Link>

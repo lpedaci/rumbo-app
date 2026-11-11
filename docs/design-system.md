@@ -237,7 +237,8 @@ Bloque con pulso de opacidad, oculto para lectores de pantalla.
 ### IconTile, KpiCard y KpiRow (rediseño 2.2.1)
 - **IconTile:** ícono dentro de un contenedor de color (`primary`, `secondary`, `tertiary`, `brand` y los tonos de estado solo para estados). Decorativo.
 - **KpiCard:** ícono y sparkline arriba, etiqueta (hasta dos líneas), número y debajo su píldora de variación o estado. Datos alineados abajo para que las tarjetas de una fila queden parejas. Número en `display-small` desde 768 px y `headline-small` en mobile (D-63).
-- **KpiRow:** fila de KPIs a todo el ancho de la grilla: 2 por fila en mobile y tablet, 4 desde 1280 px.
+- **KpiRow:** fila de KPIs a todo el ancho de la grilla: 2 por fila en mobile; desde 768 px, tantas por fila como entren con un ancho mínimo de 9 rem (`minCardWidth`), así 4 KPIs breves comparten una línea en tablet y desktop, y las tarjetas con más contenido pasan solas a una segunda línea (D-68). Entre 768 y 1279 px la tarjeta usa padding de 12 px, sparkline de 64 px y número en `headline-small`.
+- **Barra superior:** 12 px entre botones en mobile y 16 px desde 640 px, para que los objetivos táctiles no queden pegados (D-68).
 
 ### Sparkline
 Línea suave en `primary` o `tertiary` con relleno plano al 12 % y punto final. Decorativa: el valor y su variación siempre van escritos al lado.
