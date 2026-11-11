@@ -2,9 +2,9 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
+import { FilterChip } from '@/components/ui/FilterChip';
 import { FilterMenu } from '@/components/ui/FilterMenu';
 import { Icon } from '@/components/ui/Icon';
-import { SegmentedButton } from '@/components/ui/SegmentedButton';
 import { toast } from '@/components/ui/toast-store';
 import {
   groupOf,
@@ -20,6 +20,7 @@ import { EmailPreviewDialog } from './EmailPreviewDialog';
 import { NotificationItem } from './NotificationItem';
 
 type ReadFilter = 'all' | 'unread';
+const READ_FILTERS: ReadFilter[] = ['all', 'unread'];
 const GROUPS: NotificationGroup[] = ['today', 'week', 'earlier'];
 
 /**
@@ -74,29 +75,50 @@ export function NotificationsPage() {
       />
 
       <section className="flex min-w-0 flex-col gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-(--space-card-padding)">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <SegmentedButton<ReadFilter>
-            label={t('notifications.filters.read')}
-            value={read}
-            onValueChange={setRead}
-            options={[
-              { value: 'all', label: `${t('notifications.filters.all')} (${mine.length})` },
-              { value: 'unread', label: `${t('notifications.filters.unread')} (${unread})` },
-            ]}
-          />
-          <FilterMenu
-            label={t('notifications.filters.category')}
-            value={category}
-            onChange={setCategory}
-            options={[
-              { value: 'all', label: t('notifications.filters.anyCategory'), count: mine.length },
-              ...NOTIFICATION_CATEGORIES.map((c) => ({
-                value: c,
-                label: t(`notifications.categories.${c}`),
-                count: countIn(c),
-              })),
-            ]}
-          />
+        {/* Filters as in the other listings (A2, S1, D-78, D-107): from 640 px, read state as chips and
+            the type menu on the right; on phones, both as menus side by side. */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3">
+          <div
+            role="group"
+            aria-label={t('notifications.filters.read')}
+            className="hidden flex-wrap items-center gap-3 sm:flex"
+          >
+            {READ_FILTERS.map((value) => (
+              <FilterChip
+                key={value}
+                label={t(`notifications.filters.${value}`)}
+                count={value === 'all' ? mine.length : unread}
+                selected={read === value}
+                onClick={() => setRead(value)}
+              />
+            ))}
+          </div>
+          <div className="grid grid-cols-2 items-end gap-3 sm:flex sm:items-center">
+            <FilterMenu
+              label={t('notifications.filters.read')}
+              value={read}
+              onChange={(value) => setRead(value as ReadFilter)}
+              options={READ_FILTERS.map((value) => ({
+                value,
+                label: t(`notifications.filters.${value}`),
+                count: value === 'all' ? mine.length : unread,
+              }))}
+              className="sm:hidden"
+            />
+            <FilterMenu
+              label={t('notifications.filters.category')}
+              value={category}
+              onChange={setCategory}
+              options={[
+                { value: 'all', label: t('notifications.filters.anyCategory'), count: mine.length },
+                ...NOTIFICATION_CATEGORIES.map((c) => ({
+                  value: c,
+                  label: t(`notifications.categories.${c}`),
+                  count: countIn(c),
+                })),
+              ]}
+            />
+          </div>
         </div>
 
         {shown.length === 0 ? (
