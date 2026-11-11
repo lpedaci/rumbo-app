@@ -256,7 +256,7 @@
   },
   "upcoming": {
     "greeting": "Hi, {{name}}",
-    "body": "We're building this screen. Meanwhile, use the \"View as\" selector to explore Rumbo from another role.",
+    "body": "This screen arrives in the next version of the prototype. Meanwhile, you can explore the sections that already work or switch roles with \"View as\".",
     "screens": {
       "A1": "Tracking dashboard",
       "A2": "New hires",
@@ -274,6 +274,52 @@
       "S1": "Access requests",
       "S2": "Request details",
       "S3": "Security and audit"
+    },
+    "badge": "In progress",
+    "willShow": "What it will show",
+    "available": "You can already explore",
+    "preview": {
+      "A1": [
+        "Active hires, tasks on time, delayed journeys and average progress",
+        "Progress by hire or by start month",
+        "Overdue tasks by owner, to see where journeys get stuck",
+        "Alerts that open each hire record"
+      ],
+      "J1": [
+        "The new hires on your team and their progress",
+        "Each one's next check-in",
+        "What is overdue and who it depends on"
+      ],
+      "J2": [
+        "The person's journey, read only",
+        "Your tasks as direct manager, to mark them as done",
+        "The check-in history"
+      ],
+      "J3": [
+        "The stage milestones to review",
+        "Comments and next steps",
+        "Reschedule or escalate to HR a milestone that was not met"
+      ],
+      "N3": [
+        "How you feel right now",
+        "A short self-review before the meeting",
+        "What you will talk about with your manager"
+      ],
+      "S1": [
+        "Access requests with number, reason, date and status",
+        "Locked accounts",
+        "A direct link to each request"
+      ],
+      "S2": [
+        "Identity verification before acting",
+        "Unlock, force a password change or reset two-step verification",
+        "Every action recorded in the audit log"
+      ],
+      "S3": [
+        "Locked users and active sessions",
+        "The audit log with filters and export",
+        "The permission matrix and the security policies"
+      ]
     }
   },
   "rolesInline": {
@@ -819,7 +865,14 @@
       "duplicated": "Template duplicated",
       "copyName": "{{name}} (copy)",
       "empty": "There are no templates yet. Create the first one to assign it to a new hire.",
-      "updatedOn": "Edited on {{date}}"
+      "updatedOn": "Edited on {{date}}",
+      "count_one": "{{count}} template",
+      "count_other": "{{count}} templates",
+      "viewLabel": "View as",
+      "viewCards": "Cards",
+      "viewTable": "Table",
+      "tags": "Role and area",
+      "createBody": "Build the journey for a role with stages, deadlines and dependencies."
     },
     "editor": {
       "back": "Back to Templates",

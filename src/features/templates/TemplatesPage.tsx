@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
+import { IconTile } from '@/components/ui/IconTile';
+import { SegmentedButton } from '@/components/ui/SegmentedButton';
 import {
   Table,
   TableBody,
@@ -27,13 +29,15 @@ import { toast } from '@/components/ui/toast-store';
 import { DEMO_TODAY, formatDate } from '@/lib/dates';
 import { can } from '@/lib/permissions';
 import { duplicateTemplate, templateUsage } from '@/lib/templates';
+import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { Template } from '@/types/domain';
 
 /**
  * A5 · Templates by job title (CLAUDE.md F2): task count and usage, with create,
- * edit, preview, duplicate and delete. Table on desktop, cards on mobile (2.7).
+ * edit, preview, duplicate and delete. Catalog of cards by default with a "Crear plantilla"
+ * card first (2.2.1, pattern 11; D-80), and a table view from 768 px.
  */
 export function TemplatesPage() {
   const { t } = useTranslation();
@@ -42,6 +46,7 @@ export function TemplatesPage() {
   const templates = useDataStore((s) => s.templates);
   const hires = useDataStore((s) => s.hires);
   const [toDelete, setToDelete] = useState<Template | null>(null);
+  const [view, setView] = useState<'cards' | 'table'>('cards');
   const canEdit = can(user, 'template:edit');
 
   const sorted = [...templates].sort((a, b) => a.name.localeCompare(b.name, 'es'));
@@ -110,6 +115,25 @@ export function TemplatesPage() {
         }
       />
 
+      {sorted.length > 0 && (
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <p className="text-body-medium text-on-surface-variant tabular-nums">
+            {t('templates.list.count', { count: sorted.length })}
+          </p>
+          {/* Catalog by default (2.2.1, pattern 11); table from 768 px for a dense view */}
+          <SegmentedButton
+            label={t('templates.list.viewLabel')}
+            options={[
+              { value: 'cards', label: t('templates.list.viewCards') },
+              { value: 'table', label: t('templates.list.viewTable') },
+            ]}
+            value={view}
+            onValueChange={setView}
+            className="hidden md:inline-flex"
+          />
+        </div>
+      )}
+
       {sorted.length === 0 ? (
         <Card>
           <div className="flex flex-col items-start gap-3">
@@ -119,8 +143,8 @@ export function TemplatesPage() {
         </Card>
       ) : (
         <>
-          {/* Desktop and tablet: table */}
-          <div className="hidden md:block">
+          {/* Table view, from 768 px */}
+          <div className={cn('hidden', view === 'table' && 'md:block')}>
             <TableContainer label={t('templates.list.tableLabel')} className="bg-surface-container-lowest">
               <Table>
                 <TableHead>
@@ -148,14 +172,21 @@ export function TemplatesPage() {
                           >
                             {template.name}
                           </Link>
-                          <span className="block truncate text-body-small text-on-surface-variant" title={template.jobTitle}>
+                          <span
+                            className="block truncate text-body-small text-on-surface-variant"
+                            title={template.jobTitle}
+                          >
                             {template.jobTitle}
                           </span>
                         </TableCell>
                         <TableCell>{template.area}</TableCell>
                         <TableCell className="text-right tabular-nums">{template.tasks.length}</TableCell>
                         <TableCell className="text-right tabular-nums">
-                          {usage > 0 ? usage : <span className="text-on-surface-variant">{t('templates.list.usageNone')}</span>}
+                          {usage > 0 ? (
+                            usage
+                          ) : (
+                            <span className="text-on-surface-variant">{t('templates.list.usageNone')}</span>
+                          )}
                         </TableCell>
                         <TableCell className="tabular-nums">
                           <time dateTime={template.updatedAt}>{formatDate(template.updatedAt)}</time>
@@ -169,33 +200,72 @@ export function TemplatesPage() {
             </TableContainer>
           </div>
 
-          {/* Mobile: one card per template (2.7) */}
-          <ul className="flex flex-col gap-3 md:hidden" aria-label={t('templates.list.tableLabel')}>
+          {/* Catalog of cards (2.2.1, pattern 11, reference 7fa40cfb): always on phones */}
+          <ul
+            className={cn(
+              'grid grid-cols-1 gap-(--space-bento-gap) sm:grid-cols-2 xl:grid-cols-3',
+              view === 'table' && 'md:hidden',
+            )}
+            aria-label={t('templates.list.tableLabel')}
+          >
+            {canEdit && (
+              <li className="relative hidden min-h-56 flex-col items-start justify-center gap-3 rounded-xl border-2 border-dashed sm:flex border-outline-variant p-5 transition-colors hover:border-primary hover:bg-surface-container-lowest">
+                <span className="flex size-10 items-center justify-center rounded-md bg-primary-container text-primary">
+                  <Icon name="add" size={24} />
+                </span>
+                <Link
+                  to="/admin/templates/new"
+                  className="text-title-medium text-on-surface outline-none after:absolute after:inset-0 after:rounded-xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-primary"
+                >
+                  {t('templates.list.create')}
+                </Link>
+                <p className="text-body-medium text-on-surface-variant">{t('templates.list.createBody')}</p>
+              </li>
+            )}
             {sorted.map((template) => {
               const usage = templateUsage(template.id, hires);
+              const showJobTitle = template.jobTitle.trim() !== template.name.trim();
               return (
                 <li
                   key={template.id}
-                  className="flex min-w-0 items-start gap-2 rounded-xl border border-outline-variant bg-surface-container-lowest p-4"
+                  className="relative flex min-w-0 flex-col gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-5"
                 >
-                  <div className="flex min-w-0 flex-1 flex-col gap-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <IconTile icon="route" />
+                    {/* Above the stretched link so it stays clickable */}
+                    <div className="relative z-10 -mt-1 -mr-2">{actionsMenu(template, usage)}</div>
+                  </div>
+                  <div className="flex min-w-0 flex-col gap-2">
                     <Link
                       to={`/admin/templates/${template.id}`}
-                      className="flex min-h-12 items-center rounded-xs text-title-medium text-on-surface underline-offset-4 hover:underline"
+                      className="line-clamp-2 text-title-medium text-on-surface outline-none after:absolute after:inset-0 after:rounded-xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-primary"
                     >
-                      <span className="line-clamp-2">{template.name}</span>
+                      {template.name}
                     </Link>
-                    <span className="truncate text-body-medium text-on-surface-variant">
-                      {template.jobTitle} · {template.area}
-                    </span>
-                    <span className="text-body-small text-on-surface-variant tabular-nums">
-                      {t('templates.list.tasks', { count: template.tasks.length })} · {usageText(usage)}
-                    </span>
-                    <span className="text-body-small text-on-surface-variant tabular-nums">
-                      {t('templates.list.updatedOn', { date: formatDate(template.updatedAt) })}
-                    </span>
+                    <ul className="flex flex-wrap gap-1.5" aria-label={t('templates.list.tags')}>
+                      {showJobTitle && (
+                        <li className="rounded-full bg-surface-container-high px-2.5 py-0.5 text-label-medium text-on-surface">
+                          {template.jobTitle}
+                        </li>
+                      )}
+                      <li className="rounded-full bg-secondary-container px-2.5 py-0.5 text-label-medium text-on-secondary-container">
+                        {template.area}
+                      </li>
+                    </ul>
                   </div>
-                  {actionsMenu(template, usage)}
+                  <ul className="flex flex-wrap gap-x-5 gap-y-1 text-body-medium text-on-surface">
+                    <li className="inline-flex items-center gap-1.5 tabular-nums">
+                      <Icon name="checklist" size={18} className="text-primary" />
+                      {t('templates.list.tasks', { count: template.tasks.length })}
+                    </li>
+                    <li className="inline-flex items-center gap-1.5 tabular-nums">
+                      <Icon name="group" size={18} className="text-tertiary" />
+                      {usageText(usage)}
+                    </li>
+                  </ul>
+                  <p className="mt-auto border-t border-outline-variant pt-3 text-body-small text-on-surface-variant tabular-nums">
+                    {t('templates.list.updatedOn', { date: formatDate(template.updatedAt) })}
+                  </p>
                 </li>
               );
             })}

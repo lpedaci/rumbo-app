@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { FilterChip } from '@/components/ui/FilterChip';
+import { FilterMenu } from '@/components/ui/FilterMenu';
 import { Icon } from '@/components/ui/Icon';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import {
@@ -20,58 +21,11 @@ import { formatDate, formatPercent } from '@/lib/dates';
 import { countByStatus, filterHires, type HireStatusFilter, type HireSummary, summarizeHire } from '@/lib/hires';
 import { checkinDueDate, CHECKIN_OFFSETS } from '@/lib/journey';
 import { can, visibleHires } from '@/lib/permissions';
-import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import { HireStatusPill, OverduePill } from './HireStatusPill';
 
 const STATUS_FILTERS: HireStatusFilter[] = ['all', 'upcoming', 'active', 'completed'];
-
-/**
- * Filter select of A2 (D-78): a filter, not data entry, so it has no supporting text.
- * Label above the control on phones (two filters side by side), beside it from 640 px.
- */
-function FilterSelect({
-  label,
-  value,
-  onChange,
-  options,
-  className,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  options: { value: string; label: string }[];
-  className?: string;
-}) {
-  return (
-    <label
-      className={cn(
-        'flex min-w-0 flex-col gap-1.5 text-label-large text-on-surface sm:flex-row sm:items-center sm:gap-3',
-        className,
-      )}
-    >
-      {label}
-      <span className="relative min-w-0">
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="h-12 w-full min-w-0 appearance-none truncate rounded-sm border border-outline bg-surface-container-lowest pr-9 pl-3 text-body-medium text-on-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:h-10 sm:min-w-44"
-        >
-          {options.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-        <Icon
-          name="keyboard_arrow_down"
-          className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-on-surface-variant"
-        />
-      </span>
-    </label>
-  );
-}
 
 /**
  * A2 · Hires (CLAUDE.md F3): every journey with its status, progress, overdue tasks and
@@ -136,17 +90,18 @@ export function HiresPage() {
             ))}
           </div>
           <div className="grid grid-cols-2 items-end gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
-            <FilterSelect
+            <FilterMenu
               label={t('hires.list.status')}
               value={status}
               onChange={(value) => setStatus(value as HireStatusFilter)}
               options={STATUS_FILTERS.map((value) => ({
                 value,
-                label: `${t(`hires.list.${value}`)} (${counts[value]})`,
+                label: t(`hires.list.${value}`),
+                count: counts[value],
               }))}
               className="sm:hidden"
             />
-            <FilterSelect
+            <FilterMenu
               label={t('hires.list.area')}
               value={area}
               onChange={setArea}

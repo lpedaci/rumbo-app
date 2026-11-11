@@ -256,7 +256,7 @@
   },
   "upcoming": {
     "greeting": "Hola, {{name}}",
-    "body": "Estamos construyendo esta pantalla. Mientras tanto, puedes usar el selector «Ver como» para recorrer Rumbo desde otro rol.",
+    "body": "Esta pantalla llega en la próxima versión del prototipo. Mientras tanto, puedes recorrer las secciones que ya funcionan o cambiar de rol con «Ver como».",
     "screens": {
       "A1": "Panel de seguimiento",
       "A2": "Ingresos",
@@ -274,6 +274,52 @@
       "S1": "Solicitudes de acceso",
       "S2": "Detalle de la solicitud",
       "S3": "Seguridad y auditoría"
+    },
+    "badge": "En construcción",
+    "willShow": "Qué va a mostrar",
+    "available": "Ya puedes recorrer",
+    "preview": {
+      "A1": [
+        "Ingresos activos, tareas a tiempo, recorridos con atraso y avance promedio",
+        "Avance por ingreso o por mes de ingreso",
+        "Tareas atrasadas por responsable, para ver dónde se traban los recorridos",
+        "Alertas con acceso directo a la ficha de cada ingreso"
+      ],
+      "J1": [
+        "Las personas nuevas de tu equipo con su avance",
+        "El próximo check-in de cada una",
+        "Lo que está atrasado y de quién depende"
+      ],
+      "J2": [
+        "El recorrido de la persona en modo lectura",
+        "Tus tareas como jefe directo, para marcarlas como hechas",
+        "El historial de check-ins"
+      ],
+      "J3": [
+        "Los hitos de la etapa para evaluar",
+        "Comentarios y próximos pasos",
+        "Reprogramar o escalar a RRHH un hito no cumplido"
+      ],
+      "N3": [
+        "Cómo te sientes en este momento",
+        "Una autoevaluación breve antes de la reunión",
+        "Lo que vas a conversar con tu jefe directo"
+      ],
+      "S1": [
+        "Las solicitudes de acceso con número, motivo, fecha y estado",
+        "Las cuentas bloqueadas",
+        "Acceso directo a cada solicitud"
+      ],
+      "S2": [
+        "La verificación de identidad antes de actuar",
+        "Desbloquear, forzar cambio de contraseña o restablecer la verificación",
+        "El registro de cada acción en la auditoría"
+      ],
+      "S3": [
+        "Usuarios bloqueados y sesiones activas",
+        "El registro de auditoría con filtros y exportación",
+        "La matriz de permisos y las políticas de seguridad"
+      ]
     }
   },
   "rolesInline": {
@@ -819,7 +865,14 @@
       "duplicated": "Plantilla duplicada",
       "copyName": "{{name}} (copia)",
       "empty": "Todavía no hay plantillas. Crea la primera para asignarla a un nuevo ingreso.",
-      "updatedOn": "Editada el {{date}}"
+      "updatedOn": "Editada el {{date}}",
+      "count_one": "{{count}} plantilla",
+      "count_other": "{{count}} plantillas",
+      "viewLabel": "Ver como",
+      "viewCards": "Tarjetas",
+      "viewTable": "Tabla",
+      "tags": "Puesto y área",
+      "createBody": "Arma el recorrido de un puesto con etapas, plazos y dependencias."
     },
     "editor": {
       "back": "Volver a Plantillas",
