@@ -25,7 +25,7 @@ const ICONS = [
   'school', 'event', 'menu_book', 'article', 'checklist', 'calendar_today', 'mail', 'call',
   'key', 'password', 'devices', 'history', 'verified_user', 'manage_accounts', 'query_stats',
   'bar_chart', 'support_agent', 'mood', 'sentiment_satisfied', 'sentiment_dissatisfied',
-  'sentiment_neutral', 'sentiment_very_satisfied', 'sentiment_very_dissatisfied', 'palette', 'drive_file_move', 'link', 'save', 'layers',
+  'sentiment_neutral', 'sentiment_very_satisfied', 'sentiment_very_dissatisfied', 'palette', 'drive_file_move', 'link', 'save', 'layers', 'menu_open',
 ];
 
 const require = createRequire(import.meta.url);

@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router';
-import { homePath } from '@/lib/permissions';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
-import { Logo } from './Logo';
-import { BottomNav, SideNav } from './MainNav';
-import { RoleSwitcher } from './RoleSwitcher';
+import { BottomNav, MobileNavDrawer, SideNav } from './MainNav';
 import { SessionTimeout } from './SessionTimeout';
-import { UserMenu } from './UserMenu';
+import { TopBar } from './TopBar';
 import { GuidedWelcome } from '@/features/welcome/GuidedWelcome';
 
 /**
@@ -31,32 +28,21 @@ export function AppLayout() {
   if (!user) return null;
 
   return (
-    <div className="min-h-dvh bg-surface md:flex">
+    <div className="min-h-dvh bg-surface">
       <a
         href="#main-content"
         className="sr-only rounded-sm bg-surface-container-lowest px-4 py-3 text-label-large text-primary focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:shadow-elevation-1"
       >
         {t('app.skipToContent')}
       </a>
-      <SideNav />
-      <div className="flex min-w-0 flex-1 flex-col">
-        {/* Flat header on the tinted page: the navigation carries the brand from 768 px. */}
-        <header className="sticky top-0 z-40 h-16 border-b border-outline-variant bg-surface md:border-b-0">
-          <div className="flex h-full min-w-0 items-center gap-3 px-(--space-gutter)">
-            <Link to={homePath(user)} className="min-w-0 rounded-sm md:hidden">
-              <Logo showCompany={false} />
-            </Link>
-            <div className="flex-1" />
-            <RoleSwitcher />
-            <div className="xl:hidden">
-              <UserMenu />
-            </div>
-          </div>
-        </header>
+      {/* Top bar across the page, sidebar under it (reference 9d0f172e) */}
+      <TopBar />
+      <div className="flex min-w-0">
+        <SideNav />
         <main
           id="main-content"
           tabIndex={-1}
-          className="min-w-0 flex-1 px-(--space-gutter) pt-4 pb-24 focus:outline-none md:pb-10"
+          className="min-w-0 flex-1 px-(--space-gutter) pt-6 pb-20 focus:outline-none md:pb-10"
         >
           <div className="mx-auto w-full max-w-7xl min-w-0">
             <Outlet />
@@ -64,6 +50,7 @@ export function AppLayout() {
         </main>
       </div>
       <BottomNav />
+      <MobileNavDrawer />
       <SessionTimeout />
       <GuidedWelcome />
     </div>

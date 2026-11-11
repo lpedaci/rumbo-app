@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { Icon } from '@/components/ui/Icon';
 import { findDemoPerson, resetDemo, signOut } from '@/features/auth/auth-service';
-import { hasGuidedWelcome } from '@/features/welcome/welcome-steps';
 import { can } from '@/lib/permissions';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
@@ -88,11 +87,6 @@ export function UserMenu({ placement = 'header' }: { placement?: 'header' | 'sid
           {can(user, 'account:security_own') && (
             <DropdownMenuItem icon="verified_user" onSelect={() => navigate('/account/security')}>
               {t('layout.mySecurity')}
-            </DropdownMenuItem>
-          )}
-          {hasGuidedWelcome(user.role) && (
-            <DropdownMenuItem icon="help" onSelect={() => useSessionStore.getState().setWelcomeOpen(true)}>
-              {t('welcome.reopen')}
             </DropdownMenuItem>
           )}
           <DropdownMenuItem icon="schedule" onSelect={showSessionWarning}>

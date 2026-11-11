@@ -195,7 +195,26 @@
     "signOut": "Cerrar sesión",
     "userMenuSuffix": "menú de usuario",
     "home": "Ir al inicio",
-    "shortcuts": "Accesos rápidos"
+    "account": "Cuenta",
+    "bottomNav": "Navegación inferior",
+    "menu": {
+      "open": "Abrir el menú",
+      "close": "Cerrar el menú",
+      "expand": "Expandir el menú",
+      "collapse": "Contraer el menú a íconos",
+      "description": "Secciones de tu espacio y opciones de tu cuenta."
+    },
+    "help": {
+      "title": "Ayuda",
+      "docs": "Documentación del proyecto",
+      "desk": "Si tienes un problema con tu cuenta, escribe a soporte.it@nortia.demo o llama al interno 4400."
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "emptyTitle": "No tienes notificaciones",
+      "emptyBody": "Acá vas a ver las tareas por vencer, los check-ins pendientes y los avisos de tu recorrido."
+    },
+    "homeLogo": "{{name}} {{company}}, ir al inicio"
   },
   "session": {
     "warningTitle": "Tu sesión está por vencer",

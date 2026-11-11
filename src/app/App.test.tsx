@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react';
+import { act, fireEvent, screen, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { switchRole } from '@/features/auth/auth-service';
 import en from '@/locales/en.json';
@@ -6,6 +6,7 @@ import es from '@/locales/es.json';
 import templatesSeed from '@/data/templates.json';
 import { useDataStore } from '@/store/data-store';
 import { useSessionStore } from '@/store/session-store';
+import { useUiStore } from '@/store/ui-store';
 import { renderAt } from '@/test/render-app';
 import i18n from './i18n';
 
@@ -90,6 +91,31 @@ describe('routing and access control', () => {
   it('shows the not found page for unknown routes', () => {
     renderAt('/does-not-exist');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.notFound.title);
+  });
+});
+
+describe('layout (G6): top bar and side navigation', () => {
+  it('has a top bar with help and notifications, and folds the sidebar to icons', async () => {
+    useUiStore.setState({ navCollapsed: null });
+    act(() => {
+      switchRole('admin');
+    });
+    renderAt('/admin/templates');
+    await screen.findByRole('heading', { level: 1 });
+    expect(screen.getByRole('button', { name: es.layout.help.title })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: es.layout.notifications.title })).toBeInTheDocument();
+
+    const toggle = screen.getByRole('button', { name: es.layout.menu.collapse });
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(toggle).toHaveAttribute('aria-controls', 'app-sidebar');
+    fireEvent.click(toggle);
+
+    const expand = screen.getByRole('button', { name: es.layout.menu.expand });
+    expect(expand).toHaveAttribute('aria-expanded', 'false');
+    // Folded items keep their accessible name and the active state.
+    const sidebar = screen.getByRole('navigation', { name: es.layout.mainNav });
+    expect(within(sidebar).getByRole('link', { name: es.layout.nav.templates })).toHaveAttribute('aria-current', 'page');
+    expect(useUiStore.getState().navCollapsed).toBe(true);
   });
 });
 

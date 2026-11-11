@@ -195,7 +195,26 @@
     "signOut": "Sign out",
     "userMenuSuffix": "user menu",
     "home": "Go to home",
-    "shortcuts": "Shortcuts"
+    "account": "Account",
+    "bottomNav": "Bottom navigation",
+    "menu": {
+      "open": "Open the menu",
+      "close": "Close the menu",
+      "expand": "Expand the menu",
+      "collapse": "Collapse the menu to icons",
+      "description": "Sections of your workspace and account options."
+    },
+    "help": {
+      "title": "Help",
+      "docs": "Project documentation",
+      "desk": "If you have a problem with your account, write to soporte.it@nortia.demo or call extension 4400."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "emptyTitle": "You have no notifications",
+      "emptyBody": "Here you will see tasks due soon, pending check-ins and updates about your journey."
+    },
+    "homeLogo": "{{name}} {{company}}, go to home"
   },
   "session": {
     "warningTitle": "Your session is about to expire",

@@ -1,119 +1,228 @@
+import { Dialog as DialogPrimitive } from 'radix-ui';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useMatch, useNavigate } from 'react-router';
 import { NAV_ITEMS, type NavItem } from '@/app/navigation';
 import { Icon, type IconName } from '@/components/ui/Icon';
-import { hasGuidedWelcome } from '@/features/welcome/welcome-steps';
-import { can, homePath } from '@/lib/permissions';
+import { IconButton } from '@/components/ui/IconButton';
+import { Tooltip } from '@/components/ui/Tooltip';
+import { signOut } from '@/features/auth/auth-service';
+import { can } from '@/lib/permissions';
+import { useMediaQuery } from '@/lib/use-media-query';
 import { cn } from '@/lib/utils';
-import { useCurrentUser, useSessionStore } from '@/store/session-store';
+import { useCurrentUser } from '@/store/session-store';
+import { useUiStore } from '@/store/ui-store';
 import { Logo } from './Logo';
-import { UserMenu } from './UserMenu';
+
+export const SIDEBAR_ID = 'app-sidebar';
+export const MENU_BUTTON_ID = 'app-menu-button';
 
 function useNavItems(): NavItem[] {
   const user = useCurrentUser();
   return NAV_ITEMS.filter((item) => can(user, item.action));
 }
 
-/** Shared look of every sidebar entry: icon above a short label on the rail, icon + label in a row on desktop. */
-const itemBase = cn(
-  'flex min-h-16 w-full flex-col items-center justify-center gap-1 rounded-lg px-1 py-1 text-center text-label-medium transition-colors duration-150',
-  'xl:min-h-10 xl:flex-row xl:justify-start xl:gap-3 xl:px-3 xl:text-left xl:text-label-large',
-  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
-);
-const itemIdle = 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface';
-// Active item: solid primary pill with white text and filled icon, as in reference 9d0f172e (D-57).
-const itemActive = 'bg-primary text-on-primary';
+/** Folded to icons: the viewer's choice, or automatic (folded below 1280 px). */
+export function useNavCollapsed(): boolean {
+  const isDesktop = useMediaQuery('(min-width: 1280px)');
+  const preference = useUiStore((s) => s.navCollapsed);
+  return preference ?? !isDesktop;
+}
 
-function SecondaryItem({ icon, label, to, onClick }: { icon: IconName; label: string; to?: string; onClick?: () => void }) {
-  const content = (
+const itemClass = (collapsed: boolean, active: boolean) =>
+  cn(
+    'flex items-center rounded-lg text-label-large transition-colors duration-150',
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+    collapsed ? 'mx-auto size-12 justify-center' : 'min-h-11 w-full gap-3 px-3',
+    // Active item: solid primary pill, white text and filled icon (reference 9d0f172e, D-57).
+    active ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface',
+  );
+
+/** Folded items keep their name for assistive tech and show it in a tooltip (2.3). */
+function WithTooltip({ collapsed, label, children }: { collapsed: boolean; label: string; children: ReactNode }) {
+  return collapsed ? (
+    <Tooltip content={label} side="right">
+      {children}
+    </Tooltip>
+  ) : (
+    <>{children}</>
+  );
+}
+
+function ItemContent({ icon, label, collapsed, active }: { icon: IconName; label: string; collapsed: boolean; active?: boolean }) {
+  return (
     <>
-      <Icon name={icon} size={24} className="xl:size-5" />
-      <span className="line-clamp-2 max-w-full xl:truncate">{label}</span>
+      <Icon name={icon} size={24} filled={active} className="shrink-0" />
+      <span className={collapsed ? 'sr-only' : 'min-w-0 truncate'}>{label}</span>
     </>
   );
+}
+
+
+/**
+ * Navigation link with a plain className: the tooltip trigger (Radix Slot) cannot merge
+ * NavLink's className function, so the active state is computed here with useMatch.
+ */
+function SideLink({
+  to,
+  end = false,
+  icon,
+  label,
+  collapsed,
+  onNavigate,
+}: {
+  to: string;
+  end?: boolean;
+  icon: IconName;
+  label: string;
+  collapsed: boolean;
+  onNavigate?: () => void;
+}) {
+  const active = useMatch({ path: to, end }) !== null;
   return (
-    <li>
-      {to ? (
-        <NavLink to={to} className={({ isActive }) => cn(itemBase, isActive ? itemActive : itemIdle)}>
-          {content}
-        </NavLink>
-      ) : (
-        <button type="button" onClick={onClick} className={cn(itemBase, itemIdle)}>
-          {content}
-        </button>
-      )}
-    </li>
+    <WithTooltip collapsed={collapsed} label={label}>
+      <Link
+        to={to}
+        onClick={onNavigate}
+        aria-current={active ? 'page' : undefined}
+        className={itemClass(collapsed, active)}
+      >
+        <ItemContent icon={icon} label={label} collapsed={collapsed} active={active} />
+      </Link>
+    </WithTooltip>
   );
 }
 
 /**
- * Side navigation (2.2.1 pattern 5, reference 9d0f172e): one white panel with the logo
- * on top, the workspace items, and at the bottom the help shortcuts and the person.
- * - From 1280 px: full sidebar (icon + label).
- * - From 768 px: icon rail with short labels; help and account live in the header menu.
- * - Below 768 px: bottom navigation (BottomNav).
+ * Items of the side navigation, shared by the sidebar and the mobile drawer:
+ * the role workspace on top, "Mi seguridad" and "Cerrar sesión" at the bottom.
  */
-export function SideNav() {
+function NavContent({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?: () => void }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const user = useCurrentUser();
   const items = useNavItems();
   if (!user) return null;
 
-  const home = homePath(user);
-
   return (
-    <nav
-      aria-label={t('layout.mainNav')}
-      className="sticky top-0 hidden h-dvh w-24 shrink-0 flex-col overflow-y-auto border-r border-outline-variant bg-surface-container-lowest px-2 py-4 md:flex xl:w-64 xl:px-4"
-    >
-      <Link to={home} className="mb-6 hidden rounded-md px-2 xl:block">
-        <Logo />
-      </Link>
-      <Link to={home} aria-label={t('layout.home')} className="mx-auto mb-6 rounded-md xl:hidden">
-        <Logo markOnly />
-      </Link>
-
+    <div className="flex min-h-0 flex-1 flex-col gap-1">
       <ul className="flex flex-col gap-1">
         {items.map((item) => (
           <li key={item.to}>
-            <NavLink
+            <SideLink
               to={item.to}
               end={item.end}
-              className={({ isActive }) => cn(itemBase, isActive ? itemActive : itemIdle)}
-            >
-              {({ isActive }) => (
-                <>
-                  <Icon name={item.icon} size={24} filled={isActive} className="xl:size-5" />
-                  {/* Rail: up to two lines so labels are never cut; sidebar: one line. */}
-                  <span className="line-clamp-2 max-w-full xl:truncate">{t(item.label)}</span>
-                </>
-              )}
-            </NavLink>
+              icon={item.icon}
+              label={t(item.label)}
+              collapsed={collapsed}
+              onNavigate={onNavigate}
+            />
           </li>
         ))}
       </ul>
 
       <div className="flex-1" />
 
-      {/* Desktop footer: help shortcuts and the person (reference: plan card + user at the bottom) */}
-      <div className="hidden flex-col gap-3 xl:flex">
-        <ul aria-label={t('layout.shortcuts')} className="flex flex-col gap-1">
-          {hasGuidedWelcome(user.role) && (
-            <SecondaryItem
-              icon="help"
-              label={t('welcome.reopen')}
-              onClick={() => useSessionStore.getState().setWelcomeOpen(true)}
+      <ul aria-label={t('layout.account')} className="flex flex-col gap-1 border-t border-outline-variant pt-3">
+        {can(user, 'account:security_own') && (
+          <li>
+            <SideLink
+              to="/account/security"
+              icon="verified_user"
+              label={t('layout.mySecurity')}
+              collapsed={collapsed}
+              onNavigate={onNavigate}
             />
-          )}
-          {can(user, 'account:security_own') && (
-            <SecondaryItem icon="verified_user" label={t('layout.mySecurity')} to="/account/security" />
-          )}
-        </ul>
-        <div className="border-t border-outline-variant pt-3">
-          <UserMenu placement="sidebar" />
-        </div>
-      </div>
+          </li>
+        )}
+        <li>
+          <WithTooltip collapsed={collapsed} label={t('layout.signOut')}>
+            <button
+              type="button"
+              className={itemClass(collapsed, false)}
+              onClick={() => {
+                onNavigate?.();
+                signOut('manual');
+                navigate('/login', { replace: true });
+              }}
+            >
+              <ItemContent icon="logout" label={t('layout.signOut')} collapsed={collapsed} />
+            </button>
+          </WithTooltip>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+/**
+ * Side navigation from 768 px (2.2.1 pattern 5, reference 9d0f172e), under the top bar.
+ * Expanded (icon + label) or folded to icons with the menu button of the top bar;
+ * folded by default below 1280 px. The viewer's choice is remembered.
+ */
+export function SideNav() {
+  const { t } = useTranslation();
+  const collapsed = useNavCollapsed();
+
+  return (
+    <nav
+      id={SIDEBAR_ID}
+      aria-label={t('layout.mainNav')}
+      className={cn(
+        'sticky top-16 hidden h-[calc(100dvh-4rem)] shrink-0 flex-col overflow-x-hidden overflow-y-auto border-r border-outline-variant bg-surface-container-lowest py-4 md:flex',
+        'transition-[width] duration-200 ease-standard motion-reduce:transition-none',
+        collapsed ? 'w-20 px-2' : 'w-64 px-3',
+      )}
+    >
+      <NavContent collapsed={collapsed} />
     </nav>
+  );
+}
+
+/** Mobile navigation (< 768 px): the menu button opens this drawer with every item (2.7). */
+export function MobileNavDrawer() {
+  const { t } = useTranslation();
+  const open = useUiStore((s) => s.navDrawerOpen);
+  const setOpen = useUiStore((s) => s.setNavDrawerOpen);
+
+  return (
+    <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-scrim/32 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 md:hidden" />
+        <DialogPrimitive.Content
+          id={`${SIDEBAR_ID}-drawer`}
+          // The drawer opens from state, not from a Radix trigger: focus goes to the first
+          // item on open and back to the menu button on close (2.10).
+          onOpenAutoFocus={(event) => {
+            const first = (event.currentTarget as HTMLElement | null)?.querySelector<HTMLElement>('nav a, nav button');
+            if (first) {
+              event.preventDefault();
+              first.focus();
+            }
+          }}
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            document.getElementById(MENU_BUTTON_ID)?.focus();
+          }}
+          className={cn(
+            'fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100%-3rem))] flex-col gap-4 bg-surface-container-lowest px-3 py-4 shadow-elevation-2 md:hidden',
+            'duration-200 data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:animate-in data-[state=open]:slide-in-from-left',
+          )}
+        >
+          <div className="flex items-center justify-between gap-2 px-1">
+            <Logo />
+            <DialogPrimitive.Close asChild>
+              <IconButton icon="close" label={t('layout.menu.close')} />
+            </DialogPrimitive.Close>
+          </div>
+          <DialogPrimitive.Title className="sr-only">{t('layout.mainNav')}</DialogPrimitive.Title>
+          <DialogPrimitive.Description className="sr-only">{t('layout.menu.description')}</DialogPrimitive.Description>
+          <nav aria-label={t('layout.mainNav')} className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+            <NavContent collapsed={false} onNavigate={() => setOpen(false)} />
+          </nav>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
   );
 }
 
@@ -124,7 +233,7 @@ export function BottomNav() {
 
   return (
     <nav
-      aria-label={t('layout.mainNav')}
+      aria-label={t('layout.bottomNav')}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-outline-variant bg-surface-container-lowest pb-[env(safe-area-inset-bottom)] md:hidden"
     >
       <ul className="grid" style={{ gridTemplateColumns: `repeat(${Math.max(items.length, 1)}, minmax(0, 1fr))` }}>
@@ -135,22 +244,24 @@ export function BottomNav() {
               end={item.end}
               className={({ isActive }) =>
                 cn(
-                  'flex h-16 min-w-0 flex-col items-center justify-center gap-1 px-1 text-label-medium',
-                  isActive ? 'text-on-surface' : 'text-on-surface-variant',
+                  'flex h-14 min-w-0 items-center justify-center px-1',
+                  'focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary',
+                  isActive ? 'text-on-primary' : 'text-on-surface-variant',
                 )
               }
             >
               {({ isActive }) => (
                 <>
+                  {/* Icon only (the label stays for assistive tech): lighter bar on small screens. */}
                   <span
                     className={cn(
-                      'flex h-8 w-14 items-center justify-center rounded-full transition-colors duration-150',
-                      isActive && 'bg-primary text-on-primary',
+                      'flex h-10 w-16 items-center justify-center rounded-full transition-colors duration-150',
+                      isActive && 'bg-primary',
                     )}
                   >
                     <Icon name={item.icon} size={24} filled={isActive} />
                   </span>
-                  <span className="max-w-full truncate">{t(item.label)}</span>
+                  <span className="sr-only">{t(item.label)}</span>
                 </>
               )}
             </NavLink>
