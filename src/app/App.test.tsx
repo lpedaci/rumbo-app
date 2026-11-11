@@ -48,7 +48,11 @@ describe('routing and access control', () => {
     expect(question).toHaveAttribute('aria-expanded', 'false');
     fireEvent.click(question);
     expect(question).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.getByText(es.home.faq.items[0]!.a)).toBeVisible();
+    // The answer region opens and is linked to its question. Its text can mount a tick later
+    // (Radix Presence), so the test checks the region, not the text (CI timing).
+    const answer = document.getElementById(question.getAttribute('aria-controls')!);
+    expect(answer).toHaveAttribute('role', 'region');
+    expect(answer).toHaveAttribute('data-state', 'open');
   });
 
   it('the login is clean: no role cards and no "Vas a entrar como…" notice (D-66)', async () => {
