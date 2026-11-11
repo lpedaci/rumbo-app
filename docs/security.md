@@ -70,7 +70,8 @@ upgrade-insecure-requests
 | Auditoría de dependencias | `npm audit --audit-level=high` en CI: el deploy falla con vulnerabilidades altas o críticas |
 | Permisos del workflow | `contents: read` por defecto; `pages: write` e `id-token: write` solo en el job de deploy |
 | Almacenamiento local | `localStorage` guarda solo datos de demo, la sesión simulada y preferencias de interfaz; nunca algo que simule una contraseña ni un token. Si los datos guardados no tienen la forma esperada, se reemplazan por los datos semilla |
-| Datos enmascarados | El celular del ingreso se muestra enmascarado (`*** 1234`) en las fichas |
+| Datos enmascarados | El celular, el DNI, el CUIL y la cuenta bancaria (ficticios) se muestran enmascarados; RRHH puede mostrar uno escribiendo un motivo, que queda en la auditoría como `pii.reveal` (F10, D-113) |
+| Aviso de privacidad | Nadie entra a la app sin aceptar la versión vigente del aviso (G8); la aceptación queda con fecha, versión y evento `privacy.consent` (F10, D-113) |
 
 ---
 

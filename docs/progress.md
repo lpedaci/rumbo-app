@@ -373,3 +373,14 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - N2: tarjeta "Comentarios"; J2 y A4: botón con la cantidad en cada tarea que abre el hilo en un diálogo, también desde las notificaciones.
 - Avisos "Te mencionaron" y "Comentario nuevo" (F7) y permiso `comment:write`.
 - Tests del motor y de N2, y el diálogo en el test de Playwright.
+
+## Paso 17 · F10 Privacidad y datos personales, 11/11/2026 (D-113)
+
+- Modelo: `ConsentRecord`, `PrivacyRequest`, identificadores ficticios en `Person` (DNI, CUIL, CBU) y retención en `SecurityPolicy`. Esquema de datos 9.
+- G8 (`/consent`): aviso en 4 pasos con casilla obligatoria; la app redirige ahí a quien no aceptó la versión vigente y después vuelve a la pantalla pedida.
+- G10 (`/account/privacy`): aviso aceptado y su texto, datos propios con identificadores ocultos y solicitudes de acceso, rectificación o supresión con plazo legal.
+- A12 (`/admin/privacy-requests`): bandeja de RRHH con filtros, plazo en palabras (vencidas en rojo) y detalle para tomar, responder o rechazar con una respuesta escrita.
+- `MaskedValue`: dato oculto con "Mostrar" para RRHH, con motivo y auditoría (`pii.reveal`), en la ficha del ingreso.
+- Retención en la pantalla de políticas de sistemas y fecha de anonimización en los ingresos finalizados.
+- Avisos: "Solicitud de datos nueva" a RRHH y "RRHH respondió tu solicitud" a la persona. Permisos `privacy:own`, `privacy_request:manage` y `pii:reveal`.
+- Tests de reglas, del aviso, de solicitudes y del revelado; G8, G10 y A12 en Playwright con axe.

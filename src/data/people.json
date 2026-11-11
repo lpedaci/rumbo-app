@@ -5,7 +5,10 @@
     "role": "admin",
     "jobTitle": "People Partner",
     "area": "Personas",
-    "email": "carla@nortia.demo"
+    "email": "carla@nortia.demo",
+    "dni": "38.100.000",
+    "cuil": "23-38100000-0",
+    "bankAccount": "0720123456705550000000"
   },
   {
     "id": "p-martin",
@@ -13,7 +16,10 @@
     "role": "manager",
     "jobTitle": "Líder de Desarrollo",
     "area": "Tecnología",
-    "email": "martin@nortia.demo"
+    "email": "martin@nortia.demo",
+    "dni": "38.831.457",
+    "cuil": "23-38831457-7",
+    "bankAccount": "0720133333205551234567"
   },
   {
     "id": "p-sofia",
@@ -22,7 +28,10 @@
     "jobTitle": "Analista de Datos Jr.",
     "area": "Tecnología",
     "email": "sofia@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "39.562.914",
+    "cuil": "23-39562914-4",
+    "bankAccount": "0720143209705552469134"
   },
   {
     "id": "p-diego",
@@ -30,7 +39,10 @@
     "role": "it_admin",
     "jobTitle": "Mesa de ayuda IT",
     "area": "Sistemas",
-    "email": "diego@nortia.demo"
+    "email": "diego@nortia.demo",
+    "dni": "40.294.371",
+    "cuil": "23-40294371-1",
+    "bankAccount": "0720153086205553703701"
   },
   {
     "id": "p-lucia",
@@ -38,7 +50,10 @@
     "role": "manager",
     "jobTitle": "Líder Comercial",
     "area": "Comercial",
-    "email": "lucia.fernandez@nortia.demo"
+    "email": "lucia.fernandez@nortia.demo",
+    "dni": "41.025.828",
+    "cuil": "23-41025828-8",
+    "bankAccount": "0720162962705554938268"
   },
   {
     "id": "p-nicolas",
@@ -47,7 +62,10 @@
     "jobTitle": "Analista de Datos Sr.",
     "area": "Tecnología",
     "email": "nicolas.acosta@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "41.757.285",
+    "cuil": "23-41757285-5",
+    "bankAccount": "0720172839205556172835"
   },
   {
     "id": "p-julieta",
@@ -56,7 +74,10 @@
     "jobTitle": "Desarrolladora Frontend Sr.",
     "area": "Tecnología",
     "email": "julieta.paz@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "42.488.742",
+    "cuil": "23-42488742-2",
+    "bankAccount": "0720182715705557407402"
   },
   {
     "id": "p-federico",
@@ -65,7 +86,10 @@
     "jobTitle": "Gerente de Cuentas Clave",
     "area": "Comercial",
     "email": "federico.luna@nortia.demo",
-    "managerId": "p-lucia"
+    "managerId": "p-lucia",
+    "dni": "43.220.199",
+    "cuil": "23-43220199-9",
+    "bankAccount": "0720192592205558641969"
   },
   {
     "id": "p-lucas",
@@ -74,7 +98,10 @@
     "jobTitle": "Analista de Datos Jr.",
     "area": "Tecnología",
     "email": "lucas.ortiz@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "43.951.656",
+    "cuil": "23-43951656-6",
+    "bankAccount": "0720202468705559876536"
   },
   {
     "id": "p-valentina",
@@ -83,7 +110,10 @@
     "jobTitle": "Desarrolladora Frontend",
     "area": "Tecnología",
     "email": "valentina.ruiz@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "44.683.113",
+    "cuil": "23-44683113-3",
+    "bankAccount": "0720212345205561111103"
   },
   {
     "id": "p-tomas",
@@ -92,7 +122,10 @@
     "jobTitle": "Desarrollador Frontend",
     "area": "Tecnología",
     "email": "tomas.herrera@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "45.414.570",
+    "cuil": "23-45414570-0",
+    "bankAccount": "0720222221705562345670"
   },
   {
     "id": "p-agustina",
@@ -101,7 +134,10 @@
     "jobTitle": "Desarrolladora Frontend",
     "area": "Tecnología",
     "email": "agustina.vega@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "46.146.027",
+    "cuil": "23-46146027-7",
+    "bankAccount": "0720232098205563580237"
   },
   {
     "id": "p-martina",
@@ -110,7 +146,10 @@
     "jobTitle": "Analista de Datos",
     "area": "Tecnología",
     "email": "martina.lopez@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "46.877.484",
+    "cuil": "23-46877484-4",
+    "bankAccount": "0720241974705564814804"
   },
   {
     "id": "p-bruno",
@@ -119,7 +158,10 @@
     "jobTitle": "Desarrollador Frontend",
     "area": "Tecnología",
     "email": "bruno.castro@nortia.demo",
-    "managerId": "p-martin"
+    "managerId": "p-martin",
+    "dni": "38.608.941",
+    "cuil": "23-38608941-1",
+    "bankAccount": "0720251851205566049371"
   },
   {
     "id": "p-camila",
@@ -128,7 +170,10 @@
     "jobTitle": "Ejecutiva Comercial",
     "area": "Comercial",
     "email": "camila.torres@nortia.demo",
-    "managerId": "p-lucia"
+    "managerId": "p-lucia",
+    "dni": "39.340.398",
+    "cuil": "23-39340398-8",
+    "bankAccount": "0720261727705567283938"
   },
   {
     "id": "p-joaquin",
@@ -137,7 +182,10 @@
     "jobTitle": "Ejecutivo Comercial",
     "area": "Comercial",
     "email": "joaquin.benitez@nortia.demo",
-    "managerId": "p-lucia"
+    "managerId": "p-lucia",
+    "dni": "40.071.855",
+    "cuil": "23-40071855-5",
+    "bankAccount": "0720271604205568518505"
   },
   {
     "id": "p-paula",
@@ -146,7 +194,10 @@
     "jobTitle": "Ejecutiva Comercial",
     "area": "Comercial",
     "email": "paula.gimenez@nortia.demo",
-    "managerId": "p-lucia"
+    "managerId": "p-lucia",
+    "dni": "40.803.312",
+    "cuil": "23-40803312-2",
+    "bankAccount": "0720281480705569753072"
   },
   {
     "id": "p-mateo",
@@ -155,6 +206,9 @@
     "jobTitle": "Ejecutivo Comercial",
     "area": "Comercial",
     "email": "mateo.romero@nortia.demo",
-    "managerId": "p-lucia"
+    "managerId": "p-lucia",
+    "dni": "41.534.769",
+    "cuil": "23-41534769-9",
+    "bankAccount": "0720291357205570987639"
   }
 ]

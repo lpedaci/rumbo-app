@@ -185,6 +185,7 @@
       "dashboard": "Dashboard",
       "hires": "New hires",
       "templates": "Templates",
+      "privacy": "Privacy",
       "team": "My team",
       "journey": "My journey",
       "checkin": "My check-in",
@@ -196,6 +197,7 @@
     "switched": "You're now viewing Rumbo as {{name}}, {{role}}",
     "userMenu": "User menu for {{name}}",
     "mySecurity": "My security",
+    "myPrivacy": "My privacy",
     "sessionDemo": "Show the session warning (demo)",
     "resetDemo": "Reset demo",
     "signOut": "Sign out",
@@ -1615,6 +1617,12 @@
         "template.delete": "Template deleted",
         "template.publish": "Template published",
         "template.restore": "Template version restored as a draft",
+        "privacy.consent": "Privacy notice accepted",
+        "privacy_request.create": "Data request sent",
+        "privacy_request.in_progress": "Data request taken",
+        "privacy_request.answered": "Data request answered",
+        "privacy_request.rejected": "Data request rejected",
+        "pii.reveal": "Sensitive data shown",
         "hire.create": "New hire added",
         "task.complete": "Task marked as done",
         "checkin.self_review": "Self-review sent",
@@ -1657,6 +1665,9 @@
         "audit_export": "Export the audit log to CSV",
         "security_view": "View policies and the permission matrix",
         "comment_write": "Comment on tasks",
+        "privacy_own": "View \"My privacy\"",
+        "privacy_request_manage": "Handle personal data requests",
+        "pii_reveal": "Reveal sensitive data",
         "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
@@ -2350,6 +2361,16 @@
       "appOnly": "This type of notice only arrives inside Rumbo, not by email."
     },
     "types": {
+      "privacy_request": {
+        "new": {
+          "title": "New data request",
+          "body": "{{request}}, from {{person}}. Answer by {{date}}."
+        },
+        "answered": {
+          "title": "HR answered your request",
+          "body": "{{request}}: see the answer in My privacy."
+        }
+      },
       "comment": {
         "new": {
           "title": "New comment",
@@ -2563,5 +2584,185 @@
     "you": "You",
     "open": "Comments on {{task}}",
     "readOnly": "Only the new hire, their manager and HR can comment."
+  },
+  "privacy": {
+    "noticeVersion": "Version {{version}}",
+    "steps": [
+      {
+        "title": "What data we use",
+        "icon": "badge",
+        "items": [
+          "Your work data: name, email, job title, area and manager.",
+          "Your journey progress, check-ins and self-reviews.",
+          "Your identification data (DNI, CUIL and bank account), always shown hidden."
+        ]
+      },
+      {
+        "title": "What we use it for",
+        "icon": "route",
+        "items": [
+          "Organizing your journey tasks and telling you what to do and by when.",
+          "So your manager and HR can support you and see if something gets stuck.",
+          "Never for purposes outside your onboarding journey or to share it outside Nortia."
+        ]
+      },
+      {
+        "title": "Who sees it",
+        "icon": "visibility",
+        "items": [
+          "You see all your data.",
+          "Your manager sees your journey and your self-reviews.",
+          "HR sees the company journeys. Identification data is only shown with a reason, which is recorded.",
+          "IT only sees what it needs to manage your access."
+        ]
+      },
+      {
+        "title": "How long and your rights",
+        "icon": "schedule",
+        "items": [
+          "Journey data is kept {{journeyYears}} years after it ends; then it is anonymized.",
+          "Self-reviews are kept {{selfReviewYears}} year.",
+          "You can ask to access, correct or delete your data from My privacy (Argentine Law 25,326)."
+        ]
+      }
+    ],
+    "consent": {
+      "eyebrow": "Before you start",
+      "title": "How we take care of your data",
+      "intro": "Review what data of yours Rumbo uses, what for, who sees it and for how long. Accept it at the end to continue.",
+      "step": "Step {{n}} of {{total}}",
+      "previous": "Back",
+      "next": "Continue",
+      "accept": "Accept and continue",
+      "check": "I read the privacy notice and accept the use of my data for my onboarding journey.",
+      "checkRequired": "Check the box to confirm you read and accept the notice.",
+      "signOut": "Sign out",
+      "signOutHelp": "Rumbo can't be used without accepting it. If you have questions, write to privacidad@nortia.demo.",
+      "accepted": "Privacy notice accepted"
+    },
+    "mine": {
+      "title": "My privacy",
+      "description": "What data of yours Rumbo keeps, the notice you accepted and your requests about that data.",
+      "noticeCard": "Privacy notice",
+      "acceptedOn": "You accepted version {{version}} on {{date}}.",
+      "showNotice": "See the full notice",
+      "hideNotice": "Hide the notice",
+      "dataCard": "Your data",
+      "dataHelp": "Identification data is shown hidden. If something is wrong, ask for a correction.",
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "jobTitle": "Job title",
+        "area": "Area",
+        "manager": "Manager",
+        "employeeId": "Employee number",
+        "mobile": "Mobile",
+        "dni": "DNI",
+        "cuil": "CUIL",
+        "bankAccount": "Bank account (CBU)"
+      },
+      "requestsCard": "Your requests",
+      "requestsEmpty": "You haven't sent any requests yet. If you need to see, correct or delete your data, send one.",
+      "formTitle": "New request",
+      "type": "What you need",
+      "typeHelp": "Choose one. The response deadline depends on the type.",
+      "typeRequired": "Choose what you need.",
+      "typeOptions": {
+        "access": {
+          "label": "Access",
+          "help": "See what data of yours Rumbo keeps. Answer within 10 calendar days."
+        },
+        "rectification": {
+          "label": "Correction",
+          "help": "Fix a piece of data that is wrong. Answer within 5 business days."
+        },
+        "deletion": {
+          "label": "Deletion",
+          "help": "Delete data that is no longer needed. Answer within 5 business days."
+        }
+      },
+      "detail": "Details",
+      "detailHelp": "Which data and what you need, 10 to 500 characters. For example: My second last name is misspelled.",
+      "detailRequired": "Tell us what you need in at least 10 characters.",
+      "detailMax": "Details can have up to 500 characters.",
+      "send": "Send request",
+      "sent": "Request {{id}} sent",
+      "note": "HR answers within the legal deadline and lets you know in Rumbo.",
+      "sentOn": "Sent on {{date}}",
+      "due": "Answer by {{date}}",
+      "response": "HR answer"
+    },
+    "status": {
+      "new": "New",
+      "in_progress": "In progress",
+      "answered": "Answered",
+      "rejected": "Rejected"
+    },
+    "types": {
+      "access": "Access",
+      "rectification": "Correction",
+      "deletion": "Deletion"
+    },
+    "requests": {
+      "title": "Personal data requests",
+      "description": "Requests to access, correct or delete data (Argentine Law 25,326). Answer them within the legal deadline.",
+      "statusFilter": "Status",
+      "all": "All",
+      "open": "Open",
+      "listTitle": "Requests",
+      "empty": "There are no requests with this status.",
+      "dueIn_one": "Due in {{count}} day",
+      "dueIn_other": "Due in {{count}} days",
+      "dueToday": "Due today",
+      "overdue_one": "Overdue by {{count}} day",
+      "overdue_other": "Overdue by {{count}} days",
+      "answeredOn": "Answered on {{date}}",
+      "open_request": "See request {{id}} from {{name}}",
+      "dialogTitle": "{{id}} · {{type}}",
+      "from": "From",
+      "sent": "Sent",
+      "due": "Deadline",
+      "request": "Request",
+      "take": "Take request",
+      "answer": "Answer",
+      "reject": "Reject",
+      "responseLabel": "Answer",
+      "responseHelp": "What you did or what you share, 10 to 1,000 characters. For example: We fixed your last name in your record.",
+      "responseRequired": "Write an answer of at least 10 characters.",
+      "responseMax": "The answer can have up to 1,000 characters.",
+      "answered": "Request answered",
+      "rejected": "Request rejected",
+      "taken": "Request in progress",
+      "closedNote": "This request is closed."
+    },
+    "pii": {
+      "show": "Show",
+      "showLabel": "Show {{field}}",
+      "hide": "Hide",
+      "revealTitle": "Show {{name}}'s {{field}}?",
+      "revealBody": "This is sensitive data. Write why you need it: it is recorded in the audit log with your name and the time.",
+      "reason": "Reason",
+      "reasonHelp": "10 to 200 characters. For example: Health insurance enrollment.",
+      "reasonRequired": "Write a reason of at least 10 characters.",
+      "reasonMax": "The reason can have up to 200 characters.",
+      "confirm": "Show data",
+      "revealed": "Data visible until you leave this screen",
+      "masked": "Hidden",
+      "noPermission": "Only HR can show this data, with a reason."
+    },
+    "retention": {
+      "anonymization": "Scheduled anonymization",
+      "anonymizationNote": "The journey ended: its data is anonymized on {{date}}, per the retention policy."
+    },
+    "policies": {
+      "retentionJourney": "Journey data retention",
+      "retentionJourneyDetail": "From the end of the journey; then it is anonymized.",
+      "retentionSelfReview": "Self-review retention",
+      "retentionSelfReviewDetail": "From when they are sent; only the manager and HR see them.",
+      "years_one": "{{count}} year",
+      "years_other": "{{count}} years",
+      "notice": "Privacy notice",
+      "noticeDetail": "Version in force; a new version asks everyone to accept it again."
+    }
   }
 }

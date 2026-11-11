@@ -67,6 +67,9 @@ Leyenda: ✅ todo · 👥 solo su equipo · 🙋 solo lo propio · — no permit
 | `audit:export` | Exportar la auditoría a CSV | — | — | — | ✅ |
 | `security:view` | Ver políticas y matriz de permisos | — | — | — | ✅ |
 | `comment:write` | Comentar en las tareas de los recorridos que ve (N2, J2, A4) | ✅ | 👥 | 🙋 | — |
+| `privacy:own` | Ver "Mi privacidad" y pedir acceso, rectificación o supresión de sus datos (G10) | 🙋 | 🙋 | 🙋 | 🙋 |
+| `privacy_request:manage` | Atender las solicitudes sobre datos personales (A12) | ✅ | — | — | — |
+| `pii:reveal` | Revelar DNI, CUIL o datos bancarios con un motivo, que queda en la auditoría | ✅ | — | — | — |
 | `notification:view` | Ver sus propias notificaciones (G9) | 🙋 | 🙋 | 🙋 | 🙋 |
 | `account:security_own` | Ver "Mi seguridad" (G5) | 🙋 | 🙋 | 🙋 | 🙋 |
 | `demo:switch_role` | Usar el selector de rol de demo | ✅ | ✅ | ✅ | ✅ |

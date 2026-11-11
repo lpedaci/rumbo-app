@@ -137,11 +137,11 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-067 | El sistema debe mostrar el historial de versiones, compararlas y restaurar una anterior como borrador. | RRHH | F8 | A8 | Should | La comparación muestra tareas agregadas, quitadas y modificadas. | Hecho |
 | RF-068 | Solo se deben poder asignar plantillas publicadas. | RRHH | F8 | A3 | Should | Los borradores no aparecen en el alta. | Hecho |
 | RF-069 | El sistema debe permitir comentar en tareas del recorrido, con menciones `@` que notifican. | Nuevo ingreso, Jefe, RRHH | F9 | N2, J2, A4 | Should | Solo texto plano; editar marca "editado". | Hecho |
-| RF-070 | El sistema debe pedir aceptar el aviso de privacidad en el primer ingreso, registrando fecha y versión. | Todos | F10 | G8 | Should | Sin aceptar no se continúa. | Pendiente |
-| RF-071 | El sistema debe ofrecer "Mi privacidad" con el aviso vigente, la fecha de aceptación y los datos propios. | Todos | F10 | G10 | Should | | Pendiente |
-| RF-072 | El sistema debe permitir enviar solicitudes de acceso, rectificación o supresión y gestionarlas con plazo y estado. | Todos, RRHH | F10 | G10, A12 | Should | El plazo de respuesta es visible en ambas vistas. | Pendiente |
-| RF-073 | DNI, CUIL y datos bancarios deben mostrarse enmascarados; revelarlos requiere `pii:reveal`, motivo y auditoría. | RRHH | F10 | A10 | Should | También enmascarados en exportaciones. | Pendiente |
-| RF-074 | El sistema debe mostrar la política de retención y la fecha programada de anonimización de ingresos finalizados. | RRHH, Sistemas | F10 | A4, S3 | Could | | Pendiente |
+| RF-070 | El sistema debe pedir aceptar el aviso de privacidad en el primer ingreso, registrando fecha y versión. | Todos | F10 | G8 | Should | Sin aceptar no se continúa. | Hecho |
+| RF-071 | El sistema debe ofrecer "Mi privacidad" con el aviso vigente, la fecha de aceptación y los datos propios. | Todos | F10 | G10 | Should | | Hecho |
+| RF-072 | El sistema debe permitir enviar solicitudes de acceso, rectificación o supresión y gestionarlas con plazo y estado. | Todos, RRHH | F10 | G10, A12 | Should | El plazo de respuesta es visible en ambas vistas. | Hecho |
+| RF-073 | DNI, CUIL y datos bancarios deben mostrarse enmascarados; revelarlos requiere `pii:reveal`, motivo y auditoría. | RRHH | F10 | A10 | Should | También enmascarados en exportaciones. | Hecho |
+| RF-074 | El sistema debe mostrar la política de retención y la fecha programada de anonimización de ingresos finalizados. | RRHH, Sistemas | F10 | A4, S3 | Could | | Hecho |
 | RF-075 | El sistema debe listar las sesiones activas propias y permitir cerrarlas. | Todos | F11 | G5 | Should | La sesión actual está marcada. | Pendiente |
 | RF-076 | El sistema debe alertar de inicios de sesión inusuales con "Sí, fui yo" o "No fui yo"; esta última cierra la sesión y genera una solicitud urgente. | Todos | F11 | G6, G9, S1 | Should | Sofía tiene una alerta semilla pendiente. | Pendiente |
 | RF-077 | Sistemas debe ver las sesiones de toda la organización y forzar su cierre. | Sistemas | F11 | S3 | Should | Queda en la auditoría. | Pendiente |

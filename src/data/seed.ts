@@ -9,6 +9,8 @@ import type {
   AccessRequest,
   AppNotification,
   Comment,
+  ConsentRecord,
+  PrivacyRequest,
   AccountFlags,
   AuditEvent,
   AuthAttempts,
@@ -34,8 +36,10 @@ import auditEvents from './audit-events.json';
 import authAttempts from './auth-attempts.json';
 import checkinMilestones from './checkin-milestones.json';
 import comments from './comments.json';
+import consents from './consents.json';
 import hiresSeed from './hires.json';
 import people from './people.json';
+import privacyRequests from './privacy-requests.json';
 import securityPolicy from './security-policy.json';
 import templates from './templates.json';
 
@@ -81,6 +85,10 @@ export interface DemoData {
   notifications: AppNotification[];
   /** F9: comments on journey tasks. */
   comments: Comment[];
+  /** F10: who accepted which version of the privacy notice. */
+  consents: ConsentRecord[];
+  /** F10: requests about personal data (Ley 25.326). */
+  privacyRequests: PrivacyRequest[];
 }
 
 function whoCompletes(owner: Owner, seed: HireSeed): string {
@@ -233,5 +241,7 @@ export function buildSeed(): DemoData {
       comments as Comment[],
     ),
     comments: comments as Comment[],
+    consents: consents as ConsentRecord[],
+    privacyRequests: privacyRequests as PrivacyRequest[],
   });
 }

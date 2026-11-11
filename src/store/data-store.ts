@@ -10,6 +10,8 @@ import {
   onAccessRequestClosed,
   onCheckinCompleted,
   onComment,
+  onPrivacyAnswered,
+  onPrivacyRequest,
   onHireCreated,
   onSelfReview,
   onTaskCompleted,
@@ -25,6 +27,8 @@ import type {
   Hire,
   Mood,
   Person,
+  PrivacyRequest,
+  SensitiveField,
   Template,
   TemplateVersion,
 } from '@/types/domain';
@@ -37,7 +41,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 8;
+export const DATA_SCHEMA_VERSION = 9;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -96,6 +100,18 @@ interface DataActions {
   editComment: (commentId: string, body: string, mentions: string[], actorId: string) => void;
   /** F9: the author deletes their comment; the thread keeps a "Comentario eliminado" mark. */
   deleteComment: (commentId: string, actorId: string) => void;
+  /** F10: records the acceptance of the privacy notice in force (privacy.consent in the audit). */
+  acceptPrivacyNotice: (personId: string, version: string) => void;
+  /** F10: the person sends a request about their data; HR is notified. */
+  addPrivacyRequest: (request: PrivacyRequest) => void;
+  /** F10: HR takes, answers or rejects a request; the answer notifies the person. */
+  updatePrivacyRequest: (
+    id: string,
+    change: { status: PrivacyRequest['status']; response?: string },
+    actorId: string,
+  ) => void;
+  /** F10: records who revealed a masked value, of whom and why (pii.reveal). */
+  logPiiReveal: (personId: string, field: SensitiveField, reason: string, actorId: string) => void;
   /** F7: marks one notification as read or unread. */
   setNotificationRead: (id: string, read: boolean) => void;
   /** F7: marks every notification of a person as read. */
@@ -138,6 +154,8 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.authAttempts) &&
     Array.isArray(data.notifications) &&
     Array.isArray(data.comments) &&
+    Array.isArray(data.consents) &&
+    Array.isArray(data.privacyRequests) &&
     typeof data.accountFlags === 'object' &&
     data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
@@ -541,6 +559,85 @@ export const useDataStore = create<DataState>()(
           ),
         })),
 
+      acceptPrivacyNotice: (personId, version) =>
+        set((state) => {
+          const at = demoNow();
+          return {
+            consents: [...state.consents.filter((c) => c.personId !== personId), { personId, noticeVersion: version, acceptedAt: at }],
+            auditEvents: [
+              ...state.auditEvents,
+              { id: nextAuditId(), at, actorId: personId, action: 'privacy.consent', resource: version, result: 'success' },
+            ],
+          };
+        }),
+
+      addPrivacyRequest: (request) =>
+        set((state) => {
+          const name = state.people.find((p) => p.id === request.personId)?.name ?? '';
+          return {
+            privacyRequests: [...state.privacyRequests, request],
+            notifications: [...state.notifications, ...onPrivacyRequest(request, state.people, name)],
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at: request.createdAt,
+                actorId: request.personId,
+                action: 'privacy_request.create',
+                resource: request.id,
+                result: 'success',
+                detail: request.type,
+              },
+            ],
+          };
+        }),
+
+      updatePrivacyRequest: (id, change, actorId) =>
+        set((state) => {
+          const request = state.privacyRequests.find((r) => r.id === id);
+          if (!request) return {};
+          const at = demoNow();
+          const closes = change.status === 'answered' || change.status === 'rejected';
+          const updated: PrivacyRequest = {
+            ...request,
+            status: change.status,
+            handledBy: actorId,
+            response: change.response?.trim() || request.response,
+            answeredAt: closes ? at : request.answeredAt,
+          };
+          return {
+            privacyRequests: state.privacyRequests.map((r) => (r.id === id ? updated : r)),
+            notifications: closes ? [...state.notifications, ...onPrivacyAnswered(updated, at)] : state.notifications,
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: `privacy_request.${change.status}`,
+                resource: id,
+                result: 'success',
+              },
+            ],
+          };
+        }),
+
+      logPiiReveal: (personId, field, reason, actorId) =>
+        set((state) => ({
+          auditEvents: [
+            ...state.auditEvents,
+            {
+              id: nextAuditId(),
+              at: demoNow(),
+              actorId,
+              action: 'pii.reveal',
+              resource: `${personId}:${field}`,
+              result: 'success',
+              detail: reason.trim(),
+            },
+          ],
+        })),
+
       setNotificationRead: (id, read) =>
         set((state) => ({
           notifications: state.notifications.map((n) =>
@@ -576,6 +673,8 @@ export const useDataStore = create<DataState>()(
         securityPolicy,
         notifications,
         comments,
+        consents,
+        privacyRequests,
       }) => ({
         people,
         templates,
@@ -587,6 +686,8 @@ export const useDataStore = create<DataState>()(
         securityPolicy,
         notifications,
         comments,
+        consents,
+        privacyRequests,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.
       migrate: () => buildSeed(),

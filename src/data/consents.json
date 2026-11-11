@@ -1,0 +1,22 @@
+[
+  {
+    "personId": "p-carla",
+    "noticeVersion": "2026.1",
+    "acceptedAt": "2026-10-01T12:05:00.000Z"
+  },
+  {
+    "personId": "p-martin",
+    "noticeVersion": "2026.1",
+    "acceptedAt": "2026-10-01T13:40:00.000Z"
+  },
+  {
+    "personId": "p-diego",
+    "noticeVersion": "2026.1",
+    "acceptedAt": "2026-10-02T11:15:00.000Z"
+  },
+  {
+    "personId": "p-lucia",
+    "noticeVersion": "2026.1",
+    "acceptedAt": "2026-10-02T14:20:00.000Z"
+  }
+]

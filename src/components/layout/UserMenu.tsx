@@ -91,6 +91,11 @@ export function UserMenu({ placement = 'header' }: { placement?: 'header' | 'sid
               {t('layout.mySecurity')}
             </DropdownMenuItem>
           )}
+          {can(user, 'privacy:own') && (
+            <DropdownMenuItem icon="policy" onSelect={() => navigate('/account/privacy')}>
+              {t('layout.myPrivacy')}
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem icon="schedule" onSelect={showSessionWarning}>
             {t('layout.sessionDemo')}
           </DropdownMenuItem>

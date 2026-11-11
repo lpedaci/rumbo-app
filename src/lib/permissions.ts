@@ -46,6 +46,10 @@ export const PERMISSIONS = {
   'security:view': { it_admin: 'all' },
   // F9 comments on the tasks of the journeys each role can see (author edits and deletes their own)
   'comment:write': { admin: 'all', manager: 'team', hire: 'own' },
+  // F10 privacy: own notice, data and requests; HR handles the requests; revealing masked data
+  'privacy:own': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
+  'privacy_request:manage': { admin: 'all' },
+  'pii:reveal': { admin: 'all' },
   // F7 notifications: each person only sees their own
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)
@@ -112,6 +116,8 @@ export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
   { prefix: '/it', action: 'workspace:it' },
   { prefix: '/account/security', action: 'account:security_own' },
   { prefix: '/notifications', action: 'notification:view' },
+  { prefix: '/account/privacy', action: 'privacy:own' },
+  { prefix: '/admin/privacy-requests', action: 'privacy_request:manage' },
 ];
 
 export function requiredPermission(pathname: string): Action | null {

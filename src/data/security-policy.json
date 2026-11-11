@@ -6,5 +6,8 @@
   "sessionIdleMinutes": 15,
   "sessionWarningMinutes": 13,
   "passwordMinLength": 12,
-  "lockoutAttempts": 5
+  "lockoutAttempts": 5,
+  "retentionJourneyYears": 2,
+  "retentionSelfReviewYears": 1,
+  "privacyNoticeVersion": "2026.1"
 }

@@ -482,6 +482,25 @@ function Policies() {
       value: t('it.policies.chars', { count: policy.passwordMinLength }),
       detail: t('it.policies.passwordDetail'),
     },
+    // F10: retention and the privacy notice in force
+    {
+      icon: 'history',
+      title: t('privacy.policies.retentionJourney'),
+      value: t('privacy.policies.years', { count: policy.retentionJourneyYears }),
+      detail: t('privacy.policies.retentionJourneyDetail'),
+    },
+    {
+      icon: 'fact_check',
+      title: t('privacy.policies.retentionSelfReview'),
+      value: t('privacy.policies.years', { count: policy.retentionSelfReviewYears }),
+      detail: t('privacy.policies.retentionSelfReviewDetail'),
+    },
+    {
+      icon: 'policy',
+      title: t('privacy.policies.notice'),
+      value: t('privacy.noticeVersion', { version: policy.privacyNoticeVersion }),
+      detail: t('privacy.policies.noticeDetail'),
+    },
   ];
   return (
     <section aria-labelledby="policies-title" className={cn(PANEL, 'p-4 md:p-(--space-card-padding)')}>

@@ -59,6 +59,13 @@ const RequestDetailPage = lazy(() =>
   import('@/features/it/RequestDetailPage').then((m) => ({ default: m.RequestDetailPage })),
 );
 const RequestsPage = lazy(() => import('@/features/it/RequestsPage').then((m) => ({ default: m.RequestsPage })));
+const ConsentPage = lazy(() => import('@/features/privacy/ConsentPage').then((m) => ({ default: m.ConsentPage })));
+const MyPrivacyPage = lazy(() =>
+  import('@/features/privacy/MyPrivacyPage').then((m) => ({ default: m.MyPrivacyPage })),
+);
+const PrivacyRequestsPage = lazy(() =>
+  import('@/features/privacy/PrivacyRequestsPage').then((m) => ({ default: m.PrivacyRequestsPage })),
+);
 const NotificationsPage = lazy(() =>
   import('@/features/notifications/NotificationsPage').then((m) => ({ default: m.NotificationsPage })),
 );
@@ -103,6 +110,8 @@ export function AppRoutes() {
         <Route path="/login/verify" element={<VerifyPage />} />
         <Route path="/login/new-password" element={<NewPasswordPage />} />
         <Route path="/access-help" element={<AccessHelpPage />} />
+        {/* G8: privacy notice before entering the app (F10); needs a session, outside the layout */}
+        <Route path="/consent" element={<ConsentPage />} />
         {/* Public design system site (D-98): with or without a session */}
         <Route path="/design-system" element={<DesignSystemPage />} />
 
@@ -116,6 +125,8 @@ export function AppRoutes() {
           <Route element={<RouteGuard />}>
             <Route path="/account/security" element={<SecurityPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/account/privacy" element={<MyPrivacyPage />} />
+            <Route path="/admin/privacy-requests" element={<PrivacyRequestsPage />} />
 
             <Route path="/admin" element={<DashboardPage />} />
             <Route path="/admin/hires" element={<HiresPage />} />

@@ -22,6 +22,8 @@ import { latestVersion } from '@/lib/templates';
 import { Dialog, DialogContent } from '@/components/ui/Dialog';
 import { CommentThread } from '@/features/comments/CommentThread';
 import { activeCount } from '@/lib/comments';
+import { MaskedValue } from '@/features/privacy/MaskedValue';
+import { anonymizationDate } from '@/lib/privacy';
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
@@ -42,6 +44,7 @@ function DetailRow({ label, value }: { label: string; value: string }) {
  */
 export function HireDetailPage() {
   const { t } = useTranslation();
+  const retentionYears = useDataStore((st) => st.securityPolicy.retentionJourneyYears);
   // F9: the thread of a task opens in a dialog; a notification link opens it with ?comments=<task id>
   const comments = useDataStore((st) => st.comments);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -218,6 +221,24 @@ export function HireDetailPage() {
                 {s.person?.employeeId && <DetailRow label={t('hires.detail.employeeId')} value={s.person.employeeId} />}
                 {/* Only the last digits: personal data shown masked (F10) */}
                 {s.person?.mobile && <DetailRow label={t('hires.detail.mobile')} value={maskPhone(s.person.mobile)} />}
+                {/* F10: identifiers always masked; HR can show one with a reason (audited) */}
+                {s.person &&
+                  (['dni', 'cuil', 'bankAccount'] as const)
+                    .filter((f) => s.person![f])
+                    .map((f) => (
+                      <div key={f} className="flex min-w-0 flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-outline-variant py-3 last:border-b-0">
+                        <dt className="text-body-medium text-on-surface-variant">{t(`privacy.mine.fields.${f}`)}</dt>
+                        <dd className="min-w-0 text-body-medium text-on-surface">
+                          <MaskedValue personId={s.person!.id} personName={s.person!.name} field={f} value={s.person![f]!} />
+                        </dd>
+                      </div>
+                    ))}
+                {hire.status === 'completed' && (
+                  <DetailRow
+                    label={t('privacy.retention.anonymization')}
+                    value={formatDate(anonymizationDate(hire, retentionYears))}
+                  />
+                )}
               </dl>
               {/* F8: a later version never changes this journey */}
               {s.template && hire.templateVersion && (latestVersion(s.template)?.version ?? 0) > hire.templateVersion && (

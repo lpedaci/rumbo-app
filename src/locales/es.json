@@ -185,6 +185,7 @@
       "dashboard": "Panel",
       "hires": "Ingresos",
       "templates": "Plantillas",
+      "privacy": "Privacidad",
       "team": "Mi equipo",
       "journey": "Mi recorrido",
       "checkin": "Mi check-in",
@@ -196,6 +197,7 @@
     "switched": "Ahora ves Rumbo como {{name}}, {{role}}",
     "userMenu": "Menú de usuario de {{name}}",
     "mySecurity": "Mi seguridad",
+    "myPrivacy": "Mi privacidad",
     "sessionDemo": "Ver el aviso de sesión (demo)",
     "resetDemo": "Restablecer demo",
     "signOut": "Cerrar sesión",
@@ -1615,6 +1617,12 @@
         "template.delete": "Plantilla eliminada",
         "template.publish": "Plantilla publicada",
         "template.restore": "Versión de plantilla restaurada como borrador",
+        "privacy.consent": "Aviso de privacidad aceptado",
+        "privacy_request.create": "Solicitud de datos enviada",
+        "privacy_request.in_progress": "Solicitud de datos tomada",
+        "privacy_request.answered": "Solicitud de datos respondida",
+        "privacy_request.rejected": "Solicitud de datos rechazada",
+        "pii.reveal": "Dato sensible mostrado",
         "hire.create": "Alta de ingreso",
         "task.complete": "Tarea marcada como hecha",
         "checkin.self_review": "Autoevaluación enviada",
@@ -1657,6 +1665,9 @@
         "audit_export": "Exportar la auditoría a CSV",
         "security_view": "Ver políticas y matriz de permisos",
         "comment_write": "Comentar en las tareas",
+        "privacy_own": "Ver \"Mi privacidad\"",
+        "privacy_request_manage": "Atender solicitudes de datos",
+        "pii_reveal": "Revelar datos sensibles",
         "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
@@ -2350,6 +2361,16 @@
       "appOnly": "Este tipo de aviso solo llega dentro de Rumbo, no por correo."
     },
     "types": {
+      "privacy_request": {
+        "new": {
+          "title": "Solicitud de datos nueva",
+          "body": "{{request}}, de {{person}}. Responde hasta el {{date}}."
+        },
+        "answered": {
+          "title": "RRHH respondió tu solicitud",
+          "body": "{{request}}: revisa la respuesta en Mi privacidad."
+        }
+      },
       "comment": {
         "new": {
           "title": "Comentario nuevo",
@@ -2563,5 +2584,185 @@
     "you": "Tú",
     "open": "Comentarios de {{task}}",
     "readOnly": "Solo pueden comentar el nuevo ingreso, su jefe directo y RRHH."
+  },
+  "privacy": {
+    "noticeVersion": "Versión {{version}}",
+    "steps": [
+      {
+        "title": "Qué datos usamos",
+        "icon": "badge",
+        "items": [
+          "Tus datos de trabajo: nombre, correo, puesto, área y jefe directo.",
+          "El avance de tu recorrido, tus check-ins y tus autoevaluaciones.",
+          "Tus datos de identificación (DNI, CUIL y cuenta bancaria), que siempre se muestran ocultos."
+        ]
+      },
+      {
+        "title": "Para qué los usamos",
+        "icon": "route",
+        "items": [
+          "Organizar las tareas de tu recorrido y avisarte qué hacer y para cuándo.",
+          "Que tu jefe directo y RRHH te acompañen y vean si algo se traba.",
+          "Nunca para fines ajenos al recorrido de ingreso ni para compartirlos fuera de Nortia."
+        ]
+      },
+      {
+        "title": "Quién los ve",
+        "icon": "visibility",
+        "items": [
+          "Tú ves todos tus datos.",
+          "Tu jefe directo ve tu recorrido y tus autoevaluaciones.",
+          "RRHH ve los recorridos de la empresa. Los datos de identificación solo se muestran con un motivo, que queda registrado.",
+          "Sistemas solo ve lo necesario para gestionar tu acceso."
+        ]
+      },
+      {
+        "title": "Cuánto tiempo y tus derechos",
+        "icon": "schedule",
+        "items": [
+          "Los datos del recorrido se guardan {{journeyYears}} años después de terminarlo; después se anonimizan.",
+          "Las autoevaluaciones se guardan {{selfReviewYears}} año.",
+          "Puedes pedir acceso, rectificación o supresión de tus datos desde Mi privacidad (Ley 25.326)."
+        ]
+      }
+    ],
+    "consent": {
+      "eyebrow": "Antes de empezar",
+      "title": "Cómo cuidamos tus datos",
+      "intro": "Revisa qué datos tuyos usa Rumbo, para qué, quién los ve y por cuánto tiempo. Al final, acéptalo para continuar.",
+      "step": "Paso {{n}} de {{total}}",
+      "previous": "Anterior",
+      "next": "Continuar",
+      "accept": "Aceptar y continuar",
+      "check": "Leí el aviso de privacidad y acepto el uso de mis datos para mi recorrido de ingreso.",
+      "checkRequired": "Marca la casilla para confirmar que leíste y aceptas el aviso.",
+      "signOut": "Cerrar sesión",
+      "signOutHelp": "Sin aceptarlo no se puede usar Rumbo. Si tienes dudas, escribe a privacidad@nortia.demo.",
+      "accepted": "Aviso de privacidad aceptado"
+    },
+    "mine": {
+      "title": "Mi privacidad",
+      "description": "Qué datos tuyos guarda Rumbo, el aviso que aceptaste y tus pedidos sobre esos datos.",
+      "noticeCard": "Aviso de privacidad",
+      "acceptedOn": "Aceptaste la versión {{version}} el {{date}}.",
+      "showNotice": "Ver el aviso completo",
+      "hideNotice": "Ocultar el aviso",
+      "dataCard": "Tus datos",
+      "dataHelp": "Los datos de identificación se muestran ocultos. Si algo está mal, pide una rectificación.",
+      "fields": {
+        "name": "Nombre",
+        "email": "Correo",
+        "jobTitle": "Puesto",
+        "area": "Área",
+        "manager": "Jefe directo",
+        "employeeId": "Legajo",
+        "mobile": "Celular",
+        "dni": "DNI",
+        "cuil": "CUIL",
+        "bankAccount": "Cuenta bancaria (CBU)"
+      },
+      "requestsCard": "Tus solicitudes",
+      "requestsEmpty": "Todavía no enviaste solicitudes. Si necesitas ver, corregir o borrar tus datos, envía una.",
+      "formTitle": "Nueva solicitud",
+      "type": "Qué necesitas",
+      "typeHelp": "Elige una opción. El plazo de respuesta depende del tipo.",
+      "typeRequired": "Elige qué necesitas.",
+      "typeOptions": {
+        "access": {
+          "label": "Acceso",
+          "help": "Ver qué datos tuyos guarda Rumbo. Respuesta en hasta 10 días corridos."
+        },
+        "rectification": {
+          "label": "Rectificación",
+          "help": "Corregir un dato que está mal. Respuesta en hasta 5 días hábiles."
+        },
+        "deletion": {
+          "label": "Supresión",
+          "help": "Borrar datos que ya no hacen falta. Respuesta en hasta 5 días hábiles."
+        }
+      },
+      "detail": "Detalle",
+      "detailHelp": "Qué dato y qué necesitas, entre 10 y 500 caracteres. Por ejemplo: Mi segundo apellido figura mal escrito.",
+      "detailRequired": "Cuéntanos en al menos 10 caracteres qué necesitas.",
+      "detailMax": "El detalle puede tener hasta 500 caracteres.",
+      "send": "Enviar solicitud",
+      "sent": "Solicitud {{id}} enviada",
+      "note": "RRHH responde dentro del plazo legal y te avisa en Rumbo.",
+      "sentOn": "Enviada el {{date}}",
+      "due": "Respuesta hasta el {{date}}",
+      "response": "Respuesta de RRHH"
+    },
+    "status": {
+      "new": "Nueva",
+      "in_progress": "En curso",
+      "answered": "Respondida",
+      "rejected": "Rechazada"
+    },
+    "types": {
+      "access": "Acceso",
+      "rectification": "Rectificación",
+      "deletion": "Supresión"
+    },
+    "requests": {
+      "title": "Solicitudes sobre datos personales",
+      "description": "Pedidos de acceso, rectificación o supresión de datos (Ley 25.326). Respóndelos dentro del plazo legal.",
+      "statusFilter": "Estado",
+      "all": "Todas",
+      "open": "Abiertas",
+      "listTitle": "Solicitudes",
+      "empty": "No hay solicitudes con este estado.",
+      "dueIn_one": "Vence en {{count}} día",
+      "dueIn_other": "Vence en {{count}} días",
+      "dueToday": "Vence hoy",
+      "overdue_one": "Venció hace {{count}} día",
+      "overdue_other": "Venció hace {{count}} días",
+      "answeredOn": "Respondida el {{date}}",
+      "open_request": "Ver la solicitud {{id}} de {{name}}",
+      "dialogTitle": "{{id}} · {{type}}",
+      "from": "De",
+      "sent": "Enviada",
+      "due": "Plazo",
+      "request": "Pedido",
+      "take": "Tomar solicitud",
+      "answer": "Responder",
+      "reject": "Rechazar",
+      "responseLabel": "Respuesta",
+      "responseHelp": "Qué hiciste o qué le compartes, entre 10 y 1.000 caracteres. Por ejemplo: Corregimos tu apellido en tu ficha.",
+      "responseRequired": "Escribe una respuesta de al menos 10 caracteres.",
+      "responseMax": "La respuesta puede tener hasta 1.000 caracteres.",
+      "answered": "Solicitud respondida",
+      "rejected": "Solicitud rechazada",
+      "taken": "Solicitud en curso",
+      "closedNote": "Esta solicitud ya está cerrada."
+    },
+    "pii": {
+      "show": "Mostrar",
+      "showLabel": "Mostrar {{field}}",
+      "hide": "Ocultar",
+      "revealTitle": "¿Mostrar el {{field}} de {{name}}?",
+      "revealBody": "Es un dato sensible. Escribe para qué lo necesitas: queda en la auditoría con tu nombre y la hora.",
+      "reason": "Motivo",
+      "reasonHelp": "Entre 10 y 200 caracteres. Por ejemplo: Alta en la obra social.",
+      "reasonRequired": "Escribe un motivo de al menos 10 caracteres.",
+      "reasonMax": "El motivo puede tener hasta 200 caracteres.",
+      "confirm": "Mostrar dato",
+      "revealed": "Dato visible hasta que salgas de esta pantalla",
+      "masked": "Oculto",
+      "noPermission": "Solo RRHH puede mostrar este dato, con un motivo."
+    },
+    "retention": {
+      "anonymization": "Anonimización programada",
+      "anonymizationNote": "El recorrido terminó: sus datos se anonimizan el {{date}}, según la política de retención."
+    },
+    "policies": {
+      "retentionJourney": "Retención de datos del recorrido",
+      "retentionJourneyDetail": "Desde que termina el recorrido; después se anonimizan.",
+      "retentionSelfReview": "Retención de autoevaluaciones",
+      "retentionSelfReviewDetail": "Desde que se envían; solo las ven el jefe directo y RRHH.",
+      "years_one": "{{count}} año",
+      "years_other": "{{count}} años",
+      "notice": "Aviso de privacidad",
+      "noticeDetail": "Versión vigente; una nueva versión pide aceptarlo otra vez."
+    }
   }
 }

@@ -135,6 +135,17 @@ function NavContent({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
             />
           </li>
         )}
+        {can(user, 'privacy:own') && (
+          <li>
+            <SideLink
+              to="/account/privacy"
+              icon="policy"
+              label={t('layout.myPrivacy')}
+              collapsed={collapsed}
+              onNavigate={onNavigate}
+            />
+          </li>
+        )}
         <li>
           <WithTooltip collapsed={collapsed} label={t('layout.signOut')}>
             <button

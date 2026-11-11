@@ -26,6 +26,11 @@ export interface Person {
   employeeId?: string;
   /** Mobile used by IT to verify identity before restoring access (D-78). Fictitious in the demo. */
   mobile?: string;
+  /** F10: sensitive identifiers, fictitious and always shown masked unless revealed with a reason. */
+  dni?: string;
+  cuil?: string;
+  /** Bank account (CBU) for the payroll, 22 digits. */
+  bankAccount?: string;
 }
 
 export interface Session {
@@ -82,6 +87,12 @@ export interface SecurityPolicy {
   passwordMinLength: number;
   /** No unlock-by-time field: unlocking is always done by IT (CLAUDE.md 7, D-02). */
   lockoutAttempts: number;
+  /** F10: years the journey data is kept after the journey ends, then it is anonymized. */
+  retentionJourneyYears: number;
+  /** F10: years the self-reviews are kept. */
+  retentionSelfReviewYears: number;
+  /** F10: version of the privacy notice in force; a new version asks everyone to accept again. */
+  privacyNoticeVersion: string;
 }
 
 export type AuditResult = 'success' | 'failure' | 'denied';
@@ -215,7 +226,9 @@ export type NotificationType =
   | 'access_request.resolved'
   | 'access_request.rejected'
   | 'comment.new'
-  | 'comment.mention';
+  | 'comment.mention'
+  | 'privacy_request.new'
+  | 'privacy_request.answered';
 
 export type NotificationChannel = 'app' | 'email';
 
@@ -256,3 +269,33 @@ export interface Comment {
   editedAt?: string;
   deletedAt?: string;
 }
+
+// ---------- Phase B: F10 privacy ----------
+
+/** Acceptance of the privacy notice, with the version that was accepted (F10). */
+export interface ConsentRecord {
+  personId: string;
+  noticeVersion: string;
+  acceptedAt: string;
+}
+
+export type PrivacyRequestType = 'access' | 'rectification' | 'deletion';
+export type PrivacyRequestStatus = 'new' | 'in_progress' | 'answered' | 'rejected';
+
+/** Request about one's personal data (Ley 25.326), handled by HR within a legal deadline (F10). */
+export interface PrivacyRequest {
+  /** For example `PRIV-2026-0008`. */
+  id: string;
+  personId: string;
+  type: PrivacyRequestType;
+  detail: string;
+  createdAt: string;
+  /** Legal deadline (ISO date): access 10 calendar days, rectification and deletion 5 business days. */
+  dueAt: string;
+  status: PrivacyRequestStatus;
+  response?: string;
+  handledBy?: string;
+  answeredAt?: string;
+}
+
+export type SensitiveField = 'dni' | 'cuil' | 'bankAccount';

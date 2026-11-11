@@ -847,6 +847,7 @@ interface UserPreferences {
   notifications: Record<string, ('app' | 'email')[]>; reduceMotion: boolean; highContrast: boolean;
 }
 // Person suma: status ('active' | 'locked' | 'offboarded'), dni y cuil (ficticios, siempre enmascarados), areaId, jobTitleId, managerId.
+// Implementado (D-113): Person.dni, cuil y bankAccount (CBU), ficticios; SecurityPolicy suma retentionJourneyYears, retentionSelfReviewYears y privacyNoticeVersion.
 ```
 
 ### Reglas de negocio

@@ -17,6 +17,8 @@ export interface CheckedPage {
   pendingMfaFor?: Role;
   /** Show the guided welcome of the role (first visit). Seen by default. */
   welcome?: boolean;
+  /** F10: the person has not accepted the privacy notice yet (to check G8). */
+  consentPending?: boolean;
 }
 
 export const PAGES: CheckedPage[] = [
@@ -29,7 +31,10 @@ export const PAGES: CheckedPage[] = [
   { id: 'g4-access-help', path: '/#/access-help' },
   { id: 'g5-security', path: '/#/account/security', role: 'manager' },
   { id: 'g7-denied', path: '/#/admin', role: 'hire' },
+  { id: 'g8-consent', path: '/#/consent', role: 'hire', consentPending: true },
   { id: 'g9-notifications', path: '/#/notifications', role: 'hire' },
+  { id: 'g10-privacy', path: '/#/account/privacy', role: 'hire' },
+  { id: 'a12-privacy-requests', path: '/#/admin/privacy-requests', role: 'admin' },
   { id: 'g9-notifications-it', path: '/#/notifications', role: 'it_admin' },
   { id: 'g7-not-found', path: '/#/no-existe' },
   { id: 'home-admin', path: '/#/admin', role: 'admin' },
@@ -94,4 +99,21 @@ export async function prepareSession(page: Page, target: CheckedPage) {
   await page.addInitScript((value) => {
     window.localStorage.setItem('rumbo-session', JSON.stringify({ state: value, version: 1 }));
   }, state);
+  // F10: the person already accepted the privacy notice, except on the notice screen (G8) itself.
+  // The dev server serves the app modules, so this writes to the same store the app uses.
+  if (target.role && !target.consentPending) {
+    await page.goto('/#/consent');
+    await page.evaluate(async (personId) => {
+      const { useDataStore } = await import('/src/store/data-store.ts');
+      const s = useDataStore.getState();
+      if (!s.consents.some((c: { personId: string }) => c.personId === personId)) {
+        useDataStore.setState({
+          consents: [
+            ...s.consents,
+            { personId, noticeVersion: s.securityPolicy.privacyNoticeVersion, acceptedAt: '2026-11-01T12:00:00.000Z' },
+          ],
+        });
+      }
+    }, PERSON[target.role]);
+  }
 }

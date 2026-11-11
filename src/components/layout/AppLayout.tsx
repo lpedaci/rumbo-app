@@ -7,6 +7,8 @@ import { BottomNav, MobileNavDrawer, SideNav } from './MainNav';
 import { SessionTimeout } from './SessionTimeout';
 import { TopBar } from './TopBar';
 import { GuidedWelcome } from '@/features/welcome/GuidedWelcome';
+import { useDataStore } from '@/store/data-store';
+import { hasConsent } from '@/lib/privacy';
 
 /**
  * G6 · Layout of the signed-in app: header with the "Ver como" selector and the user
@@ -18,6 +20,9 @@ export function AppLayout() {
   const user = useCurrentUser();
   const location = useLocation();
   const navigate = useNavigate();
+  const consented = useDataStore((s) =>
+    user ? hasConsent(s.consents, user.personId, s.securityPolicy.privacyNoticeVersion) : true,
+  );
 
   useEffect(() => {
     if (!user) {
@@ -26,7 +31,17 @@ export function AppLayout() {
     }
   }, [user, location.pathname, navigate]);
 
+  // F10: before anything else, the privacy notice (G8); afterwards it returns to this route.
+  useEffect(() => {
+    if (user && !consented) {
+      useSessionStore.getState().setReturnTo(location.pathname + location.search);
+      navigate('/consent', { replace: true });
+    }
+  }, [user, consented, location.pathname, location.search, navigate]);
+
   if (!user) return null;
+  // F10: nobody uses the platform without accepting the privacy notice in force (G8).
+  if (!consented) return null;
 
   return (
     <div className="min-h-dvh bg-surface">

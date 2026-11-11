@@ -18,6 +18,7 @@ export const NAV_ITEMS: NavItem[] = [
   { to: '/admin', label: 'layout.nav.dashboard', icon: 'dashboard', action: 'dashboard:view', end: true },
   { to: '/admin/hires', label: 'layout.nav.hires', icon: 'group', action: 'workspace:hr' },
   { to: '/admin/templates', label: 'layout.nav.templates', icon: 'description', action: 'template:view' },
+  { to: '/admin/privacy-requests', label: 'layout.nav.privacy', icon: 'policy', action: 'privacy_request:manage' },
   { to: '/manager', label: 'layout.nav.team', icon: 'groups', action: 'workspace:team' },
   { to: '/me', label: 'layout.nav.journey', icon: 'route', action: 'workspace:journey', end: true },
   { to: '/me/checkin', label: 'layout.nav.checkin', icon: 'fact_check', action: 'checkin:self_review' },

@@ -8,6 +8,7 @@ import type {
   HireTask,
   NotificationType,
   Person,
+  PrivacyRequest,
 } from '@/types/domain';
 import { addDays, DEMO_TODAY } from './dates';
 import { CHECKIN_OFFSETS, isPastDue, taskStatus } from './journey';
@@ -50,6 +51,8 @@ export const NOTIFICATION_TYPES: Record<NotificationType, TypeMeta> = {
   'access_request.rejected': { category: 'access', icon: 'cancel', tone: 'error', email: true },
   'comment.new': { category: 'tasks', icon: 'chat', tone: 'primary', email: false },
   'comment.mention': { category: 'tasks', icon: 'alternate_email', tone: 'tertiary', email: true },
+  'privacy_request.new': { category: 'people', icon: 'policy', tone: 'info', email: true },
+  'privacy_request.answered': { category: 'people', icon: 'policy', tone: 'success', email: true },
 };
 
 export const NOTIFICATION_CATEGORIES: NotificationCategory[] = ['tasks', 'checkins', 'people', 'access'];
@@ -229,6 +232,33 @@ export function commentLink(hire: Hire, task: Pick<HireTask, 'id'>, recipientId:
   if (recipientId === hire.personId) return `/me/tasks/${task.id}#comments`;
   if (recipientId === hire.managerId) return `/manager/hires/${hire.id}?comments=${task.id}`;
   return `/admin/hires/${hire.id}?comments=${task.id}`;
+}
+
+/** F10: a new request about personal data reaches every HR admin; the answer reaches the person. */
+export function onPrivacyRequest(request: PrivacyRequest, people: Person[], personName: string): AppNotification[] {
+  return people
+    .filter((p) => p.role === 'admin')
+    .map((hr) =>
+      makeNotification({
+        recipientId: hr.id,
+        createdAt: request.createdAt,
+        type: 'privacy_request.new',
+        params: { request: request.id, person: personName, date: request.dueAt },
+        link: `/admin/privacy-requests?request=${request.id}`,
+      }),
+    );
+}
+
+export function onPrivacyAnswered(request: PrivacyRequest, when: string): AppNotification[] {
+  return [
+    makeNotification({
+      recipientId: request.personId,
+      createdAt: when,
+      type: 'privacy_request.answered',
+      params: { request: request.id },
+      link: '/account/privacy',
+    }),
+  ];
 }
 
 // ---------- Seed ----------
