@@ -321,3 +321,10 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - `docs/review-fase-a.md` con la estructura de la sección 13: fase A al 95 % (funciones completas), fase B al 10 %.
 - Pendientes de la fase A: wireflows con capturas y verificaciones manuales (teclado, lector de pantalla, Lighthouse, Firefox y Safari).
 - Confirmaciones pendientes de Lourdes: licencia de las fotos nuevas (D-93), crédito en el case study (D-92), criterios de D-53, D-95 y D-99.
+
+## Cierre de la fase A, 11/11/2026 (D-100)
+
+- Wireflows con capturas en `docs/flows.md`: inicio de sesión con MFA, recorrido del nuevo ingreso y crear y guardar una plantilla.
+- Licencia de las cinco fotos nuevas confirmada (D-93); el crédito para el case study queda redactado en `docs/README.md`.
+- La prueba con lector de pantalla pasa a líneas futuras.
+- **Fase A cerrada.** Siguiente: fase B, empezando por F7 (notificaciones).

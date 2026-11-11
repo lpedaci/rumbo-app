@@ -54,3 +54,15 @@ test('captures the architecture figures', async ({ page }) => {
     await figure.screenshot({ path: `docs/readme/${file}.png` });
   }
 });
+
+// Wireflows of docs/flows.md (D-100): real screenshots joined by the action that leads on.
+test('captures the wireflows', async ({ page }) => {
+  await page.setViewportSize({ width: 2600, height: 1200 });
+  await page.goto('/#/wireflows');
+  await page.locator('[data-wireflow="login"]').waitFor();
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForLoadState('networkidle');
+  for (const key of ['login', 'journey', 'template']) {
+    await page.locator(`[data-wireflow="${key}"]`).screenshot({ path: `docs/wireflows/${key}.png` });
+  }
+});

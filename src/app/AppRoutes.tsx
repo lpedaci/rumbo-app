@@ -61,6 +61,10 @@ const SecurityPage = lazy(() => import('@/features/account/SecurityPage').then((
 // Internal style guide: development only (CLAUDE.md 2.8). `import.meta.env.DEV` is
 // replaced with `false` in production builds, so the page is never bundled or deployed.
 // Open Graph card and app icon, captured with `npm run og` (D-76). Development only.
+// Wireflows of docs/flows.md (D-100): development only, exported as images with `npm run og`.
+const WireflowsPage = import.meta.env.DEV
+  ? lazy(() => import('@/features/marketing/WireflowsPage').then((m) => ({ default: m.WireflowsPage })))
+  : null;
 const OgCardPage = import.meta.env.DEV
   ? lazy(() => import('@/features/marketing/OgCard').then((m) => ({ default: m.OgCardPage })))
   : null;
@@ -97,6 +101,7 @@ export function AppRoutes() {
         <Route path="/design-system" element={<DesignSystemPage />} />
 
         {OgCardPage && <Route path="/og-card" element={<OgCardPage />} />}
+        {WireflowsPage && <Route path="/wireflows" element={<WireflowsPage />} />}
 
         {StyleguidePage && <Route path="/styleguide" element={<StyleguidePage />} />}
 

@@ -43,3 +43,10 @@ Rumbo es una plataforma B2B de recorridos de ingreso (onboarding) corporativo. E
 - Fotos de personas: Magnific (magnific.com, antes Freepik), con licencia confirmada por Lourdes para un portfolio público. Detalle de cada archivo en `src/assets/avatars/SOURCE.md`.
 - Íconos: Material Symbols (Google), licencia Apache 2.0.
 - Tipografía: Inter, SIL Open Font License.
+
+## Para el case study
+
+Textos listos para incluir cuando se arme el case study en el portfolio:
+
+- **Crédito de las fotos:** "Fotos de personas: Magnific (magnific.com, antes Freepik), con licencia."
+- **Datos:** "Nortia S.A., sus personas y sus datos son ficticios."

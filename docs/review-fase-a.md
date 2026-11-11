@@ -7,11 +7,11 @@
 
 La **fase A está completa en funciones**: las 24 pantallas del núcleo funcionan con datos de demo, los cuatro roles se recorren de punta a punta y la seguridad simulada, la real del front y la documentada están en su lugar. El build, 247 tests unitarios y 288 pruebas de Playwright pasan.
 
-Lo que falta para cerrarla del todo es **verificación manual**: un recorrido completo solo con teclado, la prueba con lector de pantalla, Lighthouse en el deploy y la prueba en Safari y Firefox. En la documentación, los wireflows todavía no tienen sus capturas.
+Con los wireflows armados (D-100), la documentación queda completa. Lo que resta es **verificación manual**: un recorrido completo solo con teclado, Lighthouse en el deploy y la prueba en Safari y Firefox. La prueba con lector de pantalla queda para líneas futuras.
 
 | Fase | Avance aproximado | Comentario |
 | --- | --- | --- |
-| A · Núcleo (F0 a F6) | **95 %** | Funciones completas; faltan las verificaciones manuales y los wireflows con capturas |
+| A · Núcleo (F0 a F6) | **98 %** | Funciones y documentación completas; quedan verificaciones manuales (teclado, Lighthouse, Firefox y Safari) |
 | B · Base corporativa (F7 a F17) | **10 %** | Solo piezas adelantadas: recorrido guiado de bienvenida (parte de F16), textos en inglés listos (F17), soporte de "reducir animaciones" en el código (F17) |
 
 **Estado del deploy:** al cierre de esta revisión, GitHub tiene un incidente con Actions y Pages (11/11/2026, 20:48 UTC). El sitio publicado es el del run #58 (sitio del sistema de diseño). Los cambios del paso 12 están en `main` y se publican cuando GitHub reanude los runs.
@@ -84,8 +84,8 @@ Lo que falta para cerrarla del todo es **verificación manual**: un recorrido co
 | Errores sin aparecer mientras se escribe, que se quitan al corregir, sin borrar datos, y error de servidor con "Reintentar" | Cumple | Patrón de 2.10 en todos los formularios; G4 simula el error del servidor |
 | axe sin errores, flujos con teclado, alternativa al arrastre | **Cumple parcialmente** | axe en verde en las 32 pantallas probadas a 375 y 1280 px; menú "Subir / Bajar / Mover a etapa" con test. **No se hizo** un recorrido completo solo con teclado de cada flujo |
 | Solo roles de 2.1.1 a 2.1.3; un filled por región; sin tamaños sueltos | Cumple | Revisión de botones (D-91); única clase de tamaño suelta en `OgCard`, que solo genera la imagen para compartir |
-| `docs/flows.md` con task flows, user flows y wireflows rotulados | **Cumple parcialmente** | Task y user flows completos; los wireflows están definidos como secuencias, **sin las capturas** que pide 14.5 |
-| Documentación de la sección 14 completa y coherente, con Mermaid | **Cumple parcialmente** | Ver sección 8; faltan los wireflows con capturas |
+| `docs/flows.md` con task flows, user flows y wireflows rotulados | Cumple | Task y user flows, y wireflows con capturas reales (D-100) |
+| Documentación de la sección 14 completa y coherente, con Mermaid | Cumple | Ver sección 8 |
 | Contraste AA, foco visible y teclado en formularios y constructor | **Cumple parcialmente** | Contraste verificado por test; foco con anillo `primary` en todos los componentes; teclado probado en el constructor; **sin** prueba manual completa |
 | Sin desborde horizontal en 320, 375, 768, 1024, 1280 y 1440 px | Cumple | 192 pruebas de Playwright en verde, capturas en `docs/screenshots/` |
 | Paneles en bento que se reacomodan | Cumple | A1, N1, J1 y S1 en los 6 anchos |
@@ -98,13 +98,12 @@ Lo que falta para cerrarla del todo es **verificación manual**: un recorrido co
 
 ## 4. Qué falta (por prioridad)
 
-1. **Wireflows con capturas** en `docs/flows.md` (login con MFA, recorrido del nuevo ingreso, publicación de una plantilla). Las capturas ya existen en `docs/screenshots/`.
-2. **Prueba con lector de pantalla** (NVDA) en login, recorrido del nuevo ingreso y constructor (RNF-052), con los hallazgos en `issues.md`.
-3. **Recorrido completo solo con teclado** de cada flujo principal (RNF-011).
-4. **Lighthouse** en mobile para G1, N1 y A1 en el deploy (RNF-004), cuando GitHub Pages se normalice.
-5. **Navegadores:** prueba de los flujos críticos en Firefox y Safari (RNF-008). Solo se probó en Chromium.
-6. **Crédito de las fotos en el case study** (fuera de este repositorio) y confirmación de la licencia de las cinco fotos nuevas (D-93).
-7. **Fase B**, en el orden de la sección 10.
+1. **Líneas futuras:** prueba con lector de pantalla (NVDA) en login, recorrido del nuevo ingreso y constructor (RNF-052), por decisión de Lourdes.
+2. **Recorrido completo solo con teclado** de cada flujo principal (RNF-011).
+3. **Lighthouse** en mobile para G1, N1 y A1 en el deploy (RNF-004), cuando GitHub Pages se normalice.
+4. **Navegadores:** prueba de los flujos críticos en Firefox y Safari (RNF-008). Solo se probó en Chromium.
+5. **Crédito de las fotos en el case study**, cuando se arme (texto listo en `docs/README.md`). La licencia de las fotos nuevas ya está confirmada (D-93).
+6. **Fase B**, en el orden de la sección 10.
 
 ---
 
@@ -147,8 +146,7 @@ Se registraron **99 decisiones** (`docs/decisions.md`). Las que necesitan algo d
 
 | Decisión | Qué falta |
 | --- | --- |
-| D-93 | Confirmar la licencia de las cinco fotos nuevas (Lucía, Federico, Julieta, Tomás y Valentina) |
-| D-92 | Agregar "Fotos de personas: Magnific" en el case study |
+| D-92 | Agregar "Fotos de personas: Magnific" en el case study cuando se arme (texto listo en `docs/README.md`) |
 | D-53 | Confirmar el comportamiento del aviso de cambios sin guardar con `createHashRouter` (implementado) |
 | D-95 | Validar el criterio de la CSP: scripts estrictos y estilos en línea permitidos |
 | D-99 | Validar la excepción de animación de ancho en la barra lateral |
@@ -165,7 +163,7 @@ Se registraron **99 decisiones** (`docs/decisions.md`). Las que necesitan algo d
 | `roles.md` | Completo | Matriz sincronizada con `permissions.ts` por test |
 | `requirements.md` | Completo | Estados al día; quedan pendientes la fase B y las verificaciones manuales |
 | `use-cases.md` | Completo | Casos mínimos de 14.4 |
-| `flows.md` | Desactualizado en parte | Wireflows sin capturas |
+| `flows.md` | Completo | Wireflows con capturas (D-100) |
 | `information-architecture.md` | Completo | No incluye el sitio del sistema de diseño (es una página de documentación, no del producto) |
 | `design-system.md` | Completo | Con su sitio navegable (D-98) |
 | `security.md` | Completo | D-95 |
@@ -188,8 +186,7 @@ Coherencia: cada pantalla de la fase A tiene requerimientos asociados y cada req
 
 ## 10. Próximos pasos recomendados
 
-1. Armar los wireflows con capturas en `docs/flows.md`.
-2. Hacer las verificaciones manuales: teclado, NVDA y Lighthouse en el deploy, con los hallazgos en `issues.md`.
-3. Probar en Firefox y Safari.
-4. Cerrar las confirmaciones de la sección 7.
-5. Empezar la fase B por F7 (notificaciones), que destraba la campana del layout y le da vida a varios flujos.
+1. Hacer las verificaciones manuales que quedan: teclado y Lighthouse en el deploy, con los hallazgos en `issues.md`.
+2. Probar en Firefox y Safari.
+3. Cerrar las confirmaciones de la sección 7.
+4. Empezar la fase B por F7 (notificaciones), que destraba la campana del layout y le da vida a varios flujos.

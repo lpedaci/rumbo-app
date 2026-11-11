@@ -401,13 +401,25 @@ Las etapas se derivan de la fecha de ingreso (límites de la sección 7 de `CLAU
 
 ## 6. Wireflows
 
-> **Tipo: wireflow.** Responde *¿qué ve la persona en cada pantalla y qué toca para avanzar?* Se arman con las capturas de `docs/screenshots/` cuando las pantallas estén construidas (decisión D-15). Hasta entonces, cada wireflow queda definido como secuencia de pantallas y acciones.
+> **Tipo: wireflow.** Responde *¿qué ve la persona en cada pantalla y qué toca para avanzar?* Cada wireflow une las capturas reales de `docs/screenshots/` con la acción que lleva a la pantalla siguiente (D-15, D-100). Se regeneran con `npm run og` desde la página interna `/wireflows`.
 
-| Wireflow | Pantallas y acción que lleva a la siguiente | Se completa en |
-| --- | --- | --- |
-| Login con MFA | G0 ("Recorrer como Carla") → G1 ("Continuar con Microsoft") → G2 (simulación neutra con la cuenta ficticia de Carla, sigue sola) → G3 (código precargado, "Verificar") → A1 | Paso 4 (capturas en `docs/screenshots/`) |
-| Recorrido del nuevo ingreso | N1 (tarjeta en "Lo próximo") → N2 ("Marcar como hecha") → N1 (tarea desbloqueada resaltada) → N3 ("Responder mi check-in", "Enviar autoevaluación") → N1 | Paso 5 y 8 |
-| Publicación de una plantilla | A5 ("Crear plantilla") → A6 ("Agregar tarea", ordenar) → A7 ("Ver vista previa") → A6 ("Guardar plantilla" / "Publicar" en fase B) → A5 | Paso 6 |
+### 6.1 Inicio de sesión con MFA
+
+<img src="wireflows/login.png" alt="Wireflow de inicio de sesión: G0, tocar Recorrer como Carla; G1, tocar Continuar con Microsoft; G2, la simulación sigue sola; G3, tocar Verificar con el código precargado; A1, panel de seguimiento." width="100%" />
+
+Carla entra desde la portada con su rol preseleccionado: en tres toques llega a su panel, pasando por la simulación de SSO rotulada y la verificación en dos pasos con el código precargado.
+
+### 6.2 Recorrido del nuevo ingreso
+
+<img src="wireflows/journey.png" alt="Wireflow del recorrido de Sofía: N1 bienvenida, Empezar mi recorrido; N1, tocar una tarea de Lo próximo; N2, Marcar como hecha; N2 tarea bloqueada que muestra de qué depende; N3, autoevaluación." width="100%" />
+
+Sofía arranca con la bienvenida guiada, completa una tarea desde "Lo próximo" (lo que desbloquea las que dependen de ella), entiende por qué otra está bloqueada y responde su autoevaluación antes del check-in.
+
+### 6.3 Crear y guardar una plantilla
+
+<img src="wireflows/template.png" alt="Wireflow de plantillas: A5, Crear plantilla; A6 plantilla nueva, Agregar tarea; A6 editor, ordenar, dependencias y Ver vista previa; A7 vista previa, Guardar plantilla; vuelta a A5." width="100%" />
+
+Carla crea una plantilla, agrega y ordena tareas con sus dependencias, la revisa como la verá el nuevo ingreso y la guarda. La publicación con versiones llega con F8 (fase B).
 
 ---
 
