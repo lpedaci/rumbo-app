@@ -25,7 +25,7 @@ export function PageShell({ children, width = 'narrow' }: PageShellProps) {
         tabIndex={-1}
         className={cn(
           'mx-auto flex w-full flex-col px-(--space-gutter) focus:outline-none',
-          width === 'narrow' ? 'min-h-dvh max-w-2xl justify-center gap-6 py-12' : 'max-w-7xl gap-(--space-section) py-8',
+          width === 'narrow' ? 'min-h-dvh max-w-2xl justify-center gap-6 py-12' : 'max-w-[max(80rem,80%)] gap-(--space-section) py-8',
         )}
       >
         {children}

@@ -45,7 +45,7 @@ export function AppLayout() {
             tabIndex={-1}
             className="min-w-0 flex-1 px-(--space-gutter) pt-2 pb-20 focus:outline-none md:pb-10 md:pl-4"
           >
-            <div className="mx-auto w-full max-w-7xl min-w-0">
+            <div className="mx-auto w-full max-w-[max(80rem,80%)] min-w-0">
               <Outlet />
             </div>
           </main>

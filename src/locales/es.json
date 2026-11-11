@@ -499,7 +499,11 @@
       "viewTable": "Ver como tabla",
       "viewChart": "Ver como gráfico",
       "range": "{{min}} a {{max}}"
-    }
+    },
+    "row": {
+      "doneOn": "Hecha el"
+    },
+    "yoursShort": "Tú"
   },
   "task": {
     "breadcrumb": "Migas de pan",
@@ -535,7 +539,9 @@
       "meeting": "La reunión aparece en tu calendario de trabajo. Márcala como hecha cuando haya terminado.",
       "task": "Sigue los pasos de la descripción y márcala como hecha cuando la termines."
     },
-    "notFound": "No encontramos esta tarea en tu recorrido."
+    "notFound": "No encontramos esta tarea en tu recorrido.",
+    "details": "Detalles",
+    "facts": "Datos de la tarea"
   },
   "templates": {
     "list": {

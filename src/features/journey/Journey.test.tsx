@@ -108,6 +108,19 @@ describe('N2 · Task detail', () => {
     expect(screen.queryByRole('button', { name: es.journey.complete })).not.toBeInTheDocument();
   });
 
+  it('shows the key facts as chips and the details as label and value (D-65)', async () => {
+    renderAt('/me/tasks/h-sofia-d17');
+    await screen.findByRole('heading', { level: 1 });
+    const facts = screen.getByRole('list', { name: es.task.facts });
+    expect(within(facts).getByText(es.taskStatus.blocked)).toBeInTheDocument();
+    expect(within(facts).getByText('Tarea')).toBeInTheDocument();
+    expect(within(facts).getByText('Días 30 a 90')).toBeInTheDocument();
+    const details = screen.getByRole('heading', { name: es.task.details }).closest('section')!;
+    expect(within(details).getByText(es.task.due)).toBeInTheDocument();
+    expect(within(details).getByText('12/12/2026')).toBeInTheDocument();
+    expect(within(details).getByText(es.journey.yoursShort)).toBeInTheDocument();
+  });
+
   it('completes an available task from its detail', async () => {
     renderAt('/me/tasks/h-sofia-d15');
     await screen.findByRole('heading', { level: 1 });

@@ -499,7 +499,11 @@
       "viewTable": "View as table",
       "viewChart": "View as chart",
       "range": "{{min}} to {{max}}"
-    }
+    },
+    "row": {
+      "doneOn": "Done on"
+    },
+    "yoursShort": "You"
   },
   "task": {
     "breadcrumb": "Breadcrumbs",
@@ -535,7 +539,9 @@
       "meeting": "The meeting is on your work calendar. Mark it as done when it has taken place.",
       "task": "Follow the steps in the description and mark it as done when you finish."
     },
-    "notFound": "We couldn't find this task in your journey."
+    "notFound": "We couldn't find this task in your journey.",
+    "details": "Details",
+    "facts": "Task facts"
   },
   "templates": {
     "list": {

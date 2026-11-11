@@ -30,10 +30,16 @@ export function Logo({
         <path d="M19 10.5 23 14l-4 3.5" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="stroke-on-primary" />
       </svg>
       {!markOnly && (
-      <span className="flex min-w-0 flex-col leading-none">
-        <span className="text-title-medium text-on-surface">{t('app.name')}</span>
-        {showCompany && <span className="truncate text-body-small text-on-surface-variant">{t('app.company')}</span>}
-      </span>
+        // One line: product, divider and company (D-64).
+        <span className="flex min-w-0 items-center gap-2 leading-none">
+          <span className="text-title-medium text-on-surface">{t('app.name')}</span>
+          {showCompany && (
+            <>
+              <span aria-hidden className="h-4 w-px bg-outline-variant" />
+              <span className="truncate text-body-medium text-on-surface-variant">{t('app.company')}</span>
+            </>
+          )}
+        </span>
       )}
     </span>
   );

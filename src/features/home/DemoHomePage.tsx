@@ -55,7 +55,7 @@ export function DemoHomePage() {
         {t('app.skipToContent')}
       </a>
       <header>
-        <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-2 px-(--space-gutter)">
+        <div className="mx-auto flex h-16 w-full max-w-[max(80rem,80%)] items-center gap-2 px-(--space-gutter)">
           <Logo />
           <div className="flex-1" />
           <nav aria-label={t('home.linksTitle')} className="hidden items-center gap-1 md:flex">
@@ -68,7 +68,7 @@ export function DemoHomePage() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-(--space-gutter) pt-6 pb-10 focus:outline-none lg:gap-20 lg:pt-10"
+        className="mx-auto flex w-full max-w-[max(80rem,80%)] flex-col gap-16 px-(--space-gutter) pt-6 pb-10 focus:outline-none lg:gap-20 lg:pt-10"
       >
         {lastLogout === 'reset' && (
           <InlineAlert tone="success" live="status">

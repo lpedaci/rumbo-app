@@ -12,12 +12,15 @@ export function DueText({
   status,
   className,
   dateOnly = false,
+  stacked = false,
 }: {
   task: HireTask;
   status: TaskStatus;
   className?: string;
   /** Only the date, without "Vence en…" (template preview, where today is not meaningful). */
   dateOnly?: boolean;
+  /** Date and relative label on two lines (details lists). */
+  stacked?: boolean;
 }) {
   const { t } = useTranslation();
 
@@ -41,6 +44,18 @@ export function DueText({
 
   const rel = relativeDue(task.dueDate);
   const label = 'count' in rel ? t(`due.${rel.key}`, { count: rel.count }) : t(`due.${rel.key}`);
+  if (stacked) {
+    return (
+      <span className={cn('flex flex-col', className)}>
+        <time dateTime={task.dueDate} className="text-on-surface tabular-nums">
+          {formatDate(task.dueDate)}
+        </time>
+        <span className={cn('text-body-small', status === 'overdue' ? 'text-error' : 'text-on-surface-variant')}>
+          {label}
+        </span>
+      </span>
+    );
+  }
   return (
     <span className={cn('text-body-small', status === 'overdue' ? 'text-error' : 'text-on-surface-variant', className)}>
       <time dateTime={task.dueDate}>{formatDate(task.dueDate)}</time> · {label}

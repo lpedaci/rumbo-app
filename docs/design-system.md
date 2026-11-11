@@ -141,6 +141,9 @@ Curvas y duraciones de M3, entre 150 y 300 ms:
 
 ### 2.8 Breakpoints
 
+Ancho del contenido: hasta el 80 % del área disponible y nunca menos de 1.280 px (`max-w-[max(80rem,80%)]`, D-64).
+
+
 | Nombre | Desde | Layout |
 | --- | --- | --- |
 | Mobile | 0 | 1 columna, tablas como tarjetas, áreas táctiles de 48 px |
@@ -242,6 +245,12 @@ Línea suave en `primary` o `tertiary` con relleno plano al 12 % y punto final. 
 ### SegmentedProgress
 Barritas finas (30 por defecto) que se llenan en proporción al avance; anuncia la cantidad real ("13 de 18 tareas hechas"). Se usa en las vistas previas de G0 y G1 y en la bienvenida guiada (D-56).
 
+### Fila de tarea (TaskRow)
+Patrón de lista estándar (D-65): control o ícono a la izquierda; título y "Tipo · Responsable" al medio (y el motivo si está bloqueada); fecha con "Vence en…" y estado a la derecha, en columnas fijas desde 640 px. Toda la fila es el enlace (enlace estirado) y el hover pinta un fondo dentro de sus márgenes, sin subrayado. El control de completar queda por encima del enlace.
+
+### Lista de detalles
+En las fichas (N2 y siguientes), los datos van como `dl` con etiqueta a la izquierda y valor a la derecha, separados por divisores, y los datos clave como chips bajo el título.
+
 ### Línea de tiempo del recorrido (N1)
 Un tramo por etapa relleno según sus tareas hechas, marcador "Hoy · día N" en `tertiary`, y bajo cada tramo nombre, "N de M" y estado con ícono y texto. Cada tramo es un `progressbar` con nombre y valor; "Ver como tabla" muestra los mismos datos en una tabla (D-61).
 
@@ -253,7 +262,7 @@ Panel flotante anclado a su disparador (`--elevation-1`). Al abrir, el foco va a
 
 ### Navegación (G6)
 - **Barra lateral (desde 768 px):** panel blanco flotante a todo el alto, con el botón de plegar arriba. Expandida: ícono + texto; plegada: solo íconos con tooltip y nombre accesible. El ítem activo va en `primary` con ícono relleno. La preferencia se guarda en el navegador.
-- **Barra superior:** sobre el fondo, sin franja: logo, "Ver como", Ayuda, Notificaciones y la persona. Controles con la forma única de 2.1.3, sin círculos ni píldoras con borde (D-62).
+- **Barra superior:** sobre el fondo, sin franja: logo en una línea ("Rumbo | Nortia S.A."), "Ver como", Ayuda, Notificaciones y la persona como avatar (D-64). Controles con la forma única de 2.1.3, sin círculos ni píldoras con borde (D-62).
 - **Mobile:** el botón de menú abre un panel lateral (foco al primer ítem, vuelve al botón al cerrar); barra superior y menú inferior solo con íconos.
 
 ### Bienvenida guiada

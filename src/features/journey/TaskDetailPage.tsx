@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
-import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icon';
@@ -56,15 +55,23 @@ export function TaskDetailPage() {
         </Link>
       </nav>
 
-      <PageHeader
-        eyebrow={
-          <span className="inline-flex items-center gap-1">
-            <Icon name={TASK_TYPE_ICON[task.type]} size={16} />
-            {t(`taskTypes.${task.type}`)} · {t(`stages.${task.stage}`)}
-          </span>
-        }
-        title={task.title}
-      />
+      <header className="mb-(--space-section) flex min-w-0 flex-col gap-3">
+        <h1 className="text-headline-small text-balance text-on-surface">{task.title}</h1>
+        {/* Key facts as chips (D-65): status, type and stage */}
+        <ul aria-label={t('task.facts')} className="flex flex-wrap items-center gap-2">
+          <li>
+            <TaskStatusPill status={status} />
+          </li>
+          <li className="inline-flex h-6 items-center gap-1 rounded-full border border-outline-variant bg-surface-container-lowest pr-2.5 pl-1.5 text-label-medium text-on-surface">
+            <Icon name={TASK_TYPE_ICON[task.type]} size={16} className="text-on-surface-variant" />
+            {t(`taskTypes.${task.type}`)}
+          </li>
+          <li className="inline-flex h-6 items-center gap-1 rounded-full border border-outline-variant bg-surface-container-lowest pr-2.5 pl-1.5 text-label-medium text-on-surface">
+            <Icon name="flag" size={16} className="text-on-surface-variant" />
+            {t(`stages.${task.stage}`)}
+          </li>
+        </ul>
+      </header>
 
       <div className="grid grid-cols-1 gap-(--space-bento-gap) lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)]">
         <div className="flex min-w-0 flex-col gap-(--space-bento-gap)">
@@ -111,10 +118,12 @@ export function TaskDetailPage() {
             <InlineAlert tone="info">{t('task.otherOwner', { owner: t(`owners.${task.owner}`) })}</InlineAlert>
           )}
 
-          <Card title={t('task.about')}>
-            <p className="text-body-large text-on-surface">{task.description}</p>
-          </Card>
 
+          {task.type === 'course' && (
+            <Card title={t('task.about')}>
+              <p className="text-body-large text-on-surface">{task.description}</p>
+            </Card>
+          )}
           {task.type === 'course' ? (
             <Card title={t('task.course.title')} description={t('task.course.intro')}>
               <ol className="flex flex-col divide-y divide-outline-variant rounded-md border border-outline-variant">
@@ -139,8 +148,12 @@ export function TaskDetailPage() {
               )}
             </Card>
           ) : (
-            <Card title={t('task.material.title')}>
-              <p className="text-body-medium text-on-surface-variant">{t(`task.material.${task.type}`)}</p>
+            <Card title={t('task.about')}>
+              <p className="text-body-large text-on-surface">{task.description}</p>
+              <p className="flex items-start gap-2 rounded-md bg-surface-container px-3 py-2.5 text-body-medium text-on-surface-variant">
+                <Icon name={TASK_TYPE_ICON[task.type]} className="mt-0.5 shrink-0" />
+                {t(`task.material.${task.type}`)}
+              </p>
               {canComplete && (
                 <div className="flex justify-end">
                   <Button leadingIcon="check" onClick={onComplete} fullWidth className="sm:w-auto">
@@ -152,33 +165,40 @@ export function TaskDetailPage() {
           )}
         </div>
 
-        <Card title={t('task.status')} className="h-fit">
-          <dl className="flex flex-col gap-3">
-            <div className="flex flex-col gap-1">
-              <dt className="text-label-medium text-on-surface-variant">{t('task.status')}</dt>
-              <dd>
-                <TaskStatusPill status={status} />
-              </dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-label-medium text-on-surface-variant">{t('task.due')}</dt>
-              <dd>
-                <DueText task={task} status={status} className="text-body-medium" />
-              </dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-label-medium text-on-surface-variant">{t('task.owner')}</dt>
-              <dd className="text-body-medium text-on-surface">
-                {ownTask ? t('journey.yours') : t(`owners.${task.owner}`)}
-              </dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-label-medium text-on-surface-variant">{t('task.type')}</dt>
-              <dd className="text-body-medium text-on-surface">{t(`taskTypes.${task.type}`)}</dd>
-            </div>
+        <Card title={t('task.details')} className="h-fit">
+          <dl className="flex flex-col divide-y divide-outline-variant">
+            <DetailRow label={t('task.due')}>
+              {status === 'done' ? (
+                <time dateTime={task.dueDate} className="tabular-nums">
+                  {formatDate(task.dueDate)}
+                </time>
+              ) : (
+                <DueText task={task} status={status} className="text-body-medium" stacked />
+              )}
+            </DetailRow>
+            {status === 'done' && task.completedAt && (
+              <DetailRow label={t('journey.row.doneOn')}>
+                <time dateTime={task.completedAt.slice(0, 10)} className="tabular-nums">
+                  {formatDate(task.completedAt)}
+                </time>
+              </DetailRow>
+            )}
+            <DetailRow label={t('task.owner')}>{ownTask ? t('journey.yoursShort') : t(`owners.${task.owner}`)}</DetailRow>
+            <DetailRow label={t('task.type')}>{t(`taskTypes.${task.type}`)}</DetailRow>
+            <DetailRow label={t('task.stage')}>{t(`stages.${task.stage}`)}</DetailRow>
           </dl>
         </Card>
       </div>
     </>
+  );
+}
+
+/** One row of the details list: label on the left, value on the right (stacks on very narrow cards). */
+function DetailRow({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-0.5 py-2.5 first:pt-0 last:pb-0">
+      <dt className="text-body-medium text-on-surface-variant">{label}</dt>
+      <dd className="text-right text-body-medium text-on-surface">{children}</dd>
+    </div>
   );
 }

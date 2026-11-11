@@ -32,13 +32,14 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - **G6:** barra lateral flotante a todo el alto con el botón para plegar arriba, ítems del rol y cuenta abajo; barra superior sin franja con logo, "Ver como", Ayuda, Notificaciones y la persona; en mobile, panel lateral desde el botón de menú y barras con solo íconos (D-57, D-58, D-60, D-62).
 - **G0:** hero a dos columnas con titular grande, botones y vista previa compuesta con datos reales (KPIs con sparkline, gráfico de tareas por semana con tooltip oscuro y tarjeta de recorrido con barra segmentada); tarjetas de rol con banda de color; enlaces al case study y la documentación en el encabezado.
 - **G1:** login en dos columnas con panel tintado, frase de valor y la vista previa del producto (solo desde 1024 px).
+- **Ajustes D-64 y D-65:** contenido al 80 % del ancho en desktop, logo en una línea, persona como avatar, filas de tarea con columnas de fecha y estado, hover sin subrayado y detalle de tarea (N2) con chips y lista de detalles.
 - **N1:** saludo como título; fila de KPIs como `ad2d9e23` (D-63); "Tu recorrido de ingreso" con la línea de tiempo por etapas, la frase de estado, "Ver como tabla" y "Lo próximo" (D-61); check-in con los hitos a conversar; contactos en filas compactas con detalle al tocar; recorrido completo con las tareas hechas plegadas (D-59).
 - **Bienvenida guiada de Sofía:** 3 pasos con ilustraciones hechas con componentes reales, puntos de progreso, "Saltar", "Anterior" y "Continuar", y cierre "Empezar mi recorrido".
 - **Router:** migración a `createHashRouter` y `useBlocker` en el editor de plantillas (D-53).
 
-**Verificación:** `tsc`, ESLint, 207 tests y 207 casos de Playwright en verde en dos corridas seguidas (desbordes en los 6 anchos y axe, incluida la bienvenida abierta). Recorrido manual a 320, 375, 768, 1024 y 1280 px.
+**Verificación:** `tsc`, ESLint, 208 tests y 207 casos de Playwright en verde (desbordes en los 6 anchos y axe, incluida la bienvenida abierta). Recorrido manual a 375, 1280, 1680 y 1844 px.
 
-**Pendiente:** aplicar el estilo a A5 (catálogo de tarjetas), A6, A7, N2 y G2 a G5, y seguir con el paso 7. D-63 conviene confirmarla.
+**Pendiente:** aplicar el estilo a A5 (catálogo de tarjetas), A6, A7 y G2 a G5 (N2 ya está), y seguir con el paso 7. D-63 conviene confirmarla.
 
 ## Paso 6: plantillas (A5, A6 y A7)
 

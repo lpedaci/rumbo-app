@@ -30,8 +30,8 @@ export function NextStepRow({ task, allTasks }: { task: HireTask; allTasks: Hire
             status === 'overdue' ? 'text-error' : status === 'in_progress' ? 'text-info' : 'text-on-surface-variant',
           )}
         />
-        <span className="flex min-w-0 flex-1 flex-col">
-          <span className="truncate text-title-small text-on-surface group-hover:underline group-hover:underline-offset-4">
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="truncate text-title-small text-on-surface">
             {task.title}
           </span>
           <span className="flex flex-wrap items-center gap-x-2 text-body-small text-on-surface-variant">
