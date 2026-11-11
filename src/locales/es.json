@@ -912,7 +912,9 @@
         "moveTo": "Mover a etapa…",
         "delete": "Eliminar tarea",
         "day": "Día {{day}}",
-        "dependsOn": "Depende de: {{tasks}}"
+        "dependsOn": "Depende de: {{tasks}}",
+        "facts": "Datos de la tarea",
+        "owner": "Responsable"
       },
       "dnd": {
         "instructions": "Para mover una tarea con el teclado, enfoca su manija y presiona Espacio. Usa las flechas para cambiar de lugar y Espacio de nuevo para soltarla, o Escape para cancelar.",

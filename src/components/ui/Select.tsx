@@ -32,7 +32,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
   const invalid = Boolean(error);
 
   return (
-    <div className={cn('flex min-w-0 flex-col gap-1', className)}>
+    <div className={cn('flex min-w-0 flex-col gap-2', className)}>
       <label htmlFor={selectId} className={cn('text-label-medium text-on-surface', disabled && 'text-on-surface/38')}>
         {label}
         {required && <span className="text-on-surface-variant"> ({t('ui.required')})</span>}

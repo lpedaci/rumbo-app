@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router';
-import { PageHeader } from '@/components/layout/PageHeader';
+import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ChoiceGroup } from '@/components/ui/ChoiceGroup';
@@ -56,7 +56,8 @@ export function ManagerCheckinPage() {
     return <AccessDeniedPage reason="not_found" />;
   }
 
-  const name = people.find((p) => p.id === hire.personId)?.name ?? '';
+  const person = people.find((p) => p.id === hire.personId);
+  const name = person?.name ?? '';
   const days = CHECKIN_OFFSETS[checkin.stage];
   const backTo = `/manager/hires/${hire.id}`;
   const askAction = needsAction(results);
@@ -121,11 +122,31 @@ export function ManagerCheckinPage() {
           {t('managerCheckin.back', { name: name.split(' ')[0] })}
         </Link>
       </nav>
-      <PageHeader
-        title={t('managerCheckin.title', { days })}
-        description={t('managerCheckin.description', { name: name.split(' ')[0] })}
-        eyebrow={`${name} · ${t('managerCheckin.due', { date: formatDate(checkinDueDate(checkin)) })}`}
-      />
+      {/* Who and when at a glance (D-82): photo, name and the date as chips */}
+      <header className="mb-(--space-section) flex min-w-0 flex-col gap-6">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
+          {person && <Avatar name={person.name} role={person.role} size="lg" />}
+          <div className="flex min-w-0 flex-col gap-2">
+            <span className="truncate text-title-medium text-on-surface">{person?.name}</span>
+            <ul className="flex flex-wrap items-center gap-2">
+              <li className="inline-flex h-7 items-center gap-1.5 rounded-full bg-tertiary-container px-2.5 text-label-medium text-on-tertiary-container">
+                <Icon name="event" size={16} />
+                {t('managerCheckin.due', { date: formatDate(checkinDueDate(checkin)) })}
+              </li>
+              <li className="inline-flex h-7 items-center gap-1.5 rounded-full border border-outline-variant px-2.5 text-label-medium text-on-surface">
+                <Icon name="badge" size={16} className="text-on-surface-variant" />
+                {person?.jobTitle}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="flex flex-col gap-1">
+          <h1 className="text-headline-small text-balance text-on-surface">{t('managerCheckin.title', { days })}</h1>
+          <p className="text-body-large text-pretty text-on-surface-variant">
+            {t('managerCheckin.description', { name: name.split(' ')[0] })}
+          </p>
+        </div>
+      </header>
 
       {checkin.status === 'completed' ? (
         <InlineAlert tone="success">{t('managerCheckin.alreadyDone')}</InlineAlert>

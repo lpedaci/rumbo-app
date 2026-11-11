@@ -27,18 +27,19 @@ interface GreetingHeaderProps {
  */
 export function GreetingHeader({ date, greeting, name, facts, actions }: GreetingHeaderProps) {
   return (
-    <header className="mb-(--space-section) flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-      <div className="flex min-w-0 flex-col gap-3">
-        <div className="flex min-w-0 flex-col gap-1">
+    <header className="mb-(--space-section) flex min-w-0 flex-col gap-4 pt-2 sm:flex-row sm:items-end sm:justify-between md:pt-4">
+      {/* More presence and air (D-82): larger greeting, clear steps between date, title and chips */}
+      <div className="flex min-w-0 flex-col gap-5">
+        <div className="flex min-w-0 flex-col gap-2">
           <p className="flex items-center gap-1.5 text-label-large text-on-surface-variant first-letter:uppercase">
             <Icon name="calendar_today" size={16} className="shrink-0" />
             <span className="first-letter:uppercase">{date}</span>
           </p>
-          <h1 className="text-headline-small text-balance text-on-surface">
+          <h1 className="text-headline-small text-balance text-on-surface md:text-display-small">
             {greeting}, <span className="text-primary">{name}</span>
           </h1>
         </div>
-        <ul className="flex flex-wrap gap-2">
+        <ul className="flex flex-wrap gap-3">
           {facts.map((fact) => (
             <li
               key={fact.label}

@@ -912,7 +912,9 @@
         "moveTo": "Move to stage…",
         "delete": "Delete task",
         "day": "Day {{day}}",
-        "dependsOn": "Depends on: {{tasks}}"
+        "dependsOn": "Depends on: {{tasks}}",
+        "facts": "Task details",
+        "owner": "Owner"
       },
       "dnd": {
         "instructions": "To move a task with the keyboard, focus its handle and press Space. Use the arrow keys to change its place and Space again to drop it, or Escape to cancel.",

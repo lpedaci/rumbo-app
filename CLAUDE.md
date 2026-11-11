@@ -164,7 +164,7 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 
 **Patrones concretos a incorporar** (tomados de `/design-references/`):
 1. **Capas visibles:** fondo de página tintado (`surface`) con tarjetas blancas encima; la diferencia tiene que verse a simple vista.
-2. **Encabezado de saludo en los inicios de cada rol** (`GreetingHeader`, D-67): arriba la fecha de hoy con ícono; el saludo con el nombre en `primary` ("Buenos días, **Sofía**", `headline-small`, único `h1`); debajo, chips con ícono y texto con el contexto (por ejemplo "Día 28 de 90", "Mes 1 · etapa actual"). El dato que pide atención va en `tertiary-container` ("Check-in en 2 días"). Números de KPI grandes (`display-small` desde 1280 px).
+2. **Encabezado de saludo en los inicios de cada rol** (`GreetingHeader`, D-67, D-82: `display-small` desde 768 px y más aire entre fecha, título y chips): arriba la fecha de hoy con ícono; el saludo con el nombre en `primary` ("Buenos días, **Sofía**", `headline-small`, único `h1`); debajo, chips con ícono y texto con el contexto (por ejemplo "Día 28 de 90", "Mes 1 · etapa actual"). El dato que pide atención va en `tertiary-container` ("Check-in en 2 días"). Números de KPI grandes (`display-small` desde 1280 px).
 3. **KPIs con vida:** cada tarjeta lleva arriba el ícono en un contenedor de color y la **sparkline**; después la etiqueta, el número y la píldora de variación siempre debajo del número, con los datos alineados abajo (D-63). La fila pone tantas tarjetas como entren con un mínimo de 8,5 rem: 4 KPIs breves en una línea desde tablet, 2 por fila en mobile, y si una tarjeta tiene más contenido pasa sola a dos líneas (D-68). La sparkline solo se muestra si la tarjeta mide al menos 10,5 rem y nunca por debajo de 360 px de pantalla; la píldora pasa a dos líneas en lugar de cortarse (D-69).
 4. **Gráficos protagonistas:** el gráfico principal ocupa una tarjeta grande, con relleno plano suave, ejes discretos y **tooltip oscuro** (`inverse-surface` de M3, `#1F2A30` con texto blanco).
 5. **Navegación lateral (referencia `ad2d9e23`, D-57, D-58, D-60):** una sola barra blanca flotante, con esquinas redondeadas y a todo el alto. Arriba, el botón para plegarla a íconos (la elección queda guardada; plegada por defecto por debajo de 1280 px). Al medio, los ítems del rol con el activo en píldora sólida `primary` (ícono y texto blancos). Abajo, "Mi seguridad" y "Cerrar sesión". Íconos de Material Symbols.
@@ -205,7 +205,7 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 - Mismo espacio entre tarjetas en toda la grilla (token de espaciado), mismo radio y mismo padding interno.
 - Cada tarjeta tiene título, dato principal y, si corresponde, una acción ("Ver detalle"). Nada de tarjetas con contenido que no cabe: si no entra, la tarjeta cambia de tamaño o el contenido se resume.
 - **Sin huecos:** una tarjeta que en tablet quedaría sola en media fila ocupa la fila completa y reparte su contenido en dos columnas internas (D-68).
-- **Ancho del contenido:** hasta el 80 % del área disponible y nunca menos de 1.280 px (D-64).
+- **Ancho del contenido:** todo el ancho disponible, alineado con la barra superior; desde 1920 px, 10 % de margen interno por lado (D-82).
 - **Ritmo vertical de 8 px:** 32 px entre secciones y 8 a 16 px dentro de cada una (D-69).
 
 ### 2.5 Sombras y elevación (uso mínimo)
@@ -296,6 +296,7 @@ Todos los textos viven en `src/locales/`. Antes de cerrar cada pantalla, revisar
 **Formularios: etiqueta, texto de ayuda y placeholder**
 - Cada campo tiene una **etiqueta visible y permanente** arriba del campo (`label-medium`). El placeholder **nunca** reemplaza a la etiqueta: desaparece al escribir y suele tener poco contraste.
 - Los campos ocupan todo el ancho del formulario, y las etiquetas y los textos de ayuda nunca se cortan (D-69).
+- 8 px entre la etiqueta, el campo y el texto de ayuda (D-82).
 - **Debajo de cada campo va un texto de ayuda** (*supporting text* de M3, `body-small`, color `on-surface-variant`) que indica **exactamente qué hay que poner y en qué formato**, con un ejemplo. Por ejemplo:
     - Correo: "Tu correo de trabajo, por ejemplo: nombre.apellido@nortia.demo".
     - Fecha de ingreso: "Formato DD/MM/AAAA, por ejemplo: 13/10/2026".

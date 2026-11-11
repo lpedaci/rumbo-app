@@ -45,7 +45,8 @@ export function AppLayout() {
             tabIndex={-1}
             className="min-w-0 flex-1 px-(--space-gutter) pt-5 pb-20 md:pt-6 focus:outline-none md:pb-10 md:pl-4"
           >
-            <div className="mx-auto w-full max-w-[max(80rem,80%)] min-w-0">
+            {/* Full width, aligned with the top bar; from 1920 px, 10 % inner padding per side (D-82) */}
+            <div className="w-full min-w-0 min-[120rem]:px-[10%]">
               <Outlet />
             </div>
           </main>
