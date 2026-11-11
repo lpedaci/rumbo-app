@@ -64,7 +64,7 @@ describe('N1 · Compact contacts and folded done tasks', () => {
   it('shows name and relation, and the email after tapping the contact', async () => {
     renderAt('/me');
     await screen.findByRole('heading', { level: 1 });
-    const martin = screen.getByRole('button', { name: /Martín Sosa.*Jefe directo/ });
+    const martin = screen.getByRole('button', { name: /Martín Rossi.*Jefe directo/ });
     expect(screen.queryByRole('link', { name: /martin@nortia\.demo/ })).not.toBeInTheDocument();
     fireEvent.click(martin);
     expect(await screen.findByRole('link', { name: /martin@nortia\.demo/ })).toHaveAttribute(
@@ -92,12 +92,15 @@ describe('N1 · Journey timeline', () => {
   it('shows each stage with its progress, today marker and a table alternative', async () => {
     renderAt('/me');
     await screen.findByRole('heading', { level: 1 });
-    expect(screen.getByText('Tienes 1 tarea vencida. Revísala en Lo próximo.')).toBeInTheDocument();
+    // The reference to "Lo próximo" is a chip that jumps to that section (D-83)
+    const chip = screen.getByRole('button', { name: 'Lo próximo' });
+    expect(chip.closest('p')).toHaveTextContent('Tienes 1 tarea vencida. Revísala en Lo próximo.');
     expect(screen.getByText('Hoy · día 28')).toBeInTheDocument();
     const month = screen.getByRole('progressbar', { name: 'Avance de Mes 1' });
     expect(month).toHaveAttribute('aria-valuetext', '3 de 5');
 
-    fireEvent.click(screen.getByRole('button', { name: es.journey.timeline.viewTable }));
+    // No visible toggle: the table is always there for screen readers (D-83)
+    expect(screen.queryByRole('button', { name: es.journey.timeline.viewTable })).not.toBeInTheDocument();
     const table = screen.getByRole('table', { name: es.journey.timeline.caption });
     expect(within(table).getAllByRole('row')).toHaveLength(5);
     expect(within(table).getByRole('rowheader', { name: 'Mes 1' })).toBeInTheDocument();

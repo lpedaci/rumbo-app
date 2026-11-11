@@ -256,3 +256,9 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Lógica en `src/lib/checkins.ts`, acciones `submitSelfReview` y `completeCheckin` en el store, componente `ChoiceGroup`, tests de componentes y J1 a N3 en las pruebas de desbordes y axe.
 
 **Pendiente:** paso 9 (A1, panel de seguimiento con alertas) y paso 10 (S1 a S3).
+
+## Ajustes D-83 y D-84, 11/11/2026
+
+- Contactos clave completos en desktop, sin "Ver como tabla" (la tabla queda para lectores de pantalla) y chips `RefChip` para las referencias a otras secciones (N1, G0, pantallas en construcción).
+- Fechas de las filas de tareas jerarquizadas en N1, A4, J2 y A7, y "Lo próximo" sin datos repetidos.
+- Martín pasa a llamarse Martín Rossi; Nicolás Acosta tiene foto. Versión de datos guardados 4.

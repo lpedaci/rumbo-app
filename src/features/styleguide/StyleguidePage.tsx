@@ -431,7 +431,7 @@ export function StyleguidePage() {
               {(
                 [
                   ['Carla Méndez', 'admin', 'RRHH: primary-container'],
-                  ['Martín Sosa', 'manager', 'Jefe directo: tertiary-container'],
+                  ['Martín Rossi', 'manager', 'Jefe directo: tertiary-container'],
                   ['Sofía Ramírez', 'hire', 'Nuevo ingreso: secondary-container'],
                   ['Diego Ferreyra', 'it_admin', 'Sistemas: info-container'],
                 ] as const

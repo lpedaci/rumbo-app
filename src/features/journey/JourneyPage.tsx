@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { GreetingHeader } from '@/components/layout/GreetingHeader';
 import { BentoCard } from '@/components/ui/BentoCard';
@@ -9,6 +9,7 @@ import { IconTile } from '@/components/ui/IconTile';
 import { Icon } from '@/components/ui/Icon';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { KpiCard, KpiRow } from '@/components/ui/KpiCard';
+import { RefChip } from '@/components/ui/RefChip';
 import { daysBetween, DEMO_TODAY, formatDate, formatLongDate, formatNumber, formatPercent, STAGES } from '@/lib/dates';
 import {
   CHECKIN_OFFSETS,
@@ -24,6 +25,7 @@ import {
   taskStatus,
 } from '@/lib/journey';
 import { canCompleteTask } from '@/lib/permissions';
+import { useMediaQuery } from '@/lib/use-media-query';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
@@ -48,6 +50,7 @@ const JOURNEY_DAYS = 90;
  */
 export function JourneyPage() {
   const { t, i18n } = useTranslation();
+  const wide = useMediaQuery('(min-width: 64rem)', false);
   const user = useCurrentUser();
   const hire = useOwnHire();
   const people = useDataStore((s) => s.people);
@@ -126,9 +129,7 @@ export function JourneyPage() {
                   icon: 'event' as const,
                   tone: 'accent' as const,
                   label:
-                    checkinIn <= 0
-                      ? t('journey.facts.checkinToday')
-                      : t('journey.facts.checkin', { count: checkinIn }),
+                    checkinIn <= 0 ? t('journey.facts.checkinToday') : t('journey.facts.checkin', { count: checkinIn }),
                 },
               ]
             : []),
@@ -217,11 +218,27 @@ export function JourneyPage() {
                 filled={ownOverdue === 0}
                 className={cn('mt-px shrink-0', ownOverdue > 0 ? 'text-error' : 'text-success')}
               />
-              {ownOverdue > 0 ? t('journey.timeline.overdue', { count: ownOverdue }) : t('journey.timeline.onTrack')}
+              <span>
+                {ownOverdue > 0 ? (
+                  <Trans
+                    i18nKey="journey.timeline.overdue"
+                    count={ownOverdue}
+                    components={{ next: <RefChip icon="arrow_downward" targetId="journey-next" /> }}
+                  />
+                ) : (
+                  t('journey.timeline.onTrack')
+                )}
+              </span>
             </p>
             <JourneyTimeline byStage={byStage} stage={stage} day={day} />
             <div className="flex flex-col gap-2">
-              <h3 className="text-title-small text-on-surface">{t('journey.next.title')}</h3>
+              <h3
+                id="journey-next"
+                tabIndex={-1}
+                className="scroll-mt-28 text-title-small text-on-surface outline-none"
+              >
+                {t('journey.next.title')}
+              </h3>
               {upNext.length > 0 ? (
                 <ul className="flex flex-col divide-y divide-outline-variant overflow-hidden rounded-lg border border-outline-variant">
                   {upNext.map((task) => (
@@ -266,7 +283,11 @@ export function JourneyPage() {
                   </ul>
                 </div>
               )}
-              <Button asChild variant={checkin.status === 'pending' ? 'tonal' : 'outlined'} className="mt-auto w-fit md:mt-0 xl:mt-auto">
+              <Button
+                asChild
+                variant={checkin.status === 'pending' ? 'tonal' : 'outlined'}
+                className="mt-auto w-fit md:mt-0 xl:mt-auto"
+              >
                 <Link to={`/me/checkin/${checkin.stage}`}>
                   {checkin.status === 'pending' ? t('journey.checkin.respond') : t('journey.checkin.review')}
                 </Link>
@@ -280,7 +301,7 @@ export function JourneyPage() {
         <BentoCard
           size="wide"
           title={t('journey.contacts.title')}
-          description={t('journey.contacts.hint')}
+          description={wide ? undefined : t('journey.contacts.hint')}
         >
           {/* Compact: avatar, name and relation; tapping opens job title and email. */}
           <ul className="grid grid-cols-1 gap-2 sm:grid-cols-3">

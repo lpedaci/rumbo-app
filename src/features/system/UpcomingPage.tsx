@@ -1,17 +1,15 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router';
 import { NAV_ITEMS } from '@/app/navigation';
 import { Icon } from '@/components/ui/Icon';
 import { IconTile } from '@/components/ui/IconTile';
+import { RefChip } from '@/components/ui/RefChip';
 import { findDemoPerson } from '@/features/auth/auth-service';
 import { can } from '@/lib/permissions';
 import { useCurrentUser } from '@/store/session-store';
 
 export type ScreenId =
-  | 'A1' | 'A2' | 'A3' | 'A4' | 'A5' | 'A6' | 'A7'
-  | 'J1' | 'J2' | 'J3'
-  | 'N1' | 'N2' | 'N3'
-  | 'S1' | 'S2' | 'S3';
+  'A1' | 'A2' | 'A3' | 'A4' | 'A5' | 'A6' | 'A7' | 'J1' | 'J2' | 'J3' | 'N1' | 'N2' | 'N3' | 'S1' | 'S2' | 'S3';
 
 /**
  * Screen still in progress (steps 8 to 10; redesign D-80): instead of a bare notice, it says
@@ -46,7 +44,9 @@ export function UpcomingPage({ screen }: { screen: ScreenId }) {
             <h1 id="upcoming-title" className="text-headline-small text-balance text-on-surface">
               {t(`upcoming.screens.${screen}`)}
             </h1>
-            <p className="text-body-large text-on-surface-variant">{t('upcoming.body')}</p>
+            <p className="text-body-large text-on-surface-variant">
+              <Trans i18nKey="upcoming.body" components={{ viewAs: <RefChip icon="swap_horiz" /> }} />
+            </p>
           </div>
           {preview.length > 0 && (
             <div className="flex flex-col gap-2">

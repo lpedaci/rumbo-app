@@ -11,8 +11,9 @@ Provistos por Lourdes en `design-references/`, recortados al rostro y reducidos 
 | Archivo | Persona | Original |
 | --- | --- | --- |
 | `carla.webp` | Carla Méndez, RRHH | `face-generator_gallery_1763099172_3441.avif` (generada con IA) |
-| `martin.webp` | Martín Sosa, jefe directo | `close-up-confident-male-employee-…jpg` |
+| `martin.webp` | Martín Rossi, jefe directo | `close-up-confident-male-employee-…jpg` |
 | `sofia.webp` | Sofía Ramírez, nuevo ingreso | `close-up-good-looking-smiling-friendly-female-trainee-…jpg` |
 | `diego.webp` | Diego Ferreyra, sistemas | `2148928793.jpg` |
+| `nicolas.webp` | Nicolás Acosta, buddy de Sofía (agregado el 11/11/2026, D-84) | `young-man-formal-clothes_21730-2120.avif` |
 
 Origen: banco de imágenes Magnific (magnific.com, antes Freepik), búsqueda "corporate people headshot picture". Licencia: Lourdes confirmó el 11/11/2026 que los cuatro originales tienen licencia para usarse en un portfolio público. La licencia gratuita de ese banco pide atribución: el pie de G0 incluye "Fotos de personas: Magnific".

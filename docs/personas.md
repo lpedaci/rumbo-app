@@ -47,7 +47,7 @@ Piensa en sistemas: quiere diseñar una vez y reutilizar. Revisa el estado gener
 
 ---
 
-## 2. Martín Sosa · Jefe directo (Líder de Desarrollo)
+## 2. Martín Rossi · Jefe directo (Líder de Desarrollo)
 
 > Proto-persona: hipótesis sin validar · 10/11/2026
 

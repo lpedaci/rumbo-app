@@ -257,7 +257,7 @@
   },
   "upcoming": {
     "greeting": "Hi, {{name}}",
-    "body": "This screen arrives in the next version of the prototype. Meanwhile, you can explore the sections that already work or switch roles with \"View as\".",
+    "body": "This screen arrives in the next version of the prototype. Meanwhile, you can explore the sections that already work or switch roles with <viewAs>View as</viewAs>.",
     "screens": {
       "A1": "Tracking dashboard",
       "A2": "New hires",
@@ -516,11 +516,11 @@
         },
         {
           "q": "How do I switch roles?",
-          "a": "Once inside, use the \"View as\" selector in the top bar. Switching roles is the same as signing in with that role's demo user."
+          "a": "Once inside, use the <viewAs>View as</viewAs> selector in the top bar. Switching roles is the same as signing in with that role's demo user."
         },
         {
           "q": "Are changes saved?",
-          "a": "Yes, only in this browser. You can go back to the initial state with \"Reset demo\", at the bottom of this page or in the user menu."
+          "a": "Yes, only in this browser. You can go back to the initial state with <reset>Reset demo</reset>, at the bottom of this page or in the user menu."
         },
         {
           "q": "Is the security real?",
@@ -610,7 +610,7 @@
         },
         {
           "title": "Switch roles anytime",
-          "body": "With the \"View as\" selector in the top bar you see the same process from another perspective."
+          "body": "With the <viewAs>View as</viewAs> selector in the top bar you see the same process from another perspective."
         }
       ],
       "titleHighlight": "in three steps"
@@ -771,8 +771,8 @@
         "upcoming": "Upcoming"
       },
       "onTrack": "You are up to date: no overdue tasks.",
-      "overdue_one": "You have {{count}} overdue task. Check it in Up next.",
-      "overdue_other": "You have {{count}} overdue tasks. Check them in Up next.",
+      "overdue_one": "You have {{count}} overdue task. Check it in <next>Up next</next>.",
+      "overdue_other": "You have {{count}} overdue tasks. Check them in <next>Up next</next>.",
       "viewTable": "View as table",
       "viewChart": "View as chart",
       "range": "{{min}} to {{max}}"

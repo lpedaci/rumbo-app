@@ -23,8 +23,8 @@ import type {
  */
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
-/** Bump when the shape changes: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 3;
+/** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
+export const DATA_SCHEMA_VERSION = 4;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */

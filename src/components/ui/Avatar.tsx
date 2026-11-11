@@ -12,8 +12,8 @@ export function initials(name: string): string {
 }
 
 /**
- * Portraits of the four demo personas (D-69), chosen by Lourdes. Files go in
- * src/assets/avatars/ named after the persona (carla, martin, sofia, diego) as .webp,
+ * Portraits of the four demo personas and Sofía's buddy (D-69, D-84), chosen by Lourdes. Files go in
+ * src/assets/avatars/ named after the person (carla, martin, sofia, diego, nicolas) as .webp,
  * .jpg or .png; anyone without a file keeps their initials. See SOURCE.md there.
  */
 const FILES = import.meta.glob<string>('../../assets/avatars/*.{webp,jpg,jpeg,png}', {
@@ -22,9 +22,10 @@ const FILES = import.meta.glob<string>('../../assets/avatars/*.{webp,jpg,jpeg,pn
 });
 const PERSONA_FILE: Record<string, string> = {
   'Carla Méndez': 'carla',
-  'Martín Sosa': 'martin',
+  'Martín Rossi': 'martin',
   'Sofía Ramírez': 'sofia',
   'Diego Ferreyra': 'diego',
+  'Nicolás Acosta': 'nicolas',
 };
 function photoFor(name: string): string | undefined {
   const stem = PERSONA_FILE[name];

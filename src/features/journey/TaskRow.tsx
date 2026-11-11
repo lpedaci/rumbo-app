@@ -72,9 +72,9 @@ export function TaskRow({
           )}
         </div>
 
-        <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+        <div className="flex min-w-0 flex-1 flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-4">
           {/* Main: title and its context */}
-          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
             {to ? (
               <Link
                 to={to}
@@ -96,9 +96,11 @@ export function TaskRow({
               <span>{owner}</span>
             </p>
             {blockers.length > 0 && (
-              <p className="mt-0.5 flex items-start gap-1 text-body-small text-on-warning-container">
+              <p className="flex min-w-0 items-start gap-1 text-body-small text-on-surface-variant">
                 <Icon name="lock" size={16} className="mt-px shrink-0 text-warning" />
-                {t('journey.blockedBy', { tasks: blockers.map((b) => b.title).join(', ') })}
+                <span className="line-clamp-2 min-w-0">
+                  {t('journey.blockedBy', { tasks: blockers.map((b) => b.title).join(', ') })}
+                </span>
               </p>
             )}
           </div>
@@ -114,12 +116,19 @@ export function TaskRow({
   );
 }
 
-/** Date on top and its relative label under it ("Vence en 32 días"), right-aligned from 640 px. */
+/**
+ * Due information with a clear hierarchy (D-84): what to act on first ("Vence hoy",
+ * label-medium, red when overdue) and the exact date as secondary text. Below 640 px only
+ * the relative label goes next to the status (the row is too narrow for both); from 640 px
+ * both are stacked and right-aligned.
+ */
 function DueColumn({ task, status, dateOnly }: { task: HireTask; status: TaskStatus; dateOnly: boolean }) {
   const { t } = useTranslation();
+  const wrap =
+    'flex min-w-0 flex-1 flex-wrap items-baseline gap-x-1.5 sm:w-32 sm:flex-none sm:flex-col sm:items-end sm:text-right';
   if (status === 'done' && task.completedAt) {
     return (
-      <span className="flex flex-col text-body-small text-on-surface-variant sm:w-32 sm:text-right">
+      <span className={cn(wrap, 'text-body-small text-on-surface-variant')}>
         <span>{t('journey.row.doneOn')}</span>
         <time dateTime={task.completedAt.slice(0, 10)} className="tabular-nums">
           {formatDate(task.completedAt)}
@@ -127,16 +136,22 @@ function DueColumn({ task, status, dateOnly }: { task: HireTask; status: TaskSta
       </span>
     );
   }
+  if (dateOnly) {
+    return (
+      <time dateTime={task.dueDate} className="text-label-medium text-on-surface tabular-nums sm:w-32 sm:text-right">
+        {formatDate(task.dueDate)}
+      </time>
+    );
+  }
   const rel = relativeDue(task.dueDate);
   const label = 'count' in rel ? t(`due.${rel.key}`, { count: rel.count }) : t(`due.${rel.key}`);
   return (
-    <span className="flex flex-col text-body-small sm:w-32 sm:text-right">
-      <time dateTime={task.dueDate} className="text-on-surface tabular-nums">
+    <span className={wrap}>
+      <span className={cn('text-label-medium', status === 'overdue' ? 'text-error' : 'text-on-surface')}>{label}</span>
+      {/* The exact date only where it fits next to the status; always in the detail (N2) */}
+      <time dateTime={task.dueDate} className="hidden text-body-small text-on-surface-variant tabular-nums sm:inline">
         {formatDate(task.dueDate)}
       </time>
-      {!dateOnly && (
-        <span className={status === 'overdue' ? 'text-error' : 'text-on-surface-variant'}>{label}</span>
-      )}
     </span>
   );
 }

@@ -1,7 +1,8 @@
 import { Accordion } from 'radix-ui';
 import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Icon } from '@/components/ui/Icon';
+import { RefChip } from '@/components/ui/RefChip';
 import { SectionHeading } from './SectionHeading';
 
 /**
@@ -47,7 +48,10 @@ export const FaqSection = forwardRef<HTMLHeadingElement>(function FaqSection(_, 
               </h3>
             </Accordion.Header>
             <Accordion.Content className="px-4 pb-4 pl-13 text-body-medium text-on-surface-variant">
-              {item.a}
+              <Trans
+                i18nKey={`home.faq.items.${i}.a`}
+                components={{ viewAs: <RefChip icon="swap_horiz" />, reset: <RefChip icon="refresh" /> }}
+              />
             </Accordion.Content>
           </Accordion.Item>
         ))}

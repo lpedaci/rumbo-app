@@ -5,7 +5,7 @@ El MVP tiene cuatro roles navegables. Las áreas IT, Facilities y buddy aparecen
 | Rol | Clave en el código | Persona demo | Inicio |
 | --- | --- | --- | --- |
 | Admin RRHH / L&D | `admin` | Carla Méndez | `/admin` |
-| Jefe directo | `manager` | Martín Sosa | `/manager` |
+| Jefe directo | `manager` | Martín Rossi | `/manager` |
 | Nuevo ingreso | `hire` | Sofía Ramírez | `/me` |
 | Admin de sistemas | `it_admin` | Diego Ferreyra | `/it/requests` |
 

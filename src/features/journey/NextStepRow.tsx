@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { Icon } from '@/components/ui/Icon';
+import { relativeDue } from '@/lib/dates';
 import { taskStatus } from '@/lib/journey';
 import { cn } from '@/lib/utils';
 import type { HireTask } from '@/types/domain';
-import { DueText } from './DueText';
 import { TASK_STATUS_PILL } from './task-meta';
 
 /**
@@ -15,6 +15,8 @@ export function NextStepRow({ task, allTasks }: { task: HireTask; allTasks: Hire
   const { t } = useTranslation();
   const status = taskStatus(task, allTasks);
   const pill = TASK_STATUS_PILL[status];
+  const rel = relativeDue(task.dueDate);
+  const dueLabel = 'count' in rel ? t(`due.${rel.key}`, { count: rel.count }) : t(`due.${rel.key}`);
 
   return (
     <li>
@@ -30,14 +32,16 @@ export function NextStepRow({ task, allTasks }: { task: HireTask; allTasks: Hire
             status === 'overdue' ? 'text-error' : status === 'in_progress' ? 'text-info' : 'text-on-surface-variant',
           )}
         />
-        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <span className="truncate text-title-small text-on-surface">
-            {task.title}
-          </span>
-          <span className="flex flex-wrap items-center gap-x-2 text-body-small text-on-surface-variant">
-            <span className={cn(status === 'overdue' && 'text-error')}>{t(`taskStatus.${status}`)}</span>
-            <span aria-hidden>·</span>
-            <DueText task={task} status={status} />
+        <span className="flex min-w-0 flex-1 flex-col gap-1">
+          <span className="truncate text-title-small text-on-surface">{task.title}</span>
+          {/* One fact to act on (D-84): when it is due, plus the status only when it adds something */}
+          <span className="flex flex-wrap items-baseline gap-x-1.5">
+            <span className={cn('text-label-medium', status === 'overdue' ? 'text-error' : 'text-on-surface')}>
+              {dueLabel}
+            </span>
+            {status !== 'overdue' && status !== 'pending' && (
+              <span className="text-body-small text-on-surface-variant">· {t(`taskStatus.${status}`)}</span>
+            )}
           </span>
         </span>
         <Icon name="chevron_right" className="shrink-0 text-on-surface-variant" />

@@ -367,3 +367,10 @@ Reemplaza las bandas de color de D-72.
 - **Animación de entrada (`Reveal`):** fundido y 16 px hacia arriba, 450 ms, curva enfatizada; el hero al cargar con pasos de 50 ms y las tarjetas del hero desde 300 ms; las secciones una vez al entrar en pantalla. Con reducir animaciones, solo fundido.
 - **Barra de G0 en mobile:** botón de menú (`IconButton` sobre `surface-container`) con las secciones, "Elegir un recorrido" y el case study.
 - **Pie en mobile:** un grupo por fila con sus enlaces en línea; desde 640 px, columnas.
+
+### Chips de referencia, contactos y fechas de tareas (D-83, D-84)
+
+- **`RefChip`** (`src/components/ui/RefChip.tsx`): chip en línea, 24 px de alto, `primary-container` con ícono de 16 px y `label-medium`. Señala otra sección o un control dentro de una frase. Con `targetId` es un botón que hace scroll al destino y le pasa el foco; con `to`, un enlace de la app; sin destino, un chip simple. Foco visible con anillo `primary`.
+- **Contactos clave (N1):** desde 1024 px, tarjetas con foto `lg` y anillo del rol, chip de relación en el contenedor del rol, nombre (`title-medium`), puesto y correo con ícono. Por debajo de 1024 px, fila compacta con popover.
+- **Línea de tiempo:** sin "Ver como tabla"; la tabla accesible vive en un contenedor `sr-only`.
+- **Fecha en filas de tareas:** vencimiento relativo en `label-medium` (`on-surface`, o `error` si venció) y fecha exacta en `body-small` `on-surface-variant`; por debajo de 640 px, solo el relativo. Tareas hechas: "Hecha el" y la fecha, en gris.

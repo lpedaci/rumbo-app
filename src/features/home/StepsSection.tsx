@@ -1,4 +1,5 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
+import { RefChip } from '@/components/ui/RefChip';
 import { cn } from '@/lib/utils';
 import { SectionHeading } from './SectionHeading';
 
@@ -40,7 +41,9 @@ export function StepsSection() {
               </span>
               <h3 className="text-title-medium text-on-surface">{item.title}</h3>
             </div>
-            <p className="text-body-medium text-on-surface-variant">{item.body}</p>
+            <p className="text-body-medium text-on-surface-variant">
+              <Trans i18nKey={`home.steps.items.${i}.body`} components={{ viewAs: <RefChip icon="swap_horiz" /> }} />
+            </p>
           </li>
         ))}
       </ol>

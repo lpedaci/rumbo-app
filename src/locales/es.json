@@ -257,7 +257,7 @@
   },
   "upcoming": {
     "greeting": "Hola, {{name}}",
-    "body": "Esta pantalla llega en la próxima versión del prototipo. Mientras tanto, puedes recorrer las secciones que ya funcionan o cambiar de rol con «Ver como».",
+    "body": "Esta pantalla llega en la próxima versión del prototipo. Mientras tanto, puedes recorrer las secciones que ya funcionan o cambiar de rol con <viewAs>Ver como</viewAs>.",
     "screens": {
       "A1": "Panel de seguimiento",
       "A2": "Ingresos",
@@ -516,11 +516,11 @@
         },
         {
           "q": "¿Cómo cambio de rol?",
-          "a": "Una vez dentro, usa el selector «Ver como» de la barra superior. Cambiar de rol equivale a iniciar sesión con el usuario de demo de ese rol."
+          "a": "Una vez dentro, usa el selector <viewAs>Ver como</viewAs> de la barra superior. Cambiar de rol equivale a iniciar sesión con el usuario de demo de ese rol."
         },
         {
           "q": "¿Se guardan los cambios?",
-          "a": "Sí, solo en este navegador. Puedes volver al estado inicial con «Restablecer demo», al pie de esta página o en el menú de usuario."
+          "a": "Sí, solo en este navegador. Puedes volver al estado inicial con <reset>Restablecer demo</reset>, al pie de esta página o en el menú de usuario."
         },
         {
           "q": "¿La seguridad es real?",
@@ -610,7 +610,7 @@
         },
         {
           "title": "Cambia de rol cuando quieras",
-          "body": "Con el selector «Ver como» de la barra superior ves el mismo proceso desde otra perspectiva."
+          "body": "Con el selector <viewAs>Ver como</viewAs> de la barra superior ves el mismo proceso desde otra perspectiva."
         }
       ],
       "titleHighlight": "en tres pasos"
@@ -771,8 +771,8 @@
         "upcoming": "Próxima"
       },
       "onTrack": "Vas al día: no tienes tareas vencidas.",
-      "overdue_one": "Tienes {{count}} tarea vencida. Revísala en Lo próximo.",
-      "overdue_other": "Tienes {{count}} tareas vencidas. Revísalas en Lo próximo.",
+      "overdue_one": "Tienes {{count}} tarea vencida. Revísala en <next>Lo próximo</next>.",
+      "overdue_other": "Tienes {{count}} tareas vencidas. Revísalas en <next>Lo próximo</next>.",
       "viewTable": "Ver como tabla",
       "viewChart": "Ver como gráfico",
       "range": "{{min}} a {{max}}"
