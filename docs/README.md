@@ -3,7 +3,7 @@
 Rumbo es una plataforma B2B de recorridos de ingreso (onboarding) corporativo. Este directorio reúne la documentación de producto y de diseño del MVP. Se puede leer sin el código: está pensada para el case study del portfolio y para entrevistas técnicas.
 
 > Estado: **borrador para revisión, versión 2** (paso 0 de la sección 10 de `CLAUDE.md`, ajustado a la spec actualizada). Fecha: 10/11/2026.
-> Proyecto de portfolio de Lourdes Pedaci, Experience Designer. Todos los datos son ficticios.
+> Proyecto de portfolio de Lourdes Pedaci, Experience Designer (Learning y UX/UI). Todos los datos son ficticios.
 
 ## Índice
 

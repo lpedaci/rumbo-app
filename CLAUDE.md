@@ -1,7 +1,7 @@
 # Rumbo · Plataforma de onboarding corporativo (MVP)
 
 > Nombre de trabajo: **Rumbo** (provisorio, se puede cambiar).
-> Autora: Lourdes Pedaci, Experience Designer.
+> Autora: Lourdes Pedaci, Experience Designer (Learning y UX/UI).
 > Este archivo es la especificación completa del proyecto. Leelo entero antes de empezar y volvé a consultarlo en cada paso.
 > Proyecto de portfolio: prototipo navegable de alta fidelidad (nivel 2), con datos simulados y sin backend.
 
@@ -430,11 +430,11 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
 - Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
 - **Estructura de página de producto B2B** (D-70 y D-71, a partir de dos referencias de Lourdes):
     1. Barra superior flotante con el logo, enlaces a las secciones ("Cómo funciona", "Recorridos", "Preguntas") y la acción principal "Elegir un recorrido". Por debajo de 1024 px, los enlaces van en un menú.
-    2. Hero centrado (D-73): titular con las palabras clave en `primary`, texto, "Elegir un recorrido" y el enlace "Ver el case study"; tarjetas reales del producto flotando a los costados desde 1280 px (en grilla debajo en tablet; ocultas en celulares).
+    2. Hero centrado (D-73) con la etiqueta "Plataforma de onboarding para empresas · Caso de diseño UX/UI B2B" (D-75): titular con las palabras clave en `primary`, texto, "Elegir un recorrido" y el enlace "Ver el case study"; tarjetas reales del producto flotando a los costados desde 1280 px (en grilla debajo en tablet; ocultas en celulares).
     3. **El problema:** tres tarjetas con una escena hecha con piezas de Rumbo.
     4. **La solución:** bento de cinco tarjetas (recorridos por etapa, constructor de plantillas, check-ins, panel de seguimiento, seguridad y accesos), cada una con una mini interfaz.
     5. **Un recorrido para cada rol:** una sección por rol que alterna lados desde 1024 px: de un lado la foto, el chip del rol, un título, qué hace, qué se puede recorrer y "Recorrer como…"; del otro, una miniatura de su pantalla dentro de un marco, sobre el contenedor plano del color del rol. Las miniaturas usan los datos de demo cuando se puede.
-    6. **Cifras** grandes, alternando `primary` y ciruela, sin tarjetas; los números salen de los datos de demo, nunca escritos a mano (salvo las 24 pantallas de la fase A, que son un dato de la spec).
+    6. **Cifras** grandes, alternando `primary` y ciruela, sin tarjetas; los números salen de los datos de demo, nunca escritos a mano (salvo las 24 pantallas de esta versión, que son un dato de la spec, rotuladas "Pantallas en esta versión").
     7. **Recorre la demo en tres pasos:** elegir, iniciar sesión en un clic y cambiar de rol con «Ver como».
     8. **Preguntas frecuentes** en acordeón accesible.
     La página es blanca y continua: las secciones se separan por espacio, sin bandas de color; el hero tiene una cuadrícula muy tenue. Los encabezados van centrados: una etiqueta de texto simple en `primary` (sin píldora), el `h2` con las palabras clave en `primary` y sin punto final, y una línea de contexto (D-73, D-74). Sin texturas de puntos: dificultan la lectura. Antes del pie, una franja `primary-container` con "Elegir un recorrido".
@@ -1089,4 +1089,4 @@ Documentar el sistema de diseño implementado, como referencia para el case stud
 
 ## 15. README del repositorio
 
-El README debe incluir: descripción del problema, roles, capturas de las pantallas principales, link a la demo, link al case study en el portfolio, enlace a `docs/README.md` (documentación), stack, cómo correrlo (`npm install`, `npm run dev`) y autoría: **Lourdes Pedaci, Experience Designer**.
+El README debe incluir: descripción del problema, roles, capturas de las pantallas principales, link a la demo, link al case study en el portfolio, enlace a `docs/README.md` (documentación), stack, cómo correrlo (`npm install`, `npm run dev`) y autoría: **Lourdes Pedaci, Experience Designer (Learning y UX/UI)**.

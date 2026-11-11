@@ -283,7 +283,7 @@
     "it_admin": "sistemas"
   },
   "home": {
-    "eyebrow": "Prototipo de portfolio · Recorridos de ingreso",
+    "eyebrow": "Plataforma de onboarding para empresas · Caso de diseño UX/UI B2B",
     "title": "Cada persona sabe qué hacer, con quién y para cuándo",
     "intro": "Rumbo es una plataforma donde RRHH diseña el recorrido de ingreso de cada puesto, el jefe directo acompaña con check-ins y la persona nueva sabe en todo momento qué le toca hacer. RRHH ve el avance y detecta dónde se traban los recorridos.",
     "demoTitle": "Sobre esta demo",
@@ -306,7 +306,7 @@
         "title": "Martín, jefe directo",
         "description": "Líder de Desarrollo. Acompaña a las personas nuevas de su equipo.",
         "points": [
-          "Su equipo en onboarding",
+          "Las personas nuevas de su equipo",
           "Los check-ins de 30, 60 y 90 días",
           "Cómo escalar a RRHH un hito no cumplido"
         ]
@@ -371,7 +371,7 @@
       "subtitle": "Cuando el ingreso depende de correos sueltos y planillas, cada área avanza por su lado y nadie ve el conjunto.",
       "items": [
         {
-          "title": "Nadie sabe qué toca hoy",
+          "title": "La persona nueva no sabe qué toca hoy",
           "body": "La persona nueva no sabe qué hacer, con quién ni para cuándo, y pregunta todo por chat."
         },
         {
@@ -380,7 +380,7 @@
         },
         {
           "title": "RRHH se entera tarde",
-          "body": "Sin datos del avance, los atrasos aparecen recién en la reunión de los 90 días."
+          "body": "Sin datos del avance, los atrasos no aparecen hasta la reunión de los 90 días."
         }
       ],
       "illo": {
@@ -451,7 +451,7 @@
       "title": "Un prototipo navegable, con datos simulados coherentes",
       "subtitle": "Las cifras se calculan a partir de los datos de demo de Nortia S.A.",
       "roles": "Roles para recorrer",
-      "screens": "Pantallas en la fase A",
+      "screens": "Pantallas en esta versión",
       "templates": "Plantillas de recorrido",
       "hires": "Ingresos simulados",
       "tasks": "Tareas en recorridos",
@@ -488,7 +488,7 @@
     },
     "photoCredit": "Fotos de personas: Magnific",
     "footerTagline": "Recorridos de ingreso claros para cada persona nueva, su jefe directo y RRHH.",
-    "author": "Diseño: Lourdes Pedaci, Experience Designer",
+    "author": "Diseño: Lourdes Pedaci, Experience Designer (Learning y UX/UI)",
     "showcase": {
       "eyebrow": "Recorridos",
       "title": "Un recorrido para cada rol",
@@ -499,11 +499,11 @@
           "body": "RRHH arma la plantilla de cada puesto, da de alta los ingresos y sigue el avance de todos en un panel con alertas."
         },
         "manager": {
-          "title": "Acompaña a tu equipo con check-ins a tiempo",
+          "title": "Acompaña a su equipo con check-ins a tiempo",
           "body": "El jefe directo ve a su equipo en onboarding, evalúa los hitos de 30, 60 y 90 días y escala a RRHH lo que no se cumple."
         },
         "hire": {
-          "title": "Sabe siempre qué hacer, con quién y para cuándo",
+          "title": "Sigue su recorrido paso a paso",
           "body": "La persona nueva sigue su recorrido por etapas, completa tareas que desbloquean otras y prepara su check-in."
         },
         "it_admin": {
@@ -551,7 +551,7 @@
     "steps": {
       "eyebrow": "Cómo empezar",
       "title": "Recorre la demo en tres pasos",
-      "subtitle": "Sin registros ni datos reales: todo está precargado para que solo tengas que mirar.",
+      "subtitle": "Sin crear cuentas ni ingresar datos reales: todo está precargado para que solo tengas que mirar.",
       "items": [
         {
           "title": "Elige un recorrido",

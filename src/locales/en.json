@@ -283,7 +283,7 @@
     "it_admin": "IT"
   },
   "home": {
-    "eyebrow": "Portfolio prototype · Onboarding journeys",
+    "eyebrow": "Onboarding platform for companies · B2B UX/UI design case",
     "title": "Everyone knows what to do, with whom and by when",
     "intro": "Rumbo is a platform where HR designs the onboarding journey for each role, managers support it with check-ins and new hires always know what comes next. HR tracks progress and spots where journeys get stuck.",
     "demoTitle": "About this demo",
@@ -306,7 +306,7 @@
         "title": "Martín, manager",
         "description": "Development Lead. Supports the new people on his team.",
         "points": [
-          "His team in onboarding",
+          "The new hires on their team",
           "The 30, 60 and 90-day check-ins",
           "How to escalate an unmet milestone to HR"
         ]
@@ -371,7 +371,7 @@
       "subtitle": "When onboarding depends on scattered emails and spreadsheets, each team moves on its own and nobody sees the whole picture.",
       "items": [
         {
-          "title": "Nobody knows what is due today",
+          "title": "The new hire does not know what is due today",
           "body": "The new hire does not know what to do, with whom or by when, and asks everything over chat."
         },
         {
@@ -380,7 +380,7 @@
         },
         {
           "title": "HR finds out too late",
-          "body": "Without progress data, delays only show up at the 90 day meeting."
+          "body": "Without progress data, delays do not show up until the 90 day meeting."
         }
       ],
       "illo": {
@@ -451,7 +451,7 @@
       "title": "A navigable prototype with consistent simulated data",
       "subtitle": "The figures are calculated from the Nortia S.A. demo data.",
       "roles": "Roles to explore",
-      "screens": "Screens in phase A",
+      "screens": "Screens in this version",
       "templates": "Journey templates",
       "hires": "Simulated hires",
       "tasks": "Tasks in journeys",
@@ -488,7 +488,7 @@
     },
     "photoCredit": "People photos: Magnific",
     "footerTagline": "Clear onboarding journeys for every new hire, their direct manager and HR.",
-    "author": "Design: Lourdes Pedaci, Experience Designer",
+    "author": "Design: Lourdes Pedaci, Experience Designer (Learning and UX/UI)",
     "showcase": {
       "eyebrow": "Journeys",
       "title": "A journey for each role",
@@ -499,11 +499,11 @@
           "body": "HR builds the template for each role, adds new hires and tracks everyone's progress on a dashboard with alerts."
         },
         "manager": {
-          "title": "Support your team with timely check-ins",
+          "title": "Supports their team with timely check-ins",
           "body": "The direct manager sees their team in onboarding, reviews the 30, 60 and 90 day milestones and escalates to HR what is not met."
         },
         "hire": {
-          "title": "Always know what to do, with whom and by when",
+          "title": "Follows their journey step by step",
           "body": "The new hire follows their journey by stage, completes tasks that unlock others and prepares their check-in."
         },
         "it_admin": {
@@ -551,7 +551,7 @@
     "steps": {
       "eyebrow": "Getting started",
       "title": "Explore the demo in three steps",
-      "subtitle": "No sign-ups and no real data: everything is preloaded so you only have to look.",
+      "subtitle": "No accounts to create and no real data to enter: everything is preloaded so you only have to look.",
       "items": [
         {
           "title": "Choose a journey",

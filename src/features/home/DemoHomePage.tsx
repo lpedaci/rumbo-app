@@ -154,7 +154,7 @@ export function DemoHomePage() {
           <section className="relative flex flex-col items-center xl:min-h-[34rem] xl:justify-center">
             <div className="relative z-10 flex w-full max-w-2xl min-w-0 flex-col items-center gap-6 text-center">
               <Reveal trigger="mount">
-                <p className="text-label-large text-primary">{t('home.eyebrow')}</p>
+                <p className="text-label-large text-balance text-primary">{t('home.eyebrow')}</p>
               </Reveal>
               <Reveal trigger="mount" delay={0.05}>
                 <h1 className="text-display-small text-balance text-on-surface lg:text-display-medium">
