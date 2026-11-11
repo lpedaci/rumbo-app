@@ -15,4 +15,4 @@ Provistos por Lourdes en `design-references/`, recortados al rostro y reducidos 
 | `sofia.webp` | Sofía Ramírez, nuevo ingreso | `close-up-good-looking-smiling-friendly-female-trainee-…jpg` |
 | `diego.webp` | Diego Ferreyra, sistemas | `2148928793.jpg` |
 
-Licencia de cada original: pendiente de confirmar por Lourdes.
+Licencia: Lourdes confirmó el 11/11/2026 que los cuatro originales tienen licencia para usarse en un portfolio público.
