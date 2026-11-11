@@ -1,7 +1,11 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup } from '@testing-library/react';
+import { cleanup, configure } from '@testing-library/react';
 import { afterEach } from 'vitest';
 import '@/app/i18n';
+
+// Screens load on demand (route-level code splitting, RNF-005): under a full, busy test run the
+// first import can take more than the default 1 s of findBy*, so wait up to 5 s (INC-019).
+configure({ asyncUtilTimeout: 5000 });
 
 afterEach(() => {
   cleanup();

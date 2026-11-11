@@ -108,12 +108,13 @@ describe('routing and access control', () => {
     });
   });
 
-  it('lets each role into its own workspace', () => {
+  it('lets each role into its own workspace', async () => {
     act(() => {
       switchRole('admin');
     });
     renderAt('/admin');
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Carla/);
+    // The panel loads on demand (RNF-005).
+    expect(await screen.findByRole('heading', { level: 1 }, { timeout: 5000 })).toHaveTextContent(/Carla/);
   });
 
   it('shows the not found page for unknown routes', () => {

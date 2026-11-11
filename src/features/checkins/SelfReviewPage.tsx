@@ -13,6 +13,7 @@ import { toast } from '@/components/ui/toast-store';
 import { useOwnHire } from '@/features/journey/use-own-hire';
 import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { findCheckin } from '@/lib/checkins';
+import { issuesByPath, selfReviewSchema } from '@/lib/validation';
 import { formatDate } from '@/lib/dates';
 import { CHECKIN_OFFSETS, checkinDueDate } from '@/lib/journey';
 import { useDataStore } from '@/store/data-store';
@@ -46,6 +47,8 @@ export function SelfReviewPage() {
   );
   const [comment, setComment] = useState(checkin?.hireSelfReview?.comment ?? '');
   const [submitted, setSubmitted] = useState(false);
+  // Validated with a Zod schema (INC-018); shown after the first submit.
+  const moodIssue = issuesByPath(selfReviewSchema.safeParse({ mood, comment })).mood;
 
   if (!hire || !checkin) return <AccessDeniedPage reason="not_found" />;
 
@@ -56,7 +59,7 @@ export function SelfReviewPage() {
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitted(true);
-    if (!mood || !user) return;
+    if (!selfReviewSchema.safeParse({ mood, comment }).success || !mood || !user) return;
     useDataStore
       .getState()
       .submitSelfReview(hire.id, checkin.stage, { mood: Number(mood) as Mood, comment }, user.personId);
@@ -121,7 +124,7 @@ export function SelfReviewPage() {
                       label: t(`selfReview.moods.${m}`),
                       icon: MOOD_ICONS[m],
                     }))}
-                    error={submitted && !mood ? t('selfReview.moodRequired') : undefined}
+                    error={submitted && moodIssue ? t(moodIssue) : undefined}
                   />
                   <TextArea
                     label={t('selfReview.comment')}

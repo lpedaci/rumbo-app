@@ -17,7 +17,7 @@ import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { attemptsFor, type IdentityCheck, isOpen, requester, suggestedAction } from '@/lib/access';
 import { formatDateTime } from '@/lib/dates';
 import { can } from '@/lib/permissions';
-import { maskPhone } from '@/lib/validation';
+import { identityCheckSchema, maskPhone, rejectReasonSchema } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { AccessResolutionAction } from '@/types/domain';
@@ -103,7 +103,8 @@ export function RequestDetailPage() {
   ];
 
   const confirmIdentity = () => {
-    if (!check) {
+    const parsed = identityCheckSchema.safeParse(check);
+    if (!parsed.success || !check) {
       setCheckError(true);
       return;
     }
@@ -119,7 +120,7 @@ export function RequestDetailPage() {
   };
 
   const reject = () => {
-    if (!rejectNote.trim()) {
+    if (!rejectReasonSchema.safeParse(rejectNote).success) {
       setRejectError(true);
       return;
     }
@@ -428,7 +429,11 @@ export function RequestDetailPage() {
             required
             rows={3}
             value={rejectNote}
-            error={rejectError && !rejectNote.trim() ? t('it.detail.rejectReasonRequired') : undefined}
+            error={
+              rejectError && !rejectReasonSchema.safeParse(rejectNote).success
+                ? t('it.detail.rejectReasonRequired')
+                : undefined
+            }
             onChange={(e) => setRejectNote(e.target.value)}
           />
         </DialogContent>

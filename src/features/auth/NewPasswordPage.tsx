@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useNavigate } from 'react-router';
+import { newPasswordSchema } from '@/lib/validation';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
@@ -29,7 +30,11 @@ export function NewPasswordPage() {
   if (!pending || pending.step !== 'new_password') return <Navigate to="/login" replace />;
 
   const checks = checkPassword(password, minLength);
-  const allMet = RULES.every((rule) => checks[rule]);
+  // Validated with a Zod schema built on the visible policy rules (INC-018).
+  const allMet = newPasswordSchema((value) => {
+    const c = checkPassword(value, minLength);
+    return RULES.every((rule) => c[rule]);
+  }).safeParse(password).success;
   const strength = passwordStrength(password);
 
   const onSubmit = (event: FormEvent) => {
@@ -96,7 +101,13 @@ export function NewPasswordPage() {
                   key={level}
                   className={cn(
                     'h-1.5 rounded-full transition-colors duration-200',
-                    strength >= level ? (strength <= 1 ? 'bg-error' : strength === 2 ? 'bg-warning' : 'bg-success') : 'bg-outline-variant',
+                    strength >= level
+                      ? strength <= 1
+                        ? 'bg-error'
+                        : strength === 2
+                          ? 'bg-warning'
+                          : 'bg-success'
+                      : 'bg-outline-variant',
                   )}
                 />
               ))}

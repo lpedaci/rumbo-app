@@ -18,7 +18,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 9 | Panel A1 con alertas | Hecho | 11/11/2026 |
 | 10 | Sistemas: S1, S2, S3 | Hecho | 11/11/2026 |
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Hecho | 11/11/2026 |
-| 12 | Pulido de fase A | Pendiente | |
+| 12 | Pulido de fase A | Hecho | 11/11/2026 |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
 
 ## Rediseño visual (2.2.1): piloto
@@ -305,3 +305,13 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Sitio público del sistema de diseño en `/#/design-system`, construido con los tokens y componentes reales; enlace en el pie de G0 y en el README.
 - README con el hero capturado con todo cargado, sin capturas por rol, con un diagrama de contexto C4 y las figuras de niveles de tokens y de capas exportadas desde el sitio.
 - Las capturas de página completa de `docs/screenshots/` ahora muestran las secciones que aparecen al hacer scroll.
+
+## Paso 12: pulido de fase A, 11/11/2026 (D-99)
+
+- **Rendimiento:** pantallas de los pasos 7 a 10 cargadas bajo demanda e inglés bajo demanda; JS inicial de 481 a 280 KB comprimido (RNF-005).
+- **Validación:** los formularios que quedaban (J3, N3, S2, contraseña nueva) usan esquemas de Zod (INC-018).
+- **Accesibilidad:** toasts arriba al centro en desktop para no tapar acciones ni el foco (2.4.11).
+- **Estados vacíos y "Restablecer demo":** revisados en todas las listas; restablecer está en el pie de G0 y en el menú de usuario.
+- **Requerimientos:** los de la fase A construidos y verificados pasan a "Hecho" en `requirements.md`; lo que necesita prueba manual (lector de pantalla, navegadores, Lighthouse) queda para la revisión intermedia.
+
+**Pendiente:** paso 13 (revisión intermedia, `docs/review-fase-a.md`).

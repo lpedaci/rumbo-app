@@ -54,3 +54,69 @@ export function maskPhone(value: string): string {
   const digits = value.replace(/\D/g, '');
   return digits.length > 4 ? `*** ${digits.slice(-4)}` : value;
 }
+
+/** Error message keys of a failed parse, by dotted path ("results.0", "note"). */
+export function issuesByPath(result: z.ZodSafeParseResult<unknown>): Record<string, string> {
+  if (result.success) return {};
+  const out: Record<string, string> = {};
+  for (const issue of result.error.issues) {
+    const key = issue.path.join('.');
+    if (!(key in out)) out[key] = issue.message;
+  }
+  return out;
+}
+
+/** N3 · Self-review (F5): how they feel is required; the comment is optional plain text (INC-018). */
+export const selfReviewSchema = z.object({
+  mood: z.enum(['1', '2', '3', '4', '5'], { error: 'selfReview.moodRequired' }),
+  comment: z.string().trim().max(1000),
+});
+
+/**
+ * J3 · Manager check-in (F5): every milestone needs a result; a milestone "not met" needs a
+ * decision, and that decision its data (a later date, or a note for HR) (INC-018).
+ */
+export function managerCheckinSchema(today: string) {
+  return z
+    .object({
+      results: z.array(z.enum(['met', 'partial', 'not_met']).optional()),
+      actionType: z.enum(['reschedule', 'escalate']).optional(),
+      newDate: z.string(),
+      note: z.string(),
+    })
+    .superRefine((value, ctx) => {
+      value.results.forEach((result, i) => {
+        if (!result) ctx.addIssue({ code: 'custom', path: ['results', i], message: 'managerCheckin.resultRequired' });
+      });
+      if (!value.results.includes('not_met')) return;
+      if (!value.actionType) {
+        ctx.addIssue({ code: 'custom', path: ['actionType'], message: 'validation.required' });
+        return;
+      }
+      if (value.actionType === 'reschedule') {
+        const iso = parseDisplayDate(value.newDate);
+        const message = !value.newDate.trim()
+          ? 'validation.required'
+          : !iso
+            ? 'validation.dateFormat'
+            : iso <= today
+              ? 'managerCheckin.newDatePast'
+              : null;
+        if (message) ctx.addIssue({ code: 'custom', path: ['newDate'], message });
+      }
+      if (value.actionType === 'escalate' && !value.note.trim()) {
+        ctx.addIssue({ code: 'custom', path: ['note'], message: 'validation.required' });
+      }
+    });
+}
+
+/** S2 · How IT verified the identity (D-90). */
+export const identityCheckSchema = z.enum(['callback', 'manager'], { error: 'it.detail.checkRequired' });
+
+/** S2 · Reason to reject an access request. */
+export const rejectReasonSchema = z.string().trim().min(1, 'it.detail.rejectReasonRequired');
+
+/** New password after a forced change: every rule of the policy has to be met. */
+export function newPasswordSchema(meetsPolicy: (password: string) => boolean) {
+  return z.string().refine(meetsPolicy, 'auth.newPassword.invalid');
+}

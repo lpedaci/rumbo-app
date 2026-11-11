@@ -17,7 +17,7 @@ import { DEMO_TODAY, formatDate } from '@/lib/dates';
 import { dateMask } from '@/lib/input-masks';
 import { CHECKIN_OFFSETS, checkinDueDate } from '@/lib/journey';
 import { can, canViewHire } from '@/lib/permissions';
-import { parseDisplayDate } from '@/lib/validation';
+import { issuesByPath, managerCheckinSchema, parseDisplayDate } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { CheckinAction, MilestoneResult } from '@/types/domain';
@@ -64,21 +64,15 @@ export function ManagerCheckinPage() {
   const askAction = needsAction(results);
   const newDateIso = parseDisplayDate(newDate);
 
-  // Errors are computed after the first submit and update live as things get fixed (2.10).
+  // Validated with a Zod schema (INC-018); errors show after the first submit and update live
+  // as things get fixed (2.10).
+  const issues = issuesByPath(managerCheckinSchema(DEMO_TODAY).safeParse({ results, actionType, newDate, note }));
+  const message = (path: string) => (issues[path] ? t(issues[path]!) : undefined);
   const errors = {
-    results: results.map((r) => (r ? undefined : t('managerCheckin.resultRequired'))),
-    action: askAction && !actionType ? t('validation.required') : undefined,
-    newDate:
-      askAction && actionType === 'reschedule'
-        ? !newDate.trim()
-          ? t('validation.required')
-          : !newDateIso
-            ? t('validation.dateFormat')
-            : newDateIso <= DEMO_TODAY
-              ? t('managerCheckin.newDatePast')
-              : undefined
-        : undefined,
-    note: askAction && actionType === 'escalate' && !note.trim() ? t('validation.required') : undefined,
+    results: results.map((_, i) => message(`results.${i}`)),
+    action: message('actionType'),
+    newDate: message('newDate'),
+    note: message('note'),
   };
   const problems = [
     ...errors.results.flatMap((e, i) => (e ? [`${checkin.milestones[i]!.label}: ${e}`] : [])),

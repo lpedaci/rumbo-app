@@ -42,7 +42,9 @@ export function Toaster() {
           </Toast.Close>
         </Toast.Root>
       ))}
-      <Toast.Viewport className="fixed right-0 bottom-20 left-0 z-60 md:bottom-0 mx-auto flex w-full max-w-md flex-col gap-2 p-4 outline-none md:right-4 md:left-auto md:mx-0" />
+      {/* Phones: above the bottom navigation. From 768 px: top center, under the top bar, away from
+          the actions at the bottom right of forms and cards, so it never hides the focus (2.4.11, D-99). */}
+      <Toast.Viewport className="fixed inset-x-0 bottom-20 z-60 mx-auto flex w-full max-w-md flex-col gap-2 p-4 outline-none md:top-20 md:bottom-auto" />
     </Toast.Provider>
   );
 }

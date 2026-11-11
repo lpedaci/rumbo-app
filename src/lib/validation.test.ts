@@ -45,3 +45,42 @@ describe('field schemas', () => {
     expect(otpField.safeParse('246810').success).toBe(true);
   });
 });
+
+describe('form schemas (INC-018)', () => {
+  it('requires the mood in the self-review', async () => {
+    const { selfReviewSchema, issuesByPath } = await import('./validation');
+    expect(issuesByPath(selfReviewSchema.safeParse({ mood: undefined, comment: '' })).mood).toBe(
+      'selfReview.moodRequired',
+    );
+    expect(selfReviewSchema.safeParse({ mood: '4', comment: '' }).success).toBe(true);
+  });
+
+  it('asks for a decision and its data when a milestone is not met', async () => {
+    const { managerCheckinSchema, issuesByPath } = await import('./validation');
+    const schema = managerCheckinSchema('2026-11-10');
+    expect(issuesByPath(schema.safeParse({ results: ['met', undefined], newDate: '', note: '' }))).toEqual({
+      'results.1': 'managerCheckin.resultRequired',
+    });
+    expect(issuesByPath(schema.safeParse({ results: ['not_met'], newDate: '', note: '' })).actionType).toBe(
+      'validation.required',
+    );
+    expect(
+      issuesByPath(
+        schema.safeParse({ results: ['not_met'], actionType: 'reschedule', newDate: '09/11/2026', note: '' }),
+      ).newDate,
+    ).toBe('managerCheckin.newDatePast');
+    expect(
+      issuesByPath(schema.safeParse({ results: ['not_met'], actionType: 'escalate', newDate: '', note: ' ' })).note,
+    ).toBe('validation.required');
+    expect(
+      schema.safeParse({ results: ['not_met'], actionType: 'reschedule', newDate: '20/11/2026', note: '' }).success,
+    ).toBe(true);
+  });
+
+  it('validates the identity check and the rejection reason of S2', async () => {
+    const { identityCheckSchema, rejectReasonSchema } = await import('./validation');
+    expect(identityCheckSchema.safeParse(undefined).success).toBe(false);
+    expect(identityCheckSchema.safeParse('manager').success).toBe(true);
+    expect(rejectReasonSchema.safeParse('   ').success).toBe(false);
+  });
+});

@@ -82,11 +82,11 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| RF-036 | El sistema debe permitir dar de alta un ingreso con nombre, puesto, área, fecha de ingreso, jefe, buddy y plantilla. | RRHH | A3 | Must | Validación con errores junto a cada campo. | Pendiente |
-| RF-037 | Al guardar, el sistema debe generar el recorrido copiando las tareas de la plantilla y calculando `dueDate = startDate + offsetDays`. | RRHH | A3, A4 | Must | Una plantilla nueva asignada genera fechas correctas. | Pendiente |
-| RF-038 | El sistema debe listar ingresos con filtros por estado (próximo, en curso, finalizado) y por área. | RRHH | A2 | Must | En mobile la tabla se muestra como tarjetas. | Pendiente |
-| RF-039 | El sistema debe mostrar la ficha del ingreso con datos, recorrido con estados e historial de check-ins. | RRHH | A4 | Must | RRHH puede marcar como hechas las tareas de buddy, IT y Facilities. | Pendiente |
-| RF-040 | El alta de un ingreso debe registrarse en la auditoría. | RRHH | A3 | Must | Evento `hire.create`. | Pendiente |
+| RF-036 | El sistema debe permitir dar de alta un ingreso con nombre, puesto, área, fecha de ingreso, jefe, buddy y plantilla. | RRHH | A3 | Must | Validación con errores junto a cada campo. | Hecho |
+| RF-037 | Al guardar, el sistema debe generar el recorrido copiando las tareas de la plantilla y calculando `dueDate = startDate + offsetDays`. | RRHH | A3, A4 | Must | Una plantilla nueva asignada genera fechas correctas. | Hecho |
+| RF-038 | El sistema debe listar ingresos con filtros por estado (próximo, en curso, finalizado) y por área. | RRHH | A2 | Must | En mobile la tabla se muestra como tarjetas. | Hecho |
+| RF-039 | El sistema debe mostrar la ficha del ingreso con datos, recorrido con estados e historial de check-ins. | RRHH | A4 | Must | RRHH puede marcar como hechas las tareas de buddy, IT y Facilities. | Hecho |
+| RF-040 | El alta de un ingreso debe registrarse en la auditoría. | RRHH | A3 | Must | Evento `hire.create`. | Hecho |
 
 ### F4. Panel de seguimiento (fase A)
 
@@ -102,12 +102,12 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| RF-046 | El sistema debe mostrar al jefe su equipo en onboarding con avance y próximo check-in. | Jefe | J1 | Must | Solo personas de su equipo. | Pendiente |
-| RF-047 | El sistema debe mostrar al jefe el recorrido del ingreso en modo lectura, permitiéndole completar solo sus propias tareas. | Jefe | J2 | Must | Las tareas de otros responsables no tienen acción. | Pendiente |
-| RF-048 | El sistema debe permitir al jefe evaluar cada hito (cumplido, parcial, no cumplido) con comentarios y próximos pasos. | Jefe | J3 | Must | No se envía sin evaluar todos los hitos. | Pendiente |
-| RF-049 | Ante un hito no cumplido, el jefe debe elegir reprogramar (nueva fecha) o escalar a RRHH (con nota). | Jefe | J3 | Must | Escalar genera una alerta en A1 y un evento de auditoría. | Pendiente |
-| RF-050 | El nuevo ingreso debe poder responder su autoevaluación (cómo se siente, 1 a 5, y comentario) antes de la reunión. | Nuevo ingreso | N3 | Must | El jefe ve la autoevaluación en J2 y J3. | Pendiente |
-| RF-051 | El check-in completado debe quedar en el historial de la ficha del ingreso. | RRHH, Jefe | A4, J2 | Must | Con fecha, resultados de hitos y acción tomada. | Pendiente |
+| RF-046 | El sistema debe mostrar al jefe su equipo en onboarding con avance y próximo check-in. | Jefe | J1 | Must | Solo personas de su equipo. | Hecho |
+| RF-047 | El sistema debe mostrar al jefe el recorrido del ingreso en modo lectura, permitiéndole completar solo sus propias tareas. | Jefe | J2 | Must | Las tareas de otros responsables no tienen acción. | Hecho |
+| RF-048 | El sistema debe permitir al jefe evaluar cada hito (cumplido, parcial, no cumplido) con comentarios y próximos pasos. | Jefe | J3 | Must | No se envía sin evaluar todos los hitos. | Hecho |
+| RF-049 | Ante un hito no cumplido, el jefe debe elegir reprogramar (nueva fecha) o escalar a RRHH (con nota). | Jefe | J3 | Must | Escalar genera una alerta en A1 y un evento de auditoría. | Hecho |
+| RF-050 | El nuevo ingreso debe poder responder su autoevaluación (cómo se siente, 1 a 5, y comentario) antes de la reunión. | Nuevo ingreso | N3 | Must | El jefe ve la autoevaluación en J2 y J3. | Hecho |
+| RF-051 | El check-in completado debe quedar en el historial de la ficha del ingreso. | RRHH, Jefe | A4, J2 | Must | Con fecha, resultados de hitos y acción tomada. | Hecho |
 
 ### F6. Seguridad, accesos y auditoría (fase A)
 
@@ -121,7 +121,7 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-057 | El sistema debe mostrar la auditoría con fecha y hora, usuario, acción, recurso y resultado, con filtros y exportación a CSV. | Sistemas | S3 | Must | Filtros por usuario, tipo y rango de fechas; el CSV respeta los filtros. | Hecho |
 | RF-058 | El sistema debe mostrar la matriz de permisos en modo lectura generada desde `permissions.ts`. | Sistemas | S3 | Must | Coincide con lo que cada rol puede hacer. | Hecho |
 | RF-059 | El sistema debe mostrar las políticas vigentes: MFA por rol, duración de sesión, intentos antes del bloqueo y política de contraseñas. | Sistemas | S3 | Must | Valores leídos de `SecurityPolicy`. | Hecho |
-| RF-060 | El sistema debe registrar en la auditoría todos los eventos listados en F6. | Todos | S3 | Must | Cada evento de la lista de F6 tiene al menos un caso en los datos semilla o al usar la demo. | Pendiente |
+| RF-060 | El sistema debe registrar en la auditoría todos los eventos listados en F6. | Todos | S3 | Must | Cada evento de la lista de F6 tiene al menos un caso en los datos semilla o al usar la demo. | Hecho |
 
 ### Fase B (F7 a F17)
 
@@ -185,16 +185,16 @@ Organizados según las características de calidad de **ISO/IEC 25010:2023** (IS
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
 | RNF-004 | Lighthouse Performance ≥ 85 en mobile para G1, N1 y A1 en el deploy de GitHub Pages. | Should | Lighthouse en la revisión de fase. | Pendiente |
-| RNF-005 | El JavaScript inicial (gzip) no supera 300 KB; las rutas de cada rol se cargan de forma diferida. | Should | Reporte de build de Vite. | Pendiente |
-| RNF-006 | Los íconos se importan como SVG individuales; no se carga la fuente completa de Material Symbols. | Must | Revisión del bundle. | Pendiente |
-| RNF-007 | Las animaciones duran entre 150 y 300 ms y solo animan `transform` y `opacity`. | Must | Revisión de código. | Pendiente |
+| RNF-005 | El JavaScript inicial (gzip) no supera 300 KB; las rutas de cada rol se cargan de forma diferida. | Should | Reporte de build de Vite. | Hecho |
+| RNF-006 | Los íconos se importan como SVG individuales; no se carga la fuente completa de Material Symbols. | Must | Revisión del bundle. | Hecho |
+| RNF-007 | Las animaciones duran entre 150 y 300 ms y solo animan `transform` y `opacity`. | Must | Revisión de código. | Hecho, con excepción (D-99) |
 
 ### Compatibilidad
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
 | RNF-008 | Funciona en las dos últimas versiones de Chrome, Edge, Firefox y Safari. | Should | Prueba manual de los flujos críticos. | Pendiente |
-| RNF-009 | Usa `HashRouter` para que todas las rutas funcionen en GitHub Pages, incluida la recarga directa. | Must | Recargar rutas profundas en el deploy. | Pendiente |
+| RNF-009 | Usa `HashRouter` para que todas las rutas funcionen en GitHub Pages, incluida la recarga directa. | Must | Recargar rutas profundas en el deploy. | Hecho |
 
 ### Capacidad de interacción (usabilidad y accesibilidad)
 
@@ -202,26 +202,26 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-010 | Contraste mínimo 4,5:1 en texto normal y 3:1 en texto grande, bordes de controles (`outline`) e indicadores de foco, en todas las combinaciones de tokens. | Must | Script de contraste sobre los tokens y axe en cada pantalla. | Pendiente |
+| RNF-010 | Contraste mínimo 4,5:1 en texto normal y 3:1 en texto grande, bordes de controles (`outline`) e indicadores de foco, en todas las combinaciones de tokens. | Must | Script de contraste sobre los tokens y axe en cada pantalla. | Hecho |
 | RNF-011 | Todas las acciones se pueden hacer con teclado, en orden lógico, con foco siempre visible (anillo `primary` de 2 px) y nunca tapado por el header, toasts u otros elementos (2.4.11). | Must | Recorrido con teclado de cada flujo principal. | Pendiente |
 | RNF-012 | El 100 % de los campos tiene etiqueta visible y permanente y texto de ayuda debajo con el formato y un ejemplo, asociado con `aria-describedby`; ningún placeholder reemplaza a una etiqueta o instrucción. | Must | axe y revisión de cada formulario. | Pendiente |
-| RNF-013 | Ninguna pantalla tiene desborde horizontal en 320, 375, 768, 1024, 1280 y 1440 px, ni con zoom al 200 %. | Must | Test de Playwright en verde y capturas en `docs/screenshots/`. | Pendiente |
+| RNF-013 | Ninguna pantalla tiene desborde horizontal en 320, 375, 768, 1024, 1280 y 1440 px, ni con zoom al 200 %. | Must | Test de Playwright en verde y capturas en `docs/screenshots/`. | Hecho |
 | RNF-014 | Las áreas táctiles miden al menos 48 × 48 px en mobile y 24 × 24 px en desktop (2.5.8). | Must | Test de Playwright sobre elementos interactivos a 375 px y 1280 px. | Pendiente |
 | RNF-015 | Las animaciones se reducen a solo opacidad, o se eliminan, con `prefers-reduced-motion` o la preferencia "reducir animaciones". | Must | Prueba con la emulación de reducción de movimiento. | Pendiente |
-| RNF-016 | Cada lista vacía muestra qué va a aparecer y cómo empezar. | Must | Revisión de estados vacíos con datos limpios. | Pendiente |
+| RNF-016 | Cada lista vacía muestra qué va a aparecer y cómo empezar. | Must | Revisión de estados vacíos con datos limpios. | Hecho |
 | RNF-017 | Los accesos de demo llevan al inicio de cualquier rol en 1 clic más la confirmación del paso MFA precargado, sin escribir nada. | Must | Prueba manual de los 4 roles. | Hecho |
-| RNF-018 | No hay sombras en tarjetas en reposo ni fondos con degradé; solo se usan `--elevation-1` y `--elevation-2`. | Must | Búsqueda en el código (`shadow`, `gradient`) y revisión visual. | Pendiente |
+| RNF-018 | No hay sombras en tarjetas en reposo ni fondos con degradé; solo se usan `--elevation-1` y `--elevation-2`. | Must | Búsqueda en el código (`shadow`, `gradient`) y revisión visual. | Hecho |
 | RNF-042 | Los errores de formulario cumplen las 5 reglas de 2.10: no aparecen mientras se escribe por primera vez, se muestran en el campo con ícono y `aria-invalid`, son concretos, desaparecen al corregirse y nunca borran lo cargado (salvo contraseñas). | Must | Prueba manual con una lista de verificación por formulario. | Pendiente |
 | RNF-043 | Los formularios largos (A3, A6, J3) muestran además un resumen de errores arriba con enlaces a cada campo y mueven el foco ahí. | Must | Prueba con teclado y lector de pantalla. | Pendiente |
 | RNF-044 | Los campos usan `autocomplete` (`email`, `current-password`, `new-password`, `one-time-code`) y tipos de input adecuados; se permite pegar y usar gestores de contraseñas (3.3.8). | Must | Revisión de código e inspección del DOM. | Hecho |
 | RNF-045 | Ningún flujo pide dos veces el mismo dato (3.3.7). | Must | Revisión de cada flujo. | Pendiente |
-| RNF-046 | Toda acción de arrastrar tiene una alternativa de un solo clic (2.5.7). | Must | Prueba del constructor sin arrastrar. | Pendiente |
-| RNF-047 | Cada pantalla tiene landmarks, un único `h1`, encabezados sin saltos, enlace "Saltar al contenido" y `lang` según el idioma. | Must | axe y revisión de la estructura. | Pendiente |
+| RNF-046 | Toda acción de arrastrar tiene una alternativa de un solo clic (2.5.7). | Must | Prueba del constructor sin arrastrar. | Hecho |
+| RNF-047 | Cada pantalla tiene landmarks, un único `h1`, encabezados sin saltos, enlace "Saltar al contenido" y `lang` según el idioma. | Must | axe y revisión de la estructura. | Hecho |
 | RNF-048 | Toasts y estados se anuncian con `aria-live="polite"`; errores críticos con `role="alert"`. | Must | Prueba con NVDA o VoiceOver. | Pendiente |
-| RNF-049 | Cada gráfico tiene título, resumen en texto del dato principal y la opción "Ver como tabla". | Must | Revisión de A1 y demás gráficos. | Pendiente |
+| RNF-049 | Cada gráfico tiene título, resumen en texto del dato principal y la misma información en una tabla para lectores de pantalla (D-83). | Must | Revisión de A1 y demás gráficos. | Hecho |
 | RNF-050 | Los estados se comunican con ícono y texto, nunca solo con color. | Must | Revisión en escala de grises. | Pendiente |
 | RNF-051 | El acceso a la ayuda y a "¿Problemas para iniciar sesión?" está siempre en el mismo lugar (3.2.6). | Must | Revisión de las pantallas de acceso y del layout. | Hecho |
-| RNF-052 | axe no reporta errores en ninguna pantalla, y login, recorrido del nuevo ingreso y constructor se prueban con un lector de pantalla. | Must | `@axe-core/playwright` en el test y prueba manual con NVDA o VoiceOver; hallazgos en `issues.md`. | Pendiente |
+| RNF-052 | axe no reporta errores en ninguna pantalla, y login, recorrido del nuevo ingreso y constructor se prueban con un lector de pantalla. | Must | `@axe-core/playwright` en el test y prueba manual con NVDA o VoiceOver; hallazgos en `issues.md`. | En curso: axe en verde; falta la prueba con lector de pantalla (paso 13) |
 | RNF-053 | Todo texto usa un rol tipográfico de 2.1.2 (ningún tamaño suelto), mínimo 12 px para texto de lectura, 11 px solo en insignias, cifras tabulares en números y unidades `rem`. | Must | Búsqueda de tamaños fuera de los tokens. | Pendiente |
 | RNF-055 | Los campos de fecha, número, código y correo no aceptan caracteres que no correspondan al dato, ni al escribir ni al pegar (máscaras), y las fechas se validan contra el calendario. Si se descarta un carácter, el lector de pantalla anuncia que no se aceptó y lee el valor final. | Must | Tests unitarios de `input-masks.ts`, `validation.ts` y `TextField`; prueba manual en `/styleguide`. | Hecho |
 | RNF-054 | Hay un solo botón filled por región visible; todos los botones tienen los estados de 2.1.3 (reposo, hover, foco, presionado, deshabilitado y cargando) y los deshabilitados explican por qué. | Must | Revisión en `/styleguide` y en cada pantalla. | Pendiente |
@@ -252,9 +252,9 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
 | RNF-030 | Ningún texto de interfaz está escrito directo en los componentes; todo vive en `src/locales/`. | Must | Regla de ESLint de i18n y revisión. | Pendiente |
-| RNF-031 | Los colores (roles de M3 de 2.1.1), radios, espaciados y sombras se usan solo a través de tokens; no hay valores hexadecimales en los componentes y los colores de estado nunca se usan como decoración ni como series de gráficos. | Must | Búsqueda en el código. | Pendiente |
-| RNF-032 | Las funciones de `lib/` tienen tests unitarios y el build compila sin errores de TypeScript en modo estricto. | Must | CI. | Pendiente |
-| RNF-033 | Todos los íconos pasan por el componente `<Icon />`, con estilo Rounded, peso 300. | Must | Búsqueda de importaciones de íconos fuera de `<Icon />`. | Pendiente |
+| RNF-031 | Los colores (roles de M3 de 2.1.1), radios, espaciados y sombras se usan solo a través de tokens; no hay valores hexadecimales en los componentes y los colores de estado nunca se usan como decoración ni como series de gráficos. | Must | Búsqueda en el código. | Hecho |
+| RNF-032 | Las funciones de `lib/` tienen tests unitarios y el build compila sin errores de TypeScript en modo estricto. | Must | CI. | Hecho |
+| RNF-033 | Todos los íconos pasan por el componente `<Icon />`, con estilo Rounded, peso 300. | Must | Búsqueda de importaciones de íconos fuera de `<Icon />`. | Hecho |
 
 ### Flexibilidad
 
@@ -268,10 +268,10 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-037 | Todos los datos son ficticios; no hay nombres, DNI ni CUIL de personas reales. | Must | Revisión de `src/data/`. | Pendiente |
-| RNF-038 | Los datos de ánimo nunca aparecen asociados a una persona en el panel general. | Must | Revisión de A1. | Pendiente |
-| RNF-039 | Todos los textos usan español latinoamericano neutro con tuteo; 0 casos de voseo o "usted". | Must | Script que busca formas de voseo (`-á`, `-é` imperativas, "vos") y "usted" en `es.json`. | Pendiente |
-| RNF-040 | Los textos usan el vocabulario fijo de la sección 2.9 y no contienen guiones largos (—). | Must | Script de búsqueda de términos prohibidos en `es.json`. | Pendiente |
+| RNF-037 | Todos los datos son ficticios; no hay nombres, DNI ni CUIL de personas reales. | Must | Revisión de `src/data/`. | Hecho |
+| RNF-038 | Los datos de ánimo nunca aparecen asociados a una persona en el panel general. | Must | Revisión de A1. | Hecho |
+| RNF-039 | Todos los textos usan español latinoamericano neutro con tuteo; 0 casos de voseo o "usted". | Must | Script que busca formas de voseo (`-á`, `-é` imperativas, "vos") y "usted" en `es.json`. | Hecho |
+| RNF-040 | Los textos usan el vocabulario fijo de la sección 2.9 y no contienen guiones largos (—). | Must | Script de búsqueda de términos prohibidos en `es.json`. | Hecho |
 | RNF-041 | Como máximo un signo de exclamación por pantalla, solo para celebrar avances. | Should | Revisión manual de cada pantalla. | Pendiente |
 
 ---
