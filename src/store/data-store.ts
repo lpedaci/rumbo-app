@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
 import { demoNow } from '@/lib/dates';
 import { completeTask as completeTaskRule } from '@/lib/journey';
-import type { AccessRequest, AccountFlags, AuditEvent, AuthAttempts, Template } from '@/types/domain';
+import type { AccessRequest, AccountFlags, AuditEvent, AuthAttempts, Hire, Person, Template } from '@/types/domain';
 
 /**
  * Demo data store, persisted in localStorage so changes survive a reload
@@ -30,6 +30,8 @@ interface DataActions {
   saveTemplate: (template: Template, actorId: string) => void;
   /** Deletes a template that no journey uses (D-49) and records template.delete. */
   deleteTemplate: (templateId: string, actorId: string) => void;
+  /** Adds a new hire and their journey (A3, F3) and records hire.create. */
+  addHire: (person: Person, hire: Hire, actorId: string) => void;
   /** Restores the seed data ("Restablecer demo"). The session is cleared by the session store. */
   resetData: () => void;
 }
@@ -136,6 +138,24 @@ export const useDataStore = create<DataState>()(
             ],
           };
         }),
+
+      addHire: (person, hire, actorId) =>
+        set((state) => ({
+          people: [...state.people, person],
+          hires: [...state.hires, hire],
+          auditEvents: [
+            ...state.auditEvents,
+            {
+              id: nextAuditId(),
+              at: demoNow(),
+              actorId,
+              action: 'hire.create',
+              resource: hire.id,
+              result: 'success',
+              detail: person.name,
+            },
+          ],
+        })),
 
       resetData: () => set(buildSeed()),
     }),

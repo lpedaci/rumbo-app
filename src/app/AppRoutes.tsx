@@ -1,3 +1,6 @@
+import { HireDetailPage } from '@/features/hires/HireDetailPage';
+import { HiresPage } from '@/features/hires/HiresPage';
+import { NewHirePage } from '@/features/hires/NewHirePage';
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { AppLayout } from '@/components/layout/AppLayout';
@@ -82,9 +85,9 @@ export function AppRoutes() {
           <Route path="/account/security" element={<SecurityPage />} />
 
           <Route path="/admin" element={<UpcomingPage screen="A1" />} />
-          <Route path="/admin/hires" element={<UpcomingPage screen="A2" />} />
-          <Route path="/admin/hires/new" element={<UpcomingPage screen="A3" />} />
-          <Route path="/admin/hires/:id" element={<UpcomingPage screen="A4" />} />
+          <Route path="/admin/hires" element={<HiresPage />} />
+          <Route path="/admin/hires/new" element={<NewHirePage />} />
+          <Route path="/admin/hires/:id" element={<HireDetailPage />} />
           <Route path="/admin/templates" element={<TemplatesPage />} />
           <Route path="/admin/templates/:id" element={<TemplateEditorPage />} />
           <Route path="/admin/templates/:id/preview" element={<TemplatePreviewPage />} />

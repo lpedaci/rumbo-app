@@ -13,7 +13,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 4 | Seguridad base y layout (G0 a G7) | Hecho (con el ajuste de G0) | 10/11/2026 |
 | 5 | Nuevo ingreso: N1, N2 | Hecho | 10/11/2026 |
 | 6 | Plantillas: A5, A6, A7 | Hecho | 10/11/2026 |
-| 7 | Ingresos: A2, A3, A4 | Pendiente | |
+| 7 | Ingresos: A2, A3, A4 | Hecho | 11/11/2026 |
 | 8 | Jefe: J1, J2, J3 y N3 | Pendiente | |
 | 9 | Panel A1 con alertas | Pendiente | |
 | 10 | Sistemas: S1, S2, S3 | Pendiente | |
@@ -235,3 +235,14 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 
 - G2 y G3 entran sin scroll en pantallas de laptop (columna más ancha, centrada y compacta en pantallas bajas).
 - Metadatos para buscadores y redes, tarjeta OG generada con `npm run og`, `robots.txt`, `sitemap.xml`, manifiesto e íconos.
+
+## Paso 7: ingresos (A2, A3, A4), 11/11/2026
+
+**Qué se hizo**
+- **A2 Ingresos:** listado con filtros por estado (con cantidades) y por área, tabla desde 768 px (persona, ingreso, estado, avance, atrasos, próximo check-in) y tarjetas en mobile; estados vacíos con "Quitar filtros".
+- **A3 Alta de ingreso:** formulario con validación al salir del campo, autocompletado desde la plantilla y un resumen del recorrido antes de guardar (cuenta de trabajo, tareas y rango de fechas, check-ins, estado). Al guardar genera el recorrido (`dueDate = startDate + offsetDays`), registra `hire.create` en la auditoría y abre la ficha.
+- **A4 Ficha del ingreso:** KPIs (avance, vencidas, etapa, próximo check-in con cuenta regresiva), recorrido por etapa donde RRHH completa tareas de cualquier responsable, datos del ingreso e historial de check-ins con autoevaluación, hitos y escalamientos.
+- Lógica en `src/lib/hires.ts` con tests; acción `addHire` en el store; tests de componentes; A2 a A4 en las pruebas de desbordes y axe.
+
+**Pendiente**
+- Paso 8: J1, J2, J3 y N3.
