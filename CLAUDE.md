@@ -181,7 +181,7 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 
 **Pantallas que más lo necesitan:**
 - **G0, inicio de la demo:** página de producto B2B (D-70); ver la estructura en F0.
-- **G1, login:** dos columnas como la referencia `e97bf4eb`: formulario a la izquierda y, a la derecha, un panel con fondo tintado (sin degradé) con una vista previa del producto y una frase de valor. En mobile, solo el formulario. Ritmo de 8 px: 32 px entre secciones y 8 a 16 px dentro de cada una, igual que G2 a G4 (D-69).
+- **G1, login:** dos columnas como la referencia `e97bf4eb`: formulario a la izquierda y, a la derecha, un panel con fondo tintado (sin degradé) con una vista previa del producto y una frase de valor. En mobile, solo el formulario. Ritmo de 8 px: 32 px entre secciones y 8 a 16 px dentro de cada una, igual que G2 a G4 (D-69); 24 px en pantallas de menos de 800 px de alto. Sin panel lateral, la columna mide 36 rem y va centrada en vertical, para que G2 y G3 entren sin scroll (D-76).
 - **Inicios de cada rol (A1, J1, N1, S1):** saludo + fila de KPIs + gráfico o bloque principal + lista o tabla, en bento.
 
 **Proceso obligatorio antes de seguir con el paso 7:**
@@ -1087,6 +1087,13 @@ Documentar el sistema de diseño implementado, como referencia para el case stud
 
 ---
 
-## 15. README del repositorio
+## 15. Indexación y difusión (D-76)
+
+- La portada (G0) se puede indexar: `robots: index, follow`, `canonical`, título y descripción orientados a búsqueda, datos estructurados `WebApplication` con la autora, `robots.txt` y `sitemap.xml` con la portada (las demás pantallas viven después del `#` y no se indexan).
+- Vista previa al compartir: Open Graph y Twitter con `og-image.png` de 1200 × 630 y texto alternativo. La imagen sale del componente `OgCard` (ruta `/og-card`, solo en desarrollo) y se regenera con `npm run og` cuando cambia la portada.
+- Íconos: `favicon.svg` (la flecha del logo), `apple-touch-icon.png`, `icon-512.png` y `site.webmanifest`.
+- Las URL de las etiquetas son absolutas (`https://lpedaci.github.io/rumbo-app/`).
+
+## 16. README del repositorio
 
 El README debe incluir: descripción del problema, roles, capturas de las pantallas principales, link a la demo, link al case study en el portfolio, enlace a `docs/README.md` (documentación), stack, cómo correrlo (`npm install`, `npm run dev`) y autoría: **Lourdes Pedaci, Experience Designer (Learning y UX/UI)**.

@@ -1,0 +1,5 @@
+# Rumbo, portfolio prototype (D-76): the demo start can be indexed.
+User-agent: *
+Allow: /
+
+Sitemap: https://lpedaci.github.io/rumbo-app/sitemap.xml

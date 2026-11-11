@@ -230,3 +230,8 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 
 **Problemas encontrados**
 - Ninguno. Las ambigüedades de la especificación están en `decisions.md`.
+
+## Indexación, difusión y pantallas de acceso (D-76), 11/11/2026
+
+- G2 y G3 entran sin scroll en pantallas de laptop (columna más ancha, centrada y compacta en pantallas bajas).
+- Metadatos para buscadores y redes, tarjeta OG generada con `npm run og`, `robots.txt`, `sitemap.xml`, manifiesto e íconos.

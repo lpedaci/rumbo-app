@@ -47,12 +47,15 @@ export function SsoPage() {
         <h1 className="text-headline-small text-on-surface">{t('auth.sso.title', { provider: providerName })}</h1>
       </header>
 
-      <div className="flex flex-col gap-3 rounded-lg border border-dashed border-outline bg-surface-container p-5 md:p-6">
-        <span className="flex size-10 items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant">
+      {/* Icon beside the text (D-76): same content, less height, so G2 fits without scrolling. */}
+      <div className="flex gap-4 rounded-lg border border-dashed border-outline bg-surface-container p-5">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant">
           <Icon name="open_in_new" />
         </span>
-        <p className="text-body-large text-on-surface">{t('auth.sso.simulation', { provider: providerName })}</p>
-        <p className="text-body-medium text-on-surface-variant">{t('auth.sso.branding')}</p>
+        <div className="flex min-w-0 flex-col gap-2">
+          <p className="text-body-large text-on-surface">{t('auth.sso.simulation', { provider: providerName })}</p>
+          <p className="text-body-medium text-on-surface-variant">{t('auth.sso.branding')}</p>
+        </div>
       </div>
 
       {preselected ? (

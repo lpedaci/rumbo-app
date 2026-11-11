@@ -16,7 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "icons": "node scripts/generate-icons.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "og": "playwright test --config scripts/og/playwright.config.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",

@@ -33,6 +33,10 @@ const SecurityPage = lazy(() => import('@/features/account/SecurityPage').then((
 
 // Internal style guide: development only (CLAUDE.md 2.8). `import.meta.env.DEV` is
 // replaced with `false` in production builds, so the page is never bundled or deployed.
+// Open Graph card and app icon, captured with `npm run og` (D-76). Development only.
+const OgCardPage = import.meta.env.DEV
+  ? lazy(() => import('@/features/marketing/OgCard').then((m) => ({ default: m.OgCardPage })))
+  : null;
 const StyleguidePage = import.meta.env.DEV
   ? lazy(() => import('@/features/styleguide/StyleguidePage').then((m) => ({ default: m.StyleguidePage })))
   : null;
@@ -62,6 +66,8 @@ export function AppRoutes() {
       <Route path="/login/verify" element={<VerifyPage />} />
       <Route path="/login/new-password" element={<NewPasswordPage />} />
       <Route path="/access-help" element={<AccessHelpPage />} />
+
+      {OgCardPage && <Route path="/og-card" element={<OgCardPage />} />}
 
       {StyleguidePage && (
         <Route

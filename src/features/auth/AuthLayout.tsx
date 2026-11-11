@@ -41,12 +41,19 @@ export function AuthLayout({ children, aside, showcase }: AuthLayoutProps) {
         id="main-content"
         tabIndex={-1}
         className={cn(
-          'flex min-w-0 flex-col items-center px-(--space-gutter) py-8 focus:outline-none lg:py-12',
-          showcase && 'lg:justify-center',
+          // Vertically centered and compact on short screens, so G2 and G3 fit without scrolling (D-76).
+          'flex min-w-0 flex-col items-center px-(--space-gutter) py-8 focus:outline-none md:justify-center lg:py-10',
+          '[@media(max-height:50rem)]:py-6',
         )}
       >
-        {/* 8-pt rhythm (D-69): 32 px between sections, 8 to 16 px inside each one. */}
-        <div className="flex w-full max-w-md min-w-0 flex-col gap-8">
+        {/* 8-pt rhythm (D-69): 32 px between sections (24 px on short screens), 8 to 16 px inside. */}
+        <div
+          className={cn(
+            'flex w-full min-w-0 flex-col gap-8 [@media(max-height:50rem)]:gap-6',
+            // Wider column when there is no side panel (D-76): fewer line breaks, less height.
+            showcase || aside ? 'max-w-md' : 'max-w-xl',
+          )}
+        >
           {/* The logo goes back to the demo start (G0). */}
           <Link to="/" className="w-fit rounded-sm">
             <Logo />

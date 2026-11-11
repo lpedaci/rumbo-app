@@ -3,16 +3,80 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Search and sharing (D-76). Absolute URLs: social networks do not resolve relative ones. -->
+    <title>Rumbo · Plataforma de onboarding para empresas | Caso de diseño UX/UI B2B</title>
     <meta
       name="description"
-      content="Rumbo: plataforma de recorridos de ingreso corporativo. Prototipo de portfolio con datos ficticios."
+      content="Rumbo es un caso de diseño UX/UI B2B: una plataforma de onboarding donde RRHH diseña el recorrido de ingreso, el jefe directo acompaña con check-ins y la persona nueva sabe qué hacer, con quién y para cuándo. Prototipo navegable con datos ficticios."
     />
-    <meta name="robots" content="noindex" />
+    <meta name="author" content="Lourdes Pedaci, Experience Designer (Learning y UX/UI)" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://lpedaci.github.io/rumbo-app/" />
+    <meta name="theme-color" content="#1F6F78" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rumbo" />
+    <meta property="og:locale" content="es_419" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:url" content="https://lpedaci.github.io/rumbo-app/" />
+    <meta property="og:title" content="Rumbo · Plataforma de onboarding para empresas" />
+    <meta
+      property="og:description"
+      content="Caso de diseño UX/UI B2B: cada persona sabe qué hacer, con quién y para cuándo. Recorre el prototipo como RRHH, jefe directo, nuevo ingreso o sistemas."
+    />
+    <meta property="og:image" content="https://lpedaci.github.io/rumbo-app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Rumbo: cada persona sabe qué hacer, con quién y para cuándo. Tarjetas del producto con tareas a tiempo, ingresos activos y el avance de un recorrido."
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rumbo · Plataforma de onboarding para empresas" />
+    <meta
+      name="twitter:description"
+      content="Caso de diseño UX/UI B2B: cada persona sabe qué hacer, con quién y para cuándo."
+    />
+    <meta name="twitter:image" content="https://lpedaci.github.io/rumbo-app/og-image.png" />
+
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <title>Rumbo</title>
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Rumbo",
+        "url": "https://lpedaci.github.io/rumbo-app/",
+        "description": "Caso de diseño UX/UI B2B: plataforma de onboarding con recorridos de ingreso por puesto, check-ins de 30, 60 y 90 días y seguimiento para RRHH. Prototipo con datos ficticios.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "inLanguage": ["es", "en"],
+        "isAccessibleForFree": true,
+        "image": "https://lpedaci.github.io/rumbo-app/og-image.png",
+        "creator": {
+          "@type": "Person",
+          "name": "Lourdes Pedaci",
+          "jobTitle": "Experience Designer (Learning y UX/UI)",
+          "url": "https://lpedaci.github.io/portfolio/"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Readable summary for crawlers and visitors without JavaScript -->
+    <noscript>
+      <h1>Rumbo · Plataforma de onboarding para empresas</h1>
+      <p>
+        Caso de diseño UX/UI B2B de Lourdes Pedaci. RRHH diseña el recorrido de ingreso de cada puesto, el jefe directo
+        acompaña con check-ins y la persona nueva sabe qué hacer, con quién y para cuándo. Para recorrer el prototipo,
+        activa JavaScript.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
