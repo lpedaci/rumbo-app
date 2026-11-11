@@ -19,7 +19,7 @@ import { SolutionSection } from './SolutionSection';
 import { StatsBand } from './StatsBand';
 import { StepsSection } from './StepsSection';
 
-const META_ICONS: IconName[] = ['groups', 'apartment', 'verified_user', 'devices'];
+const META_ICONS: IconName[] = ['groups', 'apartment', 'verified_user'];
 const FOOTER_LINK =
   'inline-flex min-h-11 items-center gap-1.5 rounded-sm text-left text-body-medium text-on-surface hover:text-primary hover:underline underline-offset-4 md:min-h-9';
 
