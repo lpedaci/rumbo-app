@@ -1286,5 +1286,94 @@
     "notFound": "We could not find this check-in.",
     "moodRequired": "Choose how you feel.",
     "privacy": "Only your direct manager and HR see it."
+  },
+  "dashboard": {
+    "newHire": "Add a new hire",
+    "facts": {
+      "active_one": "{{count}} hire in progress",
+      "active_other": "{{count}} hires in progress",
+      "upcoming_one": "{{count}} starting soon",
+      "upcoming_other": "{{count}} starting soon",
+      "alerts_one": "{{count}} alert",
+      "alerts_other": "{{count}} alerts",
+      "mood": "Average mood {{value}} of 5"
+    },
+    "kpis": {
+      "active": "Active hires",
+      "onTime": "Tasks on time",
+      "delayed": "Journeys behind",
+      "progress": "Average progress"
+    },
+    "kpiCaption": {
+      "active_one": "And {{count}} starting soon",
+      "active_other": "And {{count}} starting soon",
+      "onTime": "Of the tasks due",
+      "progress": "Of the journeys"
+    },
+    "kpiTrend": {
+      "delayed": "{{count}} of {{total}}",
+      "onTrack": "All on track"
+    },
+    "progress": {
+      "title": "Journey progress",
+      "description": "Tasks done by start month or by person.",
+      "viewBy": "View progress by",
+      "byCohort": "By cohort",
+      "byHire": "By hire",
+      "summaryCohort_one": "The {{month}} cohort ({{count}} hire) is at {{value}}.",
+      "summaryCohort_other": "The {{month}} cohort ({{count}} hires) is at {{value}}.",
+      "summaryHire_one": "{{count}} journey in progress, highest progress first.",
+      "summaryHire_other": "{{count}} journeys in progress, highest progress first.",
+      "tooltipAvg": "Average progress: {{value}}",
+      "tooltipHires_one": "{{count}} hire",
+      "tooltipHires_other": "{{count}} hires",
+      "tableCaption": "Average progress by cohort (start month)",
+      "colCohort": "Cohort",
+      "colHires": "Hires",
+      "colAvg": "Average progress",
+      "barLabel": "Journey progress of {{name}}"
+    },
+    "alerts": {
+      "title": "Alerts",
+      "description": "Most urgent first.",
+      "descriptionEscalated_one": "{{count}} check-in escalated to HR is waiting for you.",
+      "descriptionEscalated_other": "{{count}} check-ins escalated to HR are waiting for you.",
+      "empty": "No alerts. Every journey is on track.",
+      "overdue_one": "{{count}} overdue task",
+      "overdue_other": "{{count}} overdue tasks",
+      "more_one": "View {{count}} more alert",
+      "more_other": "View {{count}} more alerts",
+      "less": "View less",
+      "checkin": "{{days}}-day check-in",
+      "escalatedDetail": "Escalated to HR",
+      "lateDetail_one": "{{count}} day late",
+      "lateDetail_other": "{{count}} days late",
+      "blocked_one": "Task blocked for {{count}} day",
+      "blocked_other": "Task blocked for {{count}} days",
+      "blockedDetail": "Waiting for {{owner}}",
+      "overdueDetail_one": "The oldest one is {{count}} day late",
+      "overdueDetail_other": "The oldest one is {{count}} days late"
+    },
+    "bottleneck": {
+      "title": "Where journeys get stuck",
+      "description": "Overdue tasks by who holds them up.",
+      "summary_one": "{{owner}} holds {{count}} of {{total}} overdue tasks.",
+      "summary_other": "{{owner}} holds {{count}} of {{total}} overdue tasks.",
+      "tooltip_one": "{{count}} overdue task",
+      "tooltip_other": "{{count}} overdue tasks",
+      "empty": "No overdue tasks in the journeys in progress.",
+      "tableCaption": "Overdue tasks by owner",
+      "colOwner": "Owner",
+      "colCount": "Overdue tasks"
+    },
+    "upcoming": {
+      "title": "Upcoming hires",
+      "description": "Preboarding before day one.",
+      "viewAll": "View hires",
+      "empty": "No hires scheduled.",
+      "preboarding": "Preboarding: {{done}} of {{total}} tasks",
+      "startsIn_one": "Starts in {{count}} day",
+      "startsIn_other": "Starts in {{count}} days"
+    }
   }
 }

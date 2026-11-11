@@ -112,7 +112,7 @@ describe('routing and access control', () => {
       switchRole('admin');
     });
     renderAt('/admin');
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(es.upcoming.screens.A1);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Carla/);
   });
 
   it('shows the not found page for unknown routes', () => {

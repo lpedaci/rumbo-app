@@ -51,7 +51,7 @@ export function KpiCard({
       className={cn(
         // Reference ad2d9e23: icon and sparkline on top, then the label, then the number
         // with its change pill on the same line. Compact in every width (2 per row on mobile).
-        '@container flex min-w-0 flex-col gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-3 sm:p-4 md:p-3 lg:p-4 xl:p-(--space-card-padding)',
+        '@container flex min-w-0 flex-col gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-4 xl:p-(--space-card-padding)',
         className,
       )}
       variants={{

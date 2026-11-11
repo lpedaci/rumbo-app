@@ -29,3 +29,13 @@ class TestIntersectionObserver {
 if (!('IntersectionObserver' in globalThis)) {
   Object.assign(globalThis, { IntersectionObserver: TestIntersectionObserver });
 }
+
+// jsdom has no ResizeObserver; Recharts' ResponsiveContainer needs one (A1 charts, step 9).
+class TestResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+if (!('ResizeObserver' in globalThis)) {
+  Object.assign(globalThis, { ResizeObserver: TestResizeObserver });
+}

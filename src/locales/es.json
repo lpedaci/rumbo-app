@@ -1286,5 +1286,94 @@
     "notFound": "No encontramos este check-in.",
     "moodRequired": "Elige cómo te sientes.",
     "privacy": "Solo la ven tu jefe directo y RRHH."
+  },
+  "dashboard": {
+    "newHire": "Dar de alta un ingreso",
+    "facts": {
+      "active_one": "{{count}} ingreso en curso",
+      "active_other": "{{count}} ingresos en curso",
+      "upcoming_one": "{{count}} por ingresar",
+      "upcoming_other": "{{count}} por ingresar",
+      "alerts_one": "{{count}} alerta",
+      "alerts_other": "{{count}} alertas",
+      "mood": "Ánimo promedio {{value}} de 5"
+    },
+    "kpis": {
+      "active": "Ingresos activos",
+      "onTime": "Tareas a tiempo",
+      "delayed": "Recorridos con atraso",
+      "progress": "Avance promedio"
+    },
+    "kpiCaption": {
+      "active_one": "Y {{count}} por ingresar",
+      "active_other": "Y {{count}} por ingresar",
+      "onTime": "De las ya vencidas",
+      "progress": "De los recorridos"
+    },
+    "kpiTrend": {
+      "delayed": "{{count}} de {{total}}",
+      "onTrack": "Todos al día"
+    },
+    "progress": {
+      "title": "Avance de los recorridos",
+      "description": "Tareas hechas por mes de ingreso o por persona.",
+      "viewBy": "Ver avance por",
+      "byCohort": "Por cohorte",
+      "byHire": "Por ingreso",
+      "summaryCohort_one": "La cohorte de {{month}} ({{count}} ingreso) lleva un {{value}} de avance.",
+      "summaryCohort_other": "La cohorte de {{month}} ({{count}} ingresos) lleva un {{value}} de avance.",
+      "summaryHire_one": "{{count}} recorrido en curso, de mayor a menor avance.",
+      "summaryHire_other": "{{count}} recorridos en curso, de mayor a menor avance.",
+      "tooltipAvg": "Avance promedio: {{value}}",
+      "tooltipHires_one": "{{count}} ingreso",
+      "tooltipHires_other": "{{count}} ingresos",
+      "tableCaption": "Avance promedio por cohorte (mes de ingreso)",
+      "colCohort": "Cohorte",
+      "colHires": "Ingresos",
+      "colAvg": "Avance promedio",
+      "barLabel": "Avance del recorrido de {{name}}"
+    },
+    "alerts": {
+      "title": "Alertas",
+      "description": "De lo más urgente a lo menos.",
+      "descriptionEscalated_one": "{{count}} check-in escalado a RRHH espera tu respuesta.",
+      "descriptionEscalated_other": "{{count}} check-ins escalados a RRHH esperan tu respuesta.",
+      "empty": "No hay alertas. Todos los recorridos están al día.",
+      "overdue_one": "{{count}} tarea vencida",
+      "overdue_other": "{{count}} tareas vencidas",
+      "more_one": "Ver {{count}} alerta más",
+      "more_other": "Ver {{count}} alertas más",
+      "less": "Ver menos",
+      "checkin": "Check-in de {{days}} días",
+      "escalatedDetail": "Escalado a RRHH",
+      "lateDetail_one": "Atrasado {{count}} día",
+      "lateDetail_other": "Atrasado {{count}} días",
+      "blocked_one": "Tarea bloqueada hace {{count}} día",
+      "blocked_other": "Tarea bloqueada hace {{count}} días",
+      "blockedDetail": "Espera a {{owner}}",
+      "overdueDetail_one": "La más antigua venció hace {{count}} día",
+      "overdueDetail_other": "La más antigua venció hace {{count}} días"
+    },
+    "bottleneck": {
+      "title": "Dónde se traban",
+      "description": "Tareas vencidas según quién las frena.",
+      "summary_one": "{{owner}} concentra {{count}} de {{total}} tareas vencidas.",
+      "summary_other": "{{owner}} concentra {{count}} de {{total}} tareas vencidas.",
+      "tooltip_one": "{{count}} tarea vencida",
+      "tooltip_other": "{{count}} tareas vencidas",
+      "empty": "No hay tareas vencidas en los recorridos en curso.",
+      "tableCaption": "Tareas vencidas por responsable",
+      "colOwner": "Responsable",
+      "colCount": "Tareas vencidas"
+    },
+    "upcoming": {
+      "title": "Próximos ingresos",
+      "description": "El preingreso antes del primer día.",
+      "viewAll": "Ver ingresos",
+      "empty": "No hay ingresos programados.",
+      "preboarding": "Preingreso: {{done}} de {{total}} tareas",
+      "startsIn_one": "Ingresa en {{count}} día",
+      "startsIn_other": "Ingresa en {{count}} días"
+    }
   }
 }

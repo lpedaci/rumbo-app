@@ -15,7 +15,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 6 | Plantillas: A5, A6, A7 | Hecho | 10/11/2026 |
 | 7 | Ingresos: A2, A3, A4 | Hecho | 11/11/2026 |
 | 8 | Jefe: J1, J2, J3 y N3 | Hecho | 11/11/2026 |
-| 9 | Panel A1 con alertas | Pendiente | |
+| 9 | Panel A1 con alertas | Hecho | 11/11/2026 |
 | 10 | Sistemas: S1, S2, S3 | Pendiente | |
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
 | 12 | Pulido de fase A | Pendiente | |
@@ -268,3 +268,15 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Pie de acciones dentro de la tarjeta en N3, J3 y A3 (`FormFooter`).
 - Check-ins de la ficha (A4, J2) como línea de tiempo con el próximo destacado y el detalle plegado.
 - Escala de ánimo en lista para formularios angostos; "Te toca a ti" según quién mira la ficha.
+
+## Paso 9: panel de seguimiento A1, 11/11/2026
+
+- **Saludo** con los chips de contexto: ingresos en curso, por ingresar, alertas (resaltado) y ánimo promedio agregado.
+- **KPIs** de F4 (ingresos activos, tareas a tiempo, recorridos con atraso, avance promedio), calculados en `src/lib/metrics.ts`.
+- **Avance de los recorridos** (gráfico principal, Recharts): por cohorte como área con relleno plano al 12 % y tooltip oscuro, o por ingreso como barras con la persona; resumen en texto y tabla para lectores de pantalla.
+- **Alertas** de la más urgente a la menos: check-ins escalados, tareas bloqueadas (con a quién esperan), check-ins atrasados y tareas vencidas; cada una abre la ficha (A4).
+- **Dónde se traban:** tareas vencidas por responsable, atribuidas a quien bloquea (D-30), con el principal cuello de botella en ciruela.
+- **Próximos ingresos:** cuenta regresiva y avance del preingreso.
+- Recharts 2.15.4 instalado con versión fija; `npm audit --audit-level=high` sigue en verde. Test de componente del panel (KPIs que cambian con los datos, alertas, cambio de vista).
+
+**Pendiente:** paso 10 (S1 a S3, admin de sistemas).

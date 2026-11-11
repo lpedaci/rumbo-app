@@ -92,11 +92,11 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| RF-041 | El sistema debe mostrar KPIs: ingresos activos, % de tareas a tiempo, recorridos con atraso y promedio de avance. | RRHH | A1 | Must | Se calculan en `metrics.ts` y cambian al cambiar los datos. | Pendiente |
-| RF-042 | El sistema debe mostrar un gráfico de avance por ingreso o por cohorte (mes de ingreso). | RRHH | A1 | Must | Se puede alternar entre ambas vistas; tiene título, resumen en texto y "Ver como tabla". | Pendiente |
-| RF-043 | El sistema debe mostrar un gráfico de tareas atrasadas por responsable. | RRHH | A1 | Must | Incluye IT, Facilities, buddy, jefe, RRHH y nuevo ingreso. | Pendiente |
-| RF-044 | El sistema debe mostrar alertas: tareas vencidas, check-ins pendientes, check-ins escalados y tareas bloqueadas hace más de X días. | RRHH | A1 | Must | Cada alerta enlaza a la ficha del ingreso. | Pendiente |
-| RF-045 | El panel debe mostrar los datos de ánimo solo agregados. | RRHH | A1 | Must | No hay nombre asociado a un valor de ánimo en A1. | Pendiente |
+| RF-041 | El sistema debe mostrar KPIs: ingresos activos, % de tareas a tiempo, recorridos con atraso y promedio de avance. | RRHH | A1 | Must | Se calculan en `metrics.ts` y cambian al cambiar los datos. | Hecho |
+| RF-042 | El sistema debe mostrar un gráfico de avance por ingreso o por cohorte (mes de ingreso). | RRHH | A1 | Must | Se puede alternar entre ambas vistas; tiene título, resumen en texto y tabla para lectores de pantalla (D-83). | Hecho |
+| RF-043 | El sistema debe mostrar un gráfico de tareas atrasadas por responsable. | RRHH | A1 | Must | Incluye IT, Facilities, buddy, jefe, RRHH y nuevo ingreso. | Hecho |
+| RF-044 | El sistema debe mostrar alertas: tareas vencidas, check-ins pendientes, check-ins escalados y tareas bloqueadas hace más de X días. | RRHH | A1 | Must | Cada alerta enlaza a la ficha del ingreso. | Hecho |
+| RF-045 | El panel debe mostrar los datos de ánimo solo agregados. | RRHH | A1 | Must | No hay nombre asociado a un valor de ánimo en A1. | Hecho |
 
 ### F5. Check-ins 30/60/90 (fase A)
 

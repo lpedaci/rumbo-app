@@ -182,6 +182,8 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 18. **Acciones de formulario ancladas** (D-85, D-86): los botones van en un pie dentro de la tarjeta del formulario (franja blanca con divisor y una nota opcional a la izquierda), nunca sueltos debajo.
 19. **Check-ins como línea de tiempo** (D-85): en la ficha (A4, J2), 30/60/90 con marcadores; el próximo destacado con el estado de la autoevaluación y la acción del rol; los hechos con una línea de resultado ("2 de 3 hitos cumplidos") y el detalle plegado; los siguientes, solo la fecha. "Te toca a ti" se refiere siempre a quien mira la pantalla.
 20. **Escalas de opciones responsivas** (D-85): la escala de 5 opciones pasa a una lista vertical cuando su contenedor mide menos de 32 rem.
+21. **Alertas en tres líneas** (D-87): persona; qué pasa, con ícono del estado; y el detalle que lo explica (a quién espera, cuánto atraso). Todas las filas con el mismo ritmo.
+22. **Ánimo solo agregado** (D-87): en A1 va como chip del saludo ("Ánimo promedio 3,8 de 5") y solo con 3 respuestas o más.
 15. **Aviso de tarea bloqueada** (D-69): sección en `warning-container` con candado, "Se habilita cuando esté hecha esta tarea" y una fila por tarea previa con tipo, título enlazado, responsable en chip ("Te toca a ti" resaltado), vencimiento e "Ir a la tarea".
 
 **Pantallas que más lo necesitan:**

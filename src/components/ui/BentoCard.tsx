@@ -64,7 +64,7 @@ export function BentoCard({
     >
       <header className="flex min-w-0 items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          {icon}
+          {icon && <span className="hidden sm:contents">{icon}</span>}
           <div className="min-w-0">
             <Heading id={titleId} className="truncate text-title-medium text-on-surface">
               {title}

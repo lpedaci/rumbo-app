@@ -10,6 +10,7 @@ import { AppLayout } from '@/components/layout/AppLayout';
 import { NextCheckinRedirect } from '@/features/journey/NextCheckinRedirect';
 import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { NotFoundPage } from '@/features/system/NotFoundPage';
+import { DashboardPage } from '@/features/dashboard/DashboardPage';
 import { UpcomingPage } from '@/features/system/UpcomingPage';
 import { homePath } from '@/lib/permissions';
 import { useCurrentUser } from '@/store/session-store';
@@ -87,7 +88,7 @@ export function AppRoutes() {
         <Route element={<RouteGuard />}>
           <Route path="/account/security" element={<SecurityPage />} />
 
-          <Route path="/admin" element={<UpcomingPage screen="A1" />} />
+          <Route path="/admin" element={<DashboardPage />} />
           <Route path="/admin/hires" element={<HiresPage />} />
           <Route path="/admin/hires/new" element={<NewHirePage />} />
           <Route path="/admin/hires/:id" element={<HireDetailPage />} />

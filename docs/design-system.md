@@ -381,3 +381,10 @@ Reemplaza las bandas de color de D-72.
 - **`CheckinTimeline`** (`src/features/hires/CheckinTimeline.tsx`): marcadores de 32 px (hecho en `success-container`, próximo en `primary`, más adelante en `surface-container`) unidos por una línea `outline-variant`. El próximo va en un bloque `surface-container` con el estado de la autoevaluación y la acción; los hechos, con una línea de resultado y el detalle en un `details` nativo ("Ver detalle", accesible por teclado).
 - **`ChoiceGroup` en escala:** con container query; lista vertical de opciones con ícono, texto y check por debajo de 32 rem de ancho del formulario, cinco columnas desde ahí.
 - **Barra de desplazamiento de la página** (D-86): oculta por debajo de 1024 px; visible en desktop.
+
+### Panel de seguimiento A1 (D-87)
+
+- **Gráficos (Recharts 2.15.4):** área con trazo de 2 px y relleno plano al 12 % de `--chart-1`; barras horizontales con radio de 6 px, la mayor en `--chart-2` (ciruela) y el resto en `--chart-1`; ejes sin líneas, rejilla horizontal `outline-variant`; tooltip `ChartTooltip` en `inverse-surface` con `elevation-1`. Sin animación de entrada en los gráficos (los datos ya animan en los KPIs).
+- **Fila de alerta:** avatar `sm`, nombre `title-small`, línea "qué pasa" `body-small` con ícono de 16 px del color del estado y línea de detalle `body-small` gris alineada con el texto (no con el ícono); 12 px arriba y abajo y divisor entre filas.
+- **`KpiCard`:** 16 px de padding en todos los anchos menores a 1280 px.
+- **`BentoCard`:** el ícono decorativo del encabezado se oculta por debajo de 640 px.
