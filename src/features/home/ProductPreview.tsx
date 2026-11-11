@@ -12,7 +12,7 @@ import { useDataStore } from '@/store/data-store';
 import type { Hire } from '@/types/domain';
 
 /** Tasks completed per week across all journeys, for the last `weeks` weeks (real demo data). */
-function weeklyCompletions(hires: Hire[], weeks = 8): number[] {
+export function weeklyCompletions(hires: Hire[], weeks = 8): number[] {
   const tasks = hires.flatMap((h) => h.tasks).filter((t) => t.status === 'done' && t.completedAt);
   return Array.from({ length: weeks }, (_, i) => {
     const to = addDays(DEMO_TODAY, -7 * (weeks - 1 - i));
@@ -25,7 +25,7 @@ function weeklyCompletions(hires: Hire[], weeks = 8): number[] {
 }
 
 /** Journeys started up to the end of each of the last `weeks` weeks (real demo data). */
-function startedJourneys(hires: Hire[], weeks = 8): number[] {
+export function startedJourneys(hires: Hire[], weeks = 8): number[] {
   return Array.from({ length: weeks }, (_, i) => {
     const to = addDays(DEMO_TODAY, -7 * (weeks - 1 - i));
     return hires.filter((h) => h.startDate <= to).length;

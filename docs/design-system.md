@@ -330,6 +330,30 @@ World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 
 - **Preguntas frecuentes:** acordeón de Radix, filas numeradas, una abierta a la vez.
 - **Pie:** tarjeta blanca con logo, aviso de demo, enlaces, "Restablecer demo", autoría, crédito de las fotos y la marca "Rumbo" en `primary-container` como SVG decorativo, cortada por el borde.
 
+### G0 en página blanca (D-73)
+
+Reemplaza las bandas de color de D-72.
+
+- **Fondo:** `surface-container-lowest` en toda la página; el hero suma una cuadrícula SVG de 48 px en #EDF0F3.
+- **Encabezado de sección:** centrado; etiqueta `label-large` en `primary` (texto simple), `h2` en `headline-small` o `display-small` y una línea en `body-large`.
+- **Hero:** `h1` centrado con la parte final en `primary`; acción filled y enlace de texto; cuatro tarjetas flotantes con `--elevation-1` (representan ventanas sobre la página) desde 1280 px.
+- **Cifras:** `display-small` a `display-medium`, alternando `primary` y `tertiary`, con la etiqueta debajo.
+- **Franja final:** tarjeta `primary-container` con título, texto y la acción principal.
+
+### Bandas y encabezados de G0 (D-72, reemplazado por D-73)
+
+| Banda | Superficie |
+| --- | --- |
+| Hero | `surface` con cuadrícula SVG de 48 px en #E3E8EC |
+| El problema | `band-plum` #FBF0F6 |
+| La solución y Preguntas | `surface-container-lowest` |
+| Recorridos | `surface` |
+| Cifras | `inverse-surface` #1F2A30 con texto `inverse-on-surface` |
+| Pasos | `band-petrol` #E4F1F2 |
+
+- **Encabezado de sección:** `h2` en `headline-small` (mobile) o `display-small` y una línea en `body-large`, alineados a la izquierda. Sin etiquetas, números ni líneas decorativas.
+- **Pie:** títulos de columna en `title-medium` y `on-surface` con borde inferior; enlaces en `body-medium` y `on-surface-variant`.
+
 ### G0 reconstruida y página de error (D-71)
 
 - **Sección por rol:** grilla de 2 columnas desde 1024 px que alterna lados; texto (foto `lg`, chip del rol, `h3` en `headline-small`, `body-large`, puntos como chips con check del color del rol, botón outlined "Recorrer como…") y miniatura en un marco (`AppFrame`: riel de íconos, borde, `--elevation-1` porque representa una ventana flotante) sobre el contenedor plano del rol.

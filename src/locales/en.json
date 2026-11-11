@@ -451,7 +451,8 @@
       "screens": "Screens in phase A",
       "templates": "Journey templates",
       "hires": "Simulated hires",
-      "tasks": "Tasks in journeys"
+      "tasks": "Tasks in journeys",
+      "eyebrow": "In numbers"
     },
     "faq": {
       "eyebrow": "Questions",
@@ -569,7 +570,12 @@
       "journeys": "Journeys",
       "faq": "FAQ",
       "rights": "Portfolio prototype with fictitious data."
-    }
+    },
+    "cta": {
+      "title": "Explore Rumbo from any role",
+      "body": "Choose a journey, sign in with one click and switch roles anytime."
+    },
+    "titleHighlight": "by when."
   },
   "stages": {
     "preboarding": "Pre-boarding",

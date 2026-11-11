@@ -11,16 +11,25 @@ import { SectionHeading } from './SectionHeading';
 /** Decorative mini interface built with Rumbo's own pieces (2.2.1, pattern 9). */
 function Scene({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div
-      aria-hidden
-      className={cn('flex h-44 items-center justify-center overflow-hidden rounded-lg bg-surface-container p-4', className)}
-    >
+    <div aria-hidden className={cn('flex h-44 items-center justify-center overflow-hidden rounded-lg p-4', className)}>
       {children}
     </div>
   );
 }
 
-function Card({ title, body, scene, className }: { title: string; body: string; scene: ReactNode; className?: string }) {
+function Card({
+  title,
+  body,
+  scene,
+  tint,
+  className,
+}: {
+  title: string;
+  body: string;
+  scene: ReactNode;
+  tint?: string;
+  className?: string;
+}) {
   return (
     <li
       className={cn(
@@ -28,7 +37,7 @@ function Card({ title, body, scene, className }: { title: string; body: string; 
         className,
       )}
     >
-      {scene}
+      <div className={cn('rounded-lg', tint)}>{scene}</div>
       <div className="flex flex-col gap-1 px-2">
         <h3 className="text-title-medium text-on-surface">{title}</h3>
         <p className="text-body-medium text-on-surface-variant">{body}</p>
@@ -41,11 +50,22 @@ function Card({ title, body, scene, className }: { title: string; body: string; 
 export const SolutionSection = forwardRef<HTMLHeadingElement>(function SolutionSection(_, ref) {
   const { t } = useTranslation();
   const hires = useDataStore((s) => s.hires);
-  const items = t('home.solution.items', { returnObjects: true }) as { title: string; body: string }[];
-  const stages = t('home.solution.illo.stages', { returnObjects: true }) as string[];
-  const tasks = t('home.solution.illo.tasks', { returnObjects: true }) as string[];
-  const milestones = t('home.solution.illo.milestones', { returnObjects: true }) as string[];
-  const chips = t('home.solution.illo.chips', { returnObjects: true }) as string[];
+  const items = t('home.solution.items', { returnObjects: true }) as {
+    title: string;
+    body: string;
+  }[];
+  const stages = t('home.solution.illo.stages', {
+    returnObjects: true,
+  }) as string[];
+  const tasks = t('home.solution.illo.tasks', {
+    returnObjects: true,
+  }) as string[];
+  const milestones = t('home.solution.illo.milestones', {
+    returnObjects: true,
+  }) as string[];
+  const chips = t('home.solution.illo.chips', {
+    returnObjects: true,
+  }) as string[];
   const onTime = kpis(hires).onTimeRate;
 
   const scenes = [
@@ -100,7 +120,9 @@ export const SolutionSection = forwardRef<HTMLHeadingElement>(function SolutionS
             <span
               className={cn(
                 'ml-auto shrink-0 rounded-full px-2 text-label-small',
-                i < 2 ? 'bg-success-container text-on-success-container' : 'bg-warning-container text-on-warning-container',
+                i < 2
+                  ? 'bg-success-container text-on-success-container'
+                  : 'bg-warning-container text-on-warning-container',
               )}
             >
               {i < 2 ? t('home.solution.illo.met') : t('home.solution.illo.partial')}
@@ -153,6 +175,14 @@ export const SolutionSection = forwardRef<HTMLHeadingElement>(function SolutionS
 
   // Bento: three equal cards, then a wide one and a narrow one (2.4).
   const spans = ['md:col-span-2', 'md:col-span-2', 'md:col-span-2', 'md:col-span-4', 'md:col-span-2'];
+  // Each scene on its own tint so the bento is not monochrome (D-72).
+  const tints = [
+    'bg-band-petrol',
+    'bg-role-hire-container',
+    'bg-band-plum',
+    'bg-role-it-container',
+    'bg-surface-container',
+  ];
 
   return (
     <section aria-labelledby="solution-title" className="flex flex-col gap-10">
@@ -165,7 +195,14 @@ export const SolutionSection = forwardRef<HTMLHeadingElement>(function SolutionS
       />
       <ul className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-6">
         {items.map((item, i) => (
-          <Card key={item.title} title={item.title} body={item.body} scene={scenes[i]} className={spans[i]} />
+          <Card
+            key={item.title}
+            title={item.title}
+            body={item.body}
+            scene={scenes[i]}
+            tint={tints[i]}
+            className={spans[i]}
+          />
         ))}
       </ul>
     </section>

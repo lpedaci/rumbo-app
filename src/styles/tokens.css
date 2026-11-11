@@ -56,6 +56,10 @@
   --rumbo-role-it: #2457c5;
   --rumbo-role-it-container: #dce6fb;
 
+  /* Light flat tints for the G0 bands (D-72): the page alternates surfaces, never gradients. */
+  --rumbo-band-plum: #fbf0f6;
+  --rumbo-band-petrol: #e4f1f2;
+
   /* Neutral cool gray page background (D-69), no brand tint. */
   --md-sys-color-surface: #f1f3f5;
   --md-sys-color-surface-container-lowest: #ffffff;
@@ -182,6 +186,9 @@
   --rumbo-role-hire-container: #4b33a3;
   --rumbo-role-it: #b1c5ff;
   --rumbo-role-it-container: #1d43a0;
+
+  --rumbo-band-plum: #2a1822;
+  --rumbo-band-petrol: #142427;
 
   --md-sys-color-surface: #111416;
   --md-sys-color-surface-container-lowest: #0a0f11;

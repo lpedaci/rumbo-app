@@ -24,7 +24,10 @@ function SkeletonRow({ w }: { w: string }) {
 /** G0 · "El problema" (D-70): three pains of an onboarding without a journey. */
 export const ProblemSection = forwardRef<HTMLHeadingElement>(function ProblemSection(_, ref) {
   const { t } = useTranslation();
-  const items = t('home.problem.items', { returnObjects: true }) as { title: string; body: string }[];
+  const items = t('home.problem.items', { returnObjects: true }) as {
+    title: string;
+    body: string;
+  }[];
 
   const scenes = [
     <Scene key="today">

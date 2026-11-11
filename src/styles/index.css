@@ -53,6 +53,9 @@
   --color-role-it: var(--rumbo-role-it);
   --color-role-it-container: var(--rumbo-role-it-container);
 
+  --color-band-plum: var(--rumbo-band-plum);
+  --color-band-petrol: var(--rumbo-band-petrol);
+
   --color-surface: var(--md-sys-color-surface);
   --color-surface-container-lowest: var(--md-sys-color-surface-container-lowest);
   --color-surface-container: var(--md-sys-color-surface-container);
@@ -214,4 +217,10 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* G0 hero texture (D-72, D-73): a faint flat SVG grid on white, never gradients. No dots: they hurt reading. */
+@utility bg-texture-grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M48 0H0V48' fill='none' stroke='%23edf0f3' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
 }

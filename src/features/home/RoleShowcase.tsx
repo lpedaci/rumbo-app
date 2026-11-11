@@ -40,7 +40,9 @@ export const RoleShowcase = forwardRef<HTMLHeadingElement>(function RoleShowcase
           const person = findDemoPerson(personId);
           const key = demoKeyFor(personId)!;
           const accent = ROLE_ACCENT[role];
-          const points = t(`home.roles.${role}.points`, { returnObjects: true }) as string[];
+          const points = t(`home.roles.${role}.points`, {
+            returnObjects: true,
+          }) as string[];
           const Preview = ROLE_PREVIEW[role];
           return (
             <li
@@ -80,11 +82,19 @@ export const RoleShowcase = forwardRef<HTMLHeadingElement>(function RoleShowcase
                 </div>
                 <Button asChild variant="outlined" trailingIcon="arrow_forward" className="w-full sm:w-fit">
                   <Link to={`/login?demo=${key}`}>
-                    {t('home.cardAction', { name: person?.name.split(' ')[0] ?? '' })}
+                    {t('home.cardAction', {
+                      name: person?.name.split(' ')[0] ?? '',
+                    })}
                   </Link>
                 </Button>
               </div>
-              <div className={cn('relative min-w-0 rounded-xl p-4 sm:p-8', ROLE_BACKDROP[role], i % 2 === 1 && 'lg:order-1')}>
+              <div
+                className={cn(
+                  'relative min-w-0 rounded-xl p-4 sm:p-8',
+                  ROLE_BACKDROP[role],
+                  i % 2 === 1 && 'lg:order-1',
+                )}
+              >
                 <Preview />
               </div>
             </li>

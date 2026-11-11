@@ -451,7 +451,8 @@
       "screens": "Pantallas en la fase A",
       "templates": "Plantillas de recorrido",
       "hires": "Ingresos simulados",
-      "tasks": "Tareas en recorridos"
+      "tasks": "Tareas en recorridos",
+      "eyebrow": "En números"
     },
     "faq": {
       "eyebrow": "Preguntas",
@@ -569,7 +570,12 @@
       "journeys": "Recorridos",
       "faq": "Preguntas frecuentes",
       "rights": "Prototipo de portfolio con datos ficticios."
-    }
+    },
+    "cta": {
+      "title": "Recorre Rumbo desde el rol que quieras",
+      "body": "Elige un recorrido, inicia sesión en un clic y cambia de rol cuando quieras."
+    },
+    "titleHighlight": "para cuándo."
   },
   "stages": {
     "preboarding": "Preingreso",

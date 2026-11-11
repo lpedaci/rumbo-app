@@ -10,7 +10,10 @@ import { SectionHeading } from './SectionHeading';
  */
 export const FaqSection = forwardRef<HTMLHeadingElement>(function FaqSection(_, ref) {
   const { t } = useTranslation();
-  const items = t('home.faq.items', { returnObjects: true }) as { q: string; a: string }[];
+  const items = t('home.faq.items', { returnObjects: true }) as {
+    q: string;
+    a: string;
+  }[];
 
   return (
     <section aria-labelledby="faq-title" className="flex flex-col gap-10">
@@ -21,7 +24,7 @@ export const FaqSection = forwardRef<HTMLHeadingElement>(function FaqSection(_, 
         title={t('home.faq.title')}
         subtitle={t('home.faq.subtitle')}
       />
-      <Accordion.Root type="single" collapsible className="mx-auto flex w-full max-w-3xl flex-col gap-2">
+      <Accordion.Root type="single" collapsible className="flex w-full flex-col gap-2">
         {items.map((item, i) => (
           <Accordion.Item
             key={item.q}
