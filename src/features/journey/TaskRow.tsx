@@ -79,7 +79,7 @@ export function TaskRow({
 
         <div className="flex min-w-0 flex-1 flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-4">
           {/* Main: title and its context */}
-          <div className="flex min-w-0 flex-1 flex-col gap-1">
+          <div className="flex min-w-0 flex-1 flex-col gap-1.5">
             {to ? (
               <Link
                 to={to}

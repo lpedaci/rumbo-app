@@ -32,7 +32,7 @@ export function NextStepRow({ task, allTasks }: { task: HireTask; allTasks: Hire
             status === 'overdue' ? 'text-error' : status === 'in_progress' ? 'text-info' : 'text-on-surface-variant',
           )}
         />
-        <span className="flex min-w-0 flex-1 flex-col gap-1">
+        <span className="flex min-w-0 flex-1 flex-col gap-1.5">
           <span className="truncate text-title-small text-on-surface">{task.title}</span>
           {/* One fact to act on (D-84): when it is due, plus the status only when it adds something */}
           <span className="flex flex-wrap items-baseline gap-x-1.5">

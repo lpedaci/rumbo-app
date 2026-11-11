@@ -30,7 +30,7 @@ export function UpcomingHiresCard({ upcoming }: { upcoming: HireSummary[] }) {
               className="flex min-h-14 min-w-0 items-center gap-3 rounded-md px-2 py-3 transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
             >
               <Avatar name={s.person.name} role={s.person.role} size="sm" />
-              <span className="flex min-w-0 flex-1 flex-col gap-1">
+              <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                 <span className="truncate text-title-small text-on-surface">{s.person.name}</span>
                 <span className="flex flex-wrap items-baseline gap-x-1.5">
                   <span className="text-label-medium text-on-surface">

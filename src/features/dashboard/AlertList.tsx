@@ -93,7 +93,7 @@ export function AlertList({ alerts, hires, people }: { alerts: Alert[]; hires: H
               >
                 <Avatar name={person.name} role={person.role} size="sm" />
                 {/* Three lines with the same rhythm in every row: who, what happened, the detail */}
-                <span className="flex min-w-0 flex-1 flex-col gap-1">
+                <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                   <span className="truncate text-title-small text-on-surface">{person.name}</span>
                   <span className="flex min-w-0 items-center gap-1.5 text-body-small text-on-surface">
                     <Icon name={kind.icon} size={16} className={cn('shrink-0', kind.color)} />

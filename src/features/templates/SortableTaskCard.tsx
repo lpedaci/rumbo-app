@@ -76,7 +76,7 @@ export function SortableTaskCard({
         transition: reduceMotion ? undefined : transition,
       }}
       className={cn(
-        'relative flex min-w-0 items-start gap-1 rounded-md border bg-surface-container-lowest py-2 pr-1 pl-1 outline-none transition-colors hover:bg-surface-container',
+        'relative flex min-w-0 items-start gap-1 rounded-md border bg-surface-container-lowest py-3 pr-1 pl-1 outline-none transition-colors hover:bg-surface-container',
         'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
         invalid ? 'border-error' : 'border-outline-variant',
         // The dragged card lifts slightly (2.6); elevation only while it floats (2.5).
@@ -98,7 +98,7 @@ export function SortableTaskCard({
         <Icon name="drag_indicator" />
       </button>
 
-      <div className="flex min-w-0 flex-1 flex-col gap-1 py-1">
+      <div className="flex min-w-0 flex-1 flex-col gap-2 py-1">
         <button
           type="button"
           onClick={onEdit}
