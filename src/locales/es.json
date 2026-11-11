@@ -195,13 +195,7 @@
     "signOut": "Cerrar sesión",
     "userMenuSuffix": "menú de usuario",
     "home": "Ir al inicio",
-    "shortcuts": "Accesos rápidos",
-    "workspace": {
-      "admin": "Espacio de RRHH",
-      "manager": "Espacio del jefe directo",
-      "hire": "Espacio del nuevo ingreso",
-      "it_admin": "Mesa de ayuda de sistemas"
-    }
+    "shortcuts": "Accesos rápidos"
   },
   "session": {
     "warningTitle": "Tu sesión está por vencer",

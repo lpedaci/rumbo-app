@@ -40,7 +40,7 @@ La primera versión cumple las reglas de 2.1 a 2.10, pero se ve como una plantil
 | Pantalla | Cambios |
 | --- | --- |
 | Tokens y `/styleguide` | `surface` tintado, `inverse-surface` para tooltips, radio de tarjeta 20 px, avatares por rol, barra de progreso más gruesa, `SegmentedProgress`, `Sparkline`, `KpiCard`, `IconTile`. |
-| G6, layout | Navegación de escritorio en dos niveles con la persona usuaria abajo; ítem activo en píldora; header más liviano. |
+| G6, layout | Una sola barra lateral como `9d0f172e` (D-57): logo, ítems con el activo en píldora sólida, accesos de ayuda y la persona usuaria abajo; header más liviano. |
 | G0 | Hero a dos columnas con titular `display-medium`, botones y vista previa compuesta (KPIs con sparkline, gráfico de avance y tarjeta de recorrido con barra segmentada). Tarjetas de rol más grandes con avatar de color. Enlaces al case study y la documentación también en el encabezado. |
 | G1 | Dos columnas con panel tintado y vista previa del producto. |
 | N1 | Saludo como título, fila de KPIs personales, tarjeta de bienvenida con barra segmentada y checklist, y bienvenida guiada de 3 pasos al primer ingreso. |

@@ -195,13 +195,7 @@
     "signOut": "Sign out",
     "userMenuSuffix": "user menu",
     "home": "Go to home",
-    "shortcuts": "Shortcuts",
-    "workspace": {
-      "admin": "HR workspace",
-      "manager": "Manager workspace",
-      "hire": "New hire workspace",
-      "it_admin": "IT help desk"
-    }
+    "shortcuts": "Shortcuts"
   },
   "session": {
     "warningTitle": "Your session is about to expire",
