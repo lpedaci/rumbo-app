@@ -72,7 +72,12 @@ export function HiresPage() {
         className="overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest"
       >
         <div className="flex flex-col gap-3 p-4 lg:flex-row lg:items-center lg:justify-between">
-          <div role="group" aria-label={t('hires.list.statusFilter')} className="flex flex-wrap items-center gap-2">
+          {/* One row that scrolls sideways on phones; wraps from 640 px (D-78) */}
+          <div
+            role="group"
+            aria-label={t('hires.list.statusFilter')}
+            className="-mx-4 flex items-center gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
+          >
             {STATUS_FILTERS.map((value) => (
               <FilterChip
                 key={value}
@@ -83,9 +88,9 @@ export function HiresPage() {
               />
             ))}
           </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {/* Filter, not data entry: label beside the control, no supporting text (D-78) */}
-            <label className="flex items-center gap-2 text-label-large text-on-surface">
+            <label className="flex items-center gap-3 text-label-large text-on-surface">
               {t('hires.list.area')}
               <span className="relative">
                 <select
@@ -200,12 +205,12 @@ export function HiresPage() {
               </TableContainer>
             </div>
 
-            {/* Below 768 px: cards (2.7) */}
+            {/* Below 768 px: compact rows instead of the table (2.7) */}
             <ul className="flex flex-col divide-y divide-outline-variant border-t border-outline-variant md:hidden">
               {shown.map((s) => (
-                <li key={s.hire.id} className="relative flex flex-col gap-3 p-4">
+                <li key={s.hire.id} className="relative flex flex-col gap-2.5 px-4 py-3">
                   <div className="flex min-w-0 items-center gap-3">
-                    {s.person && <Avatar name={s.person.name} role={s.person.role} />}
+                    {s.person && <Avatar name={s.person.name} role={s.person.role} size="sm" />}
                     <div className="flex min-w-0 flex-1 flex-col">
                       <Link
                         to={`/admin/hires/${s.hire.id}`}
@@ -217,21 +222,24 @@ export function HiresPage() {
                     </div>
                     <Icon name="chevron_right" className="shrink-0 text-on-surface-variant" />
                   </div>
-                  <div className="flex flex-wrap items-center gap-2">
+                  {/* Light row (D-78): status, overdue and the percentage, then a thin bar */}
+                  <div className="flex items-center gap-2 pl-11">
                     <HireStatusPill status={s.status} />
-                    <OverduePill count={s.overdue} />
+                    {s.overdue > 0 && <OverduePill count={s.overdue} />}
+                    <span className="ml-auto text-label-large text-on-surface tabular-nums">
+                      {formatPercent(s.progress.percent)}
+                    </span>
                   </div>
-                  <ProgressBar
-                    value={s.progress.percent}
-                    label={t('hires.list.progressLabel', { name: s.person?.name ?? '' })}
-                    valueText={formatPercent(s.progress.percent)}
-                  />
-                  <p className="text-body-small text-on-surface-variant tabular-nums">
-                    {t(s.status === 'upcoming' ? 'hires.list.startsOn' : 'hires.list.startedOn', {
-                      date: formatDate(s.hire.startDate),
-                    })}{' '}
-                    · {nextCheckinText(s)}
-                  </p>
+                  <span
+                    role="progressbar"
+                    aria-label={t('hires.list.progressLabel', { name: s.person?.name ?? '' })}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={Math.round(s.progress.percent)}
+                    className="ml-11 h-1.5 overflow-hidden rounded-full bg-outline-variant"
+                  >
+                    <span className="block h-full bg-primary" style={{ width: `${s.progress.percent}%` }} />
+                  </span>
                 </li>
               ))}
             </ul>
