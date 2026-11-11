@@ -231,7 +231,8 @@ export function JourneyPage() {
               </span>
             </p>
             <JourneyTimeline byStage={byStage} stage={stage} day={day} />
-            <div className="flex flex-col gap-2">
+            {/* Its own block under the timeline: a divider and air so the heading is not lost (D-97) */}
+            <div className="mt-2 flex flex-col gap-3 border-t border-outline-variant pt-5">
               <h3
                 id="journey-next"
                 tabIndex={-1}
