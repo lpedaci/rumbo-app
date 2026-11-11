@@ -30,13 +30,14 @@ export function Toaster() {
             if (!open) dismissToast(item.id);
           }}
           className={cn(
-            'flex w-full items-center gap-3 rounded-md bg-inverse-surface py-2 pr-2 pl-4 text-body-medium text-inverse-on-surface shadow-elevation-2',
+            // As wide as the message needs (D-109): one line when it fits, two at most on phones.
+            'flex w-fit max-w-full items-center gap-2 rounded-md bg-inverse-surface py-2 pr-1 pl-3 sm:gap-3 sm:pr-2 sm:pl-4 text-body-medium text-inverse-on-surface shadow-elevation-2',
             'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-bottom-2',
             'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
           )}
         >
           <Icon name={toneIcon[item.tone]} size={20} />
-          <Toast.Description className="min-w-0 flex-1">{item.message}</Toast.Description>
+          <Toast.Description className="min-w-0 flex-1 text-pretty">{item.message}</Toast.Description>
           <Toast.Close asChild>
             <IconButton icon="close" label={t('ui.dismiss')} size="xs" className="text-inverse-on-surface" />
           </Toast.Close>
@@ -44,7 +45,7 @@ export function Toaster() {
       ))}
       {/* Phones: above the bottom navigation. From 768 px: top center, under the top bar, away from
           the actions at the bottom right of forms and cards, so it never hides the focus (2.4.11, D-99). */}
-      <Toast.Viewport className="fixed inset-x-0 bottom-20 z-60 mx-auto flex w-full max-w-md flex-col gap-2 p-4 outline-none md:top-20 md:bottom-auto" />
+      <Toast.Viewport className="fixed inset-x-0 bottom-20 z-60 mx-auto flex w-full max-w-[44rem] flex-col items-center gap-2 p-2 outline-none sm:p-4 md:top-20 md:bottom-auto" />
     </Toast.Provider>
   );
 }
