@@ -104,7 +104,8 @@ export function TopBar() {
     <header className="sticky top-0 z-40 bg-surface px-2 pt-2 md:pr-(--space-gutter) md:pl-4 md:pt-3">
       <div className="flex h-16 min-w-0 items-center gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest px-2 sm:gap-4 sm:px-4">
         <MenuButton />
-        <Link to={homePath(user)} className="shrink-0 rounded-sm">
+        {/* Below 768 px the logo lives in the menu drawer, so the bar stays light (D-79) */}
+        <Link to={homePath(user)} className="hidden shrink-0 rounded-sm md:inline-flex">
           <Logo markOnly className="sm:hidden" />
           {/* Mark only on small screens: the link keeps a name for assistive tech. */}
           <span className="sr-only sm:hidden">
