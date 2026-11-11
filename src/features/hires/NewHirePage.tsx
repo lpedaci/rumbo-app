@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { FormFooter } from '@/components/ui/FormFooter';
 import { Icon } from '@/components/ui/Icon';
 import { Select } from '@/components/ui/Select';
 import { TextField } from '@/components/ui/TextField';
@@ -221,17 +222,16 @@ export function NewHirePage() {
                 {...register('mobile')}
               />
             </div>
+            {/* Actions anchored to the form (D-85): main one on the right; full width, main on top, on mobile */}
+            <FormFooter>
+              <Button asChild variant="outlined">
+                <Link to="/admin/hires">{t('hires.form.cancel')}</Link>
+              </Button>
+              <Button type="submit" leadingIcon="add" loading={isSubmitting} loadingText={t('hires.form.submitting')}>
+                {t('hires.form.submit')}
+              </Button>
+            </FormFooter>
           </Card>
-
-          {/* Actions: main one on the right; full width with the main one on top on mobile (2.1.3) */}
-          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-            <Button asChild variant="outlined">
-              <Link to="/admin/hires">{t('hires.form.cancel')}</Link>
-            </Button>
-            <Button type="submit" leadingIcon="add" loading={isSubmitting} loadingText={t('hires.form.submitting')}>
-              {t('hires.form.submit')}
-            </Button>
-          </div>
         </div>
 
         {/* What will be created, before saving */}

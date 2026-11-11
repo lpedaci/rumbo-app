@@ -262,3 +262,9 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Contactos clave completos en desktop, sin "Ver como tabla" (la tabla queda para lectores de pantalla) y chips `RefChip` para las referencias a otras secciones (N1, G0, pantallas en construcción).
 - Fechas de las filas de tareas jerarquizadas en N1, A4, J2 y A7, y "Lo próximo" sin datos repetidos.
 - Martín pasa a llamarse Martín Rossi; Nicolás Acosta tiene foto. Versión de datos guardados 4.
+
+## Ajustes D-85, 11/11/2026
+
+- Pie de acciones dentro de la tarjeta en N3, J3 y A3 (`FormFooter`).
+- Check-ins de la ficha (A4, J2) como línea de tiempo con el próximo destacado y el detalle plegado.
+- Escala de ánimo en lista para formularios angostos; "Te toca a ti" según quién mira la ficha.

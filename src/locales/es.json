@@ -1142,7 +1142,7 @@
       "journeyHelp": "Como RRHH puedes marcar como hechas las tareas de cualquier responsable, también las de IT, Facilities y el buddy.",
       "stageCount": "{{done}} de {{total}}",
       "checkins": "Check-ins",
-      "checkinsHelp": "La autoevaluación la ven solo el jefe directo y RRHH.",
+      "checkinsHelp": "Conversaciones de seguimiento: confirman si la persona alcanza los hitos de cada etapa.",
       "checkinTitle": "Check-in de {{days}} días",
       "due": "Vence el {{date}}",
       "checkinStatus": {
@@ -1165,7 +1165,22 @@
       "employeeId": "Legajo",
       "mobile": "Celular",
       "doCheckin": "Hacer check-in",
-      "backTeam": "Volver a Mi equipo"
+      "backTeam": "Volver a Mi equipo",
+      "checkinsDone": "{{done}} de {{total}} hechos",
+      "doneOn": "Hecho el {{date}}",
+      "scheduledFor": "Programado para el {{date}}",
+      "milestonesMet": "{{met}} de {{total}} hitos cumplidos",
+      "partialCount_one": "{{count}} parcial",
+      "partialCount_other": "{{count}} parciales",
+      "notMetCount_one": "{{count}} no cumplido",
+      "notMetCount_other": "{{count}} no cumplidos",
+      "viewDetail": "Ver detalle",
+      "milestonesTitle": "Hitos de la etapa",
+      "selfReviewTitle": "Autoevaluación",
+      "selfReviewReady": "La autoevaluación está lista para la reunión.",
+      "selfReviewWaiting": "Todavía no envió su autoevaluación.",
+      "selfReviewPrivate": "Solo la ven el jefe directo y RRHH",
+      "nextSteps": "Próximos pasos"
     }
   },
   "team": {
@@ -1245,7 +1260,7 @@
   },
   "selfReview": {
     "title": "Tu autoevaluación de los {{days}} días",
-    "description": "Antes de la reunión con {{manager}}, cuéntale cómo te sientes y cómo te va. Solo la ven tu jefe directo y RRHH.",
+    "description": "Antes de la reunión con {{manager}}, cuéntale cómo te sientes y cómo te va.",
     "due": "Reunión: {{date}}",
     "mood": "¿Cómo te sientes en este momento?",
     "moodHelp": "Elige la opción que más se parece a cómo estás.",
@@ -1269,6 +1284,7 @@
     "completedBody": "Tu jefe directo completó el check-in el {{date}}.",
     "back": "Volver a Mi recorrido",
     "notFound": "No encontramos este check-in.",
-    "moodRequired": "Elige cómo te sientes."
+    "moodRequired": "Elige cómo te sientes.",
+    "privacy": "Solo la ven tu jefe directo y RRHH."
   }
 }

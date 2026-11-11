@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ChoiceGroup } from '@/components/ui/ChoiceGroup';
+import { FormFooter } from '@/components/ui/FormFooter';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { TextArea } from '@/components/ui/TextArea';
@@ -133,15 +134,15 @@ export function SelfReviewPage() {
                     onChange={(e) => setComment(e.target.value)}
                   />
                 </div>
+                <FormFooter note={t('selfReview.privacy')} noteIcon="lock">
+                  <Button asChild variant="outlined">
+                    <Link to="/me">{t('managerCheckin.cancel')}</Link>
+                  </Button>
+                  <Button type="submit" leadingIcon="send">
+                    {t('selfReview.submit')}
+                  </Button>
+                </FormFooter>
               </Card>
-              <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-                <Button asChild variant="outlined">
-                  <Link to="/me">{t('managerCheckin.cancel')}</Link>
-                </Button>
-                <Button type="submit" leadingIcon="send">
-                  {t('selfReview.submit')}
-                </Button>
-              </div>
             </form>
           )}
         </div>

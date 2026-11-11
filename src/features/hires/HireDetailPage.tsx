@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
-import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { Icon, type IconName } from '@/components/ui/Icon';
+import { Icon } from '@/components/ui/Icon';
 import { KpiCard, KpiRow } from '@/components/ui/KpiCard';
-import { StatusPill, type StatusTone } from '@/components/ui/StatusPill';
 import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { TaskRow } from '@/features/journey/TaskRow';
 import { useCompleteTask } from '@/features/journey/use-complete-task';
@@ -17,19 +15,8 @@ import { CHECKIN_OFFSETS, checkinDueDate, progressByStage } from '@/lib/journey'
 import { can, canCompleteTask, canViewHire } from '@/lib/permissions';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
-import type { Checkin, MilestoneResult } from '@/types/domain';
+import { CheckinTimeline } from './CheckinTimeline';
 import { HireStatusPill } from './HireStatusPill';
-
-const RESULT: Record<MilestoneResult, { tone: StatusTone; icon: IconName }> = {
-  met: { tone: 'success', icon: 'check_circle' },
-  partial: { tone: 'warning', icon: 'pending' },
-  not_met: { tone: 'error', icon: 'error' },
-};
-const CHECKIN_STATUS: Record<Checkin['status'], { tone: StatusTone; icon: IconName }> = {
-  pending: { tone: 'neutral', icon: 'schedule' },
-  hire_done: { tone: 'info', icon: 'fact_check' },
-  completed: { tone: 'success', icon: 'check_circle' },
-};
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
@@ -184,6 +171,7 @@ export function HireDetailPage() {
                           canComplete={canCompleteTask(user, hire, task)}
                           onComplete={(done) => setUnlocked(complete(hire, done))}
                           highlighted={unlocked.includes(task.id)}
+                          viewerOwner={isManager ? 'manager' : 'hr'}
                         />
                       ))}
                     </ul>
@@ -208,77 +196,19 @@ export function HireDetailPage() {
               </dl>
             </Card>
 
-            <Card title={t('hires.detail.checkins')} description={t('hires.detail.checkinsHelp')}>
-              <ol className="flex flex-col gap-4">
-                {hire.checkins.map((checkin) => (
-                  <li key={checkin.id} className="flex flex-col gap-3 rounded-md border border-outline-variant p-3">
-                    <div className="flex flex-wrap items-start justify-between gap-2">
-                      <div className="flex flex-col">
-                        <h3 className="text-title-small text-on-surface">
-                          {t('hires.detail.checkinTitle', { days: CHECKIN_OFFSETS[checkin.stage] })}
-                        </h3>
-                        <span className="text-body-small text-on-surface-variant tabular-nums">
-                          {t('hires.detail.due', { date: formatDate(checkinDueDate(checkin)) })}
-                        </span>
-                      </div>
-                      <StatusPill
-                        tone={CHECKIN_STATUS[checkin.status].tone}
-                        icon={CHECKIN_STATUS[checkin.status].icon}
-                        label={t(`hires.detail.checkinStatus.${checkin.status}`)}
-                      />
-                    </div>
-                    {canSeeSelfReview && checkin.hireSelfReview && (
-                      <p className="rounded-sm bg-surface-container p-2 text-body-small text-on-surface">
-                        <span className="text-label-medium">
-                          {t('hires.detail.mood', { mood: checkin.hireSelfReview.mood })}
-                        </span>
-                        {checkin.hireSelfReview.comment && <> · {checkin.hireSelfReview.comment}</>}
-                      </p>
-                    )}
-                    {checkin.status === 'completed' && (
-                      <ul className="flex flex-col gap-1.5">
-                        {checkin.milestones.map((m) => (
-                          <li
-                            key={m.id}
-                            className="flex items-start justify-between gap-3 text-body-small text-on-surface"
-                          >
-                            <span className="min-w-0">{m.label}</span>
-                            {m.result ? (
-                              <StatusPill
-                                tone={RESULT[m.result].tone}
-                                icon={RESULT[m.result].icon}
-                                label={t(`hires.detail.results.${m.result}`)}
-                                className="shrink-0"
-                              />
-                            ) : (
-                              <span className="shrink-0 text-on-surface-variant">{t('hires.detail.noResult')}</span>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    {checkin.action?.type === 'escalate' && (
-                      <p className="flex items-start gap-1.5 text-body-small text-on-error-container">
-                        <Icon name="warning" size={16} className="mt-px shrink-0 text-error" />
-                        {t('hires.detail.escalated', { note: checkin.action.note })}
-                      </p>
-                    )}
-                    {checkin.action?.type === 'reschedule' && (
-                      <p className="flex items-start gap-1.5 text-body-small text-on-surface-variant">
-                        <Icon name="schedule" size={16} className="mt-px shrink-0" />
-                        {t('hires.detail.rescheduled', { date: formatDate(checkin.action.newDate) })}
-                      </p>
-                    )}
-                    {isManager && checkin.status !== 'completed' && (
-                      <Button asChild variant="tonal" size="xs" leadingIcon="fact_check" className="w-fit">
-                        <Link to={`/manager/hires/${hire.id}/checkin/${checkin.stage}`}>
-                          {t('hires.detail.doCheckin')}
-                        </Link>
-                      </Button>
-                    )}
-                  </li>
-                ))}
-              </ol>
+            <Card
+              title={t('hires.detail.checkins')}
+              description={t('hires.detail.checkinsHelp')}
+              action={
+                <span className="inline-flex h-6 items-center rounded-full bg-surface-container px-2.5 text-label-medium whitespace-nowrap text-on-surface tabular-nums">
+                  {t('hires.detail.checkinsDone', {
+                    done: hire.checkins.filter((c) => c.status === 'completed').length,
+                    total: hire.checkins.length,
+                  })}
+                </span>
+              }
+            >
+              <CheckinTimeline hire={hire} canSeeSelfReview={canSeeSelfReview} canRun={isManager} />
             </Card>
           </div>
         </div>

@@ -1142,7 +1142,7 @@
       "journeyHelp": "As HR you can mark tasks of any owner as done, including IT, Facilities and buddy tasks.",
       "stageCount": "{{done}} of {{total}}",
       "checkins": "Check-ins",
-      "checkinsHelp": "Only the direct manager and HR see the self-review.",
+      "checkinsHelp": "Follow-up conversations: they confirm whether the person reaches the milestones of each stage.",
       "checkinTitle": "{{days}} day check-in",
       "due": "Due {{date}}",
       "checkinStatus": {
@@ -1165,7 +1165,22 @@
       "employeeId": "Employee number",
       "mobile": "Mobile",
       "doCheckin": "Run check-in",
-      "backTeam": "Back to My team"
+      "backTeam": "Back to My team",
+      "checkinsDone": "{{done}} of {{total}} done",
+      "doneOn": "Done on {{date}}",
+      "scheduledFor": "Scheduled for {{date}}",
+      "milestonesMet": "{{met}} of {{total}} milestones met",
+      "partialCount_one": "{{count}} partial",
+      "partialCount_other": "{{count}} partial",
+      "notMetCount_one": "{{count}} not met",
+      "notMetCount_other": "{{count}} not met",
+      "viewDetail": "View details",
+      "milestonesTitle": "Stage milestones",
+      "selfReviewTitle": "Self-review",
+      "selfReviewReady": "The self-review is ready for the meeting.",
+      "selfReviewWaiting": "They have not sent their self-review yet.",
+      "selfReviewPrivate": "Only the direct manager and HR see it",
+      "nextSteps": "Next steps"
     }
   },
   "team": {
@@ -1245,7 +1260,7 @@
   },
   "selfReview": {
     "title": "Your {{days}} day self-review",
-    "description": "Before your meeting with {{manager}}, tell them how you feel and how it is going. Only your direct manager and HR see it.",
+    "description": "Before your meeting with {{manager}}, tell them how you feel and how it is going.",
     "due": "Meeting: {{date}}",
     "mood": "How do you feel right now?",
     "moodHelp": "Choose the option closest to how you are.",
@@ -1269,6 +1284,7 @@
     "completedBody": "Your direct manager completed the check-in on {{date}}.",
     "back": "Back to My journey",
     "notFound": "We could not find this check-in.",
-    "moodRequired": "Choose how you feel."
+    "moodRequired": "Choose how you feel.",
+    "privacy": "Only your direct manager and HR see it."
   }
 }

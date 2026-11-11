@@ -4,7 +4,7 @@ import { Icon } from '@/components/ui/Icon';
 import { formatDate, relativeDue } from '@/lib/dates';
 import { blockingTasks, taskStatus } from '@/lib/journey';
 import { cn } from '@/lib/utils';
-import type { HireTask, TaskStatus } from '@/types/domain';
+import type { HireTask, Owner, TaskStatus } from '@/types/domain';
 import { CompleteTaskButton } from './CompleteTaskButton';
 import { TASK_TYPE_ICON } from './task-meta';
 import { TaskStatusPill } from './TaskStatusPill';
@@ -23,6 +23,8 @@ interface TaskRowProps {
   preview?: boolean;
   /** Reference day for the status. Defaults to the demo "today". */
   today?: string;
+  /** Who is looking: their tasks read "Te toca a ti". The new hire by default; the manager in J2, HR in A4. */
+  viewerOwner?: Owner;
 }
 
 /**
@@ -43,6 +45,7 @@ export function TaskRow({
   highlighted,
   preview = false,
   today,
+  viewerOwner = 'hire',
 }: TaskRowProps) {
   const { t } = useTranslation();
   const status = taskStatus(task, allTasks, today);
@@ -50,7 +53,9 @@ export function TaskRow({
   // Courses are completed from their detail page, after going through the content.
   const showComplete = canComplete && task.type !== 'course' && status !== 'blocked';
   const owner =
-    task.owner === 'hire' && !preview ? t('journey.yours') : t('journey.ownerIs', { owner: t(`owners.${task.owner}`) });
+    task.owner === viewerOwner && !preview
+      ? t('journey.yours')
+      : t('journey.ownerIs', { owner: t(`owners.${task.owner}`) });
 
   return (
     <li className="py-1">

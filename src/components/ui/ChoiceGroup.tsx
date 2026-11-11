@@ -49,7 +49,7 @@ export function ChoiceGroup({
 
   return (
     <fieldset
-      className={cn('flex min-w-0 flex-col gap-2', className)}
+      className={cn('@container flex min-w-0 flex-col gap-2', className)}
       aria-describedby={helperText || error ? supportId : undefined}
       aria-invalid={error ? true : undefined}
     >
@@ -57,7 +57,10 @@ export function ChoiceGroup({
       <div
         className={cn(
           'grid gap-2',
-          layout === 'scale' ? 'grid-cols-5' : 'grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(8rem,1fr))]',
+          // The scale is a list when the form is narrow and 5 columns from 32rem of form width (D-85)
+          layout === 'scale'
+            ? 'grid-cols-1 @[32rem]:grid-cols-5'
+            : 'grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(8rem,1fr))]',
         )}
       >
         {choices.map((choice) => {
@@ -79,14 +82,17 @@ export function ChoiceGroup({
                 className={cn(
                   'pointer-events-none flex min-h-12 items-center gap-2 rounded-md border border-outline bg-surface-container-lowest px-3 py-2 text-label-large text-on-surface transition-colors',
                   'peer-hover:bg-surface-container peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary',
-                  layout === 'scale' && 'flex-col justify-center gap-1 px-1 text-center text-label-medium',
+                  layout === 'scale' &&
+                    '@[32rem]:flex-col @[32rem]:justify-center @[32rem]:gap-1 @[32rem]:px-1 @[32rem]:text-center @[32rem]:text-label-medium',
                   error && !value && 'border-error',
                   SELECTED[choice.tone ?? 'primary'],
                 )}
               >
                 {choice.icon && <Icon name={choice.icon} size={layout === 'scale' ? 24 : 20} filled={checked} />}
                 <span className="min-w-0 flex-1">{choice.label}</span>
-                {checked && layout !== 'scale' && <Icon name="check" size={18} />}
+                {checked && (
+                  <Icon name="check" size={18} className={layout === 'scale' ? '@[32rem]:hidden' : undefined} />
+                )}
               </label>
             </div>
           );

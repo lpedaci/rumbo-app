@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { FormFooter } from '@/components/ui/FormFooter';
 import { ChoiceGroup } from '@/components/ui/ChoiceGroup';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { InlineAlert } from '@/components/ui/InlineAlert';
@@ -243,16 +244,15 @@ export function ManagerCheckinPage() {
                   onChange={(e) => setNextSteps(e.target.value)}
                 />
               </div>
+              <FormFooter>
+                <Button asChild variant="outlined">
+                  <Link to={backTo}>{t('managerCheckin.cancel')}</Link>
+                </Button>
+                <Button type="submit" leadingIcon="check">
+                  {t('managerCheckin.submit')}
+                </Button>
+              </FormFooter>
             </Card>
-
-            <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-              <Button asChild variant="outlined">
-                <Link to={backTo}>{t('managerCheckin.cancel')}</Link>
-              </Button>
-              <Button type="submit" leadingIcon="check">
-                {t('managerCheckin.submit')}
-              </Button>
-            </div>
           </div>
 
           {/* The hire's self-review, visible to the manager (F0, least privilege) */}
