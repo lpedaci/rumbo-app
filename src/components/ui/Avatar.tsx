@@ -12,7 +12,7 @@ export function initials(name: string): string {
 }
 
 /**
- * Portraits of the four demo personas and Sofía's buddy (D-69, D-84), chosen by Lourdes. Files go in
+ * Portraits chosen by Lourdes for the demo personas and some of the people around them (D-69, D-84, D-93). Files go in
  * src/assets/avatars/ named after the person (carla, martin, sofia, diego, nicolas) as .webp,
  * .jpg or .png; anyone without a file keeps their initials. See SOURCE.md there.
  */
@@ -26,6 +26,11 @@ const PERSONA_FILE: Record<string, string> = {
   'Sofía Ramírez': 'sofia',
   'Diego Ferreyra': 'diego',
   'Nicolás Acosta': 'nicolas',
+  'Lucía Fernández': 'lucia',
+  'Federico Luna': 'federico',
+  'Julieta Paz': 'julieta',
+  'Tomás Herrera': 'tomas',
+  'Valentina Ruiz': 'valentina',
 };
 function photoFor(name: string): string | undefined {
   const stem = PERSONA_FILE[name];
