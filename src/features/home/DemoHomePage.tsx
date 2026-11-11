@@ -7,6 +7,7 @@ import {
   DOCS_URL,
 } from '@/app/links';
 import { AuthorLinks } from '@/components/brand/AuthorLinks';
+import { BackToTop } from '@/components/layout/BackToTop';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
 import {
@@ -346,6 +347,7 @@ export function DemoHomePage() {
           </div>
         </div>
       </main>
+      <BackToTop />
 
       <ConfirmDialog
         open={resetOpen}

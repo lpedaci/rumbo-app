@@ -107,7 +107,8 @@ Todos los estados se muestran como píldora con ícono y texto, nunca solo con c
 | **Contextual** | Alertas de A1 → ficha del ingreso. Notificaciones → lugar de la acción. "Lo próximo" → detalle de tarea. Motivo de bloqueo de una tarea → tarea que la bloquea. |
 | **Migas de pan** | En pantallas de detalle y de segundo nivel: "Ingresos / Sofía Ramírez", "Plantillas / Analista de Datos / Vista previa", "Mi equipo / Sofía Ramírez / Check-in de 30 días". En mobile se reducen al nivel anterior ("‹ Ingresos"). |
 | **Ayuda** | Ícono de ayuda contextual por pantalla (B) y, en el login, "¿Problemas para iniciar sesión?" siempre debajo del formulario. Reservado el lugar del botón de ayuda flotante (línea futura). |
-| **Salto** | "Saltar al contenido" como primer elemento enfocable de cada página. |
+| **Salto** | "Saltar al contenido" como primer elemento enfocable de cada página. "Volver arriba" en la esquina inferior derecha de las páginas largas, visible solo después de desplazarse (D-104). |
+| **Índice de página** | En el sitio del sistema de diseño: índice lateral fijo desde 1280 px y, por debajo, barra fija "Secciones \| sección actual" que abre el índice en un panel (D-104). |
 
 ## 5. Sistema de búsqueda (fase B, F16)
 

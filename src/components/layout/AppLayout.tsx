@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
+import { BackToTop } from './BackToTop';
 import { BottomNav, MobileNavDrawer, SideNav } from './MainNav';
 import { SessionTimeout } from './SessionTimeout';
 import { TopBar } from './TopBar';
@@ -53,6 +54,7 @@ export function AppLayout() {
         </div>
       </div>
       <BottomNav />
+      <BackToTop aboveBottomNav />
       <MobileNavDrawer />
       <SessionTimeout />
       <GuidedWelcome />

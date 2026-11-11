@@ -179,6 +179,7 @@
     "backToLogin": "Back to sign in"
   },
   "layout": {
+    "backToTop": "Back to top",
     "mainNav": "Main navigation",
     "nav": {
       "dashboard": "Dashboard",
@@ -1701,7 +1702,10 @@
       "guidelines": "Guidelines",
       "demo": "View the demo",
       "menu": "Sections",
-      "onThisPage": "On this page"
+      "onThisPage": "On this page",
+      "current": "Current section:",
+      "close": "Close the index",
+      "sheetDescription": "Choose a section to go to it."
     },
     "hero": {
       "eyebrow": "Design system · customized Material Design 3",

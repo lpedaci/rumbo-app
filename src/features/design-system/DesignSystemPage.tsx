@@ -1,12 +1,14 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { Dialog as DialogPrimitive } from 'radix-ui';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { DESIGN_SYSTEM_MD_URL, REPO_URL } from '@/app/links';
 import { AuthorLinks } from '@/components/brand/AuthorLinks';
+import { BackToTop } from '@/components/layout/BackToTop';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
-import { FilterMenu } from '@/components/ui/FilterMenu';
 import { Icon } from '@/components/ui/Icon';
+import { IconButton } from '@/components/ui/IconButton';
 import { withHighlight } from '@/features/home/SectionHeading';
 import { useRevealOnce } from '@/lib/use-reveal-once';
 import { cn } from '@/lib/utils';
@@ -39,7 +41,7 @@ const ORDER = GROUPS.flatMap((g) => g.ids);
 function DsSection({ id, children }: { id: SectionId; children: ReactNode }) {
   const { t } = useTranslation();
   return (
-    <section id={`ds-${id}`} aria-labelledby={`ds-${id}-title`} className="flex scroll-mt-28 flex-col gap-6">
+    <section id={`ds-${id}`} aria-labelledby={`ds-${id}-title`} className="flex scroll-mt-44 flex-col gap-6 xl:scroll-mt-28">
       {/* Intro uses the full width of the content, like the rest of the product (D-103) */}
       <div className="flex flex-col gap-2">
         <p className="text-label-large text-primary">{t(`designSystem.sections.${id}.eyebrow`)}</p>
@@ -61,9 +63,11 @@ function useActiveSection(): SectionId {
     const update = () => {
       frame = 0;
       let current: SectionId = 'principles';
+      // A section is current once its top passes just under the sticky header (taller below 1280 px).
+      const line = (document.querySelector('header')?.getBoundingClientRect().bottom ?? 80) + 160;
       for (const id of ORDER) {
         const el = document.getElementById(`ds-${id}`);
-        if (el && el.getBoundingClientRect().top <= 140) current = id;
+        if (el && el.getBoundingClientRect().top <= line) current = id;
       }
       setActive(current);
     };
@@ -113,11 +117,120 @@ function countTokens(): number | null {
   }
 }
 
-function scrollToSection(id: string) {
+function scrollToSection(id: SectionId) {
   const el = document.getElementById(`ds-${id}`);
   el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   el?.querySelector('h2')?.setAttribute('tabindex', '-1');
   (el?.querySelector('h2') as HTMLElement | null)?.focus({ preventScroll: true });
+}
+
+/** Grouped list of sections, with the current one highlighted (index from 1280 px and the sheet below). */
+function SectionIndex({ active, onNavigate }: { active: SectionId; onNavigate: (id: SectionId) => void }) {
+  const { t } = useTranslation();
+  return (
+    <div className="flex flex-col gap-5">
+      {GROUPS.map((g) => (
+        <div key={g.key} className="flex flex-col gap-1">
+          <p className="px-3 text-label-medium text-on-surface-variant">{t(`designSystem.nav.${g.key}`)}</p>
+          <ul className="flex flex-col">
+            {g.ids.map((id) => (
+              <li key={id}>
+                <a
+                  href={`#ds-${id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate(id);
+                  }}
+                  aria-current={active === id ? 'true' : undefined}
+                  className={cn(
+                    'flex min-h-12 items-center rounded-sm px-3 text-label-large transition-colors focus-visible:outline-2 focus-visible:outline-primary xl:min-h-9',
+                    active === id ? 'bg-primary text-on-primary' : 'text-on-surface hover:bg-surface-container',
+                  )}
+                >
+                  {t(`designSystem.sections.${id}.eyebrow`)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Sections menu for tablet and phones (D-104): a full-width bar in the sticky header that
+ * always says where you are ("Secciones | Color"); it opens a sheet from the left, like the app menu drawer, with the whole index.
+ * Choosing a section closes the sheet, scrolls there and moves the focus to its title.
+ */
+function SectionsSheet({ active }: { active: SectionId }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const target = useRef<SectionId | null>(null);
+  return (
+    <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
+      <DialogPrimitive.Trigger asChild>
+        <button
+          type="button"
+          className="flex h-12 w-full min-w-0 items-center gap-2 rounded-xl border border-outline-variant bg-surface-container-lowest px-4 text-left transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          <Icon name="toc" size={20} className="shrink-0 text-primary" />
+          <span className="shrink-0 text-label-large text-on-surface">{t('designSystem.nav.menu')}</span>
+          <span aria-hidden className="h-4 w-px shrink-0 bg-outline-variant" />
+          <span className="min-w-0 flex-1 truncate text-body-medium text-on-surface-variant">
+            <span className="sr-only">{t('designSystem.nav.current')} </span>
+            {t(`designSystem.sections.${active}.eyebrow`)}
+          </span>
+          <Icon name="keyboard_arrow_down" size={20} className="shrink-0 text-on-surface-variant" />
+        </button>
+      </DialogPrimitive.Trigger>
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-scrim/32 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <DialogPrimitive.Content
+          onOpenAutoFocus={(event) => {
+            const current = (event.currentTarget as HTMLElement | null)?.querySelector<HTMLElement>(
+              '[aria-current="true"]',
+            );
+            if (current) {
+              event.preventDefault();
+              current.focus();
+            }
+          }}
+          onCloseAutoFocus={(event) => {
+            if (!target.current) return;
+            event.preventDefault();
+            scrollToSection(target.current);
+            target.current = null;
+          }}
+          className={cn(
+            'fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100%-3rem))] flex-col gap-4 bg-surface-container-lowest px-3 py-4 shadow-elevation-2',
+            'duration-200 data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:animate-in data-[state=open]:slide-in-from-left',
+          )}
+        >
+          <div className="flex items-center justify-between gap-2 pl-3">
+            <DialogPrimitive.Title className="text-title-medium text-on-surface">
+              {t('designSystem.nav.onThisPage')}
+            </DialogPrimitive.Title>
+            <DialogPrimitive.Close asChild>
+              <IconButton icon="close" label={t('designSystem.nav.close')} />
+            </DialogPrimitive.Close>
+          </div>
+          <DialogPrimitive.Description className="sr-only">
+            {t('designSystem.nav.sheetDescription')}
+          </DialogPrimitive.Description>
+          <nav aria-label={t('designSystem.nav.onThisPage')} className="min-h-0 flex-1 overflow-y-auto">
+            <SectionIndex
+              active={active}
+              onNavigate={(id) => {
+                target.current = id;
+                setOpen(false);
+              }}
+            />
+          </nav>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  );
 }
 
 /**
@@ -161,7 +274,7 @@ export function DesignSystemPage() {
         {t('designSystem.skip')}
       </a>
 
-      <header className="sticky top-0 z-40 px-(--space-gutter) pt-3">
+      <header className="sticky top-0 z-40 bg-surface-container-lowest px-(--space-gutter) pt-3 pb-2 xl:bg-transparent xl:pb-0">
         <div className="mx-auto flex h-16 w-full max-w-[max(80rem,80%)] items-center justify-between gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest px-4">
           <Link
             to="/"
@@ -188,6 +301,10 @@ export function DesignSystemPage() {
           <Button asChild trailingIcon="arrow_forward">
             <Link to="/">{t('designSystem.nav.demo')}</Link>
           </Button>
+        </div>
+        {/* Below 1280 px: the current section, which opens the full index (D-104) */}
+        <div className="mx-auto w-full max-w-[max(80rem,80%)] pt-2 xl:hidden">
+          <SectionsSheet active={active} />
         </div>
       </header>
 
@@ -224,44 +341,10 @@ export function DesignSystemPage() {
           </section>
 
           <div className="grid grid-cols-1 gap-10 xl:grid-cols-[14rem_minmax(0,1fr)] xl:gap-12">
-            {/* Index: a menu on small screens, a sticky list with the current section from 1280 px */}
-            <aside className="xl:sticky xl:top-24 xl:self-start">
-              <div className="xl:hidden">
-                <FilterMenu
-                  label={t('designSystem.nav.menu')}
-                  value={active}
-                  onChange={(v) => scrollToSection(v)}
-                  options={ORDER.map((id) => ({ value: id, label: t(`designSystem.sections.${id}.eyebrow`) }))}
-                />
-              </div>
-              <nav aria-label={t('designSystem.nav.onThisPage')} className="hidden flex-col gap-5 xl:flex">
-                {GROUPS.map((g) => (
-                  <div key={g.key} className="flex flex-col gap-1">
-                    <p className="px-3 text-label-medium text-on-surface-variant">{t(`designSystem.nav.${g.key}`)}</p>
-                    <ul className="flex flex-col">
-                      {g.ids.map((id) => (
-                        <li key={id}>
-                          <a
-                            href={`#ds-${id}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              scrollToSection(id);
-                            }}
-                            aria-current={active === id ? 'true' : undefined}
-                            className={cn(
-                              'flex min-h-9 items-center rounded-sm px-3 text-label-large transition-colors focus-visible:outline-2 focus-visible:outline-primary',
-                              active === id
-                                ? 'bg-primary text-on-primary'
-                                : 'text-on-surface hover:bg-surface-container',
-                            )}
-                          >
-                            {t(`designSystem.sections.${id}.eyebrow`)}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+            {/* Index: a sticky list with the current section from 1280 px; below, the sections bar of the header (D-104) */}
+            <aside className="hidden xl:sticky xl:top-24 xl:block xl:self-start">
+              <nav aria-label={t('designSystem.nav.onThisPage')}>
+                <SectionIndex active={active} onNavigate={scrollToSection} />
               </nav>
             </aside>
 
@@ -423,6 +506,7 @@ export function DesignSystemPage() {
           </p>
         </div>
       </footer>
+      <BackToTop />
     </div>
   );
 }

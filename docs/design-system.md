@@ -1,6 +1,6 @@
 # Sistema de diseño de Rumbo
 
-> **Sitio del sistema de diseño:** [lpedaci.github.io/rumbo-app/#/design-system](https://lpedaci.github.io/rumbo-app/#/design-system) (D-98). Este documento es la versión en Markdown.
+> **Sitio del sistema de diseño:** [lpedaci.github.io/rumbo-app/#/design-system](https://lpedaci.github.io/rumbo-app/#/design-system) (D-98). Este documento es la versión en Markdown. En tablet y mobile, el sitio se recorre con la barra "Secciones" del encabezado (D-104).
 >
 > Estado: **implementado en el paso 2** (10/11/2026). Los valores de este documento son los de `src/styles/tokens.css` y coinciden con la página interna `/styleguide`, disponible solo con `npm run dev` en `http://localhost:5173/#/styleguide`.
 
@@ -374,6 +374,8 @@ Reemplaza las bandas de color de D-72.
 
 - **`FormFooter`** (`src/components/ui/FormFooter.tsx`): franja blanca (`surface-container-lowest`, D-86) con borde superior `outline-variant`, que llega a los bordes de la tarjeta y redondea sus esquinas inferiores. A la izquierda, una nota opcional (`body-small` con ícono); a la derecha, las acciones (secundaria y luego principal). Se reacomoda según el ancho de la tarjeta, no de la pantalla (D-103): por debajo de 36 rem la nota va arriba y los botones abajo, a ancho completo con la principal arriba. Se usa en N3, J3 y A3.
 - **`TaskRow`**: también por contenedor (D-103); desde 32 rem de fila, fecha y estado en columnas a la derecha; más angosta, debajo del título, y el estado baja si no entra junto a la fecha.
+- **`BackToTop`** (`src/components/layout/BackToTop.tsx`, D-104): botón flotante de 48 px en la esquina inferior derecha, blanco con borde y `--elevation-1`, que aparece después de 480 px de desplazamiento y lleva el foco al `h1`.
+- **`AuthorLinks`** (`src/components/brand/AuthorLinks.tsx`, D-102, D-103): autoría en una línea con botones de ícono a LinkedIn, portfolio y GitHub; se usa en el pie de G0 y en el del sitio.
 - **`CheckinTimeline`** (`src/features/hires/CheckinTimeline.tsx`): marcadores de 32 px (hecho en `success-container`, próximo en `primary`, más adelante en `surface-container`) unidos por una línea `outline-variant`. El próximo va en un bloque `surface-container` con el estado de la autoevaluación y la acción; los hechos, con una línea de resultado y el detalle en un `details` nativo ("Ver detalle", accesible por teclado).
 - **`ChoiceGroup` en escala:** con container query; lista vertical de opciones con ícono, texto y check por debajo de 32 rem de ancho del formulario, cinco columnas desde ahí.
 - **Barra de desplazamiento de la página** (D-86): oculta por debajo de 1024 px; visible en desktop.

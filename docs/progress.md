@@ -342,3 +342,8 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - `FormFooter` y `TaskRow` con container queries; el test de Playwright detecta textos aplastados y botones fuera de su tarjeta.
 - Autoría en una línea con LinkedIn, portfolio y GitHub (`AuthorLinks`) en el pie de G0 y del sitio del sistema de diseño.
 - Títulos e introducciones del sitio del sistema de diseño a todo el ancho.
+
+## Volver arriba y menú de secciones, 11/11/2026 (D-104)
+
+- Botón "Volver arriba" en G0, el sitio del sistema de diseño y la app.
+- Sitio del sistema de diseño: barra fija "Secciones | sección actual" con panel lateral del índice en tablet y mobile.

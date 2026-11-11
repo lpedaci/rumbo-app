@@ -179,6 +179,7 @@
     "backToLogin": "Volver al inicio de sesión"
   },
   "layout": {
+    "backToTop": "Volver arriba",
     "mainNav": "Navegación principal",
     "nav": {
       "dashboard": "Panel",
@@ -1701,7 +1702,10 @@
       "guidelines": "Pautas",
       "demo": "Ver la demo",
       "menu": "Secciones",
-      "onThisPage": "En esta página"
+      "onThisPage": "En esta página",
+      "current": "Sección actual:",
+      "close": "Cerrar el índice",
+      "sheetDescription": "Elige una sección para ir a ella."
     },
     "hero": {
       "eyebrow": "Sistema de diseño · Material Design 3 personalizado",
