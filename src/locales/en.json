@@ -203,6 +203,7 @@
     "account": "Account",
     "bottomNav": "Bottom navigation",
     "menu": {
+      "title": "Menu",
       "open": "Open the menu",
       "close": "Close the menu",
       "expand": "Expand the menu",

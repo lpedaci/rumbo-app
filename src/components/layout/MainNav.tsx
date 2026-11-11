@@ -157,8 +157,8 @@ function NavContent({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
 
 /**
  * Side navigation from 768 px (reference ad2d9e23, D-60): a floating white panel that
- * runs the full height of the screen, with its fold toggle on top, the role items and the
- * account items at the bottom (the logo is in the top bar). Folded to icons (circles) or expanded with labels from
+ * runs the full height of the screen, with a "Menú" header and its fold toggle on top (D-101), the role items
+ * and the account items at the bottom (the logo is in the top bar). Folded to icons (circles) or expanded with labels from
  * the menu button of the top bar; folded by default below 1280 px, choice remembered.
  */
 export function SideNav() {
@@ -176,8 +176,10 @@ export function SideNav() {
           collapsed ? 'w-[4.5rem] px-2' : 'w-60 px-3',
         )}
       >
-        {/* Toggle that folds or expands this panel (the logo lives in the top bar). */}
-        <div className={cn('flex shrink-0', collapsed ? 'justify-center' : 'justify-end')}>
+        {/* Header (D-101): the "Menú" label and the toggle that folds or expands this panel
+            (the logo lives in the top bar). Folded, only the toggle. */}
+        <div className={cn('flex shrink-0 items-center', collapsed ? 'justify-center' : 'justify-between gap-2 pl-3')}>
+          {!collapsed && <span className="truncate text-title-small text-on-surface-variant">{t('layout.menu.title')}</span>}
           <Tooltip content={collapsed ? t('layout.menu.expand') : t('layout.menu.collapse')} side="right">
             <button
               type="button"

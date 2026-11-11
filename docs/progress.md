@@ -328,3 +328,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Licencia de las cinco fotos nuevas confirmada (D-93); el crédito para el case study queda redactado en `docs/README.md`.
 - La prueba con lector de pantalla pasa a líneas futuras.
 - **Fase A cerrada.** Siguiente: fase B, empezando por F7 (notificaciones).
+
+## Encabezado de la barra lateral, 11/11/2026 (D-101)
+
+- Rótulo "Menú" arriba de la barra lateral expandida, junto al botón de plegar. El logo se mantiene en la barra superior.

@@ -265,7 +265,7 @@ Cada rol tiene su color (D-69): RRHH `role-hr`, jefes `role-manager`, nuevos ing
 Panel flotante anclado a su disparador (`--elevation-1`). Al abrir, el foco va al panel (que se anuncia con su nombre); cierra con Escape o clic afuera y devuelve el foco. Se usa en los contactos clave.
 
 ### Navegación (G6)
-- **Barra lateral (desde 768 px):** panel blanco flotante a todo el alto, con el botón de plegar arriba. Expandida: ícono + texto; plegada: solo íconos con tooltip y nombre accesible. El ítem activo va en `primary` con ícono relleno. La preferencia se guarda en el navegador.
+- **Barra lateral (desde 768 px):** panel blanco flotante a todo el alto; arriba, el rótulo "Menú" (solo expandida) y el botón de plegar, sin repetir el logo, que está en la barra superior (D-101). Expandida: ícono + texto; plegada: solo íconos con tooltip y nombre accesible. El ítem activo va en `primary` con ícono relleno. La preferencia se guarda en el navegador.
 - **Barra superior:** sobre el fondo, sin franja: logo en una línea ("Rumbo | Nortia S.A."), "Ver como", Ayuda, Notificaciones y la persona como avatar (D-64). Controles con la forma única de 2.1.3, sin círculos ni píldoras con borde (D-62).
 - **Mobile:** el botón de menú abre un panel lateral (foco al primer ítem, vuelve al botón al cerrar); barra superior y menú inferior solo con íconos.
 

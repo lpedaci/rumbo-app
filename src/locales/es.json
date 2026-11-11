@@ -203,6 +203,7 @@
     "account": "Cuenta",
     "bottomNav": "Navegación inferior",
     "menu": {
+      "title": "Menú",
       "open": "Abrir el menú",
       "close": "Cerrar el menú",
       "expand": "Expandir el menú",
