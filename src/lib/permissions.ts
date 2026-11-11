@@ -44,6 +44,8 @@ export const PERMISSIONS = {
   'audit:view': { it_admin: 'all' },
   'audit:export': { it_admin: 'all' },
   'security:view': { it_admin: 'all' },
+  // F7 notifications: each person only sees their own
+  'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)
   'account:security_own': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Demo controls, available to every visitor
@@ -107,6 +109,7 @@ export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
   { prefix: '/me', action: 'workspace:journey' },
   { prefix: '/it', action: 'workspace:it' },
   { prefix: '/account/security', action: 'account:security_own' },
+  { prefix: '/notifications', action: 'notification:view' },
 ];
 
 export function requiredPermission(pathname: string): Action | null {

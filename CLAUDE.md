@@ -783,6 +783,7 @@ interface Checkin {
 }
 
 // ---------- Fase B ----------
+// Implementado como AppNotification (D-105): guarda type y params en lugar de title y body, y la interfaz traduce el texto.
 interface Notification {
   id: string; recipientId: string; createdAt: string; readAt?: string;
   type: string;                  // ej.: 'task.due_soon', 'access_request.new'

@@ -1653,6 +1653,7 @@
         "audit_view": "Ver y filtrar la auditoría",
         "audit_export": "Exportar la auditoría a CSV",
         "security_view": "Ver políticas y matriz de permisos",
+        "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
         "demo_reset": "Restablecer la demo"
@@ -2290,6 +2291,138 @@
       "repo": "Repositorio",
       "demo": "Volver a Rumbo",
       "credits": "Íconos: Material Symbols (Apache 2.0). Tipografía: Inter (SIL OFL). Fotos de personas: Magnific, con licencia."
+    }
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "description": "Lo que pasó en los recorridos y solicitudes que te tocan. Cada aviso te lleva a donde está la acción.",
+    "unread": "{{count}} sin leer",
+    "unreadDot": "No leída",
+    "bellLabel": "Notificaciones",
+    "bellLabelUnread_one": "Notificaciones, {{count}} sin leer",
+    "bellLabelUnread_other": "Notificaciones, {{count}} sin leer",
+    "markAll": "Marcar todas como leídas",
+    "markedAll": "Notificaciones marcadas como leídas",
+    "markRead": "Marcar como leída",
+    "markUnread": "Marcar como no leída",
+    "actions": "Acciones de la notificación {{title}}",
+    "viewAll": "Ver todas las notificaciones",
+    "alsoEmail": "También por correo",
+    "emptyTitle": "No tienes notificaciones",
+    "emptyBody": "Acá vas a ver las tareas por vencer, los check-ins pendientes y los avisos de tus recorridos.",
+    "emptyUnreadTitle": "Estás al día",
+    "emptyUnreadBody": "No tienes notificaciones sin leer. Las anteriores siguen en Todas.",
+    "emptyFilterTitle": "No hay notificaciones de este tipo",
+    "emptyFilterBody": "Prueba con otro tipo o vuelve a ver todas.",
+    "filters": {
+      "read": "Mostrar",
+      "all": "Todas",
+      "unread": "No leídas",
+      "category": "Tipo",
+      "anyCategory": "Todos los tipos"
+    },
+    "categories": {
+      "tasks": "Tareas",
+      "checkins": "Check-ins",
+      "people": "Personas",
+      "access": "Accesos"
+    },
+    "groups": {
+      "today": "Hoy",
+      "week": "Últimos 7 días",
+      "earlier": "Anteriores"
+    },
+    "email": {
+      "open": "Ver cómo llega por correo",
+      "title": "Vista previa del correo",
+      "note": "Simulación: en esta demo Rumbo no envía correos. Así se vería el aviso en la bandeja de entrada.",
+      "from": "De",
+      "to": "Para",
+      "subject": "Asunto",
+      "sender": "Rumbo · Nortia S.A. <notificaciones@nortia.demo>",
+      "greeting": "Hola, {{name}}:",
+      "cta": "Abrir en Rumbo",
+      "footer": "Recibes este correo porque tienes activados los avisos por correo de este tipo. Puedes cambiarlo en tus preferencias de Rumbo.",
+      "appOnly": "Este tipo de aviso solo llega dentro de Rumbo, no por correo."
+    },
+    "types": {
+      "task": {
+        "due_soon": {
+          "title": "Tarea por vencer",
+          "body": "{{task}} vence el {{date}}."
+        },
+        "overdue": {
+          "title": "Tarea vencida",
+          "body": "{{task}} venció el {{date}}. Si necesitas ayuda, avísale a tu jefe directo."
+        },
+        "unblocked": {
+          "title": "Tarea desbloqueada",
+          "body": "Ya se puede empezar {{task}}."
+        },
+        "journey_overdue": {
+          "title": "Tarea vencida en un recorrido",
+          "body": "{{task}}, del recorrido de {{person}}, venció el {{date}}."
+        }
+      },
+      "checkin": {
+        "self_review_pending": {
+          "title": "Responde tu autoevaluación",
+          "body": "Tu check-in de {{days}} días es el {{date}}. Cuéntanos cómo vas antes de la reunión."
+        },
+        "self_review_done": {
+          "title": "Autoevaluación lista",
+          "body": "{{person}} respondió la autoevaluación del check-in de {{days}} días."
+        },
+        "manager_due": {
+          "title": "Check-in por hacer",
+          "body": "El check-in de {{days}} días de {{person}} es el {{date}}."
+        },
+        "completed": {
+          "title": "Check-in completado",
+          "body": "Tu jefe directo completó el check-in de {{days}} días. Revisa los próximos pasos."
+        },
+        "escalated": {
+          "title": "Check-in escalado",
+          "body": "El check-in de {{days}} días de {{person}} se escaló a RRHH."
+        }
+      },
+      "journey": {
+        "delayed": {
+          "title": "Recorrido atrasado",
+          "body_one": "{{person}} tiene {{count}} tarea vencida.",
+          "body_other": "{{person}} tiene {{count}} tareas vencidas."
+        }
+      },
+      "hire": {
+        "assigned": {
+          "title": "Nueva persona en tu equipo",
+          "body": "{{person}} ingresa el {{date}}. Su recorrido ya está listo."
+        },
+        "starting": {
+          "title": "Ingreso próximo",
+          "body": "{{person}} ingresa el {{date}}. Revisa que su preingreso esté al día."
+        }
+      },
+      "access_request": {
+        "new": {
+          "title": "Solicitud de acceso nueva",
+          "body": "{{request}}, de {{person}}."
+        },
+        "resolved": {
+          "title": "Solicitud resuelta",
+          "body": "Sistemas resolvió tu solicitud {{request}}."
+        },
+        "rejected": {
+          "title": "Solicitud rechazada",
+          "body": "Sistemas no pudo resolver tu solicitud {{request}}. Comunícate con la mesa de ayuda."
+        }
+      },
+      "account": {
+        "locked": {
+          "title": "Cuenta bloqueada",
+          "body": "La cuenta de {{person}} se bloqueó por intentos fallidos."
+        }
+      }
     }
   }
 }

@@ -4,7 +4,15 @@ import { buildSeed, type DemoData } from '@/data/seed';
 import { demoNow } from '@/lib/dates';
 import type { IdentityCheck } from '@/lib/access';
 import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '@/lib/checkins';
-import { completeTask as completeTaskRule } from '@/lib/journey';
+import { completeTask as completeTaskRule, tasksUnlockedBy } from '@/lib/journey';
+import {
+  onAccessRequest,
+  onAccessRequestClosed,
+  onCheckinCompleted,
+  onHireCreated,
+  onSelfReview,
+  onTaskCompleted,
+} from '@/lib/notifications';
 import type {
   AccessRequest,
   AccessResolutionAction,
@@ -26,7 +34,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 5;
+export const DATA_SCHEMA_VERSION = 6;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -72,11 +80,22 @@ interface DataActions {
   rejectAccessRequest: (requestId: string, note: string, actorId: string) => void;
   /** S3: IT unlocks a locked account directly. */
   unlockAccount: (email: string, actorId: string) => void;
+  /** F7: marks one notification as read or unread. */
+  setNotificationRead: (id: string, read: boolean) => void;
+  /** F7: marks every notification of a person as read. */
+  markAllNotificationsRead: (personId: string) => void;
   /** Restores the seed data ("Restablecer demo"). The session is cleared by the session store. */
   resetData: () => void;
 }
 
 export type DataState = DemoData & DataActions;
+
+/** F7: notice to the manager when the hire sends a self-review. */
+function selfReviewNotice(state: DemoData, hireId: string, stage: CheckinStage) {
+  const hire = state.hires.find((h) => h.id === hireId);
+  if (!hire) return [];
+  return onSelfReview(hire, state.people.find((p) => p.id === hire.personId), stage, demoNow());
+}
 
 let auditCounter = 0;
 function nextAuditId() {
@@ -95,6 +114,7 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.accessRequests) &&
     Array.isArray(data.auditEvents) &&
     Array.isArray(data.authAttempts) &&
+    Array.isArray(data.notifications) &&
     typeof data.accountFlags === 'object' &&
     data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
@@ -115,10 +135,14 @@ export const useDataStore = create<DataState>()(
       completeTask: (hireId, taskId, actorId) =>
         set((state) => {
           const at = demoNow();
+          const hire = state.hires.find((h) => h.id === hireId);
+          if (!hire) return {};
+          const updated = { ...hire, tasks: completeTaskRule(hire.tasks, taskId, actorId, at) };
+          // F7: the tasks this one unblocked are announced to whoever has to do them.
+          const unlocked = tasksUnlockedBy(updated.tasks, taskId);
           return {
-            hires: state.hires.map((hire) =>
-              hire.id === hireId ? { ...hire, tasks: completeTaskRule(hire.tasks, taskId, actorId, at) } : hire,
-            ),
+            hires: state.hires.map((h) => (h.id === hireId ? updated : h)),
+            notifications: [...state.notifications, ...onTaskCompleted(updated, unlocked, at)],
             auditEvents: [
               ...state.auditEvents,
               { id: nextAuditId(), at, actorId, action: 'task.complete', resource: taskId, result: 'success' },
@@ -134,7 +158,11 @@ export const useDataStore = create<DataState>()(
       setAccountFlags: (personId, flags) =>
         set((state) => ({ accountFlags: { ...state.accountFlags, [personId]: flags } })),
 
-      addAccessRequest: (request) => set((state) => ({ accessRequests: [...state.accessRequests, request] })),
+      addAccessRequest: (request) =>
+        set((state) => ({
+          accessRequests: [...state.accessRequests, request],
+          notifications: [...state.notifications, ...onAccessRequest(request, state.people)],
+        })),
 
       saveTemplate: (template, actorId) =>
         set((state) => {
@@ -183,6 +211,7 @@ export const useDataStore = create<DataState>()(
         set((state) => ({
           people: [...state.people, person],
           hires: [...state.hires, hire],
+          notifications: [...state.notifications, ...onHireCreated(hire, person, demoNow())],
           auditEvents: [
             ...state.auditEvents,
             {
@@ -200,6 +229,7 @@ export const useDataStore = create<DataState>()(
       submitSelfReview: (hireId, stage, review, actorId) =>
         set((state) => ({
           hires: state.hires.map((h) => (h.id === hireId ? applySelfReview(h, stage, review, demoNow()) : h)),
+          notifications: [...state.notifications, ...selfReviewNotice(state, hireId, stage)],
           auditEvents: [
             ...state.auditEvents,
             {
@@ -236,8 +266,14 @@ export const useDataStore = create<DataState>()(
               detail: input.action.note,
             });
           }
+          const hire = state.hires.find((h) => h.id === hireId);
+          const person = hire && state.people.find((p) => p.id === hire.personId);
+          const escalated = input.action?.type === 'escalate' && input.results.includes('not_met');
           return {
             hires: state.hires.map((h) => (h.id === hireId ? applyManagerCheckin(h, stage, input, demoNow()) : h)),
+            notifications: hire
+              ? [...state.notifications, ...onCheckinCompleted(hire, person, stage, escalated, demoNow())]
+              : state.notifications,
             auditEvents: [...state.auditEvents, ...events],
           };
         }),
@@ -289,6 +325,7 @@ export const useDataStore = create<DataState>()(
           const unlocks = action === 'unlock' || action === 'force_password_reset';
           const flags = person ? state.accountFlags[person.id] : undefined;
           return {
+            notifications: [...state.notifications, ...onAccessRequestClosed(request, true, at)],
             accessRequests: state.accessRequests.map((r) =>
               r.id === requestId
                 ? {
@@ -341,7 +378,11 @@ export const useDataStore = create<DataState>()(
       rejectAccessRequest: (requestId, note, actorId) =>
         set((state) => {
           const at = demoNow();
+          const request = state.accessRequests.find((r) => r.id === requestId);
           return {
+            notifications: request
+              ? [...state.notifications, ...onAccessRequestClosed(request, false, at)]
+              : state.notifications,
             accessRequests: state.accessRequests.map((r) =>
               r.id === requestId
                 ? {
@@ -379,6 +420,23 @@ export const useDataStore = create<DataState>()(
           ],
         })),
 
+      setNotificationRead: (id, read) =>
+        set((state) => ({
+          notifications: state.notifications.map((n) =>
+            n.id === id ? { ...n, readAt: read ? (n.readAt ?? demoNow()) : undefined } : n,
+          ),
+        })),
+
+      markAllNotificationsRead: (personId) =>
+        set((state) => {
+          const at = demoNow();
+          return {
+            notifications: state.notifications.map((n) =>
+              n.recipientId === personId && !n.readAt ? { ...n, readAt: at } : n,
+            ),
+          };
+        }),
+
       resetData: () => set(buildSeed()),
     }),
     {
@@ -395,6 +453,7 @@ export const useDataStore = create<DataState>()(
         authAttempts,
         accountFlags,
         securityPolicy,
+        notifications,
       }) => ({
         people,
         templates,
@@ -404,6 +463,7 @@ export const useDataStore = create<DataState>()(
         authAttempts,
         accountFlags,
         securityPolicy,
+        notifications,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.
       migrate: () => buildSeed(),

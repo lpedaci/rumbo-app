@@ -170,3 +170,43 @@ export interface Hire {
   tasks: HireTask[];
   checkins: Checkin[];
 }
+
+// ---------- Phase B: F7 notifications ----------
+
+export type NotificationType =
+  | 'task.due_soon'
+  | 'task.overdue'
+  | 'task.unblocked'
+  | 'task.journey_overdue'
+  | 'checkin.self_review_pending'
+  | 'checkin.self_review_done'
+  | 'checkin.manager_due'
+  | 'checkin.completed'
+  | 'checkin.escalated'
+  | 'journey.delayed'
+  | 'hire.assigned'
+  | 'hire.starting'
+  | 'access_request.new'
+  | 'account.locked'
+  | 'access_request.resolved'
+  | 'access_request.rejected';
+
+export type NotificationChannel = 'app' | 'email';
+
+/**
+ * A notification (F7). Named AppNotification so it never collides with the browser's
+ * Notification. Instead of a fixed title and body (CLAUDE.md 7) it keeps its type and the
+ * parameters of the message, and the interface translates them (D-105).
+ */
+export interface AppNotification {
+  id: string;
+  recipientId: string;
+  createdAt: string;
+  readAt?: string;
+  type: NotificationType;
+  /** Values for the message: task title, person name, days of the check-in, request id, dates. */
+  params: Record<string, string>;
+  /** Route where the action happens, in the recipient's own workspace. */
+  link: string;
+  channels: NotificationChannel[];
+}

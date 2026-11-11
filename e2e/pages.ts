@@ -29,6 +29,8 @@ export const PAGES: CheckedPage[] = [
   { id: 'g4-access-help', path: '/#/access-help' },
   { id: 'g5-security', path: '/#/account/security', role: 'manager' },
   { id: 'g7-denied', path: '/#/admin', role: 'hire' },
+  { id: 'g9-notifications', path: '/#/notifications', role: 'hire' },
+  { id: 'g9-notifications-it', path: '/#/notifications', role: 'it_admin' },
   { id: 'g7-not-found', path: '/#/no-existe' },
   { id: 'home-admin', path: '/#/admin', role: 'admin' },
   { id: 'a2-hires', path: '/#/admin/hires', role: 'admin' },

@@ -347,3 +347,12 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 
 - Botón "Volver arriba" en G0, el sitio del sistema de diseño y la app.
 - Sitio del sistema de diseño: barra fija "Secciones | sección actual" con panel lateral del índice en tablet y mobile.
+
+## Paso 14 · F7 Notificaciones, 11/11/2026 (D-105)
+
+- Motor de eventos en `src/lib/notifications.ts`: tipos con su ícono, categoría y canal; avisos generados al completar tareas, autoevaluaciones, check-ins, solicitudes de acceso y altas; semilla derivada de los datos de demo con ids estables.
+- Store: `notifications` persistidas (esquema 6), "Marcar como leída / no leída" y "Marcar todas como leídas".
+- Campana en la barra superior con contador de no leídas y panel con los 5 más nuevos; en celulares lleva a G9. Toast para los avisos que llegan durante la sesión.
+- G9 (`/notifications`): filtros "Todas / No leídas" y por tipo, grupos Hoy, Últimos 7 días y Anteriores, y vista previa del correo simulado.
+- Permiso `notification:view` (cada persona ve solo las suyas), tests unitarios del motor y G9 en el test de Playwright (desbordes y axe) para nuevo ingreso y sistemas.
+- Pendiente: preferencias por tipo y canal (F17) y notificaciones de comentarios (F9), privacidad (F10) y aprobaciones (F14) cuando existan esas funciones.

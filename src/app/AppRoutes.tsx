@@ -56,6 +56,9 @@ const RequestDetailPage = lazy(() =>
   import('@/features/it/RequestDetailPage').then((m) => ({ default: m.RequestDetailPage })),
 );
 const RequestsPage = lazy(() => import('@/features/it/RequestsPage').then((m) => ({ default: m.RequestsPage })));
+const NotificationsPage = lazy(() =>
+  import('@/features/notifications/NotificationsPage').then((m) => ({ default: m.NotificationsPage })),
+);
 const SecurityPage = lazy(() => import('@/features/account/SecurityPage').then((m) => ({ default: m.SecurityPage })));
 
 // Internal style guide: development only (CLAUDE.md 2.8). `import.meta.env.DEV` is
@@ -109,6 +112,7 @@ export function AppRoutes() {
         <Route element={<AppLayout />}>
           <Route element={<RouteGuard />}>
             <Route path="/account/security" element={<SecurityPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
 
             <Route path="/admin" element={<DashboardPage />} />
             <Route path="/admin/hires" element={<HiresPage />} />

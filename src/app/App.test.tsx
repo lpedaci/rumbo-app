@@ -132,7 +132,8 @@ describe('layout (G6): top bar and side navigation', () => {
     renderAt('/admin/templates');
     await screen.findByRole('heading', { level: 1 });
     expect(screen.getByRole('button', { name: es.layout.help.title })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: es.layout.notifications.title })).toBeInTheDocument();
+    // F7: the bell carries the unread count in its name (a link to G9 below 640 px).
+    expect(screen.getAllByLabelText(new RegExp(`^${es.notifications.bellLabel}`)).length).toBeGreaterThan(0);
 
     const toggle = screen.getByRole('button', { name: es.layout.menu.collapse });
     expect(toggle).toHaveAttribute('aria-expanded', 'true');

@@ -7,6 +7,7 @@
  */
 import type {
   AccessRequest,
+  AppNotification,
   AccountFlags,
   AuditEvent,
   AuthAttempts,
@@ -24,6 +25,7 @@ import type {
 } from '@/types/domain';
 import { addDays, DEMO_TODAY } from '@/lib/dates';
 import { generateCheckins, generateHireTasks, hireStatus } from '@/lib/journey';
+import { buildSeedNotifications } from '@/lib/notifications';
 import accessRequests from './access-requests.json';
 import auditEvents from './audit-events.json';
 import authAttempts from './auth-attempts.json';
@@ -71,6 +73,8 @@ export interface DemoData {
   /** Per person id. Empty in the seed: no pending forced changes. */
   accountFlags: Record<string, AccountFlags>;
   securityPolicy: SecurityPolicy;
+  /** F7: generated from the data above with the same rules as runtime events. */
+  notifications: AppNotification[];
 }
 
 function whoCompletes(owner: Owner, seed: HireSeed): string {
@@ -152,14 +156,21 @@ function buildHire(seed: HireSeed, templatesById: Map<string, Template>): Hire {
 export function buildSeed(): DemoData {
   const typedTemplates = templates as Template[];
   const templatesById = new Map(typedTemplates.map((t) => [t.id, t]));
+  const hires = (hiresSeed as unknown as HireSeed[]).map((seed) => buildHire(seed, templatesById));
   return structuredClone({
     people: people as Person[],
     templates: typedTemplates,
-    hires: (hiresSeed as unknown as HireSeed[]).map((seed) => buildHire(seed, templatesById)),
+    hires,
     accessRequests: accessRequests as AccessRequest[],
     auditEvents: auditEvents as AuditEvent[],
     authAttempts: authAttempts as AuthAttempts[],
     accountFlags: {},
     securityPolicy: securityPolicy as SecurityPolicy,
+    notifications: buildSeedNotifications(
+      hires,
+      people as Person[],
+      accessRequests as AccessRequest[],
+      authAttempts as AuthAttempts[],
+    ),
   });
 }

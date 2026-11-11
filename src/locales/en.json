@@ -1653,6 +1653,7 @@
         "audit_view": "View and filter the audit log",
         "audit_export": "Export the audit log to CSV",
         "security_view": "View policies and the permission matrix",
+        "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
         "demo_reset": "Reset the demo"
@@ -2290,6 +2291,138 @@
       "repo": "Repository",
       "demo": "Back to Rumbo",
       "credits": "Icons: Material Symbols (Apache 2.0). Typeface: Inter (SIL OFL). People photos: Magnific, licensed."
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "description": "What happened in the journeys and requests that concern you. Each notice takes you to where the action is.",
+    "unread": "{{count}} unread",
+    "unreadDot": "Unread",
+    "bellLabel": "Notifications",
+    "bellLabelUnread_one": "Notifications, {{count}} unread",
+    "bellLabelUnread_other": "Notifications, {{count}} unread",
+    "markAll": "Mark all as read",
+    "markedAll": "Notifications marked as read",
+    "markRead": "Mark as read",
+    "markUnread": "Mark as unread",
+    "actions": "Actions for the notification {{title}}",
+    "viewAll": "See all notifications",
+    "alsoEmail": "Also by email",
+    "emptyTitle": "You have no notifications",
+    "emptyBody": "Tasks due soon, pending check-ins and notices about your journeys will show up here.",
+    "emptyUnreadTitle": "You're all caught up",
+    "emptyUnreadBody": "You have no unread notifications. Earlier ones are still under All.",
+    "emptyFilterTitle": "No notifications of this type",
+    "emptyFilterBody": "Try another type or go back to all of them.",
+    "filters": {
+      "read": "Show",
+      "all": "All",
+      "unread": "Unread",
+      "category": "Type",
+      "anyCategory": "All types"
+    },
+    "categories": {
+      "tasks": "Tasks",
+      "checkins": "Check-ins",
+      "people": "People",
+      "access": "Access"
+    },
+    "groups": {
+      "today": "Today",
+      "week": "Last 7 days",
+      "earlier": "Earlier"
+    },
+    "email": {
+      "open": "See how it arrives by email",
+      "title": "Email preview",
+      "note": "Simulation: Rumbo sends no email in this demo. This is how the notice would look in the inbox.",
+      "from": "From",
+      "to": "To",
+      "subject": "Subject",
+      "sender": "Rumbo · Nortia S.A. <notificaciones@nortia.demo>",
+      "greeting": "Hi {{name}},",
+      "cta": "Open in Rumbo",
+      "footer": "You get this email because email notices of this type are on. You can change it in your Rumbo preferences.",
+      "appOnly": "This type of notice only arrives inside Rumbo, not by email."
+    },
+    "types": {
+      "task": {
+        "due_soon": {
+          "title": "Task due soon",
+          "body": "{{task}} is due on {{date}}."
+        },
+        "overdue": {
+          "title": "Overdue task",
+          "body": "{{task}} was due on {{date}}. If you need help, let your manager know."
+        },
+        "unblocked": {
+          "title": "Task unblocked",
+          "body": "{{task}} can be started now."
+        },
+        "journey_overdue": {
+          "title": "Overdue task in a journey",
+          "body": "{{task}}, in {{person}}'s journey, was due on {{date}}."
+        }
+      },
+      "checkin": {
+        "self_review_pending": {
+          "title": "Answer your self-review",
+          "body": "Your {{days}}-day check-in is on {{date}}. Tell us how it's going before the meeting."
+        },
+        "self_review_done": {
+          "title": "Self-review ready",
+          "body": "{{person}} answered the self-review for the {{days}}-day check-in."
+        },
+        "manager_due": {
+          "title": "Check-in to do",
+          "body": "{{person}}'s {{days}}-day check-in is on {{date}}."
+        },
+        "completed": {
+          "title": "Check-in completed",
+          "body": "Your manager completed the {{days}}-day check-in. Review the next steps."
+        },
+        "escalated": {
+          "title": "Check-in escalated",
+          "body": "{{person}}'s {{days}}-day check-in was escalated to HR."
+        }
+      },
+      "journey": {
+        "delayed": {
+          "title": "Journey behind schedule",
+          "body_one": "{{person}} has {{count}} overdue task.",
+          "body_other": "{{person}} has {{count}} overdue tasks."
+        }
+      },
+      "hire": {
+        "assigned": {
+          "title": "New person on your team",
+          "body": "{{person}} starts on {{date}}. Their journey is ready."
+        },
+        "starting": {
+          "title": "Upcoming start",
+          "body": "{{person}} starts on {{date}}. Check that their pre-boarding is on track."
+        }
+      },
+      "access_request": {
+        "new": {
+          "title": "New access request",
+          "body": "{{request}}, from {{person}}."
+        },
+        "resolved": {
+          "title": "Request resolved",
+          "body": "IT resolved your request {{request}}."
+        },
+        "rejected": {
+          "title": "Request rejected",
+          "body": "IT could not resolve your request {{request}}. Contact the help desk."
+        }
+      },
+      "account": {
+        "locked": {
+          "title": "Account locked",
+          "body": "{{person}}'s account was locked after failed attempts."
+        }
+      }
     }
   }
 }

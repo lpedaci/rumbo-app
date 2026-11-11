@@ -27,6 +27,7 @@ export const ACTION_DESCRIPTIONS: Record<Action, string> = {
   'audit:view': 'Ver y filtrar la auditoría',
   'audit:export': 'Exportar la auditoría a CSV',
   'security:view': 'Ver políticas y matriz de permisos',
+  'notification:view': 'Ver sus propias notificaciones (G9)',
   'account:security_own': 'Ver "Mi seguridad" (G5)',
   'demo:switch_role': 'Usar el selector de rol de demo',
   'demo:reset': 'Restablecer la demo',

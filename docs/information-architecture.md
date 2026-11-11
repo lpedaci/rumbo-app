@@ -102,7 +102,7 @@ Todos los estados se muestran como píldora con ícono y texto, nunca solo con c
 | Tipo | Cómo se resuelve |
 | --- | --- |
 | **Global** | Menú lateral por rol (3.1). Desktop: sidebar completa. Tablet: sidebar de íconos con tooltip. Mobile: menú inferior con hasta 4 ítems, o menú desplegable si hay más. El ítem activo usa ícono relleno. |
-| **Utilitaria** | Header fijo: selector "Ver como" (demo), búsqueda (B), notificaciones (B), ayuda y menú de usuario. Siempre en el mismo lugar (WCAG 3.2.6). |
+| **Utilitaria** | Header fijo: selector "Ver como" (demo), búsqueda (B), notificaciones (campana con contador de no leídas: panel desde 640 px y, en celulares, enlace directo a G9; D-105), ayuda y menú de usuario. Siempre en el mismo lugar (WCAG 3.2.6). |
 | **Local** | Pestañas dentro de una sección: S3 (Usuarios bloqueados, Auditoría, Permisos, Políticas, *Sesiones (B)*), A4 (Datos, Recorrido, Check-ins), A9 (Personas, Áreas, Puestos). Filtros como chips o botones segmentados. |
 | **Contextual** | Alertas de A1 → ficha del ingreso. Notificaciones → lugar de la acción. "Lo próximo" → detalle de tarea. Motivo de bloqueo de una tarea → tarea que la bloquea. |
 | **Migas de pan** | En pantallas de detalle y de segundo nivel: "Ingresos / Sofía Ramírez", "Plantillas / Analista de Datos / Vista previa", "Mi equipo / Sofía Ramírez / Check-in de 30 días". En mobile se reducen al nivel anterior ("‹ Ingresos"). |
@@ -173,7 +173,7 @@ flowchart TD
 
     ROOT --> CUENTA["Cuenta (todos)"]
     CUENTA --> G5["G5 Mi seguridad"]
-    CUENTA -.-> G9["G9 Notificaciones (B)"]
+    CUENTA -.-> G9["G9 Notificaciones"]
     CUENTA -.-> G10["G10 Mi privacidad (B)"]
     CUENTA -.-> G11["G11 Preferencias (B)"]
     CUENTA -.-> G12["G12 Búsqueda (B)"]

@@ -128,9 +128,9 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Función | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| RF-061 | El sistema debe generar notificaciones por eventos y mostrarlas en un panel con contador y en una página con filtros. | Todos | F7 | G6, G9 | Should | Llegan al rol correcto y enlazan a la acción. | Pendiente |
-| RF-062 | El sistema debe permitir marcar notificaciones como leídas (una o todas) y mostrar toasts de la sesión actual. | Todos | F7 | G6, G9 | Should | El contador se actualiza. | Pendiente |
-| RF-063 | El sistema debe mostrar una vista previa del correo simulado de cada notificación. | Todos | F7 | G9 | Could | No se envía nada. | Pendiente |
+| RF-061 | El sistema debe generar notificaciones por eventos y mostrarlas en un panel con contador y en una página con filtros. | Todos | F7 | G6, G9 | Should | Llegan al rol correcto y enlazan a la acción. | Hecho |
+| RF-062 | El sistema debe permitir marcar notificaciones como leídas (una o todas) y mostrar toasts de la sesión actual. | Todos | F7 | G6, G9 | Should | El contador se actualiza. | Hecho |
+| RF-063 | El sistema debe mostrar una vista previa del correo simulado de cada notificación. | Todos | F7 | G9 | Could | No se envía nada. | Hecho |
 | RF-064 | Las plantillas deben tener estado borrador o publicada y número de versión. | RRHH | F8 | A5, A6 | Should | Editar una publicada crea un borrador. | Pendiente |
 | RF-065 | Publicar una versión no debe modificar los recorridos en curso. | RRHH | F8 | A4, A6 | Should | La ficha muestra la versión usada por cada ingreso. | Pendiente |
 | RF-066 | Publicar debe mostrar un resumen de cambios y exigir una nota de versión. | RRHH | F8 | A6 | Should | Sin nota no se publica. | Pendiente |

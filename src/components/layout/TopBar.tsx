@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
-import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
 import { hasGuidedWelcome } from '@/features/welcome/welcome-steps';
 import { homePath } from '@/lib/permissions';
@@ -18,6 +17,7 @@ import { useUiStore } from '@/store/ui-store';
 import { Logo } from './Logo';
 import { MENU_BUTTON_ID, SIDEBAR_ID } from './MainNav';
 import { RoleSwitcher } from './RoleSwitcher';
+import { NotificationsBell } from '@/features/notifications/NotificationsBell';
 import { UserMenu } from './UserMenu';
 
 /** Mobile only (< 768 px): opens the navigation drawer. From 768 px the panel has its own toggle. */
@@ -69,26 +69,6 @@ function HelpMenu() {
 }
 
 /** Notifications (F7 arrives in phase B): for now, an empty state that says what will appear. */
-function NotificationsMenu() {
-  const { t } = useTranslation();
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <IconButton icon="notifications" label={t('layout.notifications.title')} className={TOOL_BUTTON} />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent label={t('layout.notifications.title')} className="w-80">
-        <DropdownMenuLabel>{t('layout.notifications.title')}</DropdownMenuLabel>
-        <div className="flex flex-col items-center gap-2 px-4 py-6 text-center">
-          <span className="flex size-12 items-center justify-center rounded-full bg-surface-container text-on-surface-variant">
-            <Icon name="notifications" size={24} />
-          </span>
-          <p className="text-title-small text-on-surface">{t('layout.notifications.emptyTitle')}</p>
-          <p className="text-body-small text-on-surface-variant">{t('layout.notifications.emptyBody')}</p>
-        </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
 
 /**
  * Top bar of the signed-in app (reference 9d0f172e): menu button and logo on the left;
@@ -121,9 +101,8 @@ export function TopBar() {
         <span aria-hidden className="hidden h-8 w-px bg-outline-variant sm:block" />
         <div className="flex items-center gap-2">
           <HelpMenu />
-          <div className="hidden sm:block">
-            <NotificationsMenu />
-          </div>
+          {/* F7: panel from 640 px; below, the bell opens the notifications page */}
+          <NotificationsBell buttonClassName={TOOL_BUTTON} />
         </div>
         <span aria-hidden className="hidden h-8 w-px bg-outline-variant sm:block" />
         <UserMenu />
