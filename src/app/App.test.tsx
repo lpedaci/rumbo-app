@@ -38,19 +38,29 @@ describe('routing and access control', () => {
     ]);
   });
 
-  it('the login is clean: no role cards, and a preselected role shows "Vas a entrar como…"', async () => {
-    renderAt('/login');
+  it('the login is clean: no role cards and no "Vas a entrar como…" notice (D-66)', async () => {
+    renderAt('/login?demo=carla');
     expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(es.auth.login.title);
     expect(screen.queryByText(/Vas a entrar como/)).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: es.auth.login.ssoMicrosoft })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: es.auth.login.ssoGoogle })).toBeInTheDocument();
   });
 
-  it('with ?demo=carla, the login offers "Continuar como Carla" and "Cambiar recorrido"', async () => {
+  it('with ?demo=carla, SSO signs in with her fictitious account and goes on to verification', async () => {
     renderAt('/login?demo=carla');
-    expect(await screen.findByRole('heading', { level: 2, name: 'Vas a entrar como Carla, RRHH' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Continuar como Carla' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: es.auth.login.preselected.change })).toHaveAttribute('href', '/');
+    fireEvent.click(await screen.findByRole('button', { name: es.auth.login.ssoGoogle }));
+    // G2: neutral simulation with Carla's fictitious work account, checked step by step
+    expect(await screen.findByText('Cuenta de trabajo: carla@nortia.demo')).toBeInTheDocument();
+    expect(screen.getByText('carla@nortia.demo')).toBeInTheDocument();
+    // It continues by itself; "Continuar" skips the wait
+    fireEvent.click(screen.getByRole('button', { name: es.auth.sso.continue }));
+    expect(await screen.findByRole('heading', { level: 1, name: es.auth.mfa.title })).toBeInTheDocument();
+  });
+
+  it('with ?demo=carla, the email form comes prefilled with her work email', async () => {
+    renderAt('/login?demo=carla');
+    fireEvent.click(await screen.findByRole('button', { name: es.auth.login.emailToggle }));
+    expect(screen.getByLabelText(/Correo de trabajo/)).toHaveValue('carla@nortia.demo');
   });
 
   it('remembers the requested route when there is no session', async () => {

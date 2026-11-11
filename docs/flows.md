@@ -24,8 +24,8 @@ Los rótulos de pantallas y acciones coinciden con la [arquitectura de la inform
 flowchart TD
     START(["Visitante sin sesión"]) --> G0["G0 Inicio de la demo"]
     G0 -- "Recorrer como (rol)" --> G1P["G1 Login con rol preseleccionado"]
-    G1P -- "Continuar como (persona)" --> G2
-    G1P -- "Cambiar recorrido" --> G0
+    G1P -- "Continuar con Microsoft o Google" --> G2P["G2 Simulación con la cuenta ficticia de la persona"]
+    G2P -- "Pasos tildados, sigue solo" --> G3
     START -. "entra directo a /login" .-> G1["G1 Login"]
     G1 -- "SSO" --> G2["G2 Simulación neutra de SSO"]
     G1 -- "Correo y contraseña" --> G3["G3 Verificación en dos pasos"]
@@ -42,7 +42,7 @@ flowchart TD
     HOME -. "ruta de otro rol" .-> G7["G7 Acceso no permitido"]
 ```
 
-Muestra el camino desde el inicio de la demo (G0) hasta el inicio de cada rol. Elegir un recorrido abre el login con ese rol preseleccionado; "Continuar como…" pasa por la simulación de SSO y por MFA con el código precargado. Quien entra directo a `/login` ve el login limpio. Una ruta ajena al rol termina en G7.
+Muestra el camino desde el inicio de la demo (G0) hasta el inicio de cada rol. Elegir un recorrido abre el login con ese rol preseleccionado; "Continuar con Microsoft" o "Continuar con Google" abre la simulación neutra con la cuenta ficticia de esa persona, que tilda sus pasos y sigue sola a MFA con el código precargado (D-66). El formulario de correo llega con su correo de trabajo precargado. Quien entra directo a `/login` ve el login limpio. Una ruta ajena al rol termina en G7.
 
 ### 1.2 Layout común (G6)
 
@@ -180,7 +180,7 @@ Una flecha de X a Y significa que Y necesita a X. Todo depende de F0 (sesión y 
 
 ```mermaid
 flowchart LR
-    T1["G0 Elegir 'Recorrer como Sofía'"] --> T2["G1 Continuar como Sofía"] --> T3["G2 Continuar en la simulación de SSO"] --> T4["G3 Verificar el código precargado"] --> T5["N1 Ver Mi recorrido"]
+    T1["G0 Elegir 'Recorrer como Sofía'"] --> T2["G1 Continuar con Microsoft"] --> T3["G2 Simulación con la cuenta de Sofía, sigue sola"] --> T4["G3 Verificar el código precargado"] --> T5["N1 Ver Mi recorrido"]
 ```
 
 El camino del visitante del portfolio: elegir el recorrido y confirmar tres veces, sin escribir nada.
@@ -405,7 +405,7 @@ Las etapas se derivan de la fecha de ingreso (límites de la sección 7 de `CLAU
 
 | Wireflow | Pantallas y acción que lleva a la siguiente | Se completa en |
 | --- | --- | --- |
-| Login con MFA | G0 ("Recorrer como Carla") → G1 ("Continuar como Carla") → G2 (simulación neutra, "Continuar") → G3 (código precargado, "Verificar") → A1 | Paso 4 (capturas en `docs/screenshots/`) |
+| Login con MFA | G0 ("Recorrer como Carla") → G1 ("Continuar con Microsoft") → G2 (simulación neutra con la cuenta ficticia de Carla, sigue sola) → G3 (código precargado, "Verificar") → A1 | Paso 4 (capturas en `docs/screenshots/`) |
 | Recorrido del nuevo ingreso | N1 (tarjeta en "Lo próximo") → N2 ("Marcar como hecha") → N1 (tarea desbloqueada resaltada) → N3 ("Responder mi check-in", "Enviar autoevaluación") → N1 | Paso 5 y 8 |
 | Publicación de una plantilla | A5 ("Crear plantilla") → A6 ("Agregar tarea", ordenar) → A7 ("Ver vista previa") → A6 ("Guardar plantilla" / "Publicar" en fase B) → A5 | Paso 6 |
 

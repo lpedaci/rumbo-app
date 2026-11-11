@@ -69,11 +69,6 @@
         "expired": "We signed you out after a period of inactivity. Sign in again to continue.",
         "reset": "We reset the demo. All data is back to its initial state."
       },
-      "preselected": {
-        "title": "You're signing in as {{name}}, {{role}}",
-        "continue": "Continue as {{name}}",
-        "change": "Change journey"
-      },
       "showcase": {
         "title": "Everyone knows what to do, with whom and by when.",
         "body": "HR builds the journey, managers follow up and new hires track their progress in one place."
@@ -86,7 +81,16 @@
       "accountLegend": "Demo account to continue with",
       "accountHelp": "Choose which demo person you want to sign in as.",
       "continue": "Continue",
-      "back": "Back to sign in"
+      "back": "Back to sign in",
+      "steps": {
+        "redirect": "Redirecting you to {{provider}}",
+        "account": "Work account: {{email}}",
+        "verified": "{{provider}} confirmed your identity"
+      },
+      "stepsLabel": "Simulated sign-in with {{provider}}",
+      "stepDone": "done",
+      "stepPending": "in progress",
+      "allDone": "{{provider}} confirmed your identity. Moving on to verification."
     },
     "mfa": {
       "title": "Two-step verification",

@@ -1,18 +1,20 @@
 import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router';
-import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { RadioGroup } from '@/components/ui/RadioGroup';
 import { DEMO_ACCOUNTS, findDemoPerson, type SignInStep, signInWithSso } from './auth-service';
 import { AuthLayout } from './AuthLayout';
+import { SsoSimulation } from './SsoSimulation';
 
 /**
  * G2 · Neutral, clearly labelled simulation of the SSO redirect (CLAUDE.md F0).
  * It never imitates the Microsoft or Google sign-in pages (a copy of those pages
  * would work like a phishing page, even in a demo). In production this step is the
  * identity provider's page, branded by Nortia (docs/security.md).
+ * With an account chosen on the demo start, the sign-in runs by itself with that
+ * person's fictitious data (D-66); otherwise the visitor picks a demo account.
  */
 export function SsoPage() {
   const { t } = useTranslation();
@@ -53,31 +55,30 @@ export function SsoPage() {
         <p className="text-body-medium text-on-surface-variant">{t('auth.sso.branding')}</p>
       </div>
 
-      <form noValidate onSubmit={onSubmit} className="flex flex-col gap-4">
-        {preselected ? (
-          <p className="flex min-w-0 items-center gap-3 text-body-medium text-on-surface">
-            <Avatar name={preselected.name} role={preselected.role} size="sm" />
-            <span className="min-w-0 truncate">
-              {preselected.name} · {preselected.email}
-            </span>
-          </p>
-        ) : (
+      {preselected ? (
+        <SsoSimulation
+          person={preselected}
+          providerName={providerName}
+          onDone={() => go(signInWithSso(preselected.id, method, demo))}
+        />
+      ) : (
+        <form noValidate onSubmit={onSubmit} className="flex flex-col gap-4">
           <RadioGroup
-            legend={t('auth.sso.accountLegend')}
-            helperText={t('auth.sso.accountHelp')}
-            name="demo-account"
-            options={DEMO_ACCOUNTS.map(({ personId, role }) => {
-              const person = findDemoPerson(personId);
-              return { value: personId, label: `${person?.name ?? ''}, ${t(`rolesInline.${role}`)}`, description: person?.email };
-            })}
-            value={accountId}
-            onChange={(e) => setAccountId(e.target.value)}
-          />
-        )}
-        <Button type="submit" fullWidth size="m" className="md:h-12" trailingIcon="arrow_forward">
-          {t('auth.sso.continue')}
-        </Button>
-      </form>
+              legend={t('auth.sso.accountLegend')}
+              helperText={t('auth.sso.accountHelp')}
+              name="demo-account"
+              options={DEMO_ACCOUNTS.map(({ personId, role }) => {
+                const person = findDemoPerson(personId);
+                return { value: personId, label: `${person?.name ?? ''}, ${t(`rolesInline.${role}`)}`, description: person?.email };
+              })}
+              value={accountId}
+              onChange={(e) => setAccountId(e.target.value)}
+            />
+          <Button type="submit" fullWidth size="m" className="md:h-12" trailingIcon="arrow_forward">
+            {t('auth.sso.continue')}
+          </Button>
+        </form>
+      )}
 
       <Button asChild variant="text" leadingIcon="arrow_back" className="w-fit -ml-3">
         <Link to="/login">{t('auth.sso.back')}</Link>

@@ -69,11 +69,6 @@
         "expired": "Cerramos tu sesión por inactividad. Inicia sesión de nuevo para continuar.",
         "reset": "Restablecimos la demo. Los datos volvieron a su estado inicial."
       },
-      "preselected": {
-        "title": "Vas a entrar como {{name}}, {{role}}",
-        "continue": "Continuar como {{name}}",
-        "change": "Cambiar recorrido"
-      },
       "showcase": {
         "title": "Cada persona sabe qué hacer, con quién y para cuándo.",
         "body": "RRHH arma el recorrido, el jefe directo acompaña y quien ingresa sigue su avance en un solo lugar."
@@ -86,7 +81,16 @@
       "accountLegend": "Cuenta de demo para continuar",
       "accountHelp": "Elige con qué persona de la demo quieres iniciar sesión.",
       "continue": "Continuar",
-      "back": "Volver al inicio de sesión"
+      "back": "Volver al inicio de sesión",
+      "steps": {
+        "redirect": "Te redirigimos a {{provider}}",
+        "account": "Cuenta de trabajo: {{email}}",
+        "verified": "{{provider}} confirmó tu identidad"
+      },
+      "stepsLabel": "Inicio de sesión simulado con {{provider}}",
+      "stepDone": "listo",
+      "stepPending": "en curso",
+      "allDone": "{{provider}} confirmó tu identidad. Continuamos con la verificación."
     },
     "mfa": {
       "title": "Verificación en dos pasos",

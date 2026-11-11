@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { z } from 'zod';
-import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { IconButton } from '@/components/ui/IconButton';
 import { InlineAlert } from '@/components/ui/InlineAlert';
@@ -28,7 +27,8 @@ type FormProblem = { kind: 'invalid'; failedCount: number } | { kind: 'locked' }
 /**
  * G1 · Login, clean like a real Nortia sign-in (CLAUDE.md F0): SSO first with the
  * official provider logos, email and password second. With a journey chosen on the
- * demo start (`?demo=carla`), a single notice offers "Continuar como Carla".
+ * demo start (`?demo=carla`), SSO signs in with that person's fictitious account and the
+ * email form comes prefilled; there is no extra notice on the screen (D-66).
  */
 export function LoginPage() {
   const { t } = useTranslation();
@@ -58,7 +58,8 @@ export function LoginPage() {
   } = useForm<LoginValues>({
     resolver: zodResolver(schema),
     mode: 'onTouched',
-    defaultValues: { email: '', password: '' },
+    // A journey chosen on the demo start prefills that person's fictitious work email (D-66).
+    defaultValues: { email: preselected?.email ?? '', password: '' },
   });
 
   useEffect(() => {
@@ -108,31 +109,6 @@ export function LoginPage() {
         <InlineAlert tone={lastLogout === 'expired' ? 'warning' : 'success'} live="status">
           {logoutMessage}
         </InlineAlert>
-      )}
-
-      {preselected && (
-        <section
-          aria-labelledby="preselected-title"
-          className="flex flex-col gap-4 rounded-lg border border-outline-variant bg-surface-container p-4"
-        >
-          <div className="flex min-w-0 items-center gap-3">
-            <Avatar name={preselected.name} role={preselected.role} />
-            <h2 id="preselected-title" className="min-w-0 text-title-medium text-on-surface">
-              {t('auth.login.preselected.title', {
-                name: preselected.name.split(' ')[0],
-                role: t(`rolesInline.${preselected.role}`),
-              })}
-            </h2>
-          </div>
-          <div className="flex flex-col gap-2 sm:flex-row-reverse sm:items-center sm:justify-start">
-            <Button size="m" className="md:h-12" onClick={() => navigate(ssoPath('microsoft'))}>
-              {t('auth.login.preselected.continue', { name: preselected.name.split(' ')[0] })}
-            </Button>
-            <Button asChild variant="text">
-              <Link to="/">{t('auth.login.preselected.change')}</Link>
-            </Button>
-          </div>
-        </section>
       )}
 
       <section aria-label={t('auth.login.title')} className="flex flex-col gap-3">

@@ -82,7 +82,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 
 **Qué se hizo**
 - **G0 en `/`:** frase de valor, explicación de la demo, vista previa del producto (desde 768 px), 4 recorridos con 3 puntos concretos cada uno, enlace a la documentación y "Restablecer demo". El enlace al case study espera su URL (D-41).
-- **G1:** login limpio con "Usa tu cuenta de trabajo de Nortia". Con `?demo=…` muestra "Vas a entrar como…", "Continuar como…" y "Cambiar recorrido". El aviso de demo quedó en una línea.
+- **G1:** login limpio con "Usa tu cuenta de trabajo de Nortia". Con `?demo=…` mostraba "Vas a entrar como…" (reemplazado por D-66: SSO con la cuenta ficticia de la persona y correo precargado). El aviso de demo quedó en una línea.
 - **Botones de SSO:** logos oficiales sin modificar en `src/assets/brands/`, con nota de origen (D-42), los textos "Continuar con Microsoft" y "Continuar con Google" y el mismo componente para los dos.
 - **G2:** simulación neutra y rotulada, que menciona que en producción la página llevaría la marca de Nortia. Tiene un botón "Continuar", y sin rol preseleccionado agrega la elección de cuenta de demo (D-43).
 - El logo de las pantallas de acceso vuelve a G0. Restablecer la demo desde el menú de usuario también vuelve a G0.

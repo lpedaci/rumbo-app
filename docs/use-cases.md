@@ -76,7 +76,7 @@ Muestra los cinco actores (cualquier usuario agrupa a los cuatro roles cuando el
 
 **Flujos alternativos**
 - **2a. Correo y contraseña:** el usuario elige "Iniciar sesión con correo y contraseña", completa los datos y continúa en el paso 5.
-- **2b. Recorrido de demo:** en el inicio de la demo (G0) el visitante elige "Recorrer como Carla". El login muestra "Vas a entrar como Carla, RRHH"; con "Continuar como Carla" el sistema recorre los pasos 3 a 7 con el código precargado y el visitante solo confirma. "Cambiar recorrido" vuelve a G0.
+- **2b. Recorrido de demo:** en el inicio de la demo (G0) el visitante elige "Recorrer como Carla". El login se ve limpio. Con "Continuar con Microsoft" o "Continuar con Google", la simulación neutra muestra la cuenta ficticia de Carla (carla@nortia.demo), tilda sus pasos y sigue sola a la verificación con el código precargado; el visitante solo confirma. Si elige correo y contraseña, el correo llega precargado (D-66).
 - **5a. Dispositivo recordado:** si el dispositivo fue recordado hace menos de 30 días, el sistema omite G3.
 - **6a. Código de respaldo:** el usuario elige "Usar un código de respaldo" y lo ingresa.
 
