@@ -420,12 +420,19 @@
       "manager": "Jefe directo",
       "buddy": "Buddy",
       "hr": "Referente de RRHH",
-      "email": "Escribir a {{name}}"
+      "email": "Escribir a {{name}}",
+      "hint": "Toca a cada persona para ver su puesto y su correo.",
+      "more": ", ver datos de contacto",
+      "detailsOf": "Datos de contacto de {{name}}"
     },
     "all": {
       "title": "Recorrido completo",
-      "description": "Todas tus tareas, por etapa",
-      "stageCount": "{{done}} de {{total}} hechas"
+      "description": "Las tareas que faltan, por etapa. Las hechas quedan plegadas.",
+      "stageCount": "{{done}} de {{total}} hechas",
+      "showDone_one": "Ver {{count}} tarea hecha",
+      "showDone_other": "Ver {{count}} tareas hechas",
+      "hideDone_one": "Ocultar {{count}} tarea hecha",
+      "hideDone_other": "Ocultar {{count}} tareas hechas"
     },
     "complete": "Marcar como hecha",
     "completeTask": "Marcar como hecha: {{title}}",

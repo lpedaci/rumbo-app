@@ -420,12 +420,19 @@
       "manager": "Manager",
       "buddy": "Buddy",
       "hr": "HR contact",
-      "email": "Email {{name}}"
+      "email": "Email {{name}}",
+      "hint": "Tap each person to see their job title and email.",
+      "more": ", see contact details",
+      "detailsOf": "Contact details of {{name}}"
     },
     "all": {
       "title": "Full journey",
-      "description": "All your tasks, by stage",
-      "stageCount": "{{done}} of {{total}} done"
+      "description": "Tasks still to do, by stage. Done tasks are folded.",
+      "stageCount": "{{done}} of {{total}} done",
+      "showDone_one": "Show {{count}} done task",
+      "showDone_other": "Show {{count}} done tasks",
+      "hideDone_one": "Hide {{count}} done task",
+      "hideDone_other": "Hide {{count}} done tasks"
     },
     "complete": "Mark as done",
     "completeTask": "Mark as done: {{title}}",

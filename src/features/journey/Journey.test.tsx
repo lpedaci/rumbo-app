@@ -55,6 +55,34 @@ describe('N1 · Mi recorrido', () => {
   });
 });
 
+describe('N1 · Compact contacts and folded done tasks', () => {
+  it('shows name and relation, and the email after tapping the contact', async () => {
+    renderAt('/me');
+    await screen.findByRole('heading', { level: 1 });
+    const martin = screen.getByRole('button', { name: /Martín Sosa.*Jefe directo/ });
+    expect(screen.queryByRole('link', { name: /martin@nortia\.demo/ })).not.toBeInTheDocument();
+    fireEvent.click(martin);
+    expect(await screen.findByRole('link', { name: /martin@nortia\.demo/ })).toHaveAttribute(
+      'href',
+      'mailto:martin@nortia.demo',
+    );
+  });
+
+  it('keeps the tasks to do in view and folds the done ones', async () => {
+    renderAt('/me');
+    await screen.findByRole('heading', { level: 1 });
+    const all = screen.getByRole('heading', { name: es.journey.all.title }).closest('section')!;
+    expect(within(all).getByText('Primer análisis guiado')).toBeInTheDocument();
+    expect(within(all).queryByText('Firmar contrato y documentación de ingreso')).not.toBeInTheDocument();
+
+    const toggle = within(all).getByRole('button', { name: 'Ver 4 tareas hechas' });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(await within(all).findByText('Firmar contrato y documentación de ingreso')).toBeInTheDocument();
+  });
+});
+
 describe('N2 · Task detail', () => {
   it('explains why a blocked task is not available, with a link to the blocker', async () => {
     renderAt('/me/tasks/h-sofia-d17');

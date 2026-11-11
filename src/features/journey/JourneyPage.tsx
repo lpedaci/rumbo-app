@@ -2,11 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { PageHeader } from '@/components/layout/PageHeader';
-import { Avatar } from '@/components/ui/Avatar';
 import { BentoCard } from '@/components/ui/BentoCard';
 import { BentoGrid } from '@/components/ui/BentoGrid';
 import { Button } from '@/components/ui/Button';
-import { Icon } from '@/components/ui/Icon';
 import { IconTile } from '@/components/ui/IconTile';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { KpiCard } from '@/components/ui/KpiCard';
@@ -31,6 +29,8 @@ import { canCompleteTask } from '@/lib/permissions';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { HireTask, Person } from '@/types/domain';
+import { ContactCard } from './ContactCard';
+import { FoldedDoneTasks } from './FoldedDoneTasks';
 import { NextStepRow } from './NextStepRow';
 import { TaskRow } from './TaskRow';
 import { UNLOCK_HIGHLIGHT_MS } from './task-meta';
@@ -50,6 +50,8 @@ export function JourneyPage() {
   const people = useDataStore((s) => s.people);
   const complete = useCompleteTask();
   const [highlighted, setHighlighted] = useState<string[]>([]);
+  // Completed during this visit: they stay unfolded until the next visit.
+  const [recentlyDone, setRecentlyDone] = useState<string[]>([]);
   const highlightTimer = useRef<number | undefined>(undefined);
   useEffect(() => () => window.clearTimeout(highlightTimer.current), []);
 
@@ -67,6 +69,7 @@ export function JourneyPage() {
   }
 
   const onComplete = (task: HireTask) => {
+    setRecentlyDone((ids) => [...ids, task.id]);
     const unlocked = complete(hire, task);
     if (unlocked.length > 0) {
       setHighlighted(unlocked);
@@ -269,33 +272,15 @@ export function JourneyPage() {
           )}
         </BentoCard>
 
-        <BentoCard size="lg" title={t('journey.contacts.title')}>
-          <ul className="flex flex-col divide-y divide-outline-variant">
+        <BentoCard
+          size="lg"
+          title={t('journey.contacts.title')}
+          description={t('journey.contacts.hint')}
+        >
+          {/* Compact: avatar, name and relation; tapping opens job title and email. */}
+          <ul className="grid grid-cols-3 gap-2">
             {contacts.map(({ role, person: contact }) =>
-              contact ? (
-                <li
-                  key={role}
-                  className="flex min-w-0 flex-col gap-2 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:gap-4"
-                >
-                  <div className="flex min-w-0 flex-1 items-center gap-3">
-                    <Avatar name={contact.name} role={contact.role} />
-                    <div className="flex min-w-0 flex-col">
-                      <span className="text-label-medium text-on-surface-variant">{t(`journey.contacts.${role}`)}</span>
-                      <span className="truncate text-title-small text-on-surface">{contact.name}</span>
-                      <span className="truncate text-body-small text-on-surface-variant">{contact.jobTitle}</span>
-                    </div>
-                  </div>
-                  <a
-                    href={`mailto:${contact.email}`}
-                    title={contact.email}
-                    className="inline-flex min-h-12 min-w-0 items-center gap-2 text-body-medium text-primary underline-offset-4 hover:underline sm:min-h-0"
-                  >
-                    <Icon name="mail" className="shrink-0" />
-                    <span className="truncate">{contact.email}</span>
-                    <span className="sr-only">: {t('journey.contacts.email', { name: contact.name })}</span>
-                  </a>
-                </li>
-              ) : null,
+              contact ? <ContactCard key={role} person={contact} relation={t(`journey.contacts.${role}`)} /> : null,
             )}
           </ul>
         </BentoCard>
@@ -305,6 +290,8 @@ export function JourneyPage() {
             {STAGES.map((s) => {
               const tasks = hire.tasks.filter((task) => task.stage === s);
               if (tasks.length === 0) return null;
+              const folded = tasks.filter((task) => task.status === 'done' && !recentlyDone.includes(task.id));
+              const open = tasks.filter((task) => !folded.includes(task));
               return (
                 <section key={s} aria-labelledby={`stage-${s}`} className="flex flex-col gap-2">
                   <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-outline-variant pb-2">
@@ -315,11 +302,20 @@ export function JourneyPage() {
                       {t('journey.all.stageCount', { done: byStage[s].done, total: byStage[s].total })}
                     </span>
                   </div>
-                  <ul className="flex flex-col divide-y divide-outline-variant">
-                    {tasks.map((task) => (
+                  {/* Tasks still to do stay in view; done ones fold (a task just completed
+                      stays visible in this session so its check animation can be seen). */}
+                  {open.length > 0 && (
+                    <ul className="flex flex-col divide-y divide-outline-variant">
+                      {open.map((task) => (
+                        <TaskRow key={task.id} {...rowProps(task)} />
+                      ))}
+                    </ul>
+                  )}
+                  <FoldedDoneTasks count={folded.length}>
+                    {folded.map((task) => (
                       <TaskRow key={task.id} {...rowProps(task)} />
                     ))}
-                  </ul>
+                  </FoldedDoneTasks>
                 </section>
               );
             })}

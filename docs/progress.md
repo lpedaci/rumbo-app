@@ -33,6 +33,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - **G0:** hero a dos columnas con titular grande, botones y vista previa compuesta con datos reales (KPIs con sparkline, gráfico de tareas por semana con tooltip oscuro y tarjeta de recorrido con barra segmentada); tarjetas de rol con banda de color; enlaces al case study y la documentación en el encabezado.
 - **G1:** login en dos columnas con panel tintado, frase de valor y la vista previa del producto (solo desde 1024 px).
 - **N1:** saludo como título, fila de 4 KPIs, tarjeta "Tu recorrido de ingreso" con barra segmentada y "Lo próximo" como checklist con chevron, avance por etapa con barras gruesas, check-in con acento ciruela y contactos con avatar por rol.
+- **N1 compacto (D-59):** KPIs en fila en mobile, contactos con detalle al tocar y tareas hechas plegadas por etapa.
 - **Bienvenida guiada de Sofía:** 3 pasos con ilustraciones hechas con componentes reales, puntos de progreso, "Saltar", "Anterior" y "Continuar", y cierre "Empezar mi recorrido".
 - **Router:** migración a `createHashRouter` y `useBlocker` en el editor de plantillas (D-53).
 
