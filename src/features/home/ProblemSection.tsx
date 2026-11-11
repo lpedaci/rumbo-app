@@ -1,5 +1,6 @@
 import { forwardRef, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRevealOnce } from '@/lib/use-reveal-once';
 import { Icon } from '@/components/ui/Icon';
 import { SectionHeading } from './SectionHeading';
 
@@ -27,6 +28,7 @@ function SkeletonRow({ w }: { w: string }) {
 /** G0 · "El problema" (D-70): three pains of an onboarding without a journey. */
 export const ProblemSection = forwardRef<HTMLHeadingElement>(function ProblemSection(_, ref) {
   const { t } = useTranslation();
+  const stagger = useRevealOnce<HTMLElement>();
   const items = t('home.problem.items', { returnObjects: true }) as {
     title: string;
     body: string;
@@ -89,7 +91,7 @@ export const ProblemSection = forwardRef<HTMLHeadingElement>(function ProblemSec
         highlight={t('home.problem.titleHighlight')}
         subtitle={t('home.problem.subtitle')}
       />
-      <ul className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-3">
+      <ul ref={stagger} data-stagger className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-3">
         {items.map((item, i) => (
           <li
             key={item.title}

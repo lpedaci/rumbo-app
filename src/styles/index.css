@@ -236,6 +236,46 @@
   background-size: 48px 48px;
 }
 
+/* Scroll entrance of lists in G0 (D-92): children fade in and rise 16 px, 50 ms apart, once.
+   `sides` slides rows in from alternating sides. Reduced motion is handled by the global rules. */
+[data-stagger] > * {
+  opacity: 0;
+  translate: 0 1rem;
+  transition:
+    opacity 450ms var(--md-sys-motion-easing-emphasized-decelerate),
+    translate 450ms var(--md-sys-motion-easing-emphasized-decelerate);
+}
+[data-stagger='sides'] > :nth-child(odd) {
+  translate: -1.5rem 0;
+}
+[data-stagger='sides'] > :nth-child(even) {
+  translate: 1.5rem 0;
+}
+[data-stagger][data-shown] > * {
+  opacity: 1;
+  translate: 0 0;
+}
+[data-stagger] > :nth-child(2) { transition-delay: 50ms; }
+[data-stagger] > :nth-child(3) { transition-delay: 100ms; }
+[data-stagger] > :nth-child(4) { transition-delay: 150ms; }
+[data-stagger] > :nth-child(5) { transition-delay: 200ms; }
+[data-stagger] > :nth-child(6) { transition-delay: 250ms; }
+[data-stagger] > :nth-child(n + 7) { transition-delay: 300ms; }
+@media (prefers-reduced-motion: reduce) {
+  [data-stagger] > * {
+    translate: none !important;
+  }
+}
+html[data-reduce-motion='true'] [data-stagger] > * {
+  translate: none !important;
+}
+
+/* Faint grid texture on a primary-container surface (D-92), same pattern as the hero. */
+@utility bg-texture-grid-primary {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M48 0H0V48' fill='none' stroke='%23c6e3e6' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
+}
+
 /* Sideways scrolling without a visible scrollbar (D-78): chip rows and tables on phones and tablets.
    The content still scrolls with touch, trackpad and keyboard. */
 @utility scrollbar-none {

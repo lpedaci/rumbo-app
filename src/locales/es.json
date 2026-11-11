@@ -536,7 +536,6 @@
       ],
       "titleHighlight": "frecuentes"
     },
-    "photoCredit": "Fotos de personas: Magnific",
     "footerTagline": "Recorridos de ingreso claros para cada persona nueva, su jefe directo y RRHH.",
     "author": "Diseño: Lourdes Pedaci, Experience Designer (Learning y UX/UI)",
     "showcase": {
@@ -626,14 +625,24 @@
       "solution": "La solución",
       "journeys": "Recorridos",
       "faq": "Preguntas frecuentes",
-      "rights": "Prototipo de portfolio con datos ficticios."
+      "rights": "Prototipo de portfolio con datos ficticios.",
+      "author": "La autora",
+      "linkedin": "LinkedIn",
+      "portfolio": "Portfolio",
+      "designSystem": "Sistema de diseño",
+      "copyright": "© {{year}} Lourdes Pedaci"
     },
     "cta": {
       "title": "Recorre Rumbo desde el rol que quieras",
       "body": "Elige un recorrido, inicia sesión en un clic y cambia de rol cuando quieras.",
       "titleHighlight": "el rol que quieras"
     },
-    "titleHighlight": "para cuándo"
+    "titleHighlight": "para cuándo",
+    "heroCards": {
+      "alert": "Alerta para RRHH",
+      "escalated": "Check-in de 30 días escalado",
+      "stuck": "Dónde se traban"
+    }
   },
   "stages": {
     "preboarding": "Preingreso",

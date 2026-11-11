@@ -1,5 +1,6 @@
 import { forwardRef, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRevealOnce } from '@/lib/use-reveal-once';
 import { Icon } from '@/components/ui/Icon';
 import { Sparkline } from '@/components/ui/Sparkline';
 import { formatPercent } from '@/lib/dates';
@@ -49,6 +50,7 @@ function Card({
 /** G0 · "La solución" (D-70): what Rumbo does, in a bento of five cards with mini interfaces. */
 export const SolutionSection = forwardRef<HTMLHeadingElement>(function SolutionSection(_, ref) {
   const { t } = useTranslation();
+  const stagger = useRevealOnce<HTMLElement>();
   const hires = useDataStore((s) => s.hires);
   const items = t('home.solution.items', { returnObjects: true }) as {
     title: string;
@@ -194,7 +196,7 @@ export const SolutionSection = forwardRef<HTMLHeadingElement>(function SolutionS
         highlight={t('home.solution.titleHighlight')}
         subtitle={t('home.solution.subtitle')}
       />
-      <ul className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-6">
+      <ul ref={stagger} data-stagger className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-6">
         {items.map((item, i) => (
           <Card
             key={item.title}

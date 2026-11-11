@@ -5,7 +5,7 @@ import { IconTile } from '@/components/ui/IconTile';
 import { Sparkline } from '@/components/ui/Sparkline';
 import { formatNumber, formatPercent } from '@/lib/dates';
 import { progressOf } from '@/lib/journey';
-import { kpis } from '@/lib/metrics';
+import { alerts, kpis, overdueByOwner } from '@/lib/metrics';
 import { duration, easing, useShouldReduceMotion } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
@@ -30,6 +30,15 @@ export function HeroCards() {
   const sofiaPerson = people.find((p) => p.id === 'p-sofia');
   const progress = sofia ? progressOf(sofia.tasks) : { done: 0, total: 0, percent: 0 };
   const max = Math.max(...weekly, 1);
+  // Two more panels with the business idea (D-92): an escalated check-in and where journeys get stuck.
+  const escalated = alerts(hires).find((a) => a.kind === 'checkin_escalated');
+  const escalatedHire = escalated && hires.find((h) => h.id === escalated.hireId);
+  const escalatedPerson = escalatedHire && people.find((p) => p.id === escalatedHire.personId);
+  const owners = Object.entries(overdueByOwner(hires))
+    .filter(([, n]) => n > 0)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3);
+  const ownersMax = Math.max(...owners.map(([, n]) => n), 1);
   const reduce = useShouldReduceMotion();
   // Cards come in after the hero text, one by one (D-74).
   const enter = (i: number) => ({
@@ -70,6 +79,47 @@ export function HeroCards() {
           ))}
         </div>
       </motion.div>
+
+      {/* Middle left: an escalated check-in that needs HR */}
+      {escalatedPerson && (
+        <motion.div {...enter(4)} className={cn(CARD, 'xl:absolute xl:top-[41%] xl:-left-4 xl:w-64')}>
+          <div className="flex items-center gap-2">
+            <IconTile icon="warning" size="sm" tone="error" />
+            <span className="text-label-medium text-on-surface-variant">{t('home.heroCards.alert')}</span>
+          </div>
+          <div className="flex min-w-0 items-center gap-2">
+            <Avatar name={escalatedPerson.name} role={escalatedPerson.role} size="sm" />
+            <div className="flex min-w-0 flex-col">
+              <span className="truncate text-label-large text-on-surface">{escalatedPerson.name}</span>
+              <span className="truncate text-body-small text-on-surface-variant">{t('home.heroCards.escalated')}</span>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Middle right: where journeys get stuck */}
+      {owners.length > 0 && (
+        <motion.div {...enter(5)} className={cn(CARD, 'xl:absolute xl:top-[38%] xl:-right-4 xl:w-60')}>
+          <span className="text-label-medium text-on-surface-variant">{t('home.heroCards.stuck')}</span>
+          <ul className="flex flex-col gap-2">
+            {owners.map(([owner, n], i) => (
+              <li
+                key={owner}
+                className="grid grid-cols-[5.5rem_1fr_auto] items-center gap-2 text-body-small text-on-surface"
+              >
+                <span className="truncate">{t(`owners.${owner}`)}</span>
+                <span className="h-2 overflow-hidden rounded-full bg-surface-container-high">
+                  <span
+                    className={cn('block h-full rounded-full', i === 0 ? 'bg-tertiary' : 'bg-primary')}
+                    style={{ width: `${(n / ownersMax) * 100}%` }}
+                  />
+                </span>
+                <span className="tabular-nums">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      )}
 
       {/* Bottom left: active hires */}
       <motion.div {...enter(2)} className={cn(CARD, 'xl:absolute xl:bottom-6 xl:left-10 xl:w-56')}>

@@ -30,7 +30,7 @@ El objetivo del proyecto es **mostrar en un portfolio** flujos complejos con var
 ### 2.1 Base: Material Design 3, personalizado
 - El sistema visual se basa en **Material Design 3** (Google): roles de color, escala tipográfica, elevación, estados (hover, foco, presionado) y patrones de componentes. Es público y se puede usar sin problemas de licencia.
 - **Se implementa con Tailwind + shadcn/ui**, no con una librería de Material: los fundamentos de M3 se traducen a tokens propios. Así el resultado no se ve como una app de Google por defecto.
-- **Personalización obligatoria:** paleta y tipografía propias (definidas en 2.1.1), radios y densidad propios. Nada de logos, nombres ni elementos de marca de otras empresas, con una única excepción: los logos oficiales de Microsoft y Google en los botones de inicio de sesión (ver F0).
+- **Personalización obligatoria:** paleta y tipografía propias (definidas en 2.1.1), radios y densidad propios. Nada de logos, nombres ni elementos de marca de otras empresas, con dos excepciones: los logos oficiales de Microsoft y Google en los botones de inicio de sesión (ver F0) y la marca "in" de LinkedIn junto al enlace al perfil de Lourdes en el pie de G0 (D-92).
 - **Densidad:** interfaz de herramienta corporativa, con información densa pero clara y jerarquía fuerte, apta para trabajar muchas horas (tablas, listas, dashboards).
 - Modo claro como principal; preparar los tokens para modo oscuro aunque no se implemente en la fase A.
 
@@ -151,7 +151,7 @@ Material 3 Expressive (la actualización vigente de M3) mantiene los cinco estil
 - **Qué NO tomar:** **fondos con degradé.** Los fondos van en colores planos (superficies de M3). Si se necesita separar zonas, usar diferencias de superficie, bordes sutiles o elevación, nunca degradés.
 - **Gráficos de área:** varias referencias rellenan el área bajo la línea con degradé. Acá el relleno va en un color plano con baja opacidad (por ejemplo, el color de la serie al 12 %), coherente con la regla de no usar degradés.
 - No copiar ilustraciones, íconos ni textos de los shots de referencia: son de sus autores.
-- **Fotos de personas:** solo las cuatro personas de demo (Carla, Martín, Sofía y Diego) y Nicolás Acosta, el buddy de Sofía (D-84), usan retratos elegidos por Lourdes, con licencia, guardados en `src/assets/avatars/` con su origen en `SOURCE.md` y el crédito en el pie de G0. El resto de las personas usa iniciales sobre el contenedor de su rol. Nunca emojis. Los colores de botones de las referencias (azul, violeta) se reemplazan por los roles de 2.1.1 (D-69).
+- **Fotos de personas:** solo las cuatro personas de demo (Carla, Martín, Sofía y Diego) y Nicolás Acosta, el buddy de Sofía (D-84), usan retratos elegidos por Lourdes, con licencia, guardados en `src/assets/avatars/` con su origen en `SOURCE.md`; el crédito ("Fotos de personas: Magnific") va en el case study, en `docs/README.md`, en `docs/design-system.md` y en `/styleguide`, no en el pie de G0 (D-92). El resto de las personas usa iniciales sobre el contenedor de su rol. Nunca emojis. Los colores de botones de las referencias (azul, violeta) se reemplazan por los roles de 2.1.1 (D-69).
 
 ### 2.2.1 Dirección visual: que se vea propio, no genérico
 
@@ -235,7 +235,7 @@ Usar **Motion** (Framer Motion) solo para estas animaciones, con duraciones de 1
 - **Constructor de plantillas:** la tarjeta arrastrada se eleva levemente y las demás se reacomodan con transición.
 - **Modales, menús y toasts:** aparición y salida con fundido y escala o desplazamiento corto.
 - **Carga:** esqueletos con pulso suave (sin degradé animado).
-- **Inicio de la demo (G0):** el hero entra escalonado al cargar y cada sección aparece una vez al hacer scroll, con fundido y desplazamiento corto (D-74).
+- **Inicio de la demo (G0):** el hero entra escalonado al cargar y cada sección aparece una vez al hacer scroll, con fundido y desplazamiento corto (D-74); dentro de cada sección, las tarjetas y filas de una lista entran una tras otra, 50 ms entre cada una, y las secciones por rol desde los costados alternados (D-92).
 - Respetar `prefers-reduced-motion` y la preferencia "reducir animaciones" (F17): en ese caso, solo cambios de opacidad o ninguno.
 - No animar por animar: nada de rebotes, rotaciones decorativas ni animaciones en bucle.
 
@@ -450,8 +450,8 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     6. **Cifras** grandes, alternando `primary` y ciruela, sin tarjetas; los números salen de los datos de demo, nunca escritos a mano (salvo las 24 pantallas de esta versión, que son un dato de la spec, rotuladas "Pantallas en esta versión").
     7. **Recorre la demo en tres pasos:** elegir, iniciar sesión en un clic y cambiar de rol con «Ver como».
     8. **Preguntas frecuentes** en acordeón accesible.
-    La página es blanca y continua: las secciones se separan por espacio, sin bandas de color; el hero tiene una cuadrícula muy tenue. Los encabezados van centrados: una etiqueta de texto simple en `primary` (sin píldora), el `h2` con las palabras clave en `primary` y sin punto final, y una línea de contexto (D-73, D-74). Sin texturas de puntos: dificultan la lectura. Antes del pie, una franja `primary-container` con "Elegir un recorrido".
-    9. **Pie organizado por tareas:** marca con su frase y el aviso de demo; columnas "Explorar" (secciones de la página), "El proyecto" (case study y documentación) y "La demo" (elegir un recorrido, restablecer); abajo, autoría, aviso de prototipo y crédito de las fotos; y la marca "Rumbo" grande como SVG decorativo.
+    La página es blanca y continua: las secciones se separan por espacio, sin bandas de color; el hero tiene una cuadrícula muy tenue, que se repite en algunas secciones de cifras y llamados (en número, los tres pasos y la franja final en su versión `primary-container`), nunca detrás de textos largos (D-92). Los encabezados van centrados: una etiqueta de texto simple en `primary` (sin píldora), el `h2` con las palabras clave en `primary` y sin punto final, y una línea de contexto (D-73, D-74). Sin texturas de puntos: dificultan la lectura. Antes del pie, una franja `primary-container` con "Elegir un recorrido".
+    9. **Pie organizado por tareas:** marca con su frase y el aviso de demo; enlaces a LinkedIn (con su marca) y al portfolio de Lourdes; columnas "Explorar" (secciones de la página), "El proyecto" (case study, documentación y sistema de diseño) y "La demo" (elegir un recorrido, restablecer); abajo, autoría, copyright con el año actual y el aviso "Prototipo de portfolio con datos ficticios."; y la marca "Rumbo" grande como SVG decorativo (D-92).
 - **No se usan** logos de otras empresas ("empresas que confían") ni testimonios: serían inventados.
 - Sin degradés ni sombras en tarjetas en reposo; en mobile, todo en una columna (las cifras, de a dos).
 

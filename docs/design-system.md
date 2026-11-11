@@ -134,6 +134,7 @@ Curvas y duraciones de M3, entre 150 y 300 ms:
 | `ease-emphasized-accelerate` | `cubic-bezier(0.3, 0, 0.8, 0.15)` | Salidas |
 | Duraciones | 150 / 200 / 300 ms | Corta, media y larga |
 | Escalonado bento | 40 ms | Entre tarjetas |
+| Escalonado de listas (G0) | 50 ms | `data-stagger` con `useRevealOnce`: fundido y 16 px de subida al entrar en pantalla, una vez; `sides` entra desde los costados alternados (D-92) |
 
 - Implementado con **Motion** (`src/lib/motion.ts`) y con las utilidades de entrada y salida de `tw-animate-css` para Radix.
 - `useShouldReduceMotion()` combina `prefers-reduced-motion` con la preferencia de la app (`data-reduce-motion` en `<html>`, F17). Con reducción, las tarjetas solo cambian de opacidad y las barras muestran el valor final. El CSS global anula transiciones y animaciones.
@@ -232,16 +233,16 @@ Bloque con pulso de opacidad, oculto para lectores de pantalla.
 - **ConfirmDialog:** el título dice la consecuencia ("¿Eliminar esta tarea?") y el botón la repite ("Eliminar tarea"). Nunca "Sí / No".
 
 ### Toast
-`toast.success()`, `toast.info()` y `toast.error()` desde cualquier lugar. Usan Radix Toast, que los anuncia con `aria-live`. Fondo `inverse-surface` con `shadow-elevation-2`, abajo a la derecha (centrado en mobile), con 5 s de duración y botón de cerrar. Los mensajes de éxito van en pasado y son breves ("Plantilla publicada").
+`toast.success()`, `toast.info()` y `toast.error()` desde cualquier lugar. Usan Radix Toast, que los anuncia con `aria-live`. Fondo `inverse-surface` con `shadow-elevation-2`, abajo a la derecha (centrado y por encima del menú inferior en mobile), con 5 s de duración y botón de cerrar. Se ve uno a la vez: el nuevo reemplaza al anterior (D-90). Los mensajes de éxito van en pasado y son breves ("Plantilla publicada").
 
 ### IconTile, KpiCard y KpiRow (rediseño 2.2.1)
 - **IconTile:** ícono dentro de un contenedor de color (`primary`, `secondary`, `tertiary`, `brand` y los tonos de estado solo para estados). Decorativo.
-- **KpiCard:** ícono y sparkline arriba, etiqueta (hasta dos líneas), número y debajo su píldora de variación o estado. Datos alineados abajo para que las tarjetas de una fila queden parejas. Número en `display-small` desde 768 px y `headline-small` en mobile (D-63).
+- **KpiCard:** ícono y sparkline arriba, etiqueta (hasta dos líneas), número con la frase al lado si entra (si no, debajo, D-90) y debajo su píldora de variación o estado. Padding de 16 px hasta 1279 px (D-91). Datos alineados abajo para que las tarjetas de una fila queden parejas. Número en `display-small` desde 768 px y `headline-small` en mobile (D-63).
 - **KpiRow:** fila de KPIs a todo el ancho de la grilla: 2 por fila en mobile; desde 768 px, tantas por fila como entren con un ancho mínimo de 9 rem (`minCardWidth`), así 4 KPIs breves comparten una línea en tablet y desktop, y las tarjetas con más contenido pasan solas a una segunda línea (D-68). Entre 768 y 1279 px la tarjeta usa padding de 12 px, sparkline de 64 px y número en `headline-small`.
 - **Barra superior:** 12 px entre botones en mobile y 16 px desde 640 px, para que los objetivos táctiles no queden pegados (D-68).
 
 ### Sparkline
-Línea suave en `primary` o `tertiary` con relleno plano al 12 % y punto final. Decorativa: el valor y su variación siempre van escritos al lado.
+Línea suave en `primary` o `tertiary` con relleno plano al 12 % y punto final. Decorativa: el valor y su variación siempre van escritos al lado. El trazo no se deforma al estirarla (`non-scaling-stroke`) y el punto final es un elemento aparte, así sigue redondo en las vistas previas anchas (D-92).
 
 ### SegmentedProgress
 Barritas finas (30 por defecto) que se llenan en proporción al avance; anuncia la cantidad real ("13 de 18 tareas hechas"). Se usa en las vistas previas de G0 y G1 y en la bienvenida guiada (D-56).
@@ -256,10 +257,10 @@ Patrón de lista estándar (D-65): control o ícono a la izquierda; título y "T
 En las fichas (N2 y siguientes), los datos van como `dl` con etiqueta a la izquierda y valor a la derecha, separados por divisores, y los datos clave como chips bajo el título.
 
 ### Línea de tiempo del recorrido (N1)
-Un tramo por etapa relleno según sus tareas hechas, marcador "Hoy · día N" en `tertiary`, y bajo cada tramo nombre, "N de M" y estado con ícono y texto. Cada tramo es un `progressbar` con nombre y valor; "Ver como tabla" muestra los mismos datos en una tabla (D-61).
+Un tramo por etapa relleno según sus tareas hechas, marcador "Hoy · día N" en `tertiary`, y bajo cada tramo nombre, "N de M" y estado con ícono y texto. Cada tramo es un `progressbar` con nombre y valor; la misma información está en una tabla solo para lectores de pantalla, sin botón visible (D-61, D-83).
 
 ### Avatar
-Iniciales sobre el contenedor del rol: RRHH `primary-container`, jefes `tertiary-container`, nuevos ingresos `secondary-container`, sistemas `info-container`. Sin fotos.
+Cada rol tiene su color (D-69): RRHH `role-hr`, jefes `role-manager`, nuevos ingresos `role-hire` y sistemas `role-it`. Con foto, anillo de 2 px del color del rol; sin foto, iniciales sobre el contenedor del rol. Tienen foto las cuatro personas de demo y Nicolás Acosta, el buddy de Sofía (D-84). Fotos de personas: Magnific (magnific.com, antes Freepik), con licencia confirmada por Lourdes para un portfolio público. Detalle de cada archivo en `src/assets/avatars/SOURCE.md`.
 
 ### Popover
 Panel flotante anclado a su disparador (`--elevation-1`). Al abrir, el foco va al panel (que se anuncia con su nombre); cierra con Escape o clic afuera y devuelve el foco. Se usa en los contactos clave.
@@ -290,21 +291,16 @@ Radix Tooltip: se abre con hover y con foco de teclado. Fondo `inverse-surface`,
 
 ## 5. Verificación
 
-| Qué | Cómo | Resultado al 10/11/2026 |
+| Qué | Cómo | Resultado |
 | --- | --- | --- |
 | Contraste de tokens | `npm test` (`tokens.test.ts`) | 51/51 |
-| Desbordes en 320, 375, 768, 1024, 1280 y 1440 px | `npm run test:e2e` (`e2e/overflow.spec.ts`), capturas en `docs/screenshots/` | 18/18 |
-| axe (WCAG 2.2 A y AA) a 375 y 1280 px | `npm run test:e2e` (`e2e/a11y.spec.ts`) | 6/6 sin violaciones |
+| Desbordes en 320, 375, 768, 1024, 1280 y 1440 px y axe (WCAG 2.2 A y AA) | `npx playwright test` (`e2e/overflow.spec.ts`, `e2e/a11y.spec.ts`), capturas en `docs/screenshots/` | 279/279 al 11/11/2026 |
 | Un único `h1` por pantalla | `e2e/a11y.spec.ts` | 3/3 |
 | `/styleguide` fuera del build | Búsqueda en `dist/` | No aparece |
 
-## Referencias
+## 6. Cambios por decisión
 
-Google. (s.f.). *Material Design 3*. https://m3.material.io/
-
-Google. (s.f.). *Material Symbols* [Conjunto de íconos]. https://fonts.google.com/icons
-
-World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
+Ajustes posteriores a la primera versión, en el orden en que se tomaron. Cada uno remite a su decisión en `docs/decisions.md`.
 
 ### Colores por rol, avatares y barra superior (D-69)
 
@@ -404,3 +400,17 @@ Reemplaza las bandas de color de D-72.
 - **Separación:** 12 px entre botones de una fila de acciones (diálogos, formularios, aviso de sesión).
 - **Deshabilitado:** siempre con el motivo a la vista o con `disabledReason`, que deja el botón enfocable y muestra el motivo en un tooltip.
 - **Tarjeta de cuenta (G5):** encabezado de persona con chip de rol y filas de etiqueta y valor con ícono; en celulares se apilan.
+
+## 7. Créditos
+
+- Fotos de personas: Magnific (magnific.com, antes Freepik), con licencia confirmada por Lourdes para un portfolio público. Detalle de cada archivo en `src/assets/avatars/SOURCE.md`.
+- Íconos: Material Symbols (Google), licencia Apache 2.0.
+- Tipografía: Inter (Rasmus Andersson), SIL Open Font License, alojada en el proyecto.
+
+## Referencias
+
+Google. (s.f.). *Material Design 3*. https://m3.material.io/
+
+Google. (s.f.). *Material Symbols* [Conjunto de íconos]. https://fonts.google.com/icons
+
+World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/

@@ -49,29 +49,41 @@ export function Sparkline({ values, tone = 'primary', className }: SparklineProp
   const color = STROKE[tone];
 
   return (
-    <svg
-      aria-hidden
-      viewBox={`0 0 ${width} ${height}`}
-      className={cn('h-8 w-24 shrink-0 overflow-visible', className)}
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <clipPath id={clipId}>
-          <motion.rect
-            x="0"
-            y="-4"
-            height={height + 8}
-            initial={reduce ? false : { width: 0 }}
-            animate={{ width: width + 8 }}
-            transition={{ duration: reduce ? 0 : duration.long * 2, ease: easing.emphasizedDecelerate }}
+    // Stretched charts (previews) keep a round end dot and an even 2 px line (D-92).
+    <span aria-hidden className={cn('relative block h-8 w-24 shrink-0', className)}>
+      <svg viewBox={`0 0 ${width} ${height}`} className="block size-full overflow-visible" preserveAspectRatio="none">
+        <defs>
+          <clipPath id={clipId}>
+            <motion.rect
+              x="0"
+              y="-4"
+              height={height + 8}
+              initial={reduce ? false : { width: 0 }}
+              animate={{ width: width + 8 }}
+              transition={{ duration: reduce ? 0 : duration.long * 2, ease: easing.emphasizedDecelerate }}
+            />
+          </clipPath>
+        </defs>
+        <g clipPath={`url(#${clipId})`}>
+          <path d={area} fill={color} fillOpacity={0.12} />
+          <path
+            d={path}
+            fill="none"
+            stroke={color}
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
           />
-        </clipPath>
-      </defs>
-      <g clipPath={`url(#${clipId})`}>
-        <path d={area} fill={color} fillOpacity={0.12} />
-        <path d={path} fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx={lastX} cy={lastY} r={3} fill="var(--md-sys-color-surface-container-lowest)" stroke={color} strokeWidth={2} />
-      </g>
-    </svg>
+        </g>
+      </svg>
+      <motion.span
+        className="absolute size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-surface-container-lowest"
+        style={{ left: `${(lastX / width) * 100}%`, top: `${(lastY / height) * 100}%`, borderColor: color }}
+        initial={reduce ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: duration.short, delay: reduce ? 0 : duration.long * 2 }}
+      />
+    </span>
   );
 }

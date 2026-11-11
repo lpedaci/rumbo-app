@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRevealOnce } from '@/lib/use-reveal-once';
 import { Link } from 'react-router';
 import { Avatar, ROLE_ACCENT } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
@@ -25,6 +26,7 @@ const ROLE_BACKDROP: Record<Role, string> = {
  */
 export const RoleShowcase = forwardRef<HTMLHeadingElement>(function RoleShowcase(_, ref) {
   const { t } = useTranslation();
+  const stagger = useRevealOnce<HTMLElement>();
 
   return (
     <section aria-labelledby="choose-title" className="flex flex-col gap-12 lg:gap-20">
@@ -36,7 +38,7 @@ export const RoleShowcase = forwardRef<HTMLHeadingElement>(function RoleShowcase
         highlight={t('home.showcase.titleHighlight')}
         subtitle={t('home.showcase.subtitle')}
       />
-      <ul className="flex flex-col gap-16 lg:gap-24">
+      <ul ref={stagger} data-stagger="sides" className="flex flex-col gap-16 lg:gap-24">
         {DEMO_ACCOUNTS.map(({ personId, role }, i) => {
           const person = findDemoPerson(personId);
           const key = demoKeyFor(personId)!;

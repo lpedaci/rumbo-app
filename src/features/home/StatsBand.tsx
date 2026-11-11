@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useRevealOnce } from '@/lib/use-reveal-once';
 import { DEMO_ACCOUNTS } from '@/features/auth/auth-service';
 import { formatNumber } from '@/lib/dates';
 import { cn } from '@/lib/utils';
@@ -14,6 +15,7 @@ const PHASE_A_SCREENS = 24;
  */
 export function StatsBand() {
   const { t } = useTranslation();
+  const stagger = useRevealOnce<HTMLElement>();
   const templates = useDataStore((s) => s.templates);
   const hires = useDataStore((s) => s.hires);
   const tasks = hires.reduce((sum, h) => sum + h.tasks.length, 0);
@@ -50,7 +52,7 @@ export function StatsBand() {
         highlight={t('home.stats.titleHighlight')}
         subtitle={t('home.stats.subtitle')}
       />
-      <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+      <ul ref={stagger} data-stagger className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
         {stats.map((s, i) => (
           <li key={s.label} className="flex min-w-0 flex-col items-center gap-1 text-center">
             <span

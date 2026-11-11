@@ -1,4 +1,5 @@
 import { Trans, useTranslation } from 'react-i18next';
+import { useRevealOnce } from '@/lib/use-reveal-once';
 import { RefChip } from '@/components/ui/RefChip';
 import { cn } from '@/lib/utils';
 import { SectionHeading } from './SectionHeading';
@@ -9,6 +10,7 @@ const STEP_COLOR = ['bg-role-hr', 'bg-role-manager', 'bg-role-hire'];
 /** G0 · "Recorre la demo en tres pasos" (D-71, reference "simple to set up"): numbered steps. */
 export function StepsSection() {
   const { t } = useTranslation();
+  const stagger = useRevealOnce<HTMLElement>();
   const items = t('home.steps.items', { returnObjects: true }) as {
     title: string;
     body: string;
@@ -23,7 +25,7 @@ export function StepsSection() {
         highlight={t('home.steps.titleHighlight')}
         subtitle={t('home.steps.subtitle')}
       />
-      <ol className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
+      <ol ref={stagger} data-stagger className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
         {items.map((item, i) => (
           <li
             key={item.title}

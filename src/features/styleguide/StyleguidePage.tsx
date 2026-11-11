@@ -430,13 +430,14 @@ export function StyleguidePage() {
             <ul className="flex flex-col gap-2">
               {(
                 [
-                  ['Carla Méndez', 'admin', 'RRHH: primary-container'],
-                  ['Martín Rossi', 'manager', 'Jefe directo: tertiary-container'],
-                  ['Sofía Ramírez', 'hire', 'Nuevo ingreso: secondary-container'],
-                  ['Diego Ferreyra', 'it_admin', 'Sistemas: info-container'],
+                  ['Carla Méndez', 'admin', 'RRHH: role-hr, anillo y contenedor'],
+                  ['Martín Rossi', 'manager', 'Jefe directo: role-manager'],
+                  ['Sofía Ramírez', 'hire', 'Nuevo ingreso: role-hire'],
+                  ['Diego Ferreyra', 'it_admin', 'Sistemas: role-it'],
+                  ['Joaquín Benítez', 'hire', 'Sin foto: iniciales sobre el contenedor del rol'],
                 ] as const
               ).map(([name, role, note]) => (
-                <li key={role} className="flex items-center gap-3">
+                <li key={name} className="flex items-center gap-3">
                   <Avatar name={name} role={role} />
                   <span className="flex flex-col">
                     <span className="text-title-small text-on-surface">{name}</span>
@@ -445,6 +446,11 @@ export function StyleguidePage() {
                 </li>
               ))}
             </ul>
+            {/* Photo credit lives here, in the docs and in the case study, not in the G0 footer (D-92) */}
+            <p className="text-body-small text-on-surface-variant">
+              Fotos de personas: Magnific (magnific.com, antes Freepik), con licencia. Detalle en
+              src/assets/avatars/SOURCE.md.
+            </p>
           </Panel>
           <Panel className="flex flex-col gap-3">
             <h3 className="text-title-medium text-on-surface">Sparklines y tooltip de gráficos</h3>

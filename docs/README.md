@@ -36,3 +36,9 @@ Rumbo es una plataforma B2B de recorridos de ingreso (onboarding) corporativo. E
 - Fechas en formato `DD/MM/AAAA`.
 - Las fuentes (estándares y autores) se citan en formato **APA 7**, con una lista de referencias al final de cada documento.
 - Si un cambio de código altera un requisito, un flujo o un caso de uso, la documentación se actualiza en el mismo paso.
+
+## Créditos
+
+- Fotos de personas: Magnific (magnific.com, antes Freepik), con licencia confirmada por Lourdes para un portfolio público. Detalle de cada archivo en `src/assets/avatars/SOURCE.md`.
+- Íconos: Material Symbols (Google), licencia Apache 2.0.
+- Tipografía: Inter, SIL Open Font License.

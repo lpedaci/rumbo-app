@@ -536,7 +536,6 @@
       ],
       "titleHighlight": "questions"
     },
-    "photoCredit": "People photos: Magnific",
     "footerTagline": "Clear onboarding journeys for every new hire, their direct manager and HR.",
     "author": "Design: Lourdes Pedaci, Experience Designer (Learning and UX/UI)",
     "showcase": {
@@ -626,14 +625,24 @@
       "solution": "The solution",
       "journeys": "Journeys",
       "faq": "FAQ",
-      "rights": "Portfolio prototype with fictitious data."
+      "rights": "Portfolio prototype with fictitious data.",
+      "author": "The author",
+      "linkedin": "LinkedIn",
+      "portfolio": "Portfolio",
+      "designSystem": "Design system",
+      "copyright": "© {{year}} Lourdes Pedaci"
     },
     "cta": {
       "title": "Explore Rumbo from any role",
       "body": "Choose a journey, sign in with one click and switch roles anytime.",
       "titleHighlight": "any role"
     },
-    "titleHighlight": "by when"
+    "titleHighlight": "by when",
+    "heroCards": {
+      "alert": "HR alert",
+      "escalated": "30-day check-in escalated",
+      "stuck": "Where journeys get stuck"
+    }
   },
   "stages": {
     "preboarding": "Pre-boarding",

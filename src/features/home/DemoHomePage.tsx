@@ -1,7 +1,8 @@
 import { type ReactNode, type RefObject, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router';
-import { CASE_STUDY_URL, DOCS_URL } from '@/app/links';
+import { CASE_STUDY_URL, DESIGN_SYSTEM_URL, DOCS_URL, LINKEDIN_URL, PORTFOLIO_URL } from '@/app/links';
+import { LinkedInMark } from '@/components/brand/LinkedInMark';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
 import {
@@ -29,6 +30,10 @@ import { withHighlight } from './SectionHeading';
 import { SolutionSection } from './SolutionSection';
 import { StatsBand } from './StatsBand';
 import { StepsSection } from './StepsSection';
+
+/** Profile link of the footer: outlined, soft corners, like the rest of the buttons (2.1.3). */
+const PROFILE_LINK =
+  'inline-flex h-10 items-center gap-2 rounded-sm border border-outline px-3 text-label-large text-on-surface transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
 
 const FOOTER_LINK =
   'inline-flex min-h-11 items-center gap-1.5 rounded-sm text-left text-body-medium whitespace-nowrap text-on-surface-variant hover:text-primary hover:underline underline-offset-4 md:min-h-9';
@@ -151,7 +156,7 @@ export function DemoHomePage() {
 
           {/* Hero (D-73, reference): centered message with the key words in color, one main action,
               and real product cards floating on both sides from 1280 px (below, in a grid). */}
-          <section className="relative flex flex-col items-center xl:min-h-[34rem] xl:justify-center">
+          <section className="relative flex flex-col items-center xl:min-h-[40rem] xl:justify-center">
             <div className="relative z-10 flex w-full max-w-2xl min-w-0 flex-col items-center gap-6 text-center">
               <Reveal trigger="mount">
                 <p className="text-label-large text-balance text-primary">{t('home.eyebrow')}</p>
@@ -172,7 +177,7 @@ export function DemoHomePage() {
                     trailingIcon="arrow_downward"
                     onClick={goToJourneys}
                     fullWidth
-                    className="sm:w-auto md:h-12"
+                    className="sm:w-auto md:h-10 md:px-4 md:text-label-large"
                   >
                     {t('home.ctaChoose')}
                   </Button>
@@ -203,12 +208,12 @@ export function DemoHomePage() {
             <RoleShowcase ref={chooseRef} />
           </Reveal>
         </Band>
-        <Band>
+        <Band tone="hero">
           <Reveal>
             <StatsBand />
           </Reveal>
         </Band>
-        <Band>
+        <Band tone="hero">
           <Reveal>
             <StepsSection />
           </Reveal>
@@ -221,7 +226,7 @@ export function DemoHomePage() {
 
         <Band className="pt-0 lg:pt-0">
           <Reveal>
-            <div className="flex flex-col items-start gap-6 rounded-xl bg-primary-container px-6 py-10 md:flex-row md:items-center md:justify-between md:px-12">
+            <div className="bg-texture-grid-primary flex flex-col items-start gap-6 rounded-xl bg-primary-container px-6 py-10 md:flex-row md:items-center md:justify-between md:px-12">
               <div className="flex max-w-2xl flex-col gap-2">
                 <h2 className="text-headline-small text-balance text-on-primary-container">
                   {withHighlight(t('home.cta.title'), t('home.cta.titleHighlight'), 'text-primary')}
@@ -232,7 +237,7 @@ export function DemoHomePage() {
                 size="m"
                 trailingIcon="arrow_upward"
                 onClick={goToJourneys}
-                className="w-full shrink-0 md:h-12 md:w-auto"
+                className="w-full shrink-0 md:h-10 md:w-auto md:px-4 md:text-label-large"
               >
                 {t('home.ctaChoose')}
               </Button>
@@ -255,6 +260,23 @@ export function DemoHomePage() {
                       {t('home.demoBody')}
                     </span>
                   </p>
+                  {/* Who made it (D-92): LinkedIn and portfolio */}
+                  <ul className="flex flex-wrap gap-3" aria-label={t('home.footer.author')}>
+                    <li>
+                      <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={PROFILE_LINK}>
+                        <LinkedInMark className="size-5 shrink-0" />
+                        {t('home.footer.linkedin')}
+                        <span className="sr-only"> {t('home.newTab')}</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer" className={PROFILE_LINK}>
+                        <Icon name="palette" size={20} className="text-primary" />
+                        {t('home.footer.portfolio')}
+                        <span className="sr-only"> {t('home.newTab')}</span>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
                 <FooterColumn id="footer-explore" title={t('home.footer.explore')}>
                   <li>
@@ -293,6 +315,13 @@ export function DemoHomePage() {
                       <span className="sr-only"> {t('home.newTab')}</span>
                     </a>
                   </li>
+                  <li>
+                    <a href={DESIGN_SYSTEM_URL} target="_blank" rel="noopener noreferrer" className={FOOTER_LINK}>
+                      {t('home.footer.designSystem')}
+                      <Icon name="open_in_new" size={16} className="text-on-surface-variant" />
+                      <span className="sr-only"> {t('home.newTab')}</span>
+                    </a>
+                  </li>
                 </FooterColumn>
                 <FooterColumn id="footer-demo" title={t('home.footer.demo')}>
                   <li>
@@ -311,8 +340,8 @@ export function DemoHomePage() {
 
               <div className="flex flex-col gap-2 border-t border-outline-variant pt-5 text-body-small text-on-surface-variant lg:flex-row lg:justify-between lg:gap-x-8">
                 <p>{t('home.author')}</p>
+                <p>{t('home.footer.copyright', { year: new Date().getFullYear() })}</p>
                 <p>{t('home.footer.rights')}</p>
-                <p>{t('home.photoCredit')}</p>
               </div>
 
               {/* Decorative wordmark, flat color and cut by the card edge, as in the reference */}
