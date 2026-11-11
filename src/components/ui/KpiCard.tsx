@@ -49,7 +49,10 @@ export function KpiCard({
     <motion.section
       aria-labelledby={titleId}
       className={cn(
-        'flex min-w-0 flex-col gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-(--space-card-padding) md:col-span-3',
+        // Mobile: compact row (icon left, data right) so the card has no empty space.
+        // From 768 px: the vertical KPI layout of the references.
+        'flex min-w-0 gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-4',
+        'md:col-span-3 md:flex-col md:p-(--space-card-padding)',
         className,
       )}
       variants={{
@@ -61,14 +64,17 @@ export function KpiCard({
         },
       }}
     >
-      <div className="flex min-w-0 items-start justify-between gap-3">
+      <div className="flex shrink-0 items-start justify-between gap-3">
         <IconTile icon={icon} tone={iconTone} />
-        {series && <Sparkline values={series} tone={seriesTone} />}
+        {series && <Sparkline values={series} tone={seriesTone} className="hidden md:block" />}
       </div>
-      <div className="flex min-w-0 flex-col gap-1">
-        <Heading id={titleId} className="truncate text-body-medium text-on-surface-variant">
-          {label}
-        </Heading>
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <div className="flex min-w-0 items-start justify-between gap-2">
+          <Heading id={titleId} className="min-w-0 truncate text-body-medium text-on-surface-variant">
+            {label}
+          </Heading>
+          {series && <Sparkline values={series} tone={seriesTone} className="h-6 w-16 md:hidden" />}
+        </div>
         <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
           <p className="text-display-small text-on-surface tabular-nums">{value}</p>
           {trend && <StatusPill tone={trend.tone} icon={trend.icon} label={trend.label} />}
