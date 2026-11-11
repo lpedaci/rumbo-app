@@ -360,3 +360,10 @@ Reemplaza las bandas de color de D-72.
 - **Pasos numerados:** cuadrado `primary` de 36 px con el número, título `title-medium` y texto.
 - **Pie:** columnas con título `label-large` en `on-surface-variant` y enlaces de texto `body-medium` de 44 px de alto en mobile (36 px desde 768 px); barra inferior en `body-small`.
 - **Página de error:** tarjeta centrada con ícono en `error-container`, `h1`, texto sin culpar, "Recargar la página" (filled) y "Volver al inicio" (outlined), "Restablecer demo" (text) con su explicación, y el detalle técnico en un `<details>` plegado.
+
+### Ajustes de G0 (D-74)
+
+- **Títulos de sección:** hasta 56 rem, `headline-small` → `display-small` (768 px) → `display-medium` (1024 px), `text-balance`; las palabras clave en `primary` (`withHighlight`). Sin punto final.
+- **Animación de entrada (`Reveal`):** fundido y 16 px hacia arriba, 450 ms, curva enfatizada; el hero al cargar con pasos de 50 ms y las tarjetas del hero desde 300 ms; las secciones una vez al entrar en pantalla. Con reducir animaciones, solo fundido.
+- **Barra de G0 en mobile:** botón de menú (`IconButton` sobre `surface-container`) con las secciones, "Elegir un recorrido" y el case study.
+- **Pie en mobile:** un grupo por fila con sus enlaces en línea; desde 640 px, columnas.

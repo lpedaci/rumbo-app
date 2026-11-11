@@ -47,6 +47,7 @@ export function StatsBand() {
         id="stats-title"
         eyebrow={t('home.stats.eyebrow')}
         title={t('home.stats.title')}
+        highlight={t('home.stats.titleHighlight')}
         subtitle={t('home.stats.subtitle')}
       />
       <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">

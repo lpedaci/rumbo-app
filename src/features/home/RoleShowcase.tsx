@@ -33,6 +33,7 @@ export const RoleShowcase = forwardRef<HTMLHeadingElement>(function RoleShowcase
         id="choose-title"
         eyebrow={t('home.showcase.eyebrow')}
         title={t('home.showcase.title')}
+        highlight={t('home.showcase.titleHighlight')}
         subtitle={t('home.showcase.subtitle')}
       />
       <ul className="flex flex-col gap-16 lg:gap-24">

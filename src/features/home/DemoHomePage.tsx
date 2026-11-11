@@ -4,8 +4,16 @@ import { Navigate } from 'react-router';
 import { CASE_STUDY_URL, DOCS_URL } from '@/app/links';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
 import { ConfirmDialog } from '@/components/ui/Dialog';
 import { Icon } from '@/components/ui/Icon';
+import { IconButton } from '@/components/ui/IconButton';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { resetDemo } from '@/features/auth/auth-service';
 import { useShouldReduceMotion } from '@/lib/motion';
@@ -15,22 +23,27 @@ import { Band } from './Band';
 import { FaqSection } from './FaqSection';
 import { ProblemSection } from './ProblemSection';
 import { HeroCards } from './HeroCards';
+import { Reveal } from './Reveal';
 import { RoleShowcase } from './RoleShowcase';
+import { withHighlight } from './SectionHeading';
 import { SolutionSection } from './SolutionSection';
 import { StatsBand } from './StatsBand';
 import { StepsSection } from './StepsSection';
 
 const FOOTER_LINK =
-  'inline-flex min-h-11 items-center gap-1.5 rounded-sm text-left text-body-medium text-on-surface-variant hover:text-primary hover:underline underline-offset-4 md:min-h-9';
+  'inline-flex min-h-11 items-center gap-1.5 rounded-sm text-left text-body-medium whitespace-nowrap text-on-surface-variant hover:text-primary hover:underline underline-offset-4 md:min-h-9';
 
 function FooterColumn({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <nav aria-labelledby={id} className="flex min-w-0 flex-col gap-3">
-      {/* Column titles stand out from the links (D-72): darker, heavier and with a rule below. */}
-      <h2 id={id} className="border-b border-outline-variant pb-3 text-title-medium text-on-surface">
+    // Mobile: one group per row with its links side by side; from 640 px, columns (D-74).
+    <nav
+      aria-labelledby={id}
+      className="flex min-w-0 flex-col gap-2 border-t border-outline-variant pt-5 sm:gap-3 sm:border-t-0 sm:pt-0"
+    >
+      <h2 id={id} className="text-title-medium text-on-surface">
         {title}
       </h2>
-      <ul className="flex flex-col gap-1">{children}</ul>
+      <ul className="flex flex-wrap gap-x-6 sm:flex-col sm:gap-1">{children}</ul>
     </nav>
   );
 }
@@ -64,10 +77,12 @@ export function DemoHomePage() {
     ref.current?.focus({ preventScroll: true });
   };
   const goToJourneys = () => goTo(chooseRef);
+  const goToSection = (key: 'problem' | 'journeys' | 'faq') =>
+    goTo(key === 'problem' ? problemRef : key === 'journeys' ? chooseRef : faqRef);
   const sections = [
-    { label: t('home.nav.how'), ref: problemRef },
-    { label: t('home.nav.journeys'), ref: chooseRef },
-    { label: t('home.nav.faq'), ref: faqRef },
+    { label: t('home.nav.how'), key: 'problem' as const },
+    { label: t('home.nav.journeys'), key: 'journeys' as const },
+    { label: t('home.nav.faq'), key: 'faq' as const },
   ];
 
   return (
@@ -84,9 +99,9 @@ export function DemoHomePage() {
         <div className="mx-auto flex h-16 w-full max-w-[max(80rem,80%)] min-w-0 items-center gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest px-3 sm:px-4">
           <Logo />
           <div className="flex-1" />
-          <nav aria-label={t('home.nav.label')} className="hidden items-center gap-1 md:flex">
+          <nav aria-label={t('home.nav.label')} className="hidden items-center gap-1 lg:flex">
             {sections.map((section) => (
-              <Button key={section.label} variant="text" onClick={() => goTo(section.ref)}>
+              <Button key={section.label} variant="text" onClick={() => goToSection(section.key)}>
                 {section.label}
               </Button>
             ))}
@@ -95,6 +110,33 @@ export function DemoHomePage() {
           <Button onClick={goToJourneys} trailingIcon="arrow_downward" className="hidden sm:inline-flex">
             {t('home.ctaChoose')}
           </Button>
+          {/* Below 1024 px the section links live in a menu (D-74), so the bar is complete on phones too */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <IconButton
+                icon="menu"
+                label={t('home.nav.menu')}
+                className="bg-surface-container text-on-surface lg:hidden"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent label={t('home.nav.label')} className="w-64">
+              {sections.map((section) => (
+                <DropdownMenuItem key={section.label} onSelect={() => goToSection(section.key)}>
+                  {section.label}
+                </DropdownMenuItem>
+              ))}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem icon="arrow_downward" onSelect={goToJourneys}>
+                {t('home.ctaChoose')}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                icon="open_in_new"
+                onSelect={() => window.open(CASE_STUDY_URL, '_blank', 'noopener,noreferrer')}
+              >
+                {t('home.caseStudy')}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 
@@ -111,75 +153,99 @@ export function DemoHomePage() {
               and real product cards floating on both sides from 1280 px (below, in a grid). */}
           <section className="relative flex flex-col items-center xl:min-h-[34rem] xl:justify-center">
             <div className="relative z-10 flex w-full max-w-2xl min-w-0 flex-col items-center gap-6 text-center">
-              <p className="text-label-large text-primary">{t('home.eyebrow')}</p>
-              <h1 className="text-display-small text-balance text-on-surface lg:text-display-medium">
-                {t('home.title').replace(t('home.titleHighlight'), '')}
-                <span className="text-primary">{t('home.titleHighlight')}</span>
-              </h1>
-              <p className="text-body-large text-pretty text-on-surface-variant">{t('home.intro')}</p>
-              <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
-                <Button
-                  size="m"
-                  trailingIcon="arrow_downward"
-                  onClick={goToJourneys}
-                  fullWidth
-                  className="sm:w-auto md:h-12"
-                >
-                  {t('home.ctaChoose')}
-                </Button>
-                <Button asChild variant="text" trailingIcon="open_in_new">
-                  <a href={CASE_STUDY_URL} target="_blank" rel="noopener noreferrer">
-                    {t('home.caseStudy')}
-                    <span className="sr-only"> {t('home.newTab')}</span>
-                  </a>
-                </Button>
-              </div>
+              <Reveal trigger="mount">
+                <p className="text-label-large text-primary">{t('home.eyebrow')}</p>
+              </Reveal>
+              <Reveal trigger="mount" delay={0.05}>
+                <h1 className="text-display-small text-balance text-on-surface lg:text-display-medium">
+                  {t('home.title').replace(t('home.titleHighlight'), '')}
+                  <span className="text-primary">{t('home.titleHighlight')}</span>
+                </h1>
+              </Reveal>
+              <Reveal trigger="mount" delay={0.1}>
+                <p className="text-body-large text-pretty text-on-surface-variant">{t('home.intro')}</p>
+              </Reveal>
+              <Reveal trigger="mount" delay={0.15} className="w-full sm:w-auto">
+                <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
+                  <Button
+                    size="m"
+                    trailingIcon="arrow_downward"
+                    onClick={goToJourneys}
+                    fullWidth
+                    className="sm:w-auto md:h-12"
+                  >
+                    {t('home.ctaChoose')}
+                  </Button>
+                  <Button asChild variant="text" trailingIcon="open_in_new">
+                    <a href={CASE_STUDY_URL} target="_blank" rel="noopener noreferrer">
+                      {t('home.caseStudy')}
+                      <span className="sr-only"> {t('home.newTab')}</span>
+                    </a>
+                  </Button>
+                </div>
+              </Reveal>
             </div>
             <HeroCards />
           </section>
         </Band>
         <Band>
-          <ProblemSection ref={problemRef} />
+          <Reveal>
+            <ProblemSection ref={problemRef} />
+          </Reveal>
         </Band>
         <Band>
-          <SolutionSection ref={solutionRef} />
+          <Reveal>
+            <SolutionSection ref={solutionRef} />
+          </Reveal>
         </Band>
         <Band>
-          <RoleShowcase ref={chooseRef} />
+          <Reveal>
+            <RoleShowcase ref={chooseRef} />
+          </Reveal>
         </Band>
         <Band>
-          <StatsBand />
+          <Reveal>
+            <StatsBand />
+          </Reveal>
         </Band>
         <Band>
-          <StepsSection />
+          <Reveal>
+            <StepsSection />
+          </Reveal>
         </Band>
         <Band>
-          <FaqSection ref={faqRef} />
+          <Reveal>
+            <FaqSection ref={faqRef} />
+          </Reveal>
         </Band>
 
         <Band className="pt-0 lg:pt-0">
-          <div className="flex flex-col items-start gap-6 rounded-xl bg-primary-container px-6 py-10 md:flex-row md:items-center md:justify-between md:px-12">
-            <div className="flex max-w-2xl flex-col gap-2">
-              <h2 className="text-headline-small text-balance text-on-primary-container">{t('home.cta.title')}</h2>
-              <p className="text-body-large text-on-primary-container">{t('home.cta.body')}</p>
+          <Reveal>
+            <div className="flex flex-col items-start gap-6 rounded-xl bg-primary-container px-6 py-10 md:flex-row md:items-center md:justify-between md:px-12">
+              <div className="flex max-w-2xl flex-col gap-2">
+                <h2 className="text-headline-small text-balance text-on-primary-container">
+                  {withHighlight(t('home.cta.title'), t('home.cta.titleHighlight'), 'text-primary')}
+                </h2>
+                <p className="text-body-large text-on-primary-container">{t('home.cta.body')}</p>
+              </div>
+              <Button
+                size="m"
+                trailingIcon="arrow_upward"
+                onClick={goToJourneys}
+                className="w-full shrink-0 md:h-12 md:w-auto"
+              >
+                {t('home.ctaChoose')}
+              </Button>
             </div>
-            <Button
-              size="m"
-              trailingIcon="arrow_upward"
-              onClick={goToJourneys}
-              className="w-full shrink-0 md:h-12 md:w-auto"
-            >
-              {t('home.ctaChoose')}
-            </Button>
-          </div>
+          </Reveal>
         </Band>
 
         <div className="px-(--space-gutter) pb-10">
           <div className="mx-auto w-full max-w-[max(80rem,80%)]">
             {/* Footer organized by what people want to do (D-71): explore, the project, the demo */}
             <footer className="flex flex-col gap-10 overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest px-5 pt-10 sm:px-8 lg:px-10">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))] lg:gap-8">
-                <div className="col-span-2 flex min-w-0 flex-col gap-4 sm:col-span-3 lg:col-span-1">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-x-8 sm:gap-y-10 lg:grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))]">
+                <div className="flex min-w-0 flex-col gap-4 pb-3 sm:col-span-3 sm:pb-0 lg:col-span-1">
                   <Logo />
                   <p className="max-w-sm text-body-medium text-on-surface-variant">{t('home.footerTagline')}</p>
                   <p className="flex max-w-sm items-start gap-2 rounded-md bg-surface-container p-3 text-body-small text-on-surface-variant">
@@ -243,7 +309,7 @@ export function DemoHomePage() {
                 </FooterColumn>
               </div>
 
-              <div className="flex flex-col gap-2 border-t border-outline-variant pt-5 text-body-small text-on-surface-variant md:flex-row md:flex-wrap md:justify-between md:gap-x-8">
+              <div className="flex flex-col gap-2 border-t border-outline-variant pt-5 text-body-small text-on-surface-variant lg:flex-row lg:justify-between lg:gap-x-8">
                 <p>{t('home.author')}</p>
                 <p>{t('home.footer.rights')}</p>
                 <p>{t('home.photoCredit')}</p>

@@ -6,7 +6,10 @@ import { SectionHeading } from './SectionHeading';
 /** Small decorative scene made of Rumbo pieces (2.2.1, pattern 9): no stock illustrations. */
 function Scene({ children }: { children: ReactNode }) {
   return (
-    <div aria-hidden className="flex h-40 items-center justify-center overflow-hidden rounded-lg bg-surface-container p-4">
+    <div
+      aria-hidden
+      className="flex h-40 items-center justify-center overflow-hidden rounded-lg bg-surface-container p-4"
+    >
       {children}
     </div>
   );
@@ -83,6 +86,7 @@ export const ProblemSection = forwardRef<HTMLHeadingElement>(function ProblemSec
         id="problem-title"
         eyebrow={t('home.problem.eyebrow')}
         title={t('home.problem.title')}
+        highlight={t('home.problem.titleHighlight')}
         subtitle={t('home.problem.subtitle')}
       />
       <ul className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-3">

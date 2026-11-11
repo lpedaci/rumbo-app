@@ -191,6 +191,7 @@ export const SolutionSection = forwardRef<HTMLHeadingElement>(function SolutionS
         id="solution-title"
         eyebrow={t('home.solution.eyebrow')}
         title={t('home.solution.title')}
+        highlight={t('home.solution.titleHighlight')}
         subtitle={t('home.solution.subtitle')}
       />
       <ul className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-6">

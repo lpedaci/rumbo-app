@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { Avatar } from '@/components/ui/Avatar';
 import { IconTile } from '@/components/ui/IconTile';
@@ -5,6 +6,7 @@ import { Sparkline } from '@/components/ui/Sparkline';
 import { formatNumber, formatPercent } from '@/lib/dates';
 import { progressOf } from '@/lib/journey';
 import { kpis } from '@/lib/metrics';
+import { duration, easing, useShouldReduceMotion } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { startedJourneys, weeklyCompletions } from './ProductPreview';
@@ -28,6 +30,17 @@ export function HeroCards() {
   const sofiaPerson = people.find((p) => p.id === 'p-sofia');
   const progress = sofia ? progressOf(sofia.tasks) : { done: 0, total: 0, percent: 0 };
   const max = Math.max(...weekly, 1);
+  const reduce = useShouldReduceMotion();
+  // Cards come in after the hero text, one by one (D-74).
+  const enter = (i: number) => ({
+    initial: reduce ? { opacity: 0 } : { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0 },
+    transition: {
+      duration: reduce ? duration.short : duration.long * 1.5,
+      ease: easing.emphasizedDecelerate,
+      delay: 0.3 + i * 0.05,
+    },
+  });
 
   return (
     <div
@@ -35,17 +48,17 @@ export function HeroCards() {
       className="mt-12 hidden w-full grid-cols-2 gap-3 sm:grid xl:pointer-events-none xl:absolute xl:inset-0 xl:mt-0 xl:block"
     >
       {/* Top left: tasks on time with its trend */}
-      <div className={cn(CARD, 'xl:absolute xl:top-4 xl:left-0 xl:w-60 xl:-rotate-0')}>
+      <motion.div {...enter(0)} className={cn(CARD, 'xl:absolute xl:top-4 xl:left-0 xl:w-60 xl:-rotate-0')}>
         <div className="flex items-center justify-between gap-2">
           <span className="text-label-medium text-on-surface-variant">{t('home.showcase.preview.onTime')}</span>
           <IconTile icon="task_alt" size="sm" />
         </div>
         <span className="text-headline-small text-on-surface tabular-nums">{formatPercent(k.onTimeRate)}</span>
         <Sparkline values={[52, 58, 55, 63, 61, 70, 68, Math.round(k.onTimeRate)]} className="h-10 w-full" />
-      </div>
+      </motion.div>
 
       {/* Top right: tasks completed per week, as bars */}
-      <div className={cn(CARD, 'xl:absolute xl:top-0 xl:right-0 xl:w-64')}>
+      <motion.div {...enter(1)} className={cn(CARD, 'xl:absolute xl:top-0 xl:right-0 xl:w-64')}>
         <span className="text-label-medium text-on-surface-variant">{t('home.preview.chartTitle')}</span>
         <div className="flex h-20 items-end gap-1.5">
           {weekly.map((v, i) => (
@@ -56,10 +69,10 @@ export function HeroCards() {
             />
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Bottom left: active hires */}
-      <div className={cn(CARD, 'xl:absolute xl:bottom-6 xl:left-10 xl:w-56')}>
+      <motion.div {...enter(2)} className={cn(CARD, 'xl:absolute xl:bottom-6 xl:left-10 xl:w-56')}>
         <div className="flex items-center gap-3">
           <IconTile icon="group" size="sm" tone="tertiary" />
           <span className="text-label-medium text-on-surface-variant">{t('home.preview.kpiActive')}</span>
@@ -68,10 +81,10 @@ export function HeroCards() {
           <span className="text-headline-small text-on-surface tabular-nums">{formatNumber(k.activeHires)}</span>
           <Sparkline values={started} tone="tertiary" className="h-8 w-20" />
         </div>
-      </div>
+      </motion.div>
 
       {/* Bottom right: Sofía's journey */}
-      <div className={cn(CARD, 'xl:absolute xl:right-8 xl:bottom-0 xl:w-64')}>
+      <motion.div {...enter(3)} className={cn(CARD, 'xl:absolute xl:right-8 xl:bottom-0 xl:w-64')}>
         <div className="flex min-w-0 items-center gap-3">
           {sofiaPerson && <Avatar name={sofiaPerson.name} role={sofiaPerson.role} size="sm" />}
           <div className="flex min-w-0 flex-col">
@@ -84,7 +97,7 @@ export function HeroCards() {
         <span className="h-2 overflow-hidden rounded-full bg-outline-variant">
           <span className="block h-full bg-primary" style={{ width: `${progress.percent}%` }} />
         </span>
-      </div>
+      </motion.div>
     </div>
   );
 }

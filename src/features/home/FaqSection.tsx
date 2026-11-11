@@ -22,6 +22,7 @@ export const FaqSection = forwardRef<HTMLHeadingElement>(function FaqSection(_, 
         id="faq-title"
         eyebrow={t('home.faq.eyebrow')}
         title={t('home.faq.title')}
+        highlight={t('home.faq.titleHighlight')}
         subtitle={t('home.faq.subtitle')}
       />
       <Accordion.Root type="single" collapsible className="flex w-full flex-col gap-2">

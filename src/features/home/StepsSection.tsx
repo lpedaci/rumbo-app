@@ -19,6 +19,7 @@ export function StepsSection() {
         id="steps-title"
         eyebrow={t('home.steps.eyebrow')}
         title={t('home.steps.title')}
+        highlight={t('home.steps.titleHighlight')}
         subtitle={t('home.steps.subtitle')}
       />
       <ol className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">

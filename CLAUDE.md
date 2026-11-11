@@ -224,6 +224,7 @@ Usar **Motion** (Framer Motion) solo para estas animaciones, con duraciones de 1
 - **Constructor de plantillas:** la tarjeta arrastrada se eleva levemente y las demás se reacomodan con transición.
 - **Modales, menús y toasts:** aparición y salida con fundido y escala o desplazamiento corto.
 - **Carga:** esqueletos con pulso suave (sin degradé animado).
+- **Inicio de la demo (G0):** el hero entra escalonado al cargar y cada sección aparece una vez al hacer scroll, con fundido y desplazamiento corto (D-74).
 - Respetar `prefers-reduced-motion` y la preferencia "reducir animaciones" (F17): en ese caso, solo cambios de opacidad o ninguno.
 - No animar por animar: nada de rebotes, rotaciones decorativas ni animaciones en bucle.
 
@@ -279,6 +280,7 @@ Usar **Motion** (Framer Motion) solo para estas animaciones, con duraciones de 1
 | Computadora | Ordenador, PC |
 
 **Patrones de microcopy**
+- **Títulos:** sin punto final.
 - **Botones:** verbo + objeto ("Crear plantilla", "Enviar solicitud"). Acción principal a la derecha.
 - **Confirmaciones destructivas:** título con la consecuencia ("¿Eliminar esta tarea?") y botón que la repite ("Eliminar tarea"), nunca "Sí / No".
 - **Estados vacíos:** qué va a aparecer acá y cómo empezar ("Todavía no hay plantillas. Crea la primera para asignarla a un nuevo ingreso.").
@@ -427,7 +429,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     5. "Restablecer demo".
 - Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
 - **Estructura de página de producto B2B** (D-70 y D-71, a partir de dos referencias de Lourdes):
-    1. Barra superior flotante con el logo, enlaces a las secciones ("Cómo funciona", "Recorridos", "Preguntas") y la acción principal "Elegir un recorrido".
+    1. Barra superior flotante con el logo, enlaces a las secciones ("Cómo funciona", "Recorridos", "Preguntas") y la acción principal "Elegir un recorrido". Por debajo de 1024 px, los enlaces van en un menú.
     2. Hero centrado (D-73): titular con las palabras clave en `primary`, texto, "Elegir un recorrido" y el enlace "Ver el case study"; tarjetas reales del producto flotando a los costados desde 1280 px (en grilla debajo en tablet; ocultas en celulares).
     3. **El problema:** tres tarjetas con una escena hecha con piezas de Rumbo.
     4. **La solución:** bento de cinco tarjetas (recorridos por etapa, constructor de plantillas, check-ins, panel de seguimiento, seguridad y accesos), cada una con una mini interfaz.
@@ -435,7 +437,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     6. **Cifras** grandes, alternando `primary` y ciruela, sin tarjetas; los números salen de los datos de demo, nunca escritos a mano (salvo las 24 pantallas de la fase A, que son un dato de la spec).
     7. **Recorre la demo en tres pasos:** elegir, iniciar sesión en un clic y cambiar de rol con «Ver como».
     8. **Preguntas frecuentes** en acordeón accesible.
-    La página es blanca y continua: las secciones se separan por espacio, sin bandas de color; el hero tiene una cuadrícula muy tenue. Los encabezados van centrados: una etiqueta de texto simple en `primary` (sin píldora), el `h2` y una línea de contexto (D-73). Sin texturas de puntos: dificultan la lectura. Antes del pie, una franja `primary-container` con "Elegir un recorrido".
+    La página es blanca y continua: las secciones se separan por espacio, sin bandas de color; el hero tiene una cuadrícula muy tenue. Los encabezados van centrados: una etiqueta de texto simple en `primary` (sin píldora), el `h2` con las palabras clave en `primary` y sin punto final, y una línea de contexto (D-73, D-74). Sin texturas de puntos: dificultan la lectura. Antes del pie, una franja `primary-container` con "Elegir un recorrido".
     9. **Pie organizado por tareas:** marca con su frase y el aviso de demo; columnas "Explorar" (secciones de la página), "El proyecto" (case study y documentación) y "La demo" (elegir un recorrido, restablecer); abajo, autoría, aviso de prototipo y crédito de las fotos; y la marca "Rumbo" grande como SVG decorativo.
 - **No se usan** logos de otras empresas ("empresas que confían") ni testimonios: serían inventados.
 - Sin degradés ni sombras en tarjetas en reposo; en mobile, todo en una columna (las cifras, de a dos).

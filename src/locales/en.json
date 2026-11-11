@@ -284,7 +284,7 @@
   },
   "home": {
     "eyebrow": "Portfolio prototype · Onboarding journeys",
-    "title": "Everyone knows what to do, with whom and by when.",
+    "title": "Everyone knows what to do, with whom and by when",
     "intro": "Rumbo is a platform where HR designs the onboarding journey for each role, managers support it with check-ins and new hires always know what comes next. HR tracks progress and spots where journeys get stuck.",
     "demoTitle": "About this demo",
     "demoBody": "It is a clickable prototype with fictitious data from Nortia S.A., a made-up technology services company. Your changes are only saved in this browser.",
@@ -362,7 +362,8 @@
       "how": "How it works",
       "journeys": "Journeys",
       "faq": "Questions",
-      "label": "Page sections"
+      "label": "Page sections",
+      "menu": "Open the sections menu"
     },
     "problem": {
       "eyebrow": "The problem",
@@ -387,7 +388,8 @@
         "waiting": "Waiting for IT",
         "blocked": "Blocked",
         "late": "3 overdue"
-      }
+      },
+      "titleHighlight": "lost in questions"
     },
     "solution": {
       "eyebrow": "The solution",
@@ -442,7 +444,8 @@
           "Two-step verification",
           "Audit log"
         ]
-      }
+      },
+      "titleHighlight": "in one place"
     },
     "stats": {
       "title": "A navigable prototype with consistent simulated data",
@@ -452,7 +455,8 @@
       "templates": "Journey templates",
       "hires": "Simulated hires",
       "tasks": "Tasks in journeys",
-      "eyebrow": "In numbers"
+      "eyebrow": "In numbers",
+      "titleHighlight": "consistent simulated data"
     },
     "faq": {
       "eyebrow": "Questions",
@@ -479,7 +483,8 @@
           "q": "Which accessibility standard does it follow?",
           "a": "WCAG 2.2 AA: it works with a keyboard, has visible focus, checked contrast and reflows from 320 px wide."
         }
-      ]
+      ],
+      "titleHighlight": "questions"
     },
     "photoCredit": "People photos: Magnific",
     "footerTagline": "Clear onboarding journeys for every new hire, their direct manager and HR.",
@@ -540,7 +545,8 @@
         "onTime": "Tasks on time",
         "delayed": "Delayed",
         "dashboard": "Tracking dashboard"
-      }
+      },
+      "titleHighlight": "for each role"
     },
     "steps": {
       "eyebrow": "Getting started",
@@ -559,7 +565,8 @@
           "title": "Switch roles anytime",
           "body": "With the \"View as\" selector in the top bar you see the same process from another perspective."
         }
-      ]
+      ],
+      "titleHighlight": "in three steps"
     },
     "footer": {
       "explore": "Explore",
@@ -573,9 +580,10 @@
     },
     "cta": {
       "title": "Explore Rumbo from any role",
-      "body": "Choose a journey, sign in with one click and switch roles anytime."
+      "body": "Choose a journey, sign in with one click and switch roles anytime.",
+      "titleHighlight": "any role"
     },
-    "titleHighlight": "by when."
+    "titleHighlight": "by when"
   },
   "stages": {
     "preboarding": "Pre-boarding",
