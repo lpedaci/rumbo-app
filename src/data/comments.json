@@ -1,0 +1,57 @@
+[
+  {
+    "id": "cm-001",
+    "hireId": "h-sofia",
+    "hireTaskId": "h-sofia-d11",
+    "authorId": "p-carla",
+    "body": "Sofía, el manual está en la intranet, en la sección Cultura. Son unas 20 páginas y se lee en una tarde.",
+    "mentions": [],
+    "createdAt": "2026-10-20T13:10:00.000Z"
+  },
+  {
+    "id": "cm-002",
+    "hireId": "h-sofia",
+    "hireTaskId": "h-sofia-d11",
+    "authorId": "p-sofia",
+    "body": "Gracias, Carla. Lo empiezo esta semana, después del curso de seguridad.",
+    "mentions": [],
+    "createdAt": "2026-10-21T15:40:00.000Z",
+    "editedAt": "2026-10-21T15:52:00.000Z"
+  },
+  {
+    "id": "cm-003",
+    "hireId": "h-sofia",
+    "hireTaskId": "h-sofia-d15",
+    "authorId": "p-martin",
+    "body": "Para el análisis guiado usa el tablero de ventas del trimestre. @Sofía Ramírez si te trabas con los filtros, avísame y lo vemos juntos.",
+    "mentions": ["p-sofia"],
+    "createdAt": "2026-11-05T14:00:00.000Z"
+  },
+  {
+    "id": "cm-004",
+    "hireId": "h-sofia",
+    "hireTaskId": "h-sofia-d15",
+    "authorId": "p-sofia",
+    "body": "Gracias, Martín. Ya tengo el entorno listo; mañana empiezo con los filtros.",
+    "mentions": [],
+    "createdAt": "2026-11-06T12:20:00.000Z"
+  },
+  {
+    "id": "cm-005",
+    "hireId": "h-lucas",
+    "hireTaskId": "h-lucas-d12",
+    "authorId": "p-carla",
+    "body": "Sistemas confirmó que el acceso al data warehouse sale esta semana. @Martín Rossi te aviso cuando esté, así Lucas retoma el curso del modelo de datos.",
+    "mentions": ["p-martin"],
+    "createdAt": "2026-11-09T13:30:00.000Z"
+  },
+  {
+    "id": "cm-006",
+    "hireId": "h-joaquin",
+    "hireTaskId": "h-joaquin-c13",
+    "authorId": "p-carla",
+    "body": "@Lucía Fernández la cartera propia quedó pendiente. ¿La asignamos en el check-in de 90 días?",
+    "mentions": ["p-lucia"],
+    "createdAt": "2026-11-08T16:05:00.000Z"
+  }
+]

@@ -44,6 +44,8 @@ export const PERMISSIONS = {
   'audit:view': { it_admin: 'all' },
   'audit:export': { it_admin: 'all' },
   'security:view': { it_admin: 'all' },
+  // F9 comments on the tasks of the journeys each role can see (author edits and deletes their own)
+  'comment:write': { admin: 'all', manager: 'team', hire: 'own' },
   // F7 notifications: each person only sees their own
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)

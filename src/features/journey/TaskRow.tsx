@@ -25,6 +25,9 @@ interface TaskRowProps {
   today?: string;
   /** Who is looking: their tasks read "Te toca a ti". The new hire by default; the manager in J2, HR in A4. */
   viewerOwner?: Owner;
+  /** F9: comments on the task; with `onOpenComments` the row shows a button with the count. */
+  commentCount?: number;
+  onOpenComments?: () => void;
 }
 
 /**
@@ -46,6 +49,8 @@ export function TaskRow({
   preview = false,
   today,
   viewerOwner = 'hire',
+  commentCount,
+  onOpenComments,
 }: TaskRowProps) {
   const { t } = useTranslation();
   const status = taskStatus(task, allTasks, today);
@@ -114,6 +119,18 @@ export function TaskRow({
           <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1.5 @lg:flex-nowrap @lg:justify-end">
             <DueColumn task={task} status={status} dateOnly={preview} />
             <TaskStatusPill status={status} className="w-fit @lg:w-28 @lg:justify-center" />
+            {onOpenComments && (
+              // Above the stretched link so it stays clickable; the count is part of its name
+              <button
+                type="button"
+                onClick={onOpenComments}
+                aria-label={`${t('comments.open', { task: task.title })}: ${t('comments.count', { count: commentCount ?? 0 })}`}
+                className="relative z-10 inline-flex h-8 min-w-12 shrink-0 items-center justify-center gap-1 rounded-sm px-2 text-label-large text-on-surface-variant tabular-nums transition-colors hover:bg-surface-container-high hover:text-on-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary max-md:min-h-12"
+              >
+                <Icon name="chat" size={18} />
+                {commentCount ?? 0}
+              </button>
+            )}
           </div>
         </div>
       </div>

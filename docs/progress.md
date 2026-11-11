@@ -365,3 +365,11 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - A5 muestra el estado de cada plantilla; A3 solo ofrece plantillas publicadas (con su versión); A4 muestra la versión del recorrido y aclara si hay una más nueva.
 - Auditoría: `template.publish` y `template.restore`. Tests de publicación y restauración, y A8 en Playwright.
 - También: correos completos en todo el producto (D-110) y más aire en los encabezados de página (D-111).
+
+## Paso 16 · F9 Comentarios en tareas, 11/11/2026 (D-112)
+
+- Modelo `Comment` (con `hireId`), semilla en 4 tareas y esquema de datos 8. Store: comentar, editar (marca "editado") y borrar (marca "Comentario eliminado").
+- `CommentThread`: hilo en lista con divisores, texto plano con las menciones resaltadas, chips "Mencionar a…", validación con Zod y acciones del autor en un menú.
+- N2: tarjeta "Comentarios"; J2 y A4: botón con la cantidad en cada tarea que abre el hilo en un diálogo, también desde las notificaciones.
+- Avisos "Te mencionaron" y "Comentario nuevo" (F7) y permiso `comment:write`.
+- Tests del motor y de N2, y el diálogo en el test de Playwright.

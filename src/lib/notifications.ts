@@ -1,5 +1,14 @@
 import type { IconName } from '@/components/ui/Icon';
-import type { AccessRequest, AppNotification, AuthAttempts, Hire, HireTask, NotificationType, Person } from '@/types/domain';
+import type {
+  AccessRequest,
+  AppNotification,
+  AuthAttempts,
+  Comment,
+  Hire,
+  HireTask,
+  NotificationType,
+  Person,
+} from '@/types/domain';
 import { addDays, DEMO_TODAY } from './dates';
 import { CHECKIN_OFFSETS, isPastDue, taskStatus } from './journey';
 
@@ -39,6 +48,8 @@ export const NOTIFICATION_TYPES: Record<NotificationType, TypeMeta> = {
   'account.locked': { category: 'access', icon: 'lock', tone: 'error', email: false },
   'access_request.resolved': { category: 'access', icon: 'check_circle', tone: 'success', email: true },
   'access_request.rejected': { category: 'access', icon: 'cancel', tone: 'error', email: true },
+  'comment.new': { category: 'tasks', icon: 'chat', tone: 'primary', email: false },
+  'comment.mention': { category: 'tasks', icon: 'alternate_email', tone: 'tertiary', email: true },
 };
 
 export const NOTIFICATION_CATEGORIES: NotificationCategory[] = ['tasks', 'checkins', 'people', 'access'];
@@ -189,6 +200,37 @@ export function onHireCreated(hire: Hire, person: Person, when: string): AppNoti
   ];
 }
 
+/**
+ * A comment was posted (F9): the people mentioned get "Te mencionaron"; the rest of the thread
+ * (the hire and whoever commented before) gets "Comentario nuevo". Never the author.
+ */
+export function onComment(
+  hire: Hire,
+  task: HireTask,
+  comment: { authorId: string; mentions: string[]; createdAt: string },
+  earlierAuthors: string[],
+  authorName: string,
+): AppNotification[] {
+  const mentioned = new Set(comment.mentions.filter((id) => id !== comment.authorId));
+  const thread = new Set([hire.personId, ...earlierAuthors].filter((id) => id !== comment.authorId && !mentioned.has(id)));
+  const make = (recipientId: string, type: 'comment.new' | 'comment.mention') =>
+    makeNotification({
+      recipientId,
+      createdAt: comment.createdAt,
+      type,
+      params: { person: authorName, task: task.title },
+      link: commentLink(hire, task, recipientId),
+    });
+  return [...[...mentioned].map((id) => make(id, 'comment.mention')), ...[...thread].map((id) => make(id, 'comment.new'))];
+}
+
+/** Where a comment is read: the task detail for the hire, the thread in the record for the others. */
+export function commentLink(hire: Hire, task: Pick<HireTask, 'id'>, recipientId: string): string {
+  if (recipientId === hire.personId) return `/me/tasks/${task.id}#comments`;
+  if (recipientId === hire.managerId) return `/manager/hires/${hire.id}?comments=${task.id}`;
+  return `/admin/hires/${hire.id}?comments=${task.id}`;
+}
+
 // ---------- Seed ----------
 
 /**
@@ -201,6 +243,7 @@ export function buildSeedNotifications(
   people: Person[],
   accessRequests: AccessRequest[],
   authAttempts: AuthAttempts[],
+  comments: Comment[] = [],
   today = DEMO_TODAY,
 ): AppNotification[] {
   const nameOf = (id: string) => people.find((p) => p.id === id)?.name ?? '';
@@ -374,6 +417,19 @@ export function buildSeedNotifications(
         params: { person: person?.name ?? attempt.email },
         link: '/it/security',
       });
+    }
+  }
+
+  // F9: comments of the seed, with the same rule as a comment posted during the session.
+  for (const comment of [...comments].sort((a, b) => a.createdAt.localeCompare(b.createdAt))) {
+    const hire = hires.find((h) => h.id === comment.hireId);
+    const task = hire?.tasks.find((x) => x.id === comment.hireTaskId);
+    if (!hire || !task) continue;
+    const earlier = comments
+      .filter((c) => c.hireTaskId === comment.hireTaskId && c.createdAt < comment.createdAt)
+      .map((c) => c.authorId);
+    for (const n of onComment(hire, task, comment, earlier, nameOf(comment.authorId))) {
+      drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
     }
   }
 

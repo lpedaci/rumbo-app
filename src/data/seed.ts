@@ -8,6 +8,7 @@
 import type {
   AccessRequest,
   AppNotification,
+  Comment,
   AccountFlags,
   AuditEvent,
   AuthAttempts,
@@ -32,6 +33,7 @@ import accessRequests from './access-requests.json';
 import auditEvents from './audit-events.json';
 import authAttempts from './auth-attempts.json';
 import checkinMilestones from './checkin-milestones.json';
+import comments from './comments.json';
 import hiresSeed from './hires.json';
 import people from './people.json';
 import securityPolicy from './security-policy.json';
@@ -77,6 +79,8 @@ export interface DemoData {
   securityPolicy: SecurityPolicy;
   /** F7: generated from the data above with the same rules as runtime events. */
   notifications: AppNotification[];
+  /** F9: comments on journey tasks. */
+  comments: Comment[];
 }
 
 function whoCompletes(owner: Owner, seed: HireSeed): string {
@@ -226,6 +230,8 @@ export function buildSeed(): DemoData {
       people as Person[],
       accessRequests as AccessRequest[],
       authAttempts as AuthAttempts[],
+      comments as Comment[],
     ),
+    comments: comments as Comment[],
   });
 }

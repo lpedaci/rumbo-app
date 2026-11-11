@@ -136,7 +136,7 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-066 | Publicar debe mostrar un resumen de cambios y exigir una nota de versión. | RRHH | F8 | A6 | Should | Sin nota no se publica. | Hecho |
 | RF-067 | El sistema debe mostrar el historial de versiones, compararlas y restaurar una anterior como borrador. | RRHH | F8 | A8 | Should | La comparación muestra tareas agregadas, quitadas y modificadas. | Hecho |
 | RF-068 | Solo se deben poder asignar plantillas publicadas. | RRHH | F8 | A3 | Should | Los borradores no aparecen en el alta. | Hecho |
-| RF-069 | El sistema debe permitir comentar en tareas del recorrido, con menciones `@` que notifican. | Nuevo ingreso, Jefe, RRHH | F9 | N2, J2, A4 | Should | Solo texto plano; editar marca "editado". | Pendiente |
+| RF-069 | El sistema debe permitir comentar en tareas del recorrido, con menciones `@` que notifican. | Nuevo ingreso, Jefe, RRHH | F9 | N2, J2, A4 | Should | Solo texto plano; editar marca "editado". | Hecho |
 | RF-070 | El sistema debe pedir aceptar el aviso de privacidad en el primer ingreso, registrando fecha y versión. | Todos | F10 | G8 | Should | Sin aceptar no se continúa. | Pendiente |
 | RF-071 | El sistema debe ofrecer "Mi privacidad" con el aviso vigente, la fecha de aceptación y los datos propios. | Todos | F10 | G10 | Should | | Pendiente |
 | RF-072 | El sistema debe permitir enviar solicitudes de acceso, rectificación o supresión y gestionarlas con plazo y estado. | Todos, RRHH | F10 | G10, A12 | Should | El plazo de respuesta es visible en ambas vistas. | Pendiente |

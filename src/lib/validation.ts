@@ -127,3 +127,11 @@ export const publishNoteSchema = z
   .trim()
   .min(10, 'templateVersions.dialog.noteRequired')
   .max(500, 'templateVersions.dialog.noteMax');
+
+/** F9: a comment is plain text, 1 to 1.000 characters. */
+export const COMMENT_MAX = 1000;
+export const commentSchema = z
+  .string()
+  .trim()
+  .min(1, 'comments.required')
+  .max(COMMENT_MAX, 'comments.max');

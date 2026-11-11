@@ -1656,6 +1656,7 @@
         "audit_view": "Ver y filtrar la auditoría",
         "audit_export": "Exportar la auditoría a CSV",
         "security_view": "Ver políticas y matriz de permisos",
+        "comment_write": "Comentar en las tareas",
         "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
@@ -2349,6 +2350,16 @@
       "appOnly": "Este tipo de aviso solo llega dentro de Rumbo, no por correo."
     },
     "types": {
+      "comment": {
+        "new": {
+          "title": "Comentario nuevo",
+          "body": "{{person}} comentó en {{task}}."
+        },
+        "mention": {
+          "title": "Te mencionaron",
+          "body": "{{person}} te mencionó en {{task}}."
+        }
+      },
       "task": {
         "due_soon": {
           "title": "Tarea por vencer",
@@ -2522,5 +2533,35 @@
       "olderNote": "La versión vigente es la v{{version}}; este recorrido no cambia."
     },
     "assignOnly": "Solo aparecen las plantillas publicadas. El recorrido usa la versión vigente."
+  },
+  "comments": {
+    "title": "Comentarios",
+    "description": "Para coordinar esta tarea. Lo ven el nuevo ingreso, su jefe directo y RRHH.",
+    "count_one": "{{count}} comentario",
+    "count_other": "{{count}} comentarios",
+    "empty": "Todavía no hay comentarios. Escribe el primero para coordinar esta tarea.",
+    "label": "Tu comentario",
+    "help": "Texto simple, hasta 1.000 caracteres. Para avisarle a alguien del recorrido, menciónalo con @, por ejemplo: @Martín Rossi.",
+    "mention": "Mencionar a",
+    "mentionChip": "Mencionar a {{name}}",
+    "send": "Enviar comentario",
+    "sent": "Comentario enviado",
+    "required": "Escribe el comentario antes de enviarlo.",
+    "max": "El comentario puede tener hasta 1.000 caracteres.",
+    "edited": "editado",
+    "deleted": "Comentario eliminado",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "actions": "Acciones del comentario de {{name}}",
+    "save": "Guardar cambios",
+    "cancel": "Cancelar",
+    "updated": "Comentario actualizado",
+    "deleteTitle": "¿Eliminar este comentario?",
+    "deleteBody": "Se quita el texto del hilo y queda la marca \"Comentario eliminado\". No se puede deshacer.",
+    "deleteConfirm": "Eliminar comentario",
+    "deletedToast": "Comentario eliminado",
+    "you": "Tú",
+    "open": "Comentarios de {{task}}",
+    "readOnly": "Solo pueden comentar el nuevo ingreso, su jefe directo y RRHH."
   }
 }

@@ -1656,6 +1656,7 @@
         "audit_view": "View and filter the audit log",
         "audit_export": "Export the audit log to CSV",
         "security_view": "View policies and the permission matrix",
+        "comment_write": "Comment on tasks",
         "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
@@ -2349,6 +2350,16 @@
       "appOnly": "This type of notice only arrives inside Rumbo, not by email."
     },
     "types": {
+      "comment": {
+        "new": {
+          "title": "New comment",
+          "body": "{{person}} commented on {{task}}."
+        },
+        "mention": {
+          "title": "You were mentioned",
+          "body": "{{person}} mentioned you in {{task}}."
+        }
+      },
       "task": {
         "due_soon": {
           "title": "Task due soon",
@@ -2522,5 +2533,35 @@
       "olderNote": "The version in force is v{{version}}; this journey doesn't change."
     },
     "assignOnly": "Only published templates are listed. The journey uses the version in force."
+  },
+  "comments": {
+    "title": "Comments",
+    "description": "To coordinate this task. The new hire, their manager and HR can see them.",
+    "count_one": "{{count}} comment",
+    "count_other": "{{count}} comments",
+    "empty": "No comments yet. Write the first one to coordinate this task.",
+    "label": "Your comment",
+    "help": "Plain text, up to 1,000 characters. To let someone in the journey know, mention them with @, for example: @Martín Rossi.",
+    "mention": "Mention",
+    "mentionChip": "Mention {{name}}",
+    "send": "Send comment",
+    "sent": "Comment sent",
+    "required": "Write the comment before sending it.",
+    "max": "The comment can have up to 1,000 characters.",
+    "edited": "edited",
+    "deleted": "Comment deleted",
+    "edit": "Edit",
+    "delete": "Delete",
+    "actions": "Actions for {{name}}'s comment",
+    "save": "Save changes",
+    "cancel": "Cancel",
+    "updated": "Comment updated",
+    "deleteTitle": "Delete this comment?",
+    "deleteBody": "The text is removed from the thread and a \"Comment deleted\" mark stays. This can't be undone.",
+    "deleteConfirm": "Delete comment",
+    "deletedToast": "Comment deleted",
+    "you": "You",
+    "open": "Comments on {{task}}",
+    "readOnly": "Only the new hire, their manager and HR can comment."
   }
 }

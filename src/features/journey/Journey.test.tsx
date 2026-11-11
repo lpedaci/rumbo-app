@@ -181,3 +181,26 @@ describe('Guided welcome (F16, 2.2.1)', () => {
     expect(useSessionStore.getState().welcomeSeen).toContain('p-sofia');
   });
 });
+
+describe('N2 · Comments on a task (F9)', () => {
+  it('shows the thread and sends a comment that mentions the manager', async () => {
+    act(() => {
+      switchRole('hire');
+    });
+    renderAt('/me/tasks/h-sofia-d15');
+    expect(await screen.findByRole('heading', { name: es.comments.title })).toBeInTheDocument();
+    expect(screen.getByText(/ya tengo el entorno listo/i)).toBeInTheDocument();
+
+    // An empty comment is not sent, and the error says what to do.
+    fireEvent.click(screen.getByRole('button', { name: es.comments.send }));
+    expect(await screen.findByText(es.comments.required)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Mencionar a Martín Rossi' }));
+    const box = screen.getByLabelText(new RegExp(es.comments.label));
+    fireEvent.change(box, { target: { value: `${(box as HTMLTextAreaElement).value}terminé los filtros.` } });
+    fireEvent.click(screen.getByRole('button', { name: es.comments.send }));
+
+    await waitFor(() => expect(useDataStore.getState().comments.at(-1)).toMatchObject({ authorId: 'p-sofia', mentions: ['p-martin'] }));
+    expect(useDataStore.getState().notifications.at(-1)).toMatchObject({ recipientId: 'p-martin', type: 'comment.mention' });
+  });
+});

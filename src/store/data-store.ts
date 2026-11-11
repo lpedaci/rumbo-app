@@ -9,6 +9,7 @@ import {
   onAccessRequest,
   onAccessRequestClosed,
   onCheckinCompleted,
+  onComment,
   onHireCreated,
   onSelfReview,
   onTaskCompleted,
@@ -20,6 +21,7 @@ import type {
   AuditEvent,
   AuthAttempts,
   CheckinStage,
+  Comment,
   Hire,
   Mood,
   Person,
@@ -35,7 +37,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 7;
+export const DATA_SCHEMA_VERSION = 8;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -88,6 +90,12 @@ interface DataActions {
   rejectAccessRequest: (requestId: string, note: string, actorId: string) => void;
   /** S3: IT unlocks a locked account directly. */
   unlockAccount: (email: string, actorId: string) => void;
+  /** F9: posts a comment on a task and notifies the mentioned people and the thread. */
+  addComment: (input: { hireId: string; hireTaskId: string; authorId: string; body: string; mentions: string[] }) => void;
+  /** F9: the author edits their comment (marked as edited). */
+  editComment: (commentId: string, body: string, mentions: string[], actorId: string) => void;
+  /** F9: the author deletes their comment; the thread keeps a "Comentario eliminado" mark. */
+  deleteComment: (commentId: string, actorId: string) => void;
   /** F7: marks one notification as read or unread. */
   setNotificationRead: (id: string, read: boolean) => void;
   /** F7: marks every notification of a person as read. */
@@ -103,6 +111,12 @@ function selfReviewNotice(state: DemoData, hireId: string, stage: CheckinStage) 
   const hire = state.hires.find((h) => h.id === hireId);
   if (!hire) return [];
   return onSelfReview(hire, state.people.find((p) => p.id === hire.personId), stage, demoNow());
+}
+
+let commentCounter = 0;
+function nextCommentId() {
+  commentCounter += 1;
+  return `cm-${Date.now().toString(36)}-${commentCounter}`;
 }
 
 let auditCounter = 0;
@@ -123,6 +137,7 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.auditEvents) &&
     Array.isArray(data.authAttempts) &&
     Array.isArray(data.notifications) &&
+    Array.isArray(data.comments) &&
     typeof data.accountFlags === 'object' &&
     data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
@@ -496,6 +511,36 @@ export const useDataStore = create<DataState>()(
           ],
         })),
 
+      addComment: (input) =>
+        set((state) => {
+          const hire = state.hires.find((h) => h.id === input.hireId);
+          const task = hire?.tasks.find((x) => x.id === input.hireTaskId);
+          if (!hire || !task) return {};
+          const comment: Comment = { ...input, body: input.body.trim(), id: nextCommentId(), createdAt: demoNow() };
+          const earlier = state.comments.filter((c) => c.hireTaskId === task.id).map((c) => c.authorId);
+          const author = state.people.find((p) => p.id === input.authorId)?.name ?? '';
+          return {
+            comments: [...state.comments, comment],
+            notifications: [...state.notifications, ...onComment(hire, task, comment, earlier, author)],
+          };
+        }),
+
+      editComment: (commentId, body, mentions, actorId) =>
+        set((state) => ({
+          comments: state.comments.map((c) =>
+            c.id === commentId && c.authorId === actorId && !c.deletedAt
+              ? { ...c, body: body.trim(), mentions, editedAt: demoNow() }
+              : c,
+          ),
+        })),
+
+      deleteComment: (commentId, actorId) =>
+        set((state) => ({
+          comments: state.comments.map((c) =>
+            c.id === commentId && c.authorId === actorId ? { ...c, body: '', mentions: [], deletedAt: demoNow() } : c,
+          ),
+        })),
+
       setNotificationRead: (id, read) =>
         set((state) => ({
           notifications: state.notifications.map((n) =>
@@ -530,6 +575,7 @@ export const useDataStore = create<DataState>()(
         accountFlags,
         securityPolicy,
         notifications,
+        comments,
       }) => ({
         people,
         templates,
@@ -540,6 +586,7 @@ export const useDataStore = create<DataState>()(
         accountFlags,
         securityPolicy,
         notifications,
+        comments,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.
       migrate: () => buildSeed(),

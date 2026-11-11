@@ -798,6 +798,7 @@ interface TemplateVersion {
 }
 // Template pasa a tener: currentPublishedVersionId y draftVersionId?. Hire guarda templateVersionId.
 
+// Implementado (D-112): suma hireId para encontrar el hilo sin recorrer todos los recorridos.
 interface Comment {
   id: string; hireTaskId: string; authorId: string; body: string;   // texto plano
   mentions: string[]; createdAt: string; editedAt?: string; deletedAt?: string;

@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const ICONS = [
   // Navigation and layout
-  'menu', 'home', 'work', 'toc', 'edit_note', 'publish', 'compare_arrows', 'add_circle', 'do_not_disturb_on', 'change_circle', 'settings_backup_restore', 'swap_vert', 'person_add', 'cancel', 'done_all', 'mark_email_read', 'mark_email_unread', 'dashboard', 'group', 'groups', 'person', 'badge', 'apartment', 'route',
+  'menu', 'home', 'work', 'toc', 'edit_note', 'publish', 'compare_arrows', 'add_circle', 'do_not_disturb_on', 'change_circle', 'settings_backup_restore', 'swap_vert', 'chat', 'alternate_email', 'forum', 'send', 'person_add', 'cancel', 'done_all', 'mark_email_read', 'mark_email_unread', 'dashboard', 'group', 'groups', 'person', 'badge', 'apartment', 'route',
   'description', 'assignment', 'fact_check', 'security', 'admin_panel_settings', 'policy',
   'notifications', 'help', 'search', 'settings', 'logout', 'account_circle', 'swap_horiz',
   // Actions

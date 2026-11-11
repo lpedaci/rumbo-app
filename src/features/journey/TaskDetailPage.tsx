@@ -1,7 +1,7 @@
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DetailHeader, HeaderChip } from '@/components/layout/DetailHeader';
-import { Link, useParams } from 'react-router';
+import { Link, useLocation, useParams } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icon';
@@ -17,6 +17,7 @@ import { TASK_TYPE_ICON } from './task-meta';
 import { TaskStatusPill } from './TaskStatusPill';
 import { useCompleteTask } from './use-complete-task';
 import { useOwnHire } from './use-own-hire';
+import { CommentThread } from '@/features/comments/CommentThread';
 
 const LESSON_MINUTES = [8, 20, 12];
 
@@ -32,6 +33,11 @@ export function TaskDetailPage() {
   const hire = useOwnHire();
   const complete = useCompleteTask();
   const [unlocked, setUnlocked] = useState<string[]>([]);
+  const { hash } = useLocation();
+  // Coming from a comment notification: go to the thread (F9).
+  useEffect(() => {
+    if (hash === '#comments') document.getElementById('comments')?.scrollIntoView({ block: 'start' });
+  }, [hash]);
 
   const task = hire?.tasks.find((x) => x.id === id);
   if (!hire || !task) return <AccessDeniedPage reason="not_found" />;
@@ -210,6 +216,13 @@ export function TaskDetailPage() {
               )}
             </Card>
           )}
+
+          {/* F9: the conversation about this task, reachable from notifications (#comments) */}
+          <div id="comments" className="scroll-mt-24">
+            <Card title={t('comments.title')} description={t('comments.description')}>
+              <CommentThread hire={hire} task={task} />
+            </Card>
+          </div>
         </div>
 
         <Card title={t('task.details')} className="h-fit">

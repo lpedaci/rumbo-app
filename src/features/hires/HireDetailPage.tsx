@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HeaderChip } from '@/components/layout/DetailHeader';
-import { Link, useParams } from 'react-router';
+import { Link, useParams, useSearchParams } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
 import { Card } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icon';
@@ -19,6 +19,9 @@ import { useCurrentUser } from '@/store/session-store';
 import { CheckinTimeline } from './CheckinTimeline';
 import { HireStatusPill } from './HireStatusPill';
 import { latestVersion } from '@/lib/templates';
+import { Dialog, DialogContent } from '@/components/ui/Dialog';
+import { CommentThread } from '@/features/comments/CommentThread';
+import { activeCount } from '@/lib/comments';
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
@@ -39,6 +42,12 @@ function DetailRow({ label, value }: { label: string; value: string }) {
  */
 export function HireDetailPage() {
   const { t } = useTranslation();
+  // F9: the thread of a task opens in a dialog; a notification link opens it with ?comments=<task id>
+  const comments = useDataStore((st) => st.comments);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const commentsTaskId = searchParams.get('comments');
+  const openComments = (taskId: string | null) =>
+    setSearchParams(taskId ? { comments: taskId } : {}, { replace: true });
   const { id } = useParams();
   const user = useCurrentUser();
   const hires = useDataStore((s) => s.hires);
@@ -49,6 +58,7 @@ export function HireDetailPage() {
 
   const hire = hires.find((h) => h.id === id);
   if (!hire || !canViewHire(user, hire)) return <AccessDeniedPage reason="not_found" />;
+  const commentsTask = commentsTaskId ? hire.tasks.find((x) => x.id === commentsTaskId) : undefined;
 
   const s = summarizeHire(hire, people, templates);
   const nameOf = (personId?: string) => people.find((p) => p.id === personId)?.name ?? t('hires.detail.none');
@@ -176,6 +186,8 @@ export function HireDetailPage() {
                           onComplete={(done) => setUnlocked(complete(hire, done))}
                           highlighted={unlocked.includes(task.id)}
                           viewerOwner={isManager ? 'manager' : 'hr'}
+                          commentCount={activeCount(comments, task.id)}
+                          onOpenComments={() => openComments(task.id)}
                         />
                       ))}
                     </ul>
@@ -232,6 +244,17 @@ export function HireDetailPage() {
           </div>
         </div>
       </div>
+      <Dialog open={Boolean(commentsTask)} onOpenChange={(open) => !open && openComments(null)}>
+        {commentsTask && (
+          <DialogContent
+            title={t('comments.open', { task: commentsTask.title })}
+            description={t('comments.description')}
+            className="max-w-2xl"
+          >
+            <CommentThread hire={hire} task={commentsTask} />
+          </DialogContent>
+        )}
+      </Dialog>
     </>
   );
 }

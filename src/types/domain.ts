@@ -213,7 +213,9 @@ export type NotificationType =
   | 'access_request.new'
   | 'account.locked'
   | 'access_request.resolved'
-  | 'access_request.rejected';
+  | 'access_request.rejected'
+  | 'comment.new'
+  | 'comment.mention';
 
 export type NotificationChannel = 'app' | 'email';
 
@@ -233,4 +235,24 @@ export interface AppNotification {
   /** Route where the action happens, in the recipient's own workspace. */
   link: string;
   channels: NotificationChannel[];
+}
+
+// ---------- Phase B: F9 comments ----------
+
+/**
+ * A comment on a journey task (F9). Plain text only: React escapes it and it is never turned into
+ * HTML. Deleting keeps the record with `deletedAt` so the thread shows "Comentario eliminado".
+ */
+export interface Comment {
+  id: string;
+  /** Hire of the task, so a thread is found without scanning every journey. */
+  hireId: string;
+  hireTaskId: string;
+  authorId: string;
+  body: string;
+  /** Person ids mentioned with @ (people involved in the journey). */
+  mentions: string[];
+  createdAt: string;
+  editedAt?: string;
+  deletedAt?: string;
 }
