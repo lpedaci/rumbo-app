@@ -299,3 +299,9 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - **`docs/security.md`:** las tres capas, amenazas y mitigaciones, diagrama del inicio de sesión en producción y referencias APA.
 
 **Pendiente:** paso 12 (pulido de fase A) y paso 13 (revisión intermedia).
+
+## Web del sistema de diseño y README, 11/11/2026 (D-98)
+
+- Sitio público del sistema de diseño en `/#/design-system`, construido con los tokens y componentes reales; enlace en el pie de G0 y en el README.
+- README con el hero capturado con todo cargado, sin capturas por rol, con un diagrama de contexto C4 y las figuras de niveles de tokens y de capas exportadas desde el sitio.
+- Las capturas de página completa de `docs/screenshots/` ahora muestran las secciones que aparecen al hacer scroll.

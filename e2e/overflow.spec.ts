@@ -31,6 +31,17 @@ for (const page of PAGES) {
         return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, overflowing, offenders };
       });
 
+      // Sections that appear on scroll (G0, D-92) only show once they enter the viewport:
+      // scroll through the page first so the full-page capture shows everything.
+      await browserPage.evaluate(async () => {
+        for (let y = 0; y < document.body.scrollHeight; y += 400) {
+          window.scrollTo(0, y);
+          await new Promise((r) => setTimeout(r, 40));
+        }
+        window.scrollTo(0, 0);
+      });
+      await browserPage.waitForTimeout(500);
+
       // On Windows another process (a viewer, the indexer) can hold the file for a moment:
       // retry the capture before failing (INC-012). The checks above do not depend on it.
       for (let attempt = 1; ; attempt += 1) {

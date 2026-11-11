@@ -10,7 +10,6 @@ import { useUiStore } from '@/store/ui-store';
 import { renderAt } from '@/test/render-app';
 import i18n from './i18n';
 
-
 beforeEach(() => {
   localStorage.clear();
   useDataStore.getState().resetData();
@@ -43,7 +42,9 @@ describe('routing and access control', () => {
     await screen.findByRole('heading', { level: 1 });
     const stats = screen.getByRole('region', { name: es.home.stats.title });
     const templates = useDataStore.getState().templates.length;
-    expect(within(stats).getByText(es.home.stats.templates).previousElementSibling).toHaveTextContent(String(templates));
+    expect(within(stats).getByText(es.home.stats.templates).previousElementSibling).toHaveTextContent(
+      String(templates),
+    );
     const question = screen.getByRole('button', { name: (name) => name.includes(es.home.faq.items[0]!.q) });
     expect(question).toHaveAttribute('aria-expanded', 'false');
     fireEvent.click(question);
@@ -141,7 +142,10 @@ describe('layout (G6): top bar and side navigation', () => {
     expect(expand).toHaveAttribute('aria-expanded', 'false');
     // Folded items keep their accessible name and the active state.
     const sidebar = screen.getByRole('navigation', { name: es.layout.mainNav });
-    expect(within(sidebar).getByRole('link', { name: es.layout.nav.templates })).toHaveAttribute('aria-current', 'page');
+    expect(within(sidebar).getByRole('link', { name: es.layout.nav.templates })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
     expect(useUiStore.getState().navCollapsed).toBe(true);
   });
 });
@@ -158,8 +162,18 @@ describe('locales', () => {
 
   it('Spanish texts avoid voseo, "usted", long dashes and banned words (CLAUDE.md 2.9)', () => {
     const valuesOf = (obj: object): string[] =>
-      Object.values(obj).flatMap((value) => (typeof value === 'object' && value !== null ? valuesOf(value) : [String(value)]));
-    const texts = valuesOf(es).join(' | ');
+      Object.values(obj).flatMap((value) =>
+        typeof value === 'object' && value !== null ? valuesOf(value) : [String(value)],
+      );
+    // The "Evitar" column of the design system vocabulary lists banned words on purpose (D-98).
+    const checked = {
+      ...es,
+      designSystem: {
+        ...es.designSystem,
+        voice: { ...es.designSystem.voice, vocab: es.designSystem.voice.vocab.map(([use]) => use) },
+      },
+    };
+    const texts = valuesOf(checked).join(' | ');
     expect(texts).not.toMatch(/—/);
     expect(texts).not.toMatch(/\b(vos|usted)\b/i);
     // "Clave" as password is banned; "contactos clave" (key contacts, F1) is fine.

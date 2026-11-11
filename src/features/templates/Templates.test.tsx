@@ -49,7 +49,10 @@ describe('A5 · Templates list', () => {
     await screen.findByRole('heading', { level: 1 });
     const menu = openMenu('Acciones de Ejecutivo/a Comercial');
     fireEvent.click(within(menu).getByRole('menuitem', { name: 'Duplicar plantilla' }));
-    expect(await screen.findByRole('heading', { level: 1, name: 'Ejecutivo/a Comercial (copia)' })).toBeInTheDocument();
+    // The editor is loaded on demand (route-level code splitting): give it time under a busy test run.
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Ejecutivo/a Comercial (copia)' }, { timeout: 5000 }),
+    ).toBeInTheDocument();
     const templates = useDataStore.getState().templates;
     expect(templates).toHaveLength(4);
     expect(useDataStore.getState().auditEvents.at(-1)).toMatchObject({ action: 'template.create', actorId: 'p-carla' });

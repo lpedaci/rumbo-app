@@ -1,19 +1,18 @@
 # Sistema de diseño de Rumbo
 
+> **Sitio del sistema de diseño:** [lpedaci.github.io/rumbo-app/#/design-system](https://lpedaci.github.io/rumbo-app/#/design-system) (D-98). Este documento es la versión en Markdown.
+>
 > Estado: **implementado en el paso 2** (10/11/2026). Los valores de este documento son los de `src/styles/tokens.css` y coinciden con la página interna `/styleguide`, disponible solo con `npm run dev` en `http://localhost:5173/#/styleguide`.
 
 Rumbo usa **Material Design 3** (Google, s.f.) como base: roles de color, escala tipográfica, forma, estados, elevación y patrones de componentes. No usa una librería de Material, sino **Tailwind CSS 4 y shadcn/ui** (con Radix debajo). Así los fundamentos de M3 se convierten en tokens propios y el producto no se ve como una app de Google por defecto.
 
 ## 1. Arquitectura de tokens
 
-```mermaid
-flowchart LR
-    T["tokens.css<br/>variables --md-sys-*"] --> TW["index.css · @theme inline<br/>utilidades de Tailwind"]
-    TW --> C["Componentes<br/>src/components/ui"]
-    C --> P["Pantallas"]
-    T --> TEST["tokens.test.ts<br/>contraste WCAG"]
-    T --> SG["/styleguide"]
-```
+Los tokens siguen la organización en niveles que proponen Material 3 y el W3C Design Tokens Community Group: **referencia → sistema → componente**. Cada nivel solo usa el anterior, y los componentes nunca usan un valor suelto.
+
+<img src="readme/token-tiers.png" alt="Niveles de tokens: referencia, sistema, tema de Tailwind y componentes, con el control de calidad debajo." width="900" />
+
+*Diagrama de niveles de tokens: los valores crudos (nivel 1) solo se usan para definir los roles semánticos (nivel 2); Tailwind los convierte en utilidades (nivel 3) y los componentes los combinan en variantes (nivel 4). En verde, los controles: el test de contraste lee los tokens de sistema, y el sitio del sistema de diseño y `/styleguide` muestran los componentes. El modo oscuro tiene los mismos roles preparados para la fase B.*
 
 `tokens.css` es la única fuente de verdad. El tema de Tailwind **borra la paleta, las tipografías, los radios y las sombras por defecto** y solo expone los tokens de Rumbo. Por eso un componente no puede usar `text-sm`, `bg-blue-500` ni `shadow-lg`: esas clases no existen. Un test lee `tokens.css` y verifica el contraste de cada combinación permitida.
 
@@ -412,6 +411,8 @@ Reemplaza las bandas de color de D-72.
 Google. (s.f.). *Material Design 3*. https://m3.material.io/
 
 Google. (s.f.). *Material Symbols* [Conjunto de íconos]. https://fonts.google.com/icons
+
+W3C Design Tokens Community Group. (2025). *Design Tokens Format Module*. https://www.designtokens.org/tr/drafts/format/
 
 World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
 

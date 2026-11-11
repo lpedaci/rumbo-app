@@ -8,7 +8,7 @@
 
 Plataforma B2B de onboarding corporativo · Caso de diseño UX/UI y prototipo navegable de alta fidelidad
 
-[**Ver la demo**](https://lpedaci.github.io/rumbo-app/) · [Case study](https://lpedaci.github.io/portfolio/) · [Documentación](docs/README.md) · [Sistema de diseño](docs/design-system.md)
+[**Ver la demo**](https://lpedaci.github.io/rumbo-app/) · [Case study](https://lpedaci.github.io/portfolio/) · [Documentación](docs/README.md) · [Sistema de diseño](https://lpedaci.github.io/rumbo-app/#/design-system)
 
 ![Deploy](https://img.shields.io/github/actions/workflow/status/lpedaci/rumbo-app/deploy.yml?branch=main&label=CI%20%C2%B7%20deploy&logo=githubactions&logoColor=white)
 ![WCAG 2.2 AA](https://img.shields.io/badge/WCAG-2.2%20AA-1F6F78?logo=w3c&logoColor=white)
@@ -16,7 +16,7 @@ Plataforma B2B de onboarding corporativo · Caso de diseño UX/UI y prototipo na
 ![Idiomas](https://img.shields.io/badge/idiomas-es%20%C2%B7%20en-9C3D74)
 ![Datos ficticios](https://img.shields.io/badge/datos-100%25%20ficticios-4A6366)
 
-<img src="docs/screenshots/g0-home-1440.jpg" alt="Portada de Rumbo: titular, tarjetas reales del producto con tareas a tiempo, alertas para RRHH y el avance de un recorrido" width="900" />
+<img src="docs/readme/hero.jpg" alt="Portada de Rumbo: titular, tarjetas reales del producto con tareas a tiempo, alertas para RRHH, dónde se traban los recorridos y el avance de un recorrido" width="900" />
 
 </div>
 
@@ -48,20 +48,6 @@ La demo se recorre con cuatro personas ficticias de **Nortia S.A.** y se puede c
 | <img src="src/assets/avatars/sofia.webp" alt="" width="48" /> | **Sofía Ramírez** · Nuevo ingreso | Ve su recorrido, completa tareas y responde su autoevaluación | Mi recorrido (N1), tarea (N2), autoevaluación (N3) |
 | <img src="src/assets/avatars/diego.webp" alt="" width="48" /> | **Diego Ferreyra** · Sistemas | Atiende solicitudes de acceso verificando la identidad, revisa la auditoría y las políticas | Solicitudes (S1, S2), seguridad y auditoría (S3) |
 
-<table>
-  <tr>
-    <td width="50%"><img src="docs/screenshots/home-admin-1440.jpg" alt="Panel de seguimiento de RRHH con KPIs, avance por cohorte y alertas" /><br /><sub><b>A1 · Panel de seguimiento.</b> KPIs, avance por cohorte o por persona, alertas priorizadas y dónde se traban los recorridos.</sub></td>
-    <td width="50%"><img src="docs/screenshots/n1-journey-1440.jpg" alt="Mi recorrido de Sofía con la línea de tiempo por etapas y lo próximo" /><br /><sub><b>N1 · Mi recorrido.</b> Línea de tiempo por etapas, lo próximo y contactos clave.</sub></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/a6-template-editor-1440.jpg" alt="Editor de plantillas con tareas por etapa que se reordenan" /><br /><sub><b>A6 · Constructor de plantillas.</b> Arrastrar y soltar con alternativa por teclado, dependencias y validación de ciclos.</sub></td>
-    <td><img src="docs/screenshots/j3-checkin-1440.jpg" alt="Check-in de 30 días con hitos y autoevaluación" /><br /><sub><b>J3 · Check-in 30/60/90.</b> Hitos con resultado, autoevaluación del ingreso y escalamiento a RRHH.</sub></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/s2-request-1440.jpg" alt="Detalle de una solicitud de acceso con verificación de identidad" /><br /><sub><b>S2 · Solicitud de acceso.</b> Primero se verifica la identidad; recién después se restablece el acceso.</sub></td>
-    <td><img src="docs/screenshots/g1-login-1440.jpg" alt="Inicio de sesión con Microsoft y Google" /><br /><sub><b>G1 · Inicio de sesión.</b> SSO, MFA y bloqueo por intentos, simulados y rotulados como simulación.</sub></td>
-  </tr>
-</table>
 
 ---
 
@@ -99,7 +85,9 @@ Material Design 3 traducido a tokens propios: no se ve como una app de Google, p
 - **Bento** para paneles, **línea de tiempo** del recorrido, **encabezado de ficha** único, tablas que se seleccionan por fila completa y pie de formulario anclado.
 - **Movimiento** con las curvas de M3, 150 a 300 ms, escalonado al entrar y siempre respetando "reducir animaciones".
 
-Todo está documentado con sus valores reales en [`docs/design-system.md`](docs/design-system.md) y visible en la página interna `/styleguide` (solo en desarrollo).
+<img src="docs/readme/token-tiers.png" alt="Niveles de tokens: 1 Referencia (valores crudos, tipografía), 2 Sistema (roles de color, personas y gráficos, espacio y elevación, movimiento), 3 Tema de Tailwind (@theme inline y utilidades) y 4 Componentes (variantes con cva y pantallas), con el control de calidad debajo (test de contraste y documentación viva)." width="900" />
+
+**[Ver el sitio del sistema de diseño](https://lpedaci.github.io/rumbo-app/#/design-system):** fundamentos leídos en vivo desde los tokens, contraste calculado, componentes reales, patrones y pautas. También está la versión en Markdown, [`docs/design-system.md`](docs/design-system.md).
 
 ---
 
@@ -148,17 +136,41 @@ Detalle completo, amenazas y mitigaciones en [`docs/security.md`](docs/security.
 
 Es un **prototipo funcional sin backend**: las pantallas responden de verdad (crear, editar, completar, aprobar) y los cambios se guardan en el navegador.
 
+La arquitectura se explica con el **modelo C4** (Brown, s.f.), en dos niveles.
+
+**Nivel 1 · Contexto:** quiénes usan Rumbo y con qué sistemas se relaciona.
+
 ```mermaid
-flowchart LR
-    seed["Datos semilla<br/>src/data/*.json"] --> store["Store de Zustand<br/>persistido en localStorage"]
-    store --> rules["Reglas puras<br/>src/lib: fechas, estados,<br/>métricas, accesos"]
-    perms["Permisos<br/>src/lib/permissions.ts"] --> ui
-    rules --> ui["Pantallas por rol<br/>src/features"]
-    ui -- "acciones" --> store
-    store -- "cada acción sensible" --> audit["Auditoría"]
+flowchart TB
+    hr(["👤 RRHH<br/><small>Diseña plantillas, da de alta<br/>ingresos y sigue el avance</small>"])
+    mgr(["👤 Jefe directo<br/><small>Acompaña y hace<br/>los check-ins</small>"])
+    hire(["👤 Nuevo ingreso<br/><small>Sigue su recorrido<br/>y completa tareas</small>"])
+    it(["👤 Sistemas<br/><small>Verifica identidades y<br/>restablece accesos</small>"])
+
+    rumbo["<b>Rumbo</b><br/><small>Aplicación web de una sola página<br/>que corre en el navegador</small>"]
+
+    pages["GitHub Pages<br/><small>Hosting estático con CSP</small>"]
+    ci["GitHub Actions<br/><small>Auditoría, lint, tests,<br/>build y deploy</small>"]
+    idp["Proveedor de identidad<br/><small>Entra ID o Google Workspace<br/>(simulado en la demo)</small>"]
+
+    hr & mgr & hire & it -->|usa| rumbo
+    pages -->|sirve| rumbo
+    ci -->|publica en| pages
+    rumbo -.->|SSO y MFA en producción| idp
+
+    classDef person fill:#D8EEF0,stroke:#1F6F78,color:#0B3B40
+    classDef system fill:#1F6F78,stroke:#0B3B40,color:#FFFFFF
+    classDef external fill:#EEF2F4,stroke:#7D8793,color:#111827
+    class hr,mgr,hire,it person
+    class rumbo system
+    class pages,ci,idp external
 ```
 
-*Los datos semilla cargan el store; las pantallas leen a través de reglas puras (fechas, estados, métricas) y de una única matriz de permisos; cada acción vuelve al store y, si es sensible, deja un evento de auditoría.*
+*Las cuatro personas usan Rumbo desde el navegador; GitHub Actions lo verifica y lo publica en GitHub Pages. El proveedor de identidad está en línea punteada: en la demo se simula y en producción se integra por OIDC (ver [`docs/security.md`](docs/security.md)).*
+
+**Nivel 2 y 3 · Contenedores y componentes:** cómo se organiza la aplicación por dentro, en capas.
+
+<img src="docs/readme/app-layers.png" alt="Diagrama de capas: Presentación (pantallas por rol, sistema de diseño, router, i18n y Motion) lee y dispara acciones en Estado (datos de la demo, sesión simulada, preferencias), que carga y persiste en Datos (datos semilla y localStorage). Presentación y Estado consultan el Dominio: permisos, recorrido, métricas, accesos y auditoría, y validación." width="900" />
 
 - **Una sola fuente de permisos:** rutas y botones consultan `can(user, acción)`; la matriz que ve sistemas en S3 se genera desde el mismo archivo.
 - **Reglas de negocio puras y probadas:** fechas (`dueDate = ingreso + plazo`), estados calculados (bloqueada, vencida), métricas del panel y atribución de atrasos a quien bloquea.
@@ -229,3 +241,9 @@ En la portada, elige un recorrido e inicia sesión con un clic; todo está preca
 - **Fotos de personas:** Magnific (antes Freepik), con licencia; detalle en [`src/assets/avatars/SOURCE.md`](src/assets/avatars/SOURCE.md).
 - **Íconos:** Material Symbols (Google), Apache 2.0. **Tipografía:** Inter, SIL Open Font License.
 - Nortia S.A., sus personas y sus datos son ficticios. Los logos de Microsoft y Google se usan solo en los botones de inicio de sesión simulados.
+
+---
+
+## Referencias
+
+Brown, S. (s.f.). *The C4 model for visualising software architecture*. https://c4model.com/

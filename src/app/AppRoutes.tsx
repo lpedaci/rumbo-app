@@ -38,6 +38,9 @@ const TemplateEditorPage = lazy(() =>
 const TemplatePreviewPage = lazy(() =>
   import('@/features/templates/TemplatePreviewPage').then((m) => ({ default: m.TemplatePreviewPage })),
 );
+const DesignSystemPage = lazy(() =>
+  import('@/features/design-system/DesignSystemPage').then((m) => ({ default: m.DesignSystemPage })),
+);
 const SecurityPage = lazy(() => import('@/features/account/SecurityPage').then((m) => ({ default: m.SecurityPage })));
 
 // Internal style guide: development only (CLAUDE.md 2.8). `import.meta.env.DEV` is
@@ -75,6 +78,8 @@ export function AppRoutes() {
       <Route path="/login/verify" element={<VerifyPage />} />
       <Route path="/login/new-password" element={<NewPasswordPage />} />
       <Route path="/access-help" element={<AccessHelpPage />} />
+      {/* Public design system site (D-98): with or without a session */}
+      <Route path="/design-system" element={<DesignSystemPage />} />
 
       {OgCardPage && <Route path="/og-card" element={<OgCardPage />} />}
 

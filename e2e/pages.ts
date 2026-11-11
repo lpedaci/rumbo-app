@@ -50,6 +50,7 @@ export const PAGES: CheckedPage[] = [
   { id: 'home-it', path: '/#/it/requests', role: 'it_admin' },
   { id: 's2-request', path: '/#/it/requests/IT-2026-0141', role: 'it_admin' },
   { id: 's3-security', path: '/#/it/security', role: 'it_admin' },
+  { id: 'ds-site', path: '/#/design-system' },
   { id: 'styleguide', path: '/#/styleguide' },
 ];
 

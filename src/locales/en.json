@@ -1687,5 +1687,605 @@
       "mfa_issue": "Not getting the verification code",
       "other": "Other reason"
     }
+  },
+  "designSystem": {
+    "title": "Design system",
+    "docTitle": "Rumbo design system",
+    "skip": "Skip to content",
+    "nav": {
+      "label": "Design system sections",
+      "foundations": "Foundations",
+      "components": "Components",
+      "patterns": "Patterns",
+      "guidelines": "Guidelines",
+      "demo": "View the demo",
+      "menu": "Sections",
+      "onThisPage": "On this page"
+    },
+    "hero": {
+      "eyebrow": "Design system · customized Material Design 3",
+      "title": "A language to work for hours without tiring your eyes",
+      "highlight": "without tiring your eyes",
+      "intro": "Rumbo is a work tool for companies: dense with information, clear in hierarchy and accessible by design. This site gathers its foundations, components and patterns, built with the same tokens and components the product uses.",
+      "stats": {
+        "tokens": "design tokens",
+        "roles": "color roles",
+        "type": "type roles",
+        "patterns": "documented patterns"
+      },
+      "md": "View the Markdown version"
+    },
+    "sections": {
+      "principles": {
+        "eyebrow": "Principles",
+        "title": "Four decisions that guide everything else",
+        "intro": "When a screen is in doubt, it goes back to these principles."
+      },
+      "tokens": {
+        "eyebrow": "Token architecture",
+        "title": "From a raw value to a screen, in four tiers",
+        "intro": "Tokens follow the tiers of Material 3 and the W3C Design Tokens Community Group. Each tier only uses the previous one: no component uses a loose value."
+      },
+      "color": {
+        "eyebrow": "Color",
+        "title": "Color roles, not loose colors",
+        "intro": "Each color has a Material 3 role and its \"on\" color for the text or icon on top. Values and contrast are read live from the tokens."
+      },
+      "type": {
+        "eyebrow": "Typography",
+        "title": "Inter with the Material 3 scale",
+        "intro": "No text uses a loose size: always a role. Titles use the emphasized variant of M3 Expressive so hierarchy reads well with Inter."
+      },
+      "space": {
+        "eyebrow": "Space, shape and elevation",
+        "title": "An 8 px rhythm and tonal depth",
+        "intro": "Hierarchy comes from surface levels, not shadows. Shadows are only for what floats."
+      },
+      "icons": {
+        "eyebrow": "Icons",
+        "title": "Material Symbols, one style",
+        "intro": "Rounded, weight 300, imported as SVG per icon. Outline by default and filled only for active or selected items."
+      },
+      "motion": {
+        "eyebrow": "Motion",
+        "title": "Purposeful motion, never decorative",
+        "intro": "Material 3 curves, between 150 and 300 ms. With \"reduce motion\" only opacity changes."
+      },
+      "components": {
+        "eyebrow": "Components",
+        "title": "Real pieces of the product",
+        "intro": "Everything you see here is the component Rumbo uses, not a picture."
+      },
+      "patterns": {
+        "eyebrow": "Patterns",
+        "title": "Solutions that repeat across the product",
+        "intro": "Each pattern comes from a recorded decision. The number points to docs/decisions.md."
+      },
+      "a11y": {
+        "eyebrow": "Accessibility",
+        "title": "WCAG 2.2 AA by design",
+        "intro": "Not a review at the end: it lives in the tokens, the components and the automated tests."
+      },
+      "voice": {
+        "eyebrow": "Voice and tone",
+        "title": "Professional, clear and warm",
+        "intro": "Neutral Latin American Spanish with informal \"tú\" across the product, and US English."
+      },
+      "app": {
+        "eyebrow": "In the product",
+        "title": "How the app is put together",
+        "intro": "The design system is one more layer of the architecture: screens use it and never decide on their own."
+      }
+    },
+    "principles": [
+      {
+        "title": "Clarity over decoration",
+        "body": "Strong hierarchy, one idea per block and a single main button per region. Richness comes from data and composition."
+      },
+      {
+        "title": "Tonal depth, not shadows",
+        "body": "White cards stand out from the gray page by surface and border. No gradients, no shadows at rest."
+      },
+      {
+        "title": "Accessible by default",
+        "body": "AA contrast checked by tests, focus always visible, states with icon and text, and an alternative to every gesture."
+      },
+      {
+        "title": "Tool density",
+        "body": "Built for long hours: dense information, an 8 px rhythm, tabular figures and nothing that distracts."
+      }
+    ],
+    "tiers": {
+      "ref": {
+        "title": "1 · Reference",
+        "items": [
+          [
+            "Raw values",
+            "hex, rem, ms, M3 curves"
+          ],
+          [
+            "--md-ref-typeface",
+            "Inter, hosted in the project"
+          ]
+        ]
+      },
+      "sys": {
+        "title": "2 · System",
+        "items": [
+          [
+            "--md-sys-color-*",
+            "M3 roles and states"
+          ],
+          [
+            "--role-* · --chart-*",
+            "people and charts"
+          ],
+          [
+            "--space-* · --elevation-*",
+            "8 px rhythm, 2 shadows"
+          ],
+          [
+            "--md-sys-motion-*",
+            "curves and durations"
+          ]
+        ]
+      },
+      "theme": {
+        "title": "3 · Tailwind theme",
+        "items": [
+          [
+            "@theme inline",
+            "no default palette or radii"
+          ],
+          [
+            "Utilities",
+            "bg-primary, text-title-medium"
+          ]
+        ]
+      },
+      "comp": {
+        "title": "4 · Components",
+        "items": [
+          [
+            "cva variants",
+            "Button, StatusPill, KpiCard"
+          ],
+          [
+            "Screens",
+            "24 screens by role"
+          ]
+        ]
+      },
+      "qa": {
+        "title": "Quality checks",
+        "items": [
+          [
+            "tokens.test.ts",
+            "WCAG 2.2 AA contrast"
+          ],
+          [
+            "This site and /styleguide",
+            "living documentation"
+          ]
+        ]
+      },
+      "arrow": "used by",
+      "caption": "Raw values only define semantic roles; Tailwind turns them into utilities and components combine them into variants. In green, the checks that verify and document the system."
+    },
+    "layers": {
+      "ui": {
+        "title": "Presentation",
+        "items": [
+          [
+            "Screens by role",
+            "G, A, J, N and S"
+          ],
+          [
+            "Design system",
+            "tokens and components"
+          ],
+          [
+            "Router · i18n · Motion",
+            "routes, languages, motion"
+          ]
+        ]
+      },
+      "state": {
+        "title": "State",
+        "items": [
+          [
+            "Demo data",
+            "Zustand"
+          ],
+          [
+            "Simulated session",
+            "role, MFA, devices"
+          ],
+          [
+            "Preferences",
+            "interface"
+          ]
+        ]
+      },
+      "domain": {
+        "title": "Domain",
+        "items": [
+          [
+            "Permissions",
+            "can() · role × action"
+          ],
+          [
+            "Journey",
+            "dates, states, dependencies"
+          ],
+          [
+            "Metrics",
+            "KPIs, alerts"
+          ],
+          [
+            "Access and audit",
+            "requests, events"
+          ],
+          [
+            "Validation",
+            "Zod and masks"
+          ]
+        ]
+      },
+      "data": {
+        "title": "Data",
+        "items": [
+          [
+            "Seed data",
+            "src/data/*.json"
+          ],
+          [
+            "localStorage",
+            "demo data only"
+          ]
+        ]
+      },
+      "links": {
+        "uiState": "reads and dispatches actions",
+        "stateDomain": "applies rules and audits",
+        "uiDomain": "checks rules and permissions",
+        "stateData": "loads and persists"
+      },
+      "caption": "Screens never decide on their own: they check the pure domain rules and the permission matrix. State loads from seed data, is saved in the browser and every sensitive action leaves an audit event."
+    },
+    "color": {
+      "brand": "Brand",
+      "status": "States",
+      "surfaces": "Surfaces and neutrals",
+      "people": "Color by person role",
+      "charts": "Chart series",
+      "base": "Base",
+      "container": "Container",
+      "contrastOn": "Contrast with its text",
+      "aa": "AA",
+      "aaa": "AAA",
+      "fail": "Fails",
+      "roles": {
+        "primary": "Primary · petrol",
+        "secondary": "Secondary · muted petrol",
+        "tertiary": "Tertiary · plum",
+        "error": "Error",
+        "success": "Success",
+        "warning": "Warning",
+        "info": "Info"
+      },
+      "uses": {
+        "primary": "Main action, active navigation, focus",
+        "secondary": "Tonal buttons, selected filters",
+        "tertiary": "Accents: achievements, highlights, second series",
+        "error": "Overdue, locked, destructive",
+        "success": "Done, on track",
+        "warning": "Due soon, pending, blocked",
+        "info": "Notices and help"
+      },
+      "surfaceNames": {
+        "surface": "Page background",
+        "surface-container-lowest": "Cards",
+        "surface-container": "Navigation, headers",
+        "surface-container-high": "Row hover",
+        "on-surface": "Main text",
+        "on-surface-variant": "Secondary text",
+        "outline": "Field borders (3:1)",
+        "outline-variant": "Decorative dividers",
+        "inverse-surface": "Tooltips and toasts"
+      },
+      "peopleNames": {
+        "hr": "HR",
+        "manager": "Direct manager",
+        "hire": "New hire",
+        "it": "IT"
+      },
+      "peopleNote": "They identify people and their roles; they never signal states.",
+      "chartsNote": "In this order. All reach at least 3:1 on white; status colors are never used as a series.",
+      "rule": "Color is never the only signal: every state also has an icon and text."
+    },
+    "type": {
+      "role": "Role",
+      "sample": "Sample",
+      "spec": "Size / line height · weight",
+      "use": "Use",
+      "samples": {
+        "display-small": "86 %",
+        "headline-small": "Good afternoon, Carla",
+        "title-large": "Journey progress",
+        "title-medium": "30-day check-in",
+        "title-small": "First guided analysis",
+        "body-large": "Everyone knows what to do, with whom and by when.",
+        "body-medium": "You completed 13 of 18 tasks. 5 to go.",
+        "body-small": "Format DD/MM/YYYY, for example: 10/13/2026",
+        "label-large": "Save template",
+        "label-medium": "Work email (required)",
+        "label-small": "3"
+      },
+      "uses": {
+        "display-small": "KPIs from 1280 px",
+        "headline-small": "Page title (h1)",
+        "title-large": "Section title (h2)",
+        "title-medium": "Cards and dialogs (h3)",
+        "title-small": "Subtitles, table headers",
+        "body-large": "Long reading, mobile base",
+        "body-medium": "Desktop base, cells",
+        "body-small": "Field help, metadata",
+        "label-large": "Buttons, tabs, navigation",
+        "label-medium": "Labels, chips, pills",
+        "label-small": "Counters and badges only"
+      },
+      "note": "Tabular figures in KPIs, tables and dates. At least 12 px for reading; 11 px only in badges."
+    },
+    "space": {
+      "spacing": "Spacing",
+      "shape": "Shape",
+      "elevation": "Elevation",
+      "tokens": {
+        "space-gutter": "Page margin on mobile",
+        "space-bento-gap": "Between cards",
+        "space-card-padding": "Inside cards",
+        "space-section": "Between sections"
+      },
+      "rhythm": "8 px rhythm: 32 px between sections and 8 to 16 px inside each one.",
+      "shapes": {
+        "xs": "Extra small",
+        "sm": "Small · buttons",
+        "md": "Medium · rows, fields",
+        "lg": "Large · menus",
+        "xl": "Extra large · cards",
+        "full": "Full · chips and pills"
+      },
+      "levels": {
+        "tonal": "Tonal · cards at rest",
+        "e1": "Level 1 · menus, popovers, tooltips",
+        "e2": "Level 2 · dialogs, toasts, dragging"
+      },
+      "shapeNote": "One shape for the whole product: soft corners, never round buttons."
+    },
+    "icons": {
+      "rules": [
+        "Rounded, weight 300",
+        "20 px in dense UI, 24 px in navigation",
+        "Filled only for active or selected",
+        "Decorative with aria-hidden; icon-only buttons with a name and tooltip"
+      ],
+      "outline": "Outline",
+      "filled": "Filled"
+    },
+    "motion": {
+      "curves": {
+        "standard": "Standard · state changes",
+        "decelerate": "Emphasized decelerate · entering",
+        "accelerate": "Emphasized accelerate · exiting"
+      },
+      "durations": "Durations",
+      "short": "Short",
+      "medium": "Medium",
+      "long": "Long",
+      "replay": "Replay the staggered entrance",
+      "uses": [
+        "Completed tasks: the check draws itself",
+        "Progress bars: fill when they appear",
+        "KPIs: the number counts up",
+        "Lists: staggered entrance, 50 ms apart",
+        "Dialogs, menus and toasts: short fade and scale"
+      ],
+      "reduced": "With \"reduce motion\" or prefers-reduced-motion, only opacity changes."
+    },
+    "components": {
+      "buttons": "Buttons",
+      "buttonsNote": "Only one filled per region. Sizes: XS 32 px (dense rows), S 40 px (default), M 56 px (main action of one-step screens on mobile).",
+      "filled": "Save template",
+      "tonal": "Save draft",
+      "outlined": "Cancel",
+      "text": "View details",
+      "danger": "Delete task",
+      "disabled": "Publish",
+      "disabledReason": "Fill in the template name to publish",
+      "sizes": "Sizes",
+      "xs": "XS",
+      "s": "S",
+      "m": "M",
+      "fields": "Form fields",
+      "fieldsNote": "Visible label on top, helper text below with format and example, and the error where the helper is.",
+      "email": "Work email",
+      "emailHelp": "Your work email, for example: first.last@nortia.demo",
+      "date": "Start date",
+      "dateHelp": "Format DD/MM/YYYY, for example: 10/13/2026",
+      "dateError": "Enter a date in the DD/MM/YYYY format",
+      "chips": "Chips and status pills",
+      "chipsNote": "Pills for states, always with icon and text; chips for context.",
+      "statuses": {
+        "done": "Done",
+        "progress": "In progress",
+        "soon": "Due soon",
+        "overdue": "Overdue",
+        "neutral": "Pending"
+      },
+      "kpi": "KPI cards",
+      "kpiNote": "Icon and sparkline on top, label, number with its caption next to it and the change below.",
+      "kpiActive": "Active hires",
+      "kpiActiveCaption": "And 2 starting soon",
+      "kpiOnTime": "Tasks on time",
+      "kpiOnTimeTrend": "+4 % in 30 days",
+      "header": "Record header",
+      "headerNote": "Person with photo, chips with icon, a single h1 and a line saying what the screen is for.",
+      "headerTitle": "30-day check-in",
+      "headerDesc": "Review the stage milestones with Sofía.",
+      "headerDue": "Due on 11/12/2026",
+      "headerJob": "Junior Data Analyst",
+      "list": "List rows",
+      "listNote": "The whole row is the link, no underline. Icon on the left, title and facts in the middle, status on the right.",
+      "row1": "Read the Nortia culture handbook",
+      "row1Meta": "Reading · Your turn",
+      "row2": "First guided analysis",
+      "row2Meta": "Task · Your turn",
+      "footer": "Form footer",
+      "footerNote": "Actions sit at the bottom of the form card, with an optional note on the left.",
+      "footerNoteText": "Only your direct manager and HR see it.",
+      "send": "Send self-review"
+    },
+    "patterns": [
+      [
+        "D-61",
+        "Journey timeline",
+        "One segment per stage, the \"Today\" marker in plum and the conclusion on top: \"On track\" or \"N overdue tasks\"."
+      ],
+      [
+        "D-65",
+        "Standard lists and details",
+        "The whole row is the link; in details, label and value on the same row."
+      ],
+      [
+        "D-67",
+        "Greeting on each role home",
+        "Date, greeting with the name in primary and chips with the context that needs attention."
+      ],
+      [
+        "D-68",
+        "KPIs without gaps",
+        "As many cards per row as fit; no row with a single card."
+      ],
+      [
+        "D-69",
+        "People with color",
+        "Each role has its color: a ring on the photo or initials on its container."
+      ],
+      [
+        "D-83",
+        "References as chips",
+        "When a sentence names another section or control, the name is a chip that takes you there."
+      ],
+      [
+        "D-85",
+        "Anchored actions",
+        "Buttons sit in a footer inside the form card, never loose."
+      ],
+      [
+        "D-87",
+        "Three-line alerts",
+        "Person, what is happening with its icon, and the detail that explains it."
+      ],
+      [
+        "D-90",
+        "Verify before restoring",
+        "IT confirms identity with data on record, never with the request data."
+      ],
+      [
+        "D-94",
+        "One record header",
+        "The same header on every detail screen."
+      ]
+    ],
+    "a11y": [
+      [
+        "AA contrast",
+        "Checked by tests for every token pair."
+      ],
+      [
+        "Visible focus",
+        "2 px primary ring, never hidden by the top bar or toasts."
+      ],
+      [
+        "Forms",
+        "Visible label, helper with example, no errors while you type."
+      ],
+      [
+        "Keyboard",
+        "Everything works with the keyboard; drag and drop has an alternative."
+      ],
+      [
+        "Charts",
+        "Title, text summary and a table for screen readers."
+      ],
+      [
+        "Reflow",
+        "No horizontal scroll at 320 px and at 200 % zoom."
+      ]
+    ],
+    "voice": {
+      "principles": [
+        [
+          "Clarity first",
+          "Short sentences and action verbs: \"Save template\", not \"OK\"."
+        ],
+        [
+          "No blame",
+          "\"We could not verify the code. Check that it has 6 digits.\""
+        ],
+        [
+          "Inclusive",
+          "\"Welcome aboard\", never gendered forms."
+        ],
+        [
+          "Tone by moment",
+          "Warm in the journey, neutral in panels, serious in lockouts and privacy."
+        ]
+      ],
+      "use": "Use",
+      "avoid": "Avoid",
+      "vocab": [
+        [
+          "Sign in",
+          "Log in, login"
+        ],
+        [
+          "Email",
+          "E-mail, mail"
+        ],
+        [
+          "Password",
+          "Passcode"
+        ],
+        [
+          "Panel",
+          "Dashboard (in the UI)"
+        ],
+        [
+          "Onboarding journey",
+          "Onboarding flow"
+        ],
+        [
+          "Direct manager",
+          "Supervisor, boss"
+        ],
+        [
+          "Template",
+          "Model"
+        ],
+        [
+          "Mobile",
+          "Cell phone"
+        ]
+      ]
+    },
+    "footer": {
+      "by": "Design and development: Lourdes Pedaci, Experience Designer (Learning and UX/UI).",
+      "md": "Markdown documentation",
+      "repo": "Repository",
+      "demo": "Back to Rumbo",
+      "credits": "Icons: Material Symbols (Apache 2.0). Typeface: Inter (SIL OFL). People photos: Magnific, licensed."
+    }
   }
 }

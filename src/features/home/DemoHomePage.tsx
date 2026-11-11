@@ -1,7 +1,7 @@
 import { type ReactNode, type RefObject, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate } from 'react-router';
-import { CASE_STUDY_URL, DESIGN_SYSTEM_URL, DOCS_URL, LINKEDIN_URL, PORTFOLIO_URL } from '@/app/links';
+import { Link, Navigate } from 'react-router';
+import { CASE_STUDY_URL, DESIGN_SYSTEM_PATH, DOCS_URL, LINKEDIN_URL, PORTFOLIO_URL } from '@/app/links';
 import { LinkedInMark } from '@/components/brand/LinkedInMark';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
@@ -316,11 +316,10 @@ export function DemoHomePage() {
                     </a>
                   </li>
                   <li>
-                    <a href={DESIGN_SYSTEM_URL} target="_blank" rel="noopener noreferrer" className={FOOTER_LINK}>
+                    <Link to={DESIGN_SYSTEM_PATH} className={FOOTER_LINK}>
                       {t('home.footer.designSystem')}
-                      <Icon name="open_in_new" size={16} className="text-on-surface-variant" />
-                      <span className="sr-only"> {t('home.newTab')}</span>
-                    </a>
+                      <Icon name="arrow_forward" size={16} className="text-on-surface-variant" />
+                    </Link>
                   </li>
                 </FooterColumn>
                 <FooterColumn id="footer-demo" title={t('home.footer.demo')}>

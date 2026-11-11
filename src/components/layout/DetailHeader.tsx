@@ -37,6 +37,8 @@ interface DetailHeaderProps {
   chipsLabel?: string;
   title: string;
   description?: ReactNode;
+  /** h1 on detail screens; a lower level only when the header is shown as a specimen (design system site). */
+  titleAs?: 'h1' | 'h2' | 'h3';
 }
 
 /**
@@ -44,7 +46,14 @@ interface DetailHeaderProps {
  * the person with photo and name (when there is one), the key facts as chips with icon and
  * text, then the single h1 and a line that says what this screen is for.
  */
-export function DetailHeader({ person, chips, chipsLabel, title, description }: DetailHeaderProps) {
+export function DetailHeader({
+  person,
+  chips,
+  chipsLabel,
+  title,
+  description,
+  titleAs: Title = 'h1',
+}: DetailHeaderProps) {
   const chipList = chips && (
     <ul aria-label={chipsLabel} className="flex flex-wrap items-center gap-2">
       {chips}
@@ -64,7 +73,7 @@ export function DetailHeader({ person, chips, chipsLabel, title, description }: 
         chipList
       )}
       <div className="flex flex-col gap-1">
-        <h1 className="text-headline-small text-balance text-on-surface">{title}</h1>
+        <Title className="text-headline-small text-balance text-on-surface">{title}</Title>
         {description && <p className="text-body-large text-pretty text-on-surface-variant">{description}</p>}
       </div>
     </header>

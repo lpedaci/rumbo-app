@@ -1687,5 +1687,605 @@
       "mfa_issue": "No recibe el código de verificación",
       "other": "Otro motivo"
     }
+  },
+  "designSystem": {
+    "title": "Sistema de diseño",
+    "docTitle": "Sistema de diseño de Rumbo",
+    "skip": "Saltar al contenido",
+    "nav": {
+      "label": "Secciones del sistema de diseño",
+      "foundations": "Fundamentos",
+      "components": "Componentes",
+      "patterns": "Patrones",
+      "guidelines": "Pautas",
+      "demo": "Ver la demo",
+      "menu": "Secciones",
+      "onThisPage": "En esta página"
+    },
+    "hero": {
+      "eyebrow": "Sistema de diseño · Material Design 3 personalizado",
+      "title": "Un lenguaje para trabajar muchas horas sin cansar la vista",
+      "highlight": "sin cansar la vista",
+      "intro": "Rumbo es una herramienta de trabajo para empresas: densa en información, clara en jerarquía y accesible desde el diseño. Este sitio reúne sus fundamentos, componentes y patrones, construidos con los mismos tokens y componentes que usa el producto.",
+      "stats": {
+        "tokens": "tokens de diseño",
+        "roles": "roles de color",
+        "type": "roles tipográficos",
+        "patterns": "patrones documentados"
+      },
+      "md": "Ver la versión en Markdown"
+    },
+    "sections": {
+      "principles": {
+        "eyebrow": "Principios",
+        "title": "Cuatro decisiones que guían todo lo demás",
+        "intro": "Cuando una pantalla duda, vuelve a estos principios."
+      },
+      "tokens": {
+        "eyebrow": "Arquitectura de tokens",
+        "title": "De un valor crudo a una pantalla, en cuatro niveles",
+        "intro": "Los tokens siguen los niveles de Material 3 y del W3C Design Tokens Community Group. Cada nivel solo usa el anterior: ningún componente usa un valor suelto."
+      },
+      "color": {
+        "eyebrow": "Color",
+        "title": "Roles de color, no colores sueltos",
+        "intro": "Cada color tiene un rol de Material 3 y su color \"on\" para el texto o el ícono que va encima. Los valores y el contraste se leen en vivo desde los tokens."
+      },
+      "type": {
+        "eyebrow": "Tipografía",
+        "title": "Inter con la escala de Material 3",
+        "intro": "Ningún texto usa un tamaño suelto: siempre un rol. Los títulos usan la variante enfatizada de M3 Expressive para que la jerarquía se lea con Inter."
+      },
+      "space": {
+        "eyebrow": "Espacio, forma y elevación",
+        "title": "Ritmo de 8 px y profundidad tonal",
+        "intro": "La jerarquía se marca con los niveles de superficie, no con sombras. Las sombras quedan para lo que flota."
+      },
+      "icons": {
+        "eyebrow": "Íconos",
+        "title": "Material Symbols, un solo estilo",
+        "intro": "Rounded, peso 300, en SVG importado por ícono. Contorno por defecto y relleno solo para lo activo o seleccionado."
+      },
+      "motion": {
+        "eyebrow": "Movimiento",
+        "title": "Animación con intención, nunca decorativa",
+        "intro": "Curvas de Material 3, entre 150 y 300 ms. Con \"reducir animaciones\" solo cambia la opacidad."
+      },
+      "components": {
+        "eyebrow": "Componentes",
+        "title": "Piezas reales del producto",
+        "intro": "Todo lo que ves acá es el componente que usa Rumbo, no una imagen."
+      },
+      "patterns": {
+        "eyebrow": "Patrones",
+        "title": "Soluciones que se repiten en todo el producto",
+        "intro": "Cada patrón nació de una decisión registrada. El número remite a docs/decisions.md."
+      },
+      "a11y": {
+        "eyebrow": "Accesibilidad",
+        "title": "WCAG 2.2 AA desde el diseño",
+        "intro": "No es una revisión al final: está en los tokens, en los componentes y en las pruebas automáticas."
+      },
+      "voice": {
+        "eyebrow": "Voz y tono",
+        "title": "Profesional, clara y cercana",
+        "intro": "Español latinoamericano neutro, con tuteo en todo el producto. Como una persona de RRHH que te recibe bien el primer día."
+      },
+      "app": {
+        "eyebrow": "En el producto",
+        "title": "Cómo se arma la aplicación",
+        "intro": "El sistema de diseño es una capa más de la arquitectura: las pantallas lo usan y nunca deciden por su cuenta."
+      }
+    },
+    "principles": [
+      {
+        "title": "Claridad antes que decoración",
+        "body": "Jerarquía fuerte, una idea por bloque y un solo botón principal por región. La riqueza viene de los datos y la composición."
+      },
+      {
+        "title": "Profundidad tonal, no sombras",
+        "body": "Las tarjetas blancas se despegan del fondo gris por superficie y borde. Sin degradés, sin sombras en reposo."
+      },
+      {
+        "title": "Accesible por defecto",
+        "body": "Contraste AA verificado por test, foco siempre visible, estados con ícono y texto, y alternativa a cada gesto."
+      },
+      {
+        "title": "Densidad de herramienta",
+        "body": "Pensado para trabajar muchas horas: información densa, ritmo de 8 px, cifras tabulares y nada que distraiga."
+      }
+    ],
+    "tiers": {
+      "ref": {
+        "title": "1 · Referencia",
+        "items": [
+          [
+            "Valores crudos",
+            "hex, rem, ms, curvas de M3"
+          ],
+          [
+            "--md-ref-typeface",
+            "Inter, alojada en el proyecto"
+          ]
+        ]
+      },
+      "sys": {
+        "title": "2 · Sistema",
+        "items": [
+          [
+            "--md-sys-color-*",
+            "roles de M3 y estados"
+          ],
+          [
+            "--role-* · --chart-*",
+            "personas y gráficos"
+          ],
+          [
+            "--space-* · --elevation-*",
+            "ritmo de 8 px y 2 sombras"
+          ],
+          [
+            "--md-sys-motion-*",
+            "curvas y duraciones"
+          ]
+        ]
+      },
+      "theme": {
+        "title": "3 · Tema de Tailwind",
+        "items": [
+          [
+            "@theme inline",
+            "sin paleta ni radios por defecto"
+          ],
+          [
+            "Utilidades",
+            "bg-primary, text-title-medium"
+          ]
+        ]
+      },
+      "comp": {
+        "title": "4 · Componentes",
+        "items": [
+          [
+            "Variantes con cva",
+            "Button, StatusPill, KpiCard"
+          ],
+          [
+            "Pantallas",
+            "24 pantallas por rol"
+          ]
+        ]
+      },
+      "qa": {
+        "title": "Control de calidad",
+        "items": [
+          [
+            "tokens.test.ts",
+            "contraste WCAG 2.2 AA"
+          ],
+          [
+            "Este sitio y /styleguide",
+            "documentación viva"
+          ]
+        ]
+      },
+      "arrow": "se usa en",
+      "caption": "Los valores crudos solo definen roles semánticos; Tailwind los convierte en utilidades y los componentes los combinan en variantes. En verde, los controles que verifican y documentan el sistema."
+    },
+    "layers": {
+      "ui": {
+        "title": "Presentación",
+        "items": [
+          [
+            "Pantallas por rol",
+            "G, A, J, N y S"
+          ],
+          [
+            "Sistema de diseño",
+            "tokens y componentes"
+          ],
+          [
+            "Router · i18n · Motion",
+            "rutas, idiomas, animación"
+          ]
+        ]
+      },
+      "state": {
+        "title": "Estado",
+        "items": [
+          [
+            "Datos de la demo",
+            "Zustand"
+          ],
+          [
+            "Sesión simulada",
+            "rol, MFA, dispositivos"
+          ],
+          [
+            "Preferencias",
+            "interfaz"
+          ]
+        ]
+      },
+      "domain": {
+        "title": "Dominio",
+        "items": [
+          [
+            "Permisos",
+            "can() · rol × acción"
+          ],
+          [
+            "Recorrido",
+            "fechas, estados, dependencias"
+          ],
+          [
+            "Métricas",
+            "KPIs, alertas"
+          ],
+          [
+            "Accesos y auditoría",
+            "solicitudes, eventos"
+          ],
+          [
+            "Validación",
+            "Zod y máscaras"
+          ]
+        ]
+      },
+      "data": {
+        "title": "Datos",
+        "items": [
+          [
+            "Datos semilla",
+            "src/data/*.json"
+          ],
+          [
+            "localStorage",
+            "solo datos de demo"
+          ]
+        ]
+      },
+      "links": {
+        "uiState": "lee y dispara acciones",
+        "stateDomain": "aplica reglas y audita",
+        "uiDomain": "consulta reglas y permisos",
+        "stateData": "carga y persiste"
+      },
+      "caption": "Las pantallas nunca deciden por su cuenta: consultan las reglas puras del dominio y la matriz de permisos. El estado se carga desde los datos semilla, se guarda en el navegador y cada acción sensible deja un evento de auditoría."
+    },
+    "color": {
+      "brand": "Marca",
+      "status": "Estados",
+      "surfaces": "Superficies y neutros",
+      "people": "Color por rol de persona",
+      "charts": "Series de gráficos",
+      "base": "Base",
+      "container": "Contenedor",
+      "contrastOn": "Contraste con su texto",
+      "aa": "AA",
+      "aaa": "AAA",
+      "fail": "No cumple",
+      "roles": {
+        "primary": "Primary · petróleo",
+        "secondary": "Secondary · petróleo apagado",
+        "tertiary": "Tertiary · ciruela",
+        "error": "Error",
+        "success": "Success",
+        "warning": "Warning",
+        "info": "Info"
+      },
+      "uses": {
+        "primary": "Acción principal, navegación activa, foco",
+        "secondary": "Botones tonales, filtros seleccionados",
+        "tertiary": "Acentos: logros, destacados, segunda serie",
+        "error": "Vencidas, bloqueos, destructivo",
+        "success": "Completadas, al día",
+        "warning": "Por vencer, pendientes, bloqueadas",
+        "info": "Avisos y ayuda"
+      },
+      "surfaceNames": {
+        "surface": "Fondo de la página",
+        "surface-container-lowest": "Tarjetas",
+        "surface-container": "Navegación, encabezados",
+        "surface-container-high": "Hover de filas",
+        "on-surface": "Texto principal",
+        "on-surface-variant": "Texto secundario",
+        "outline": "Bordes de campos (3:1)",
+        "outline-variant": "Divisores decorativos",
+        "inverse-surface": "Tooltips y toasts"
+      },
+      "peopleNames": {
+        "hr": "RRHH",
+        "manager": "Jefe directo",
+        "hire": "Nuevo ingreso",
+        "it": "Sistemas"
+      },
+      "peopleNote": "Identifican a las personas y sus roles; nunca indican estados.",
+      "chartsNote": "En este orden. Todas tienen al menos 3:1 contra el blanco; los colores de estado nunca se usan como serie.",
+      "rule": "El color nunca es la única señal: cada estado lleva además ícono y texto."
+    },
+    "type": {
+      "role": "Rol",
+      "sample": "Ejemplo",
+      "spec": "Tamaño / interlineado · peso",
+      "use": "Uso",
+      "samples": {
+        "display-small": "86 %",
+        "headline-small": "Buenas tardes, Carla",
+        "title-large": "Avance de los recorridos",
+        "title-medium": "Check-in de 30 días",
+        "title-small": "Primer análisis guiado",
+        "body-large": "Cada persona sabe qué hacer, con quién y para cuándo.",
+        "body-medium": "Completaste 13 de 18 tareas. Te faltan 5 para terminar.",
+        "body-small": "Formato DD/MM/AAAA, por ejemplo: 13/10/2026",
+        "label-large": "Guardar plantilla",
+        "label-medium": "Correo de trabajo (obligatorio)",
+        "label-small": "3"
+      },
+      "uses": {
+        "display-small": "KPIs desde 1280 px",
+        "headline-small": "Título de página (h1)",
+        "title-large": "Título de sección (h2)",
+        "title-medium": "Tarjetas y modales (h3)",
+        "title-small": "Subtítulos, encabezados de tabla",
+        "body-large": "Lectura larga, base en mobile",
+        "body-medium": "Base en desktop, celdas",
+        "body-small": "Ayuda de campos, metadatos",
+        "label-large": "Botones, pestañas, navegación",
+        "label-medium": "Etiquetas, chips, píldoras",
+        "label-small": "Solo contadores e insignias"
+      },
+      "note": "Cifras tabulares en KPIs, tablas y fechas. Mínimo 12 px para leer; 11 px solo en insignias."
+    },
+    "space": {
+      "spacing": "Espaciado",
+      "shape": "Forma",
+      "elevation": "Elevación",
+      "tokens": {
+        "space-gutter": "Margen de página en mobile",
+        "space-bento-gap": "Entre tarjetas",
+        "space-card-padding": "Dentro de las tarjetas",
+        "space-section": "Entre secciones"
+      },
+      "rhythm": "Ritmo de 8 px: 32 px entre secciones y de 8 a 16 px dentro de cada una.",
+      "shapes": {
+        "xs": "Extra small",
+        "sm": "Small · botones",
+        "md": "Medium · filas, campos",
+        "lg": "Large · menús",
+        "xl": "Extra large · tarjetas",
+        "full": "Full · chips y píldoras"
+      },
+      "levels": {
+        "tonal": "Tonal · tarjetas en reposo",
+        "e1": "Nivel 1 · menús, popovers, tooltips",
+        "e2": "Nivel 2 · modales, toasts, arrastre"
+      },
+      "shapeNote": "Una sola forma para todo el producto: esquinas suaves, nunca botones en círculo."
+    },
+    "icons": {
+      "rules": [
+        "Rounded, peso 300",
+        "20 px en interfaz densa, 24 px en navegación",
+        "Relleno solo para lo activo o seleccionado",
+        "Decorativos con aria-hidden; botones de solo ícono con nombre y tooltip"
+      ],
+      "outline": "Contorno",
+      "filled": "Relleno"
+    },
+    "motion": {
+      "curves": {
+        "standard": "Estándar · cambios de estado",
+        "decelerate": "Enfatizada desacelerada · entradas",
+        "accelerate": "Enfatizada acelerada · salidas"
+      },
+      "durations": "Duraciones",
+      "short": "Corta",
+      "medium": "Media",
+      "long": "Larga",
+      "replay": "Reproducir la entrada escalonada",
+      "uses": [
+        "Tareas completadas: el check se dibuja",
+        "Barras de progreso: se llenan al entrar",
+        "KPIs: el número cuenta hasta su valor",
+        "Listas: entran escalonadas, 50 ms entre cada una",
+        "Modales, menús y toasts: fundido y escala corta"
+      ],
+      "reduced": "Con \"reducir animaciones\" o prefers-reduced-motion, solo cambia la opacidad."
+    },
+    "components": {
+      "buttons": "Botones",
+      "buttonsNote": "Uno solo filled por región. Tamaños: XS 32 px (filas densas), S 40 px (por defecto), M 56 px (acción principal de pantallas de un paso en mobile).",
+      "filled": "Guardar plantilla",
+      "tonal": "Guardar borrador",
+      "outlined": "Cancelar",
+      "text": "Ver detalle",
+      "danger": "Eliminar tarea",
+      "disabled": "Publicar",
+      "disabledReason": "Completa el nombre de la plantilla para publicar",
+      "sizes": "Tamaños",
+      "xs": "XS",
+      "s": "S",
+      "m": "M",
+      "fields": "Campos de formulario",
+      "fieldsNote": "Etiqueta visible arriba, texto de ayuda debajo con formato y ejemplo, y el error en el mismo lugar que la ayuda.",
+      "email": "Correo de trabajo",
+      "emailHelp": "Tu correo de trabajo, por ejemplo: nombre.apellido@nortia.demo",
+      "date": "Fecha de ingreso",
+      "dateHelp": "Formato DD/MM/AAAA, por ejemplo: 13/10/2026",
+      "dateError": "Ingresa una fecha con el formato DD/MM/AAAA",
+      "chips": "Chips y píldoras de estado",
+      "chipsNote": "Píldoras para estados, siempre con ícono y texto; chips para datos de contexto.",
+      "statuses": {
+        "done": "Hecha",
+        "progress": "En curso",
+        "soon": "Por vencer",
+        "overdue": "Vencida",
+        "neutral": "Pendiente"
+      },
+      "kpi": "Tarjetas de KPI",
+      "kpiNote": "Ícono y sparkline arriba, etiqueta, número con su frase al lado y la variación debajo.",
+      "kpiActive": "Ingresos activos",
+      "kpiActiveCaption": "Y 2 por ingresar",
+      "kpiOnTime": "Tareas a tiempo",
+      "kpiOnTimeTrend": "+4 % en 30 días",
+      "header": "Encabezado de ficha",
+      "headerNote": "Persona con foto, chips con ícono, un solo h1 y una línea que dice para qué es la pantalla.",
+      "headerTitle": "Check-in de 30 días",
+      "headerDesc": "Evalúa los hitos de la etapa con Sofía.",
+      "headerDue": "Vence el 12/11/2026",
+      "headerJob": "Analista de Datos Jr.",
+      "list": "Filas de lista",
+      "listNote": "Toda la fila es el enlace, sin subrayado. A la izquierda el ícono, al medio título y datos, a la derecha el estado.",
+      "row1": "Leer el manual de cultura de Nortia",
+      "row1Meta": "Lectura · Te toca a ti",
+      "row2": "Primer análisis guiado",
+      "row2Meta": "Tarea · Te toca a ti",
+      "footer": "Pie de formulario",
+      "footerNote": "Las acciones van ancladas al pie de la tarjeta, con una nota opcional a la izquierda.",
+      "footerNoteText": "Solo la ven tu jefe directo y RRHH.",
+      "send": "Enviar autoevaluación"
+    },
+    "patterns": [
+      [
+        "D-61",
+        "Línea de tiempo del recorrido",
+        "Un tramo por etapa, el marcador \"Hoy\" en ciruela y la conclusión arriba: \"Vas al día\" o \"Tienes N tareas vencidas\"."
+      ],
+      [
+        "D-65",
+        "Listas y detalles estándar",
+        "Fila completa como enlace; en los detalles, etiqueta y valor en la misma fila."
+      ],
+      [
+        "D-67",
+        "Saludo en el inicio de cada rol",
+        "Fecha, saludo con el nombre en primary y chips con el contexto que pide atención."
+      ],
+      [
+        "D-68",
+        "KPIs sin huecos",
+        "Tantas tarjetas por fila como entren; ninguna fila con una tarjeta sola."
+      ],
+      [
+        "D-69",
+        "Personas con color",
+        "Cada rol tiene su color: anillo en la foto o iniciales sobre su contenedor."
+      ],
+      [
+        "D-83",
+        "Referencias como chips",
+        "Cuando una frase nombra otra sección o control, el nombre va en un chip que lleva ahí."
+      ],
+      [
+        "D-85",
+        "Acciones ancladas",
+        "Los botones van en un pie dentro de la tarjeta del formulario, nunca sueltos."
+      ],
+      [
+        "D-87",
+        "Alertas en tres líneas",
+        "Persona, qué pasa con su ícono y el detalle que lo explica."
+      ],
+      [
+        "D-90",
+        "Verificación antes de restablecer",
+        "Sistemas confirma la identidad con datos de la ficha, nunca con los de la solicitud."
+      ],
+      [
+        "D-94",
+        "Encabezado de ficha único",
+        "El mismo encabezado en todas las fichas de detalle."
+      ]
+    ],
+    "a11y": [
+      [
+        "Contraste AA",
+        "Verificado por test en cada combinación de tokens."
+      ],
+      [
+        "Foco visible",
+        "Anillo primary de 2 px, nunca tapado por la barra ni por los toasts."
+      ],
+      [
+        "Formularios",
+        "Etiqueta visible, ayuda con ejemplo, errores que no aparecen mientras escribes."
+      ],
+      [
+        "Teclado",
+        "Todo se usa con teclado; arrastrar y soltar tiene alternativa."
+      ],
+      [
+        "Gráficos",
+        "Título, resumen en texto y tabla para lectores de pantalla."
+      ],
+      [
+        "Reflow",
+        "Sin desplazamiento horizontal a 320 px y con zoom al 200 %."
+      ]
+    ],
+    "voice": {
+      "principles": [
+        [
+          "Claridad primero",
+          "Frases cortas y verbos de acción: \"Guardar plantilla\", no \"Aceptar\"."
+        ],
+        [
+          "Sin culpar",
+          "\"No pudimos verificar el código. Revisa que tenga 6 dígitos.\""
+        ],
+        [
+          "Inclusivo sin marcas",
+          "\"Te damos la bienvenida\", nunca \"bienvenido/a\"."
+        ],
+        [
+          "Tono según el momento",
+          "Cálido en el recorrido, neutro en paneles, serio en bloqueos y privacidad."
+        ]
+      ],
+      "use": "Usar",
+      "avoid": "Evitar",
+      "vocab": [
+        [
+          "Iniciar sesión",
+          "Ingresar, loguearse"
+        ],
+        [
+          "Correo",
+          "Mail, email"
+        ],
+        [
+          "Contraseña",
+          "Clave, password"
+        ],
+        [
+          "Panel",
+          "Dashboard"
+        ],
+        [
+          "Recorrido de ingreso",
+          "Onboarding (para el nuevo ingreso)"
+        ],
+        [
+          "Jefe directo",
+          "Manager, supervisor"
+        ],
+        [
+          "Plantilla",
+          "Template"
+        ],
+        [
+          "Celular",
+          "Móvil"
+        ]
+      ]
+    },
+    "footer": {
+      "by": "Diseño y desarrollo: Lourdes Pedaci, Experience Designer (Learning y UX/UI).",
+      "md": "Documentación en Markdown",
+      "repo": "Repositorio",
+      "demo": "Volver a Rumbo",
+      "credits": "Íconos: Material Symbols (Apache 2.0). Tipografía: Inter (SIL OFL). Fotos de personas: Magnific, con licencia."
+    }
   }
 }
