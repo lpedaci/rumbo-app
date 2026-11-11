@@ -1375,5 +1375,286 @@
       "startsIn_one": "Starts in {{count}} day",
       "startsIn_other": "Starts in {{count}} days"
     }
+  },
+  "it": {
+    "status": {
+      "new": "New",
+      "verifying": "Verifying",
+      "resolved": "Resolved",
+      "rejected": "Rejected"
+    },
+    "filters": {
+      "all": "All",
+      "new": "New",
+      "verifying": "Verifying",
+      "resolved": "Resolved",
+      "rejected": "Rejected"
+    },
+    "facts": {
+      "open_one": "{{count}} open request",
+      "open_other": "{{count}} open requests",
+      "locked_one": "{{count}} locked account",
+      "locked_other": "{{count}} locked accounts"
+    },
+    "kpis": {
+      "new": "New requests",
+      "verifying": "Verifying",
+      "locked": "Locked accounts",
+      "resolved": "Resolved"
+    },
+    "kpiCaption": {
+      "new": "Not handled yet",
+      "verifying": "Waiting for an identity check",
+      "locked_one": "{{count}} with an open request",
+      "locked_other": "{{count}} with an open request",
+      "resolved_one": "And {{count}} rejected",
+      "resolved_other": "And {{count}} rejected"
+    },
+    "unknownPerson": "Matches nobody at the company",
+    "columns": {
+      "request": "Request",
+      "person": "Person",
+      "reason": "Reason",
+      "status": "Status"
+    },
+    "requests": {
+      "title": "Access requests",
+      "description": "They come from \"Trouble signing in?\". Open ones first.",
+      "tableLabel": "Access requests",
+      "statusFilter": "Filter by status",
+      "status": "Status",
+      "empty": "No requests yet. They appear here when someone asks for help signing in.",
+      "emptyFiltered": "No requests with this status.",
+      "toSecurity": "Security and audit"
+    },
+    "actions": {
+      "unlock": "Unlock the account",
+      "force_password_reset": "Force a password change",
+      "reset_mfa": "Reset two-step verification"
+    },
+    "actionHelp": {
+      "unlock": "The person signs in again with their current password.",
+      "force_password_reset": "Unlocks the account and asks for a new password at sign-in.",
+      "reset_mfa": "At sign-in, the person links their authenticator app again."
+    },
+    "detail": {
+      "back": "Back to Requests",
+      "subtitle": "{{name}} · {{date}}",
+      "step1": "1. Verify the identity",
+      "step1Help": "Before restoring access, confirm that the person asking is who they say.",
+      "checkLegend": "How you verified it (required)",
+      "checkRequired": "Choose how you verified the identity.",
+      "checks": {
+        "callback": "Call to the registered mobile",
+        "callbackHelp": "Call {{mobile}} from their record and ask for their employee number.",
+        "manager": "Check with the direct manager",
+        "managerHelp": "Confirm with {{name}} that the person asked for help."
+      },
+      "checkNote": "Never use details the person gives in the request: they may be false.",
+      "confirmIdentity": "Confirm identity",
+      "verified": "Identity verified",
+      "verifiedBody": "Identity verified: {{method}}.",
+      "verifiedUnknown": "method not recorded",
+      "verifiedToast": "Identity verified",
+      "notVerified": "The identity was not verified.",
+      "noPersonTitle": "The email matches nobody at the company",
+      "noPersonBody": "Without a registered mobile or direct manager there is no way to verify who is asking. Rejecting is the usual step.",
+      "step2": "2. Restore the access",
+      "outcome": "Outcome",
+      "lockedStep": "Available once you verify the identity.",
+      "actionLegend": "What to do",
+      "suggested": "{{action}} (suggested)",
+      "note": "Note",
+      "noteHelp": "Saved in the audit log, for example: identity confirmed with the direct manager.",
+      "apply": "Apply",
+      "reject": "Reject request",
+      "resolvedToast": "Access restored",
+      "rejectedToast": "Request rejected",
+      "resolvedBy": "By {{name}} · {{date}}",
+      "rejectTitle": "Reject this request?",
+      "rejectBody": "The person will not get access back. The reason is saved in the audit log.",
+      "rejectReason": "Reason (required)",
+      "rejectReasonHelp": "For example: the identity could not be verified.",
+      "rejectReasonRequired": "Write the reason for the rejection.",
+      "rejectConfirm": "Reject request",
+      "request": "Who is asking",
+      "area": "Role",
+      "account": "Account status",
+      "accountLocked": "Locked since {{date}}",
+      "accountActive": "Active, not locked",
+      "failedAttempts_one": "{{count}} failed attempt",
+      "failedAttempts_other": "{{count}} failed attempts",
+      "flagPassword": "Must create a new password at sign-in",
+      "flagMfa": "Must link their authenticator again",
+      "noCheckTitle": "There is no registered data to verify the identity"
+    },
+    "history": {
+      "title": "History",
+      "description": "Audit events of this request and the account.",
+      "anonymous": "Not signed in"
+    },
+    "security": {
+      "title": "Security and audit",
+      "description": "Locked accounts, event log, permissions by role and organization policies.",
+      "tabsLabel": "Security sections",
+      "tabs": {
+        "locked": "Locked accounts",
+        "audit": "Audit log",
+        "permissions": "Permissions",
+        "policies": "Policies"
+      }
+    },
+    "locked": {
+      "title": "Locked accounts",
+      "description": "They lock after 5 failed attempts and only IT unlocks them.",
+      "empty": "No locked accounts.",
+      "attempts_one": "{{count}} attempt",
+      "attempts_other": "{{count}} attempts",
+      "last": "Last: {{date}}",
+      "viewRequest": "View {{id}}",
+      "unlock": "Unlock",
+      "confirmTitle": "Unlock this account?",
+      "confirmBody": "The account {{email}} will be able to sign in again. Do it only if you verified the identity.",
+      "confirmAction": "Unlock account",
+      "unlocked": "Account unlocked"
+    },
+    "audit": {
+      "title": "Audit log",
+      "description": "Sign-ins, access, changes to accounts and content, newest first.",
+      "export": "Export CSV",
+      "exported": "Audit log exported",
+      "filters": {
+        "actor": "User",
+        "allActors": "All",
+        "category": "Type",
+        "allCategories": "All",
+        "range": "Period"
+      },
+      "categories": {
+        "auth": "Session",
+        "access": "Requests",
+        "account": "Accounts",
+        "content": "Content",
+        "demo": "Demo"
+      },
+      "ranges": {
+        "7": "Last 7 days",
+        "30": "Last 30 days",
+        "all": "All"
+      },
+      "results_one": "{{count}} event",
+      "results_other": "{{count}} events",
+      "empty": "No events with these filters.",
+      "more_one": "View {{count}} more event",
+      "more_other": "View {{count}} more events",
+      "columns": {
+        "at": "Date and time",
+        "actor": "User",
+        "action": "Action",
+        "resource": "Resource",
+        "result": "Result",
+        "detail": "Detail"
+      },
+      "results_": {
+        "success": "Success",
+        "failure": "Failed",
+        "denied": "Denied"
+      },
+      "actions": {
+        "auth.login": "Sign-in",
+        "auth.logout": "Sign-out",
+        "auth.login_failed": "Failed sign-in attempt",
+        "auth.account_locked": "Account locked after attempts",
+        "auth.mfa_verified": "Two-step verification passed",
+        "auth.mfa_failed": "Wrong verification code",
+        "auth.mfa_enabled": "Two-step verification turned on",
+        "auth.mfa_disabled": "Two-step verification turned off",
+        "auth.mfa_relinked": "Authenticator linked again",
+        "auth.password_changed": "Password changed",
+        "auth.access_denied": "Access denied",
+        "auth.session_expired": "Session expired after inactivity",
+        "auth.device_forgotten": "Device forgotten",
+        "access_request.create": "Access request created",
+        "access_request.start_verification": "Identity check started",
+        "access_request.verify_identity": "Identity verified",
+        "access_request.resolve": "Request resolved",
+        "access_request.reject": "Request rejected",
+        "account.unlock": "Account unlocked",
+        "account.force_password_reset": "Password change forced",
+        "account.reset_mfa": "Two-step verification reset",
+        "template.create": "Template created",
+        "template.update": "Template updated",
+        "template.delete": "Template deleted",
+        "hire.create": "New hire added",
+        "task.complete": "Task marked as done",
+        "checkin.self_review": "Self-review sent",
+        "checkin.complete": "Check-in completed",
+        "checkin.escalate": "Check-in escalated to HR",
+        "demo.reset": "Demo reset",
+        "demo.switch_role": "Demo role switched",
+        "audit.export": "Audit log exported"
+      }
+    },
+    "permissions": {
+      "title": "Permission matrix",
+      "description": "Generated from permissions.ts: the same rule that routes and buttons apply.",
+      "action": "Action",
+      "none": "No permission",
+      "scopes": {
+        "all": "All",
+        "team": "Their team",
+        "own": "Their own"
+      },
+      "actions": {
+        "workspace_hr": "HR section (panel, hires, templates)",
+        "workspace_team": "Direct manager section (my team)",
+        "workspace_journey": "New hire section (my journey)",
+        "workspace_it": "IT section (access, audit)",
+        "dashboard_view": "View the follow-up panel",
+        "template_view": "View templates and their preview",
+        "template_edit": "Create, duplicate, edit and delete templates",
+        "hire_view": "View hires and their record",
+        "hire_create": "Add a new hire",
+        "task_complete": "Mark a task as done",
+        "checkin_fill": "Run the check-in as manager",
+        "checkin_self_review": "Answer the self-review",
+        "checkin_view_self_review": "Read the hire's self-review",
+        "checkin_view_escalations": "View and handle escalated check-ins",
+        "access_request_view": "View the access request inbox",
+        "access_request_resolve": "Verify identity and resolve requests",
+        "account_unlock": "Unlock accounts",
+        "audit_view": "View and filter the audit log",
+        "audit_export": "Export the audit log to CSV",
+        "security_view": "View policies and the permission matrix",
+        "account_security_own": "View \"My security\"",
+        "demo_switch_role": "Use the demo role selector",
+        "demo_reset": "Reset the demo"
+      }
+    },
+    "policies": {
+      "title": "Organization policies",
+      "description": "Current values. In production they are set in the identity provider.",
+      "mfa": "Two-step verification required",
+      "mfaDetail": "For the other roles it is optional and on by default.",
+      "session": "Sign-out after inactivity",
+      "sessionDetail_one": "The notice appears at minute {{count}}.",
+      "sessionDetail_other": "The notice appears at minute {{count}}.",
+      "minutes_one": "{{count}} minute",
+      "minutes_other": "{{count}} minutes",
+      "lockout": "Account lockout",
+      "attempts_one": "After {{count}} failed attempt",
+      "attempts_other": "After {{count}} failed attempts",
+      "lockoutDetail": "It never unlocks by itself: only IT, after verifying the identity.",
+      "password": "Password",
+      "chars_one": "At least {{count}} character",
+      "chars_other": "At least {{count}} characters",
+      "passwordDetail": "With uppercase, lowercase, a number and a symbol, and different from previous ones."
+    },
+    "outcomes": {
+      "unlock": "Account unlocked",
+      "force_password_reset": "Password change forced",
+      "reset_mfa": "Two-step verification reset",
+      "reject": "Request rejected"
+    }
   }
 }

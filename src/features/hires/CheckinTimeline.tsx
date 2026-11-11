@@ -49,7 +49,7 @@ export function CheckinTimeline({ hire, canSeeSelfReview, canRun }: CheckinTimel
               <Marker state={state} />
               {!last && <span aria-hidden className="w-0.5 flex-1 bg-outline-variant" />}
             </div>
-            <div className={cn('flex min-w-0 flex-1 flex-col gap-2', !last && 'pb-5')}>
+            <div className={cn('flex min-w-0 flex-1 flex-col gap-3', !last && 'pb-8')}>
               {state === 'done' && <DoneCheckin checkin={checkin} canSeeSelfReview={canSeeSelfReview} />}
               {state === 'next' && (
                 <NextCheckin hire={hire} checkin={checkin} canSeeSelfReview={canSeeSelfReview} canRun={canRun} />
@@ -99,7 +99,7 @@ function DoneCheckin({ checkin, canSeeSelfReview }: { checkin: Checkin; canSeeSe
     <>
       <Heading checkin={checkin} meta={t('hires.detail.doneOn', { date: formatDate(date) })} />
       {/* The result in one line: what the business needs to know at a glance */}
-      <p className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-body-medium text-on-surface">
+      <p className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5 text-body-medium text-on-surface">
         <span className="text-label-large">
           {t('hires.detail.milestonesMet', { met: count('met'), total: checkin.milestones.length })}
         </span>
@@ -123,7 +123,7 @@ function DoneCheckin({ checkin, canSeeSelfReview }: { checkin: Checkin; canSeeSe
           {t('hires.detail.viewDetail')}
           <Icon name="keyboard_arrow_down" className="shrink-0 transition-transform group-open:rotate-180" />
         </summary>
-        <div className="flex flex-col gap-4 border-t border-outline-variant p-3">
+        <div className="flex flex-col gap-5 border-t border-outline-variant p-4">
           <section className="flex flex-col gap-2">
             <h4 className="text-label-medium text-on-surface-variant">{t('hires.detail.milestonesTitle')}</h4>
             <ul className="flex flex-col gap-2">
@@ -197,7 +197,7 @@ function NextCheckin({
         meta={`${formatDate(due)} · ${label}`}
         metaClass={overdue ? 'text-error' : undefined}
       />
-      <div className="flex flex-col gap-3 rounded-md bg-surface-container p-3">
+      <div className="flex flex-col gap-4 rounded-md bg-surface-container p-4">
         <p className="flex min-w-0 items-start gap-2 text-body-small text-on-surface">
           <Icon
             name={review ? 'fact_check' : 'hourglass_empty'}
@@ -252,7 +252,7 @@ function ActionNote({ checkin }: { checkin: Checkin }) {
   const { t } = useTranslation();
   if (checkin.action?.type === 'escalate') {
     return (
-      <p className="flex items-start gap-1.5 rounded-sm bg-error-container px-2 py-1.5 text-body-small text-on-error-container">
+      <p className="flex items-start gap-1.5 rounded-md bg-error-container px-3 py-2 text-body-small text-on-error-container">
         <Icon name="warning" size={16} className="mt-px shrink-0 text-error" />
         {t('hires.detail.escalated', { note: checkin.action.note })}
       </p>

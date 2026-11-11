@@ -2,10 +2,12 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
 import { demoNow } from '@/lib/dates';
+import type { IdentityCheck } from '@/lib/access';
 import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '@/lib/checkins';
 import { completeTask as completeTaskRule } from '@/lib/journey';
 import type {
   AccessRequest,
+  AccessResolutionAction,
   AccountFlags,
   AuditEvent,
   AuthAttempts,
@@ -52,6 +54,24 @@ interface DataActions {
   ) => void;
   /** J3: the manager completes a check-in; an escalation is recorded as checkin.escalate (F5). */
   completeCheckin: (hireId: string, stage: CheckinStage, input: ManagerCheckinInput, actorId: string) => void;
+  /** S2: IT opens a new request and starts checking who is asking (status "verifying"). */
+  startVerification: (requestId: string, actorId: string) => void;
+  /** S2: IT confirms the identity with a call to the registered extension or with the manager. */
+  verifyIdentity: (requestId: string, check: IdentityCheck, actorId: string) => void;
+  /**
+   * S2: IT restores access once the identity is verified: unlocks the account, forces a new
+   * password (which also unlocks it, or the person could not sign in) or resets MFA.
+   */
+  resolveAccessRequest: (
+    requestId: string,
+    action: Exclude<AccessResolutionAction, 'reject'>,
+    note: string,
+    actorId: string,
+  ) => void;
+  /** S2: IT rejects a request with a reason (for example, the identity could not be verified). */
+  rejectAccessRequest: (requestId: string, note: string, actorId: string) => void;
+  /** S3: IT unlocks a locked account directly. */
+  unlockAccount: (email: string, actorId: string) => void;
   /** Restores the seed data ("Restablecer demo"). The session is cleared by the session store. */
   resetData: () => void;
 }
@@ -221,6 +241,143 @@ export const useDataStore = create<DataState>()(
             auditEvents: [...state.auditEvents, ...events],
           };
         }),
+
+      startVerification: (requestId, actorId) =>
+        set((state) => ({
+          accessRequests: state.accessRequests.map((r) =>
+            r.id === requestId && r.status === 'new' ? { ...r, status: 'verifying' as const } : r,
+          ),
+          auditEvents: [
+            ...state.auditEvents,
+            {
+              id: nextAuditId(),
+              at: demoNow(),
+              actorId,
+              action: 'access_request.start_verification',
+              resource: requestId,
+              result: 'success',
+            },
+          ],
+        })),
+
+      verifyIdentity: (requestId, check, actorId) =>
+        set((state) => ({
+          accessRequests: state.accessRequests.map((r) =>
+            r.id === requestId ? { ...r, status: 'verifying' as const, identityVerified: true } : r,
+          ),
+          auditEvents: [
+            ...state.auditEvents,
+            {
+              id: nextAuditId(),
+              at: demoNow(),
+              actorId,
+              action: 'access_request.verify_identity',
+              resource: requestId,
+              result: 'success',
+              detail: check === 'callback' ? 'Llamada al interno registrado' : 'Validación con el jefe directo',
+            },
+          ],
+        })),
+
+      resolveAccessRequest: (requestId, action, note, actorId) =>
+        set((state) => {
+          const request = state.accessRequests.find((r) => r.id === requestId);
+          if (!request || !request.identityVerified) return {};
+          const at = demoNow();
+          const email = request.email.toLowerCase();
+          const person = state.people.find((p) => p.id === request.personId || p.email.toLowerCase() === email);
+          const unlocks = action === 'unlock' || action === 'force_password_reset';
+          const flags = person ? state.accountFlags[person.id] : undefined;
+          return {
+            accessRequests: state.accessRequests.map((r) =>
+              r.id === requestId
+                ? {
+                    ...r,
+                    status: 'resolved' as const,
+                    resolution: { action, by: actorId, at, note: note || undefined },
+                  }
+                : r,
+            ),
+            authAttempts: unlocks
+              ? state.authAttempts.map((a) =>
+                  a.email.toLowerCase() === email
+                    ? { email: a.email, failedCount: 0, locked: false, lastAttemptAt: a.lastAttemptAt }
+                    : a,
+                )
+              : state.authAttempts,
+            accountFlags:
+              person && action !== 'unlock'
+                ? {
+                    ...state.accountFlags,
+                    [person.id]: {
+                      ...flags,
+                      ...(action === 'force_password_reset' ? { mustChangePassword: true } : { mfaReset: true }),
+                    },
+                  }
+                : state.accountFlags,
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: `account.${action}`,
+                resource: request.email,
+                result: 'success',
+              },
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: 'access_request.resolve',
+                resource: requestId,
+                result: 'success',
+                detail: note || undefined,
+              },
+            ],
+          };
+        }),
+
+      rejectAccessRequest: (requestId, note, actorId) =>
+        set((state) => {
+          const at = demoNow();
+          return {
+            accessRequests: state.accessRequests.map((r) =>
+              r.id === requestId
+                ? {
+                    ...r,
+                    status: 'rejected' as const,
+                    resolution: { action: 'reject' as const, by: actorId, at, note },
+                  }
+                : r,
+            ),
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: 'access_request.reject',
+                resource: requestId,
+                result: 'success',
+                detail: note,
+              },
+            ],
+          };
+        }),
+
+      unlockAccount: (email, actorId) =>
+        set((state) => ({
+          authAttempts: state.authAttempts.map((a) =>
+            a.email.toLowerCase() === email.toLowerCase()
+              ? { email: a.email, failedCount: 0, locked: false, lastAttemptAt: a.lastAttemptAt }
+              : a,
+          ),
+          auditEvents: [
+            ...state.auditEvents,
+            { id: nextAuditId(), at: demoNow(), actorId, action: 'account.unlock', resource: email, result: 'success' },
+          ],
+        })),
 
       resetData: () => set(buildSeed()),
     }),

@@ -48,6 +48,8 @@ export const PAGES: CheckedPage[] = [
   { id: 'n2-task-course', path: '/#/me/tasks/h-sofia-d9', role: 'hire' },
   { id: 'n2-task-overdue', path: '/#/me/tasks/h-sofia-d11', role: 'hire' },
   { id: 'home-it', path: '/#/it/requests', role: 'it_admin' },
+  { id: 's2-request', path: '/#/it/requests/IT-2026-0141', role: 'it_admin' },
+  { id: 's3-security', path: '/#/it/security', role: 'it_admin' },
   { id: 'styleguide', path: '/#/styleguide' },
 ];
 

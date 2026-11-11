@@ -11,7 +11,9 @@ import { NextCheckinRedirect } from '@/features/journey/NextCheckinRedirect';
 import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { NotFoundPage } from '@/features/system/NotFoundPage';
 import { DashboardPage } from '@/features/dashboard/DashboardPage';
-import { UpcomingPage } from '@/features/system/UpcomingPage';
+import { ItSecurityPage } from '@/features/it/ItSecurityPage';
+import { RequestDetailPage } from '@/features/it/RequestDetailPage';
+import { RequestsPage } from '@/features/it/RequestsPage';
 import { homePath } from '@/lib/permissions';
 import { useCurrentUser } from '@/store/session-store';
 import { RouteGuard } from './RouteGuard';
@@ -105,9 +107,9 @@ export function AppRoutes() {
           <Route path="/me/checkin" element={<NextCheckinRedirect />} />
           <Route path="/me/checkin/:stage" element={<SelfReviewPage />} />
 
-          <Route path="/it/requests" element={<UpcomingPage screen="S1" />} />
-          <Route path="/it/requests/:id" element={<UpcomingPage screen="S2" />} />
-          <Route path="/it/security" element={<UpcomingPage screen="S3" />} />
+          <Route path="/it/requests" element={<RequestsPage />} />
+          <Route path="/it/requests/:id" element={<RequestDetailPage />} />
+          <Route path="/it/security" element={<ItSecurityPage />} />
 
           {user && <Route path="*" element={<CatchAll />} />}
         </Route>

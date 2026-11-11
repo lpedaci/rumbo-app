@@ -17,7 +17,8 @@ function emit() {
 }
 
 function push(tone: ToastTone, message: string) {
-  items = [...items, { id: nextId++, tone, message }];
+  // One toast at a time (D-90): a new one replaces the previous, so they never pile up.
+  items = [{ id: nextId++, tone, message }];
   emit();
 }
 

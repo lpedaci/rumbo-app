@@ -39,12 +39,13 @@ export function GreetingHeader({ date, greeting, name, facts, actions }: Greetin
             {greeting}, <span className="text-primary">{name}</span>
           </h1>
         </div>
-        <ul className="flex flex-wrap gap-3">
+        {/* Compact chips on phones so they share a line; full size from 640 px (D-90) */}
+        <ul className="flex flex-wrap gap-2 sm:gap-3">
           {facts.map((fact) => (
             <li
               key={fact.label}
               className={cn(
-                'inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-label-large',
+                'inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-label-medium sm:h-8 sm:px-3 sm:text-label-large',
                 fact.tone === 'accent'
                   ? 'border-transparent bg-tertiary-container text-on-tertiary-container'
                   : 'border-outline-variant bg-surface-container-lowest text-on-surface',
@@ -60,7 +61,12 @@ export function GreetingHeader({ date, greeting, name, facts, actions }: Greetin
           ))}
         </ul>
       </div>
-      {actions && <div className="flex shrink-0 flex-wrap gap-2">{actions}</div>}
+      {/* Full width on phones, next to the greeting from 640 px (2.1.3) */}
+      {actions && (
+        <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap [&>*]:w-full sm:[&>*]:w-auto">
+          {actions}
+        </div>
+      )}
     </header>
   );
 }

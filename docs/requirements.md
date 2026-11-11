@@ -113,14 +113,14 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 | ID | Descripción | Rol | Pantallas | Prioridad | Criterio de aceptación | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| RF-052 | El sistema debe mostrar la bandeja de solicitudes de acceso con número, usuario, motivo, fecha y estado. | Sistemas | S1 | Must | Filtrable por estado. | Pendiente |
-| RF-053 | El sistema debe exigir marcar la verificación de identidad antes de resolver una solicitud. | Sistemas | S2 | Must | Las acciones de resolución están deshabilitadas, con motivo visible, hasta completar el checklist. | Pendiente |
-| RF-054 | El sistema debe permitir desbloquear, forzar cambio de contraseña, restablecer MFA o rechazar con motivo. | Sistemas | S2 | Must | Cada acción cambia el estado y genera un evento de auditoría. | Pendiente |
-| RF-055 | Resolver una solicitud debe permitir al usuario volver a iniciar sesión. | Sistemas, Todos | S2, G1 | Must | Tras desbloquear, la cuenta entra; tras forzar cambio, pide contraseña nueva. | Pendiente |
-| RF-056 | El sistema debe listar las cuentas bloqueadas con intentos fallidos y último intento, con desbloqueo directo. | Sistemas | S3 | Must | Desbloquear actualiza la lista y la auditoría. | Pendiente |
-| RF-057 | El sistema debe mostrar la auditoría con fecha y hora, usuario, acción, recurso y resultado, con filtros y exportación a CSV. | Sistemas | S3 | Must | Filtros por usuario, tipo y rango de fechas; el CSV respeta los filtros. | Pendiente |
-| RF-058 | El sistema debe mostrar la matriz de permisos en modo lectura generada desde `permissions.ts`. | Sistemas | S3 | Must | Coincide con lo que cada rol puede hacer. | Pendiente |
-| RF-059 | El sistema debe mostrar las políticas vigentes: MFA por rol, duración de sesión, intentos antes del bloqueo y política de contraseñas. | Sistemas | S3 | Must | Valores leídos de `SecurityPolicy`. | Pendiente |
+| RF-052 | El sistema debe mostrar la bandeja de solicitudes de acceso con número, usuario, motivo, fecha y estado. | Sistemas | S1 | Must | Filtrable por estado. | Hecho |
+| RF-053 | El sistema debe exigir marcar la verificación de identidad antes de resolver una solicitud. | Sistemas | S2 | Must | Las acciones de resolución están deshabilitadas, con motivo visible, hasta completar el checklist. | Hecho |
+| RF-054 | El sistema debe permitir desbloquear, forzar cambio de contraseña, restablecer MFA o rechazar con motivo. | Sistemas | S2 | Must | Cada acción cambia el estado y genera un evento de auditoría. | Hecho |
+| RF-055 | Resolver una solicitud debe permitir al usuario volver a iniciar sesión. | Sistemas, Todos | S2, G1 | Must | Tras desbloquear, la cuenta entra; tras forzar cambio, pide contraseña nueva. | Hecho |
+| RF-056 | El sistema debe listar las cuentas bloqueadas con intentos fallidos y último intento, con desbloqueo directo. | Sistemas | S3 | Must | Desbloquear actualiza la lista y la auditoría. | Hecho |
+| RF-057 | El sistema debe mostrar la auditoría con fecha y hora, usuario, acción, recurso y resultado, con filtros y exportación a CSV. | Sistemas | S3 | Must | Filtros por usuario, tipo y rango de fechas; el CSV respeta los filtros. | Hecho |
+| RF-058 | El sistema debe mostrar la matriz de permisos en modo lectura generada desde `permissions.ts`. | Sistemas | S3 | Must | Coincide con lo que cada rol puede hacer. | Hecho |
+| RF-059 | El sistema debe mostrar las políticas vigentes: MFA por rol, duración de sesión, intentos antes del bloqueo y política de contraseñas. | Sistemas | S3 | Must | Valores leídos de `SecurityPolicy`. | Hecho |
 | RF-060 | El sistema debe registrar en la auditoría todos los eventos listados en F6. | Todos | S3 | Must | Cada evento de la lista de F6 tiene al menos un caso en los datos semilla o al usar la demo. | Pendiente |
 
 ### Fase B (F7 a F17)

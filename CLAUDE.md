@@ -184,6 +184,10 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 20. **Escalas de opciones responsivas** (D-85): la escala de 5 opciones pasa a una lista vertical cuando su contenedor mide menos de 32 rem.
 21. **Alertas en tres líneas** (D-87): persona; qué pasa, con ícono del estado; y el detalle que lo explica (a quién espera, cuánto atraso). Todas las filas con el mismo ritmo.
 22. **Ánimo solo agregado** (D-87): en A1 va como chip del saludo ("Ánimo promedio 3,8 de 5") y solo con 3 respuestas o más.
+23. **Pestañas sin cortes** (D-90): en celulares, las pestañas de sección van en grilla (2 × 2), nunca cortadas ni con desplazamiento lateral.
+24. **Frase del KPI al lado del número** (D-90) cuando entra; si no, debajo.
+25. **Un toast a la vez** (D-90): el nuevo reemplaza al anterior y, en celulares, aparece por encima del menú inferior.
+26. **Verificación de identidad antes de restablecer un acceso** (D-90): solo con datos de la ficha (celular registrado o jefe directo), nunca con los que trae la solicitud.
 15. **Aviso de tarea bloqueada** (D-69): sección en `warning-container` con candado, "Se habilita cuando esté hecha esta tarea" y una fila por tarea previa con tipo, título enlazado, responsable en chip ("Te toca a ti" resaltado), vencimiento e "Ir a la tarea".
 
 **Pantallas que más lo necesitan:**

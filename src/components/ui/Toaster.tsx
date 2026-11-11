@@ -42,7 +42,7 @@ export function Toaster() {
           </Toast.Close>
         </Toast.Root>
       ))}
-      <Toast.Viewport className="fixed right-0 bottom-0 left-0 z-60 mx-auto flex w-full max-w-md flex-col gap-2 p-4 outline-none md:right-4 md:left-auto md:mx-0" />
+      <Toast.Viewport className="fixed right-0 bottom-20 left-0 z-60 md:bottom-0 mx-auto flex w-full max-w-md flex-col gap-2 p-4 outline-none md:right-4 md:left-auto md:mx-0" />
     </Toast.Provider>
   );
 }

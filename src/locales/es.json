@@ -1375,5 +1375,286 @@
       "startsIn_one": "Ingresa en {{count}} día",
       "startsIn_other": "Ingresa en {{count}} días"
     }
+  },
+  "it": {
+    "status": {
+      "new": "Nueva",
+      "verifying": "En verificación",
+      "resolved": "Resuelta",
+      "rejected": "Rechazada"
+    },
+    "filters": {
+      "all": "Todas",
+      "new": "Nuevas",
+      "verifying": "En verificación",
+      "resolved": "Resueltas",
+      "rejected": "Rechazadas"
+    },
+    "facts": {
+      "open_one": "{{count}} solicitud abierta",
+      "open_other": "{{count}} solicitudes abiertas",
+      "locked_one": "{{count}} cuenta bloqueada",
+      "locked_other": "{{count}} cuentas bloqueadas"
+    },
+    "kpis": {
+      "new": "Solicitudes nuevas",
+      "verifying": "En verificación",
+      "locked": "Cuentas bloqueadas",
+      "resolved": "Resueltas"
+    },
+    "kpiCaption": {
+      "new": "Sin atender todavía",
+      "verifying": "Esperan confirmar la identidad",
+      "locked_one": "{{count}} con solicitud abierta",
+      "locked_other": "{{count}} con solicitud abierta",
+      "resolved_one": "Y {{count}} rechazada",
+      "resolved_other": "Y {{count}} rechazadas"
+    },
+    "unknownPerson": "No corresponde a ninguna persona",
+    "columns": {
+      "request": "Solicitud",
+      "person": "Persona",
+      "reason": "Motivo",
+      "status": "Estado"
+    },
+    "requests": {
+      "title": "Solicitudes de acceso",
+      "description": "Llegan desde \"¿Problemas para iniciar sesión?\". Las abiertas van primero.",
+      "tableLabel": "Solicitudes de acceso",
+      "statusFilter": "Filtrar por estado",
+      "status": "Estado",
+      "empty": "Todavía no hay solicitudes. Van a aparecer acá cuando alguien pida ayuda para iniciar sesión.",
+      "emptyFiltered": "No hay solicitudes con este estado.",
+      "toSecurity": "Seguridad y auditoría"
+    },
+    "actions": {
+      "unlock": "Desbloquear la cuenta",
+      "force_password_reset": "Forzar cambio de contraseña",
+      "reset_mfa": "Restablecer la verificación en dos pasos"
+    },
+    "actionHelp": {
+      "unlock": "La persona vuelve a iniciar sesión con su contraseña actual.",
+      "force_password_reset": "Desbloquea la cuenta y, al iniciar sesión, pide crear una contraseña nueva.",
+      "reset_mfa": "Al iniciar sesión, la persona vincula de nuevo su app autenticadora."
+    },
+    "detail": {
+      "back": "Volver a Solicitudes",
+      "subtitle": "{{name}} · {{date}}",
+      "step1": "1. Verificar la identidad",
+      "step1Help": "Antes de restablecer un acceso, confirma que quien lo pide es la persona.",
+      "checkLegend": "Cómo la verificaste (obligatorio)",
+      "checkRequired": "Elige cómo verificaste la identidad.",
+      "checks": {
+        "callback": "Llamada al celular registrado",
+        "callbackHelp": "Llama al {{mobile}} de su ficha y pide su legajo.",
+        "manager": "Validación con el jefe directo",
+        "managerHelp": "Confirma con {{name}} que la persona pidió ayuda."
+      },
+      "checkNote": "Nunca uses datos que te dé la persona en la solicitud: pueden ser falsos.",
+      "confirmIdentity": "Confirmar identidad",
+      "verified": "Identidad verificada",
+      "verifiedBody": "Identidad verificada: {{method}}.",
+      "verifiedUnknown": "método no registrado",
+      "verifiedToast": "Identidad verificada",
+      "notVerified": "La identidad no se verificó.",
+      "noPersonTitle": "El correo no coincide con ninguna persona de Nortia",
+      "noPersonBody": "Sin un celular o un jefe directo registrados no hay forma de verificar quién la pide. Lo habitual es rechazar la solicitud.",
+      "step2": "2. Restablecer el acceso",
+      "outcome": "Resolución",
+      "lockedStep": "Se habilita cuando verifiques la identidad.",
+      "actionLegend": "Qué hacer",
+      "suggested": "{{action}} (sugerido)",
+      "note": "Nota",
+      "noteHelp": "Queda en la auditoría, por ejemplo: identidad validada con el jefe directo.",
+      "apply": "Aplicar",
+      "reject": "Rechazar solicitud",
+      "resolvedToast": "Acceso restablecido",
+      "rejectedToast": "Solicitud rechazada",
+      "resolvedBy": "Por {{name}} · {{date}}",
+      "rejectTitle": "¿Rechazar esta solicitud?",
+      "rejectBody": "La persona no va a recuperar el acceso. El motivo queda en la auditoría.",
+      "rejectReason": "Motivo (obligatorio)",
+      "rejectReasonHelp": "Por ejemplo: no fue posible verificar la identidad.",
+      "rejectReasonRequired": "Escribe el motivo del rechazo.",
+      "rejectConfirm": "Rechazar solicitud",
+      "request": "Quién la pide",
+      "area": "Puesto",
+      "account": "Estado de la cuenta",
+      "accountLocked": "Bloqueada desde el {{date}}",
+      "accountActive": "Activa, sin bloqueo",
+      "failedAttempts_one": "{{count}} intento fallido",
+      "failedAttempts_other": "{{count}} intentos fallidos",
+      "flagPassword": "Tiene que crear una contraseña nueva al iniciar sesión",
+      "flagMfa": "Tiene que vincular de nuevo su autenticador",
+      "noCheckTitle": "No hay datos registrados para verificar la identidad"
+    },
+    "history": {
+      "title": "Historial",
+      "description": "Eventos de la auditoría de esta solicitud y de la cuenta.",
+      "anonymous": "Sin sesión"
+    },
+    "security": {
+      "title": "Seguridad y auditoría",
+      "description": "Cuentas bloqueadas, registro de eventos, permisos por rol y políticas de la organización.",
+      "tabsLabel": "Secciones de seguridad",
+      "tabs": {
+        "locked": "Cuentas bloqueadas",
+        "audit": "Auditoría",
+        "permissions": "Permisos",
+        "policies": "Políticas"
+      }
+    },
+    "locked": {
+      "title": "Cuentas bloqueadas",
+      "description": "Se bloquean tras 5 intentos fallidos y solo sistemas las desbloquea.",
+      "empty": "No hay cuentas bloqueadas.",
+      "attempts_one": "{{count}} intento",
+      "attempts_other": "{{count}} intentos",
+      "last": "Último: {{date}}",
+      "viewRequest": "Ver {{id}}",
+      "unlock": "Desbloquear",
+      "confirmTitle": "¿Desbloquear esta cuenta?",
+      "confirmBody": "La cuenta {{email}} va a poder iniciar sesión de nuevo. Hazlo solo si verificaste la identidad.",
+      "confirmAction": "Desbloquear cuenta",
+      "unlocked": "Cuenta desbloqueada"
+    },
+    "audit": {
+      "title": "Registro de auditoría",
+      "description": "Inicios de sesión, accesos, cambios en cuentas y en contenidos, del más reciente al más antiguo.",
+      "export": "Exportar CSV",
+      "exported": "Auditoría exportada",
+      "filters": {
+        "actor": "Usuario",
+        "allActors": "Todos",
+        "category": "Tipo",
+        "allCategories": "Todos",
+        "range": "Período"
+      },
+      "categories": {
+        "auth": "Sesión",
+        "access": "Solicitudes",
+        "account": "Cuentas",
+        "content": "Contenidos",
+        "demo": "Demo"
+      },
+      "ranges": {
+        "7": "Últimos 7 días",
+        "30": "Últimos 30 días",
+        "all": "Todo"
+      },
+      "results_one": "{{count}} evento",
+      "results_other": "{{count}} eventos",
+      "empty": "No hay eventos con estos filtros.",
+      "more_one": "Ver {{count}} evento más",
+      "more_other": "Ver {{count}} eventos más",
+      "columns": {
+        "at": "Fecha y hora",
+        "actor": "Usuario",
+        "action": "Acción",
+        "resource": "Recurso",
+        "result": "Resultado",
+        "detail": "Detalle"
+      },
+      "results_": {
+        "success": "Correcto",
+        "failure": "Fallido",
+        "denied": "Denegado"
+      },
+      "actions": {
+        "auth.login": "Inicio de sesión",
+        "auth.logout": "Cierre de sesión",
+        "auth.login_failed": "Intento de inicio de sesión fallido",
+        "auth.account_locked": "Cuenta bloqueada por intentos",
+        "auth.mfa_verified": "Verificación en dos pasos correcta",
+        "auth.mfa_failed": "Código de verificación incorrecto",
+        "auth.mfa_enabled": "Verificación en dos pasos activada",
+        "auth.mfa_disabled": "Verificación en dos pasos desactivada",
+        "auth.mfa_relinked": "Autenticador vinculado de nuevo",
+        "auth.password_changed": "Contraseña cambiada",
+        "auth.access_denied": "Acceso no permitido",
+        "auth.session_expired": "Sesión vencida por inactividad",
+        "auth.device_forgotten": "Dispositivo olvidado",
+        "access_request.create": "Solicitud de acceso creada",
+        "access_request.start_verification": "Verificación de identidad iniciada",
+        "access_request.verify_identity": "Identidad verificada",
+        "access_request.resolve": "Solicitud resuelta",
+        "access_request.reject": "Solicitud rechazada",
+        "account.unlock": "Cuenta desbloqueada",
+        "account.force_password_reset": "Cambio de contraseña forzado",
+        "account.reset_mfa": "Verificación en dos pasos restablecida",
+        "template.create": "Plantilla creada",
+        "template.update": "Plantilla modificada",
+        "template.delete": "Plantilla eliminada",
+        "hire.create": "Alta de ingreso",
+        "task.complete": "Tarea marcada como hecha",
+        "checkin.self_review": "Autoevaluación enviada",
+        "checkin.complete": "Check-in completado",
+        "checkin.escalate": "Check-in escalado a RRHH",
+        "demo.reset": "Demo restablecida",
+        "demo.switch_role": "Cambio de rol de demo",
+        "audit.export": "Auditoría exportada"
+      }
+    },
+    "permissions": {
+      "title": "Matriz de permisos",
+      "description": "Generada desde permissions.ts: es la misma regla que aplican las rutas y los botones.",
+      "action": "Acción",
+      "none": "Sin permiso",
+      "scopes": {
+        "all": "Todo",
+        "team": "Su equipo",
+        "own": "Lo propio"
+      },
+      "actions": {
+        "workspace_hr": "Sección de RRHH (panel, ingresos, plantillas)",
+        "workspace_team": "Sección del jefe directo (mi equipo)",
+        "workspace_journey": "Sección del nuevo ingreso (mi recorrido)",
+        "workspace_it": "Sección de sistemas (accesos, auditoría)",
+        "dashboard_view": "Ver el panel de seguimiento",
+        "template_view": "Ver plantillas y su vista previa",
+        "template_edit": "Crear, duplicar, editar y eliminar plantillas",
+        "hire_view": "Ver ingresos y su ficha",
+        "hire_create": "Dar de alta un ingreso",
+        "task_complete": "Marcar una tarea como hecha",
+        "checkin_fill": "Completar el check-in como jefe",
+        "checkin_self_review": "Responder la autoevaluación",
+        "checkin_view_self_review": "Leer la autoevaluación del ingreso",
+        "checkin_view_escalations": "Ver y atender check-ins escalados",
+        "access_request_view": "Ver la bandeja de solicitudes de acceso",
+        "access_request_resolve": "Verificar identidad y resolver solicitudes",
+        "account_unlock": "Desbloquear cuentas",
+        "audit_view": "Ver y filtrar la auditoría",
+        "audit_export": "Exportar la auditoría a CSV",
+        "security_view": "Ver políticas y matriz de permisos",
+        "account_security_own": "Ver \"Mi seguridad\"",
+        "demo_switch_role": "Usar el selector de rol de demo",
+        "demo_reset": "Restablecer la demo"
+      }
+    },
+    "policies": {
+      "title": "Políticas de la organización",
+      "description": "Valores vigentes. En producción se configuran en el proveedor de identidad.",
+      "mfa": "Verificación en dos pasos obligatoria",
+      "mfaDetail": "Para el resto de los roles es opcional y viene activada.",
+      "session": "Cierre de sesión por inactividad",
+      "sessionDetail_one": "El aviso aparece en el minuto {{count}}.",
+      "sessionDetail_other": "El aviso aparece en el minuto {{count}}.",
+      "minutes_one": "{{count}} minuto",
+      "minutes_other": "{{count}} minutos",
+      "lockout": "Bloqueo de cuenta",
+      "attempts_one": "Tras {{count}} intento fallido",
+      "attempts_other": "Tras {{count}} intentos fallidos",
+      "lockoutDetail": "No se desbloquea sola: solo sistemas, después de verificar la identidad.",
+      "password": "Contraseña",
+      "chars_one": "Mínimo {{count}} carácter",
+      "chars_other": "Mínimo {{count}} caracteres",
+      "passwordDetail": "Con mayúscula, minúscula, número y símbolo, y distinta de las anteriores."
+    },
+    "outcomes": {
+      "unlock": "Cuenta desbloqueada",
+      "force_password_reset": "Cambio de contraseña forzado",
+      "reset_mfa": "Verificación en dos pasos restablecida",
+      "reject": "Solicitud rechazada"
+    }
   }
 }

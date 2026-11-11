@@ -77,7 +77,11 @@ export function KpiCard({
         </Heading>
         {/* The pill always goes under the number, so every card of a row has the same shape. */}
         <div className="flex min-w-0 flex-col items-start gap-1.5">
-          <p className="text-headline-small text-on-surface tabular-nums xl:text-display-small">{value}</p>
+          {/* The caption sits next to the number when it fits and wraps under it when not (D-90) */}
+          <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <p className="text-headline-small text-on-surface tabular-nums xl:text-display-small">{value}</p>
+            {caption && <p className="min-w-0 text-body-small text-on-surface-variant">{caption}</p>}
+          </div>
           {/* The pill wraps instead of truncating in narrow cards (D-69). */}
           {trend && (
             <StatusPill
@@ -88,7 +92,6 @@ export function KpiCard({
             />
           )}
         </div>
-        {caption && <p className="text-body-small text-on-surface-variant">{caption}</p>}
       </div>
     </motion.section>
   );

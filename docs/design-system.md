@@ -388,3 +388,12 @@ Reemplaza las bandas de color de D-72.
 - **Fila de alerta:** avatar `sm`, nombre `title-small`, línea "qué pasa" `body-small` con ícono de 16 px del color del estado y línea de detalle `body-small` gris alineada con el texto (no con el ícono); 12 px arriba y abajo y divisor entre filas.
 - **`KpiCard`:** 16 px de padding en todos los anchos menores a 1280 px.
 - **`BentoCard`:** el ícono decorativo del encabezado se oculta por debajo de 640 px.
+
+### Sistemas, pestañas, KPI y toasts (D-90)
+
+- **Pestañas de sección (S3):** Radix Tabs con botones de esquinas suaves; la activa en `primary` con texto blanco e ícono relleno. Grilla de 2 × 2 por debajo de 640 px, una fila desde ahí.
+- **`RequestStatusPill`:** nueva (`info`), en verificación (`warning`), resuelta (`success`), rechazada (`error`), siempre con ícono y texto.
+- **Flujo por pasos en una ficha (S2):** tarjetas numeradas "1." y "2."; el paso 2 muestra un aviso `warning-container` con candado mientras no se cumple el 1, y sus controles quedan deshabilitados con el motivo visible.
+- **`KpiCard`:** la frase acompaña al número en la misma línea cuando entra.
+- **`GreetingHeader`:** chips `label-medium` de 28 px en celulares; acción a ancho completo.
+- **Toasts:** uno a la vez; en celulares, 80 px por encima del borde para no tapar el menú inferior.

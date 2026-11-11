@@ -16,7 +16,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 7 | Ingresos: A2, A3, A4 | Hecho | 11/11/2026 |
 | 8 | Jefe: J1, J2, J3 y N3 | Hecho | 11/11/2026 |
 | 9 | Panel A1 con alertas | Hecho | 11/11/2026 |
-| 10 | Sistemas: S1, S2, S3 | Pendiente | |
+| 10 | Sistemas: S1, S2, S3 | Hecho | 11/11/2026 |
 | 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
@@ -280,3 +280,13 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Recharts 2.15.4 instalado con versión fija; `npm audit --audit-level=high` sigue en verde. Test de componente del panel (KPIs que cambian con los datos, alertas, cambio de vista).
 
 **Pendiente:** paso 10 (S1 a S3, admin de sistemas).
+
+## Paso 10: admin de sistemas (S1, S2, S3), 11/11/2026
+
+- **S1 Bandeja de solicitudes:** saludo de Diego con solicitudes abiertas y cuentas bloqueadas, KPIs (nuevas, en verificación, cuentas bloqueadas, resueltas), filtros por estado (chips desde 640 px, menú en celulares) y tabla con número, persona, motivo, fecha y estado; las abiertas primero. Filas compactas por debajo de 1024 px.
+- **S2 Detalle:** dos pasos. 1) Verificar la identidad con los datos de la ficha (llamada al celular registrado o validación con el jefe directo), nunca con datos de la solicitud; 2) restablecer el acceso (desbloquear, forzar cambio de contraseña o restablecer la verificación en dos pasos), habilitado solo con la identidad verificada, o rechazar con motivo obligatorio. Al costado: quién la pide, estado de la cuenta e historial de la auditoría.
+- **S3 Seguridad y auditoría:** pestañas de cuentas bloqueadas (desbloqueo directo con confirmación), auditoría (filtros por usuario, tipo y período, exportación a CSV que queda registrada), matriz de permisos generada desde `permissions.ts` y políticas vigentes.
+- Lógica en `src/lib/access.ts` y acciones del store (`startVerification`, `verifyIdentity`, `resolveAccessRequest`, `rejectAccessRequest`, `unlockAccount`), cada una con su evento de auditoría. Tests de reglas, store y pantallas; S2 y S3 en las pruebas de desbordes y axe.
+- Con este paso todas las pantallas de la fase A tienen su versión funcional.
+
+**Pendiente:** paso 11 (seguridad real del front y `docs/security.md`), paso 12 (pulido) y paso 13 (revisión intermedia).
