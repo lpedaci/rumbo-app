@@ -5,7 +5,6 @@
     "type": "rectification",
     "detail": "Mi segundo apellido figura mal escrito en mis datos: es Ruiz Peralta, no Ruiz Pereyra.",
     "createdAt": "2026-11-04T14:10:00.000Z",
-    "dueAt": "2026-11-11",
     "status": "in_progress",
     "handledBy": "p-carla"
   },
@@ -15,7 +14,6 @@
     "type": "access",
     "detail": "Quiero saber qué datos míos guarda la plataforma y quién puede verlos.",
     "createdAt": "2026-11-09T16:30:00.000Z",
-    "dueAt": "2026-11-19",
     "status": "new"
   }
 ]

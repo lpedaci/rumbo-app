@@ -596,7 +596,7 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
 ### F10. Privacidad y datos personales
 - **Aviso de privacidad y consentimiento** la primera vez que cualquier usuario entra: qué datos se usan, para qué, quién los ve y por cuánto tiempo. Sin aceptar no se puede continuar; la aceptación queda registrada con fecha y versión del aviso.
 - Pantalla **"Mi privacidad"**: ver el aviso vigente, la fecha de aceptación y los datos personales propios que tiene la plataforma.
-- **Solicitudes sobre datos personales** (acceso, rectificación o supresión, según la Ley 25.326): el usuario la envía desde "Mi privacidad"; RRHH la gestiona en una bandeja con plazo de respuesta visible, estados y respuesta al usuario.
+- **Solicitudes sobre datos personales** (acceso, rectificación o supresión, según la Ley 25.326): el usuario la envía desde "Mi privacidad"; RRHH la gestiona en una bandeja con plazo de respuesta visible, estados y respuesta al usuario. Plazos: acceso en 10 días corridos (art. 14); rectificación y supresión en 5 días hábiles, sin sábados ni domingos (art. 16). Viven en una sola constante de configuración (`PRIVACY_DEADLINES`, `src/app/legal.ts`) por si una reforma los cambia (D-113).
 - **Enmascarado de datos sensibles:** DNI, CUIL y datos bancarios se muestran ocultos (`***.***.1234`). Revelarlos requiere el permiso `pii:reveal`, pide un motivo y queda en la auditoría.
 - **Retención:** política visible en la pantalla de políticas (ej.: datos del recorrido 2 años después de finalizado, autoevaluaciones 1 año). En la demo, los ingresos finalizados muestran la fecha programada de anonimización.
 

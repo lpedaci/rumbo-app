@@ -30,6 +30,7 @@ import type {
 import { addDays, DEMO_TODAY } from '@/lib/dates';
 import { generateCheckins, generateHireTasks, hireStatus } from '@/lib/journey';
 import { buildSeedNotifications } from '@/lib/notifications';
+import { dueDateFor } from '@/lib/privacy';
 import { asVersion } from '@/lib/templates';
 import accessRequests from './access-requests.json';
 import auditEvents from './audit-events.json';
@@ -242,6 +243,10 @@ export function buildSeed(): DemoData {
     ),
     comments: comments as Comment[],
     consents: consents as ConsentRecord[],
-    privacyRequests: privacyRequests as PrivacyRequest[],
+    // Legal deadlines computed from the configuration (src/app/legal.ts), never written by hand.
+    privacyRequests: (privacyRequests as Omit<PrivacyRequest, 'dueAt'>[]).map((r) => ({
+      ...r,
+      dueAt: dueDateFor(r.type, r.createdAt.slice(0, 10)),
+    })),
   });
 }

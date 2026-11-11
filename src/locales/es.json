@@ -2670,15 +2670,15 @@
       "typeOptions": {
         "access": {
           "label": "Acceso",
-          "help": "Ver qué datos tuyos guarda Rumbo. Respuesta en hasta 10 días corridos."
+          "help": "Ver qué datos tuyos guarda Rumbo. Respuesta en hasta {{days}} días corridos."
         },
         "rectification": {
           "label": "Rectificación",
-          "help": "Corregir un dato que está mal. Respuesta en hasta 5 días hábiles."
+          "help": "Corregir un dato que está mal. Respuesta en hasta {{days}} días hábiles."
         },
         "deletion": {
           "label": "Supresión",
-          "help": "Borrar datos que ya no hacen falta. Respuesta en hasta 5 días hábiles."
+          "help": "Borrar datos que ya no hacen falta. Respuesta en hasta {{days}} días hábiles."
         }
       },
       "detail": "Detalle",

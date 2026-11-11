@@ -10,6 +10,7 @@ import { RadioGroup } from '@/components/ui/RadioGroup';
 import { TextArea } from '@/components/ui/TextArea';
 import { toast } from '@/components/ui/toast-store';
 import { DEMO_TODAY, demoNow, formatDate } from '@/lib/dates';
+import { PRIVACY_DEADLINES } from '@/app/legal';
 import { consentOf, dueDateFor, nextPrivacyRequestId } from '@/lib/privacy';
 import { issuesByPath, maskPhone } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
@@ -176,7 +177,7 @@ export function MyPrivacyPage() {
               options={TYPES.map((value) => ({
                 value,
                 label: t(`privacy.mine.typeOptions.${value}.label`),
-                description: t(`privacy.mine.typeOptions.${value}.help`),
+                description: t(`privacy.mine.typeOptions.${value}.help`, { days: PRIVACY_DEADLINES[value].days }),
               }))}
             />
             <TextArea

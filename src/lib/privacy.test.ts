@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { PRIVACY_DEADLINES } from '@/app/legal';
 import { buildSeed } from '@/data/seed';
 import { addBusinessDays, anonymizationDate, daysLeft, dueDateFor, hasConsent, mask, nextPrivacyRequestId } from './privacy';
 
@@ -9,6 +10,35 @@ describe('privacy rules (F10)', () => {
     expect(dueDateFor('rectification', '2026-11-10')).toBe('2026-11-17');
     expect(addBusinessDays('2026-11-13', 1)).toBe('2026-11-16'); // Friday to Monday
     expect(daysLeft('2026-11-08', '2026-11-10')).toBe(-2);
+  });
+
+  it('skips Saturday and Sunday for a rectification sent on a Friday (art. 16)', () => {
+    // Friday 13/11/2026: Mon 16, Tue 17, Wed 18, Thu 19, Fri 20
+    expect(new Date('2026-11-13T12:00:00Z').getUTCDay()).toBe(5);
+    expect(dueDateFor('rectification', '2026-11-13')).toBe('2026-11-20');
+    expect(dueDateFor('deletion', '2026-11-13')).toBe('2026-11-20');
+    // Access counts calendar days, weekend included (art. 14): Friday 13 + 10 = Monday 23
+    expect(dueDateFor('access', '2026-11-13')).toBe('2026-11-23');
+  });
+
+  it('never lands a business-day deadline on a weekend, whatever the day it was sent', () => {
+    for (let d = 9; d <= 15; d += 1) {
+      const sent = `2026-11-${String(d).padStart(2, '0')}`;
+      const due = dueDateFor('rectification', sent);
+      const weekday = new Date(`${due}T12:00:00Z`).getUTCDay();
+      expect(weekday, `${sent} → ${due}`).not.toBe(0);
+      expect(weekday, `${sent} → ${due}`).not.toBe(6);
+    }
+  });
+
+  it('takes the deadlines from the legal configuration, so a reform changes one place', () => {
+    expect(PRIVACY_DEADLINES).toMatchObject({
+      access: { days: 10, kind: 'calendar', article: 'art. 14' },
+      rectification: { days: 5, kind: 'business', article: 'art. 16' },
+      deletion: { days: 5, kind: 'business', article: 'art. 16' },
+    });
+    const reformed = { ...PRIVACY_DEADLINES, access: { days: 15, kind: 'business' as const, article: 'art. 14' } };
+    expect(dueDateFor('access', '2026-11-13', reformed)).toBe('2026-12-04');
   });
 
   it('masks identifiers and keeps only the last digits', () => {

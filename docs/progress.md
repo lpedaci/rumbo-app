@@ -384,3 +384,4 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Retención en la pantalla de políticas de sistemas y fecha de anonimización en los ingresos finalizados.
 - Avisos: "Solicitud de datos nueva" a RRHH y "RRHH respondió tu solicitud" a la persona. Permisos `privacy:own`, `privacy_request:manage` y `pii:reveal`.
 - Tests de reglas, del aviso, de solicitudes y del revelado; G8, G10 y A12 en Playwright con axe.
+- Plazos legales confirmados por Lourdes y llevados a `src/app/legal.ts` (`PRIVACY_DEADLINES`); la semilla y los textos los toman de ahí. Tests con una solicitud creada un viernes y de que ningún plazo en días hábiles caiga en fin de semana.

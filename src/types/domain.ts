@@ -290,7 +290,7 @@ export interface PrivacyRequest {
   type: PrivacyRequestType;
   detail: string;
   createdAt: string;
-  /** Legal deadline (ISO date): access 10 calendar days, rectification and deletion 5 business days. */
+  /** Legal deadline (ISO date), from PRIVACY_DEADLINES in src/app/legal.ts (Ley 25.326). */
   dueAt: string;
   status: PrivacyRequestStatus;
   response?: string;

@@ -1,11 +1,12 @@
 import type { ConsentRecord, Hire, PrivacyRequestType, SensitiveField } from '@/types/domain';
 import { addDays, DEMO_TODAY, daysBetween } from './dates';
 import { CHECKIN_OFFSETS } from './journey';
+import { type LegalDeadline, PRIVACY_DEADLINES } from '@/app/legal';
 
 /**
- * Privacy rules (F10). Deadlines follow Ley 25.326 (Argentina): access within 10 calendar days,
- * rectification and deletion within 5 business days. Sensitive identifiers are always masked
- * and only the last 4 characters are shown.
+ * Privacy rules (F10). Response deadlines come from PRIVACY_DEADLINES (src/app/legal.ts,
+ * Ley 25.326): never written here. Sensitive identifiers are always masked and only the last
+ * 4 characters are shown.
  */
 
 /** True when the person accepted the version of the notice in force. */
@@ -29,9 +30,14 @@ export function addBusinessDays(isoDate: string, days: number): string {
   return date;
 }
 
-/** Legal deadline of a request, from the day it was sent. */
-export function dueDateFor(type: PrivacyRequestType, createdOn: string): string {
-  return type === 'access' ? addDays(createdOn, 10) : addBusinessDays(createdOn, 5);
+/** Legal deadline of a request, from the day it was sent (the day itself does not count). */
+export function dueDateFor(
+  type: PrivacyRequestType,
+  createdOn: string,
+  deadlines: Record<PrivacyRequestType, LegalDeadline> = PRIVACY_DEADLINES,
+): string {
+  const { days, kind } = deadlines[type];
+  return kind === 'calendar' ? addDays(createdOn, days) : addBusinessDays(createdOn, days);
 }
 
 /** Days left to answer (negative when the deadline passed). */

@@ -2670,15 +2670,15 @@
       "typeOptions": {
         "access": {
           "label": "Access",
-          "help": "See what data of yours Rumbo keeps. Answer within 10 calendar days."
+          "help": "See what data of yours Rumbo keeps. Answer within {{days}} calendar days."
         },
         "rectification": {
           "label": "Correction",
-          "help": "Fix a piece of data that is wrong. Answer within 5 business days."
+          "help": "Fix a piece of data that is wrong. Answer within {{days}} business days."
         },
         "deletion": {
           "label": "Deletion",
-          "help": "Delete data that is no longer needed. Answer within 5 business days."
+          "help": "Delete data that is no longer needed. Answer within {{days}} business days."
         }
       },
       "detail": "Details",
