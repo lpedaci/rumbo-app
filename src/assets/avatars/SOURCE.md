@@ -15,4 +15,4 @@ Provistos por Lourdes en `design-references/`, recortados al rostro y reducidos 
 | `sofia.webp` | Sofía Ramírez, nuevo ingreso | `close-up-good-looking-smiling-friendly-female-trainee-…jpg` |
 | `diego.webp` | Diego Ferreyra, sistemas | `2148928793.jpg` |
 
-Licencia: Lourdes confirmó el 11/11/2026 que los cuatro originales tienen licencia para usarse en un portfolio público.
+Origen: banco de imágenes Magnific (magnific.com, antes Freepik), búsqueda "corporate people headshot picture". Licencia: Lourdes confirmó el 11/11/2026 que los cuatro originales tienen licencia para usarse en un portfolio público. La licencia gratuita de ese banco pide atribución: el pie de G0 incluye "Fotos de personas: Magnific".

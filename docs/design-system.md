@@ -321,3 +321,11 @@ World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 
 - **Ritmo vertical de los flujos de acceso:** 32 px entre secciones, 8 a 16 px dentro de cada una.
 - **Aviso de tarea bloqueada (N2):** sección en `warning-container` con candado, explicación y una fila por tarea previa (tipo, título enlazado, responsable en chip, vencimiento, "Ir a la tarea").
 
+### Página de inicio de la demo, G0 (D-70)
+
+- **Encabezado de sección** (`SectionHeading`): etiqueta con punto `primary`, `h2` en `headline-small` (mobile) o `display-small`, y una línea en `body-large`. Centrado.
+- **Escenas:** tarjetas con una zona `surface-container` de 160 a 176 px con mini interfaces hechas con piezas de Rumbo (filas, chips, línea de tiempo, código de verificación). Son decorativas (`aria-hidden`); el título y el texto de la tarjeta dicen lo mismo.
+- **Bento de la solución:** grilla de 6 columnas desde 768 px: tres tarjetas de 2 columnas y abajo una de 4 y una de 2.
+- **Banda de cifras:** bloque `primary` plano con tarjetas blancas (ícono, número y etiqueta). Es la única zona de color fuerte de la página. Números calculados desde los datos.
+- **Preguntas frecuentes:** acordeón de Radix, filas numeradas, una abierta a la vez.
+- **Pie:** tarjeta blanca con logo, aviso de demo, enlaces, "Restablecer demo", autoría, crédito de las fotos y la marca "Rumbo" en `primary-container` como SVG decorativo, cortada por el borde.

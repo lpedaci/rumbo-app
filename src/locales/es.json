@@ -364,13 +364,46 @@
     ],
     "metaLabel": "Sobre esta demo",
     "previewFrame": "Vista previa del producto",
-    "features": {
-      "title": "Qué muestra el prototipo",
-      "subtitle": "Los flujos clave de un recorrido de ingreso en una empresa, de punta a punta.",
+    "roleLabel": "Rol",
+    "nav": {
+      "how": "Cómo funciona",
+      "journeys": "Recorridos",
+      "faq": "Preguntas",
+      "label": "Secciones de la página"
+    },
+    "problem": {
+      "eyebrow": "El problema",
+      "title": "Sin un recorrido claro, el primer mes se pierde en preguntas",
+      "subtitle": "Cuando el ingreso depende de correos sueltos y planillas, cada área avanza por su lado y nadie ve el conjunto.",
+      "items": [
+        {
+          "title": "Nadie sabe qué toca hoy",
+          "body": "La persona nueva no sabe qué hacer, con quién ni para cuándo, y pregunta todo por chat."
+        },
+        {
+          "title": "Las tareas se traban entre áreas",
+          "body": "Un acceso que no llega frena el resto del recorrido, y nadie sabe a quién reclamarlo."
+        },
+        {
+          "title": "RRHH se entera tarde",
+          "body": "Sin datos del avance, los atrasos aparecen recién en la reunión de los 90 días."
+        }
+      ],
+      "illo": {
+        "question": "¿Qué hago hoy?",
+        "waiting": "Esperando a Sistemas",
+        "blocked": "Bloqueada",
+        "late": "3 vencidas"
+      }
+    },
+    "solution": {
+      "eyebrow": "La solución",
+      "title": "Todo el recorrido de ingreso en un solo lugar",
+      "subtitle": "RRHH diseña, el jefe directo acompaña y la persona nueva sabe siempre qué sigue.",
       "items": [
         {
           "title": "Recorridos por etapa",
-          "body": "Preingreso, Semana 1, Mes 1 y Días 30 a 90, con tareas que se desbloquean por dependencias."
+          "body": "Preingreso, Semana 1, Mes 1 y Días 30 a 90, con tareas que se desbloquean al completar otras."
         },
         {
           "title": "Constructor de plantillas",
@@ -378,15 +411,85 @@
         },
         {
           "title": "Check-ins 30, 60 y 90",
-          "body": "El jefe directo evalúa hitos y, si algo no se cumple, reprograma o escala a RRHH."
+          "body": "El jefe directo evalúa hitos; si uno no se cumple, reprograma o escala a RRHH."
+        },
+        {
+          "title": "Panel de seguimiento",
+          "body": "RRHH ve el avance de cada ingreso, las tareas vencidas por responsable y dónde se traban los recorridos."
         },
         {
           "title": "Seguridad y accesos",
           "body": "Inicio de sesión con SSO, verificación en dos pasos, permisos por rol y auditoría, simulados."
         }
+      ],
+      "illo": {
+        "today": "Hoy",
+        "stages": [
+          "Preingreso",
+          "Semana 1",
+          "Mes 1",
+          "Días 30 a 90"
+        ],
+        "tasks": [
+          "Firmar contrato",
+          "Acceso a Jira",
+          "Primer análisis guiado"
+        ],
+        "milestones": [
+          "Completó la semana 1",
+          "Conoce las herramientas",
+          "Vínculo con el equipo"
+        ],
+        "met": "Cumplido",
+        "partial": "Parcial",
+        "onTime": "Tareas a tiempo",
+        "code": "Código de verificación",
+        "chips": [
+          "SSO",
+          "Verificación en dos pasos",
+          "Auditoría"
+        ]
+      }
+    },
+    "stats": {
+      "title": "Un prototipo navegable, con datos simulados coherentes",
+      "subtitle": "Las cifras se calculan a partir de los datos de demo de Nortia S.A.",
+      "roles": "Roles para recorrer",
+      "screens": "Pantallas en la fase A",
+      "templates": "Plantillas de recorrido",
+      "hires": "Ingresos simulados",
+      "tasks": "Tareas en recorridos"
+    },
+    "faq": {
+      "eyebrow": "Preguntas",
+      "title": "Preguntas frecuentes",
+      "subtitle": "Lo que conviene saber antes de recorrer la demo.",
+      "items": [
+        {
+          "q": "¿Los datos son reales?",
+          "a": "No. Nortia S.A. es una empresa inventada y todas las personas, correos y datos son ficticios. No ingreses datos reales."
+        },
+        {
+          "q": "¿Cómo cambio de rol?",
+          "a": "Una vez dentro, usa el selector «Ver como» de la barra superior. Cambiar de rol equivale a iniciar sesión con el usuario de demo de ese rol."
+        },
+        {
+          "q": "¿Se guardan los cambios?",
+          "a": "Sí, solo en este navegador. Puedes volver al estado inicial con «Restablecer demo», al pie de esta página o en el menú de usuario."
+        },
+        {
+          "q": "¿La seguridad es real?",
+          "a": "El inicio de sesión con SSO, la verificación en dos pasos y los bloqueos están simulados en la interfaz. La documentación explica cómo se implementarían en producción."
+        },
+        {
+          "q": "¿Qué estándar de accesibilidad sigue?",
+          "a": "WCAG 2.2 AA: se usa con teclado, tiene foco visible, contraste verificado y se reacomoda desde 320 px de ancho."
+        }
       ]
     },
-    "roleLabel": "Rol"
+    "photoCredit": "Fotos de personas: Magnific",
+    "footerTagline": "Recorridos de ingreso claros para cada persona nueva, su jefe directo y RRHH.",
+    "author": "Diseño: Lourdes Pedaci, Learning Experience Designer"
   },
   "stages": {
     "preboarding": "Preingreso",

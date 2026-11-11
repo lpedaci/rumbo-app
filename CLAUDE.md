@@ -56,7 +56,7 @@ Los colores se nombran y usan con los **roles de Material 3** (cada rol tiene su
 
 | Rol M3 | Color | Uso |
 | --- | --- | --- |
-| `surface` | `#EDF3F4` | Fondo de la página: levemente tintado de petróleo para que las tarjetas blancas se despeguen, como en las referencias |
+| `surface` | `#F1F3F5` | Fondo de la página: gris frío neutro, sin tinte de marca; las tarjetas blancas se despegan con su borde (D-69) |
 | `surface-container-lowest` | `#FFFFFF` | Tarjetas bento, tablas, formularios |
 | `surface-container` | `#EEF2F4` | Sidebar, encabezados de tabla, zonas agrupadas |
 | `surface-container-high` | `#E4E9EC` | Hover de filas, elementos seleccionados neutros |
@@ -64,6 +64,15 @@ Los colores se nombran y usan con los **roles de Material 3** (cada rol tiene su
 | `on-surface-variant` | `#4B5563` | Texto secundario, íconos |
 | `outline` | `#7D8793` | Bordes de campos de formulario y controles (3:1) |
 | `outline-variant` | `#D5DBE0` | Bordes de tarjetas y divisores (decorativos) |
+
+**Colores por rol** (D-69): identifican a las personas y sus roles; nunca indican estados.
+
+| Rol | Base | Container | Uso |
+| --- | --- | --- | --- |
+| `role-hr` (RRHH) | `#1F6F78` | `#D8EEF0` | Anillo de la foto, barra y chip de la tarjeta de rol, contenedor de las iniciales |
+| `role-manager` (jefe directo) | `#9C3D74` | `#F6DCEA` | Ídem |
+| `role-hire` (nuevo ingreso) | `#6A4FC4` | `#E8E1FB` | Ídem |
+| `role-it` (sistemas) | `#2457C5` | `#DCE6FB` | Ídem |
 
 **Reglas de color**
 - **Jerarquía por elevación tonal, no por sombra:** como propone M3, la profundidad se marca con los niveles de `surface-container`, no con sombras (ver 2.5).
@@ -80,7 +89,7 @@ Los colores se nombran y usan con los **roles de Material 3** (cada rol tiene su
 
 | Rol M3 | Tamaño / interlineado | Peso | Uso en el producto |
 | --- | --- | --- | --- |
-| `display-small` (enfatizado) | 36 / 44 | 600 | Solo números grandes de KPIs |
+| `display-small` (enfatizado) | 36 / 44 | 600 | Números grandes de KPIs desde 1280 px (en mobile y tablet, `headline-small`, D-63) y títulos de sección de G0 |
 | `headline-small` (enfatizado) | 24 / 32 | 600 | Título de página (un único `h1` por pantalla) |
 | `title-large` (enfatizado) | 22 / 28 | 600 | Título de sección (`h2`) |
 | `title-medium` (enfatizado) | 16 / 24 | 600 | Título de tarjeta, de modal y de grupo (`h3`) |
@@ -120,6 +129,8 @@ Material 3 Expressive (la actualización vigente de M3) mantiene los cinco estil
 - Estados obligatorios en todos los botones: reposo, hover, foco visible (anillo `primary` de 2 px con separación), presionado, deshabilitado y cargando (con indicador y texto "Guardando…", sin cambiar el ancho).
 - Un botón deshabilitado debe explicar por qué (texto de ayuda cercano o tooltip accesible por teclado).
 - Para filtros y alternativas excluyentes usar **segmented buttons** o **chips** de M3, no botones sueltos.
+- **Separación entre botones:** al menos 12 px entre botones de ícono en mobile y 16 px desde 640 px, para que no se toquen por error (D-68).
+- **Forma única también en la navegación y la barra superior:** sin botones en círculo; los de utilidad (Ayuda, Notificaciones) van sobre `surface-container` con esquinas suaves, y "Ver como" usa el botón outlined (D-62, D-69).
 
 ### 2.2 Referencias visuales
 - Colección de referencia de Lourdes en Dribbble: https://dribbble.com/milu106ae8/collections/87da69f1-df85-4cf2-9bce-93de87a8363b/share
@@ -140,7 +151,7 @@ Material 3 Expressive (la actualización vigente de M3) mantiene los cinco estil
 - **Qué NO tomar:** **fondos con degradé.** Los fondos van en colores planos (superficies de M3). Si se necesita separar zonas, usar diferencias de superficie, bordes sutiles o elevación, nunca degradés.
 - **Gráficos de área:** varias referencias rellenan el área bajo la línea con degradé. Acá el relleno va en un color plano con baja opacidad (por ejemplo, el color de la serie al 12 %), coherente con la regla de no usar degradés.
 - No copiar ilustraciones, íconos ni textos de los shots de referencia: son de sus autores.
-- **Sin fotos de personas:** las referencias usan fotos y emojis en los avatares; Rumbo usa iniciales sobre contenedores de color (ver 2.2.1). Los colores de botones de las referencias (azul, violeta) se reemplazan por los roles de 2.1.1.
+- **Fotos de personas:** solo las cuatro personas de demo (Carla, Martín, Sofía y Diego) usan retratos elegidos por Lourdes, con licencia, guardados en `src/assets/avatars/` con su origen en `SOURCE.md` y el crédito en el pie de G0. El resto de las personas usa iniciales sobre el contenedor de su rol. Nunca emojis. Los colores de botones de las referencias (azul, violeta) se reemplazan por los roles de 2.1.1 (D-69).
 
 ### 2.2.1 Dirección visual: que se vea propio, no genérico
 
@@ -153,22 +164,24 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 
 **Patrones concretos a incorporar** (tomados de `/design-references/`):
 1. **Capas visibles:** fondo de página tintado (`surface`) con tarjetas blancas encima; la diferencia tiene que verse a simple vista.
-2. **Jerarquía tipográfica marcada:** saludo grande en los inicios de cada rol ("Buenas tardes, Carla", `headline-small` o mayor) con una línea de contexto; números de KPI grandes (`display-small`).
-3. **KPIs con vida:** cada tarjeta de KPI lleva ícono en un contenedor de color, número grande, variación en píldora de color (sube / baja) y una **mini línea de tendencia (sparkline)**.
+2. **Encabezado de saludo en los inicios de cada rol** (`GreetingHeader`, D-67): arriba la fecha de hoy con ícono; el saludo con el nombre en `primary` ("Buenos días, **Sofía**", `headline-small`, único `h1`); debajo, chips con ícono y texto con el contexto (por ejemplo "Día 28 de 90", "Mes 1 · etapa actual"). El dato que pide atención va en `tertiary-container` ("Check-in en 2 días"). Números de KPI grandes (`display-small` desde 1280 px).
+3. **KPIs con vida:** cada tarjeta lleva arriba el ícono en un contenedor de color y la **sparkline**; después la etiqueta, el número y la píldora de variación siempre debajo del número, con los datos alineados abajo (D-63). La fila pone tantas tarjetas como entren con un mínimo de 8,5 rem: 4 KPIs breves en una línea desde tablet, 2 por fila en mobile, y si una tarjeta tiene más contenido pasa sola a dos líneas (D-68). La sparkline solo se muestra si la tarjeta mide al menos 10,5 rem y nunca por debajo de 360 px de pantalla; la píldora pasa a dos líneas en lugar de cortarse (D-69).
 4. **Gráficos protagonistas:** el gráfico principal ocupa una tarjeta grande, con relleno plano suave, ejes discretos y **tooltip oscuro** (`inverse-surface` de M3, `#1F2A30` con texto blanco).
-5. **Navegación lateral con identidad:** íconos de Material Symbols, ítem activo con píldora tintada de `primary-container`, sección de usuario abajo con avatar.
-6. **Personas con color:** avatares con iniciales sobre contenedores de color distintos por rol (`primary-container` para RRHH, `tertiary-container` para jefes, `secondary-container` para nuevos ingresos, `info` container para sistemas), usados igual en todo el producto.
+5. **Navegación lateral (referencia `ad2d9e23`, D-57, D-58, D-60):** una sola barra blanca flotante, con esquinas redondeadas y a todo el alto. Arriba, el botón para plegarla a íconos (la elección queda guardada; plegada por defecto por debajo de 1280 px). Al medio, los ítems del rol con el activo en píldora sólida `primary` (ícono y texto blancos). Abajo, "Mi seguridad" y "Cerrar sesión". Íconos de Material Symbols.
+6. **Personas con color:** cada rol tiene su color (`role-hr`, `role-manager`, `role-hire`, `role-it`, ver 2.1.1). Con foto, un anillo de 2 px del color del rol; sin foto, iniciales sobre el contenedor del rol. Igual en todo el producto (D-69).
 7. **Tablas aireadas:** avatar + nombre + dato secundario en la primera columna, estados en píldoras de color con ícono, filas con hover.
 8. **Progreso visible:** barras de progreso gruesas y redondeadas, checklist con íconos de estado, como en la tarjeta "You're almost there!".
 9. **Bienvenida guiada como la del video:** al primer ingreso de cada rol, un modal de 3 o 4 pasos con zona ilustrativa hecha con **componentes reales de Rumbo en miniatura** (por ejemplo, para Sofía: su tarjeta de recorrido, una tarea que se tilda y su check-in), puntos de progreso, "Anterior" / "Continuar" y un cierre ("Empezar mi recorrido"). Se puede saltar y volver a ver desde el menú (F16). En "Anterior" del primer paso: oculto o deshabilitado con texto que no dependa solo del color. Respeta reducir animaciones.
-10. **Tarjeta de progreso con barra segmentada:** como `original-cf59fe35`, una barra hecha de barritas verticales (una por tarea o por porcentaje), en colores planos (`primary` las completas, `outline-variant` las pendientes, nunca degradé). Debajo, la checklist en filas con ícono de estado y chevron. Usar en N1 para el bienvenido y el avance.
+10. **Línea de tiempo del recorrido** (reemplaza la barra segmentada en N1, D-61): un tramo por etapa relleno según sus tareas hechas y el marcador "Hoy · día N" en ciruela; bajo cada tramo, nombre, "N de M" y estado con ícono y texto. Arriba, una frase con la conclusión ("Vas al día" o "Tienes N tareas vencidas"), con "Ver como tabla"; debajo, "Lo próximo". La barra segmentada de `original-cf59fe35` queda para vistas previas.
 11. **Catálogo de tarjetas para plantillas:** como `7fa40cfb`, A5 se muestra por defecto como **grilla de tarjetas** (nombre, puesto y área en chips, cantidad de tareas con ícono, ingresos que la usan, estado borrador o publicada, botón "Ver plantilla"), con la primera tarjeta "Crear plantilla" con borde punteado, y un selector para cambiar a vista de tabla.
-12. **Doble navegación lateral en desktop:** riel de íconos fijo y menú expandido con secciones agrupadas y la persona usuaria abajo, como `7fa40cfb`; en tablet solo el riel; en mobile, menú inferior (ya implementado).
+12. **Barra superior** (D-60, D-64, D-69): barra blanca flotante con borde y radio `xl`, sobre el fondo gris: logo en una línea ("Rumbo | Nortia S.A."), "Ver como", divisores, Ayuda y Notificaciones sobre `surface-container`, y la persona con foto, nombre y correo desde 1024 px (solo la foto en pantallas menores). En mobile, la barra superior y el menú inferior muestran solo íconos, y el botón de menú abre el panel lateral.
 13. **Acento con intención:** el `tertiary` (ciruela) aparece en logros, destacados y la segunda serie de gráficos para dar contraste; no todo es petróleo.
+14. **Listas y detalles estándar** (D-65): en una fila de tarea, a la izquierda el control o ícono; al medio el título y debajo "Tipo · Responsable"; a la derecha, en columnas desde 640 px, la fecha con "Vence en…" y el estado. Toda la fila es el enlace, sin subrayado. Las tareas hechas se pliegan en "Ver N tareas hechas" (D-59). En los detalles (N2), chips de estado, tipo y etapa, y una lista "Detalles" con etiqueta y valor en la misma fila.
+15. **Aviso de tarea bloqueada** (D-69): sección en `warning-container` con candado, "Se habilita cuando esté hecha esta tarea" y una fila por tarea previa con tipo, título enlazado, responsable en chip ("Te toca a ti" resaltado), vencimiento e "Ir a la tarea".
 
 **Pantallas que más lo necesitan:**
-- **G0, inicio de la demo:** hero a dos columnas con titular grande (`display-small` o `display-medium`), texto breve y botones; a la derecha, una **vista previa grande y compuesta del producto** (tarjetas de KPI con sparklines, un gráfico y la checklist de recorrido, armadas con componentes reales, superpuestas en una composición tipo bento). Debajo, las tarjetas de roles con avatar de color, más grandes y con más contraste. Enlaces "Ver el case study" y "Ver la documentación" también en el encabezado.
-- **G1, login:** dos columnas como la referencia `e97bf4eb`: formulario a la izquierda y, a la derecha, un panel con fondo tintado (sin degradé) con una vista previa del producto y una frase de valor. En mobile, solo el formulario.
+- **G0, inicio de la demo:** página de producto B2B (D-70); ver la estructura en F0.
+- **G1, login:** dos columnas como la referencia `e97bf4eb`: formulario a la izquierda y, a la derecha, un panel con fondo tintado (sin degradé) con una vista previa del producto y una frase de valor. En mobile, solo el formulario. Ritmo de 8 px: 32 px entre secciones y 8 a 16 px dentro de cada una, igual que G2 a G4 (D-69).
 - **Inicios de cada rol (A1, J1, N1, S1):** saludo + fila de KPIs + gráfico o bloque principal + lista o tabla, en bento.
 
 **Proceso obligatorio antes de seguir con el paso 7:**
@@ -191,6 +204,9 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 - Tamaños de tarjeta definidos como variantes de un componente `<BentoCard size="sm | md | lg | wide | tall">`, por ejemplo: KPI = sm, gráfico principal = lg o wide, alertas = tall.
 - Mismo espacio entre tarjetas en toda la grilla (token de espaciado), mismo radio y mismo padding interno.
 - Cada tarjeta tiene título, dato principal y, si corresponde, una acción ("Ver detalle"). Nada de tarjetas con contenido que no cabe: si no entra, la tarjeta cambia de tamaño o el contenido se resume.
+- **Sin huecos:** una tarjeta que en tablet quedaría sola en media fila ocupa la fila completa y reparte su contenido en dos columnas internas (D-68).
+- **Ancho del contenido:** hasta el 80 % del área disponible y nunca menos de 1.280 px (D-64).
+- **Ritmo vertical de 8 px:** 32 px entre secciones y 8 a 16 px dentro de cada una (D-69).
 
 ### 2.5 Sombras y elevación (uso mínimo)
 - La interfaz debe sentirse **liviana**. Las tarjetas y superficies se separan con **color de superficie y bordes sutiles**, no con sombras.
@@ -217,7 +233,7 @@ Usar **Motion** (Framer Motion) solo para estas animaciones, con duraciones de 1
 - Textos largos (nombres, emails, títulos de tareas): cortar con puntos suspensivos y mostrar el texto completo en tooltip, o pasar a dos líneas con límite.
 - **Tablas en mobile:** se transforman en listas de tarjetas con los datos principales; si una tabla debe mantenerse, el desplazamiento horizontal ocurre dentro de su contenedor, nunca en la página.
 - Gráficos responsivos (se redimensionan con su tarjeta) y con leyendas que se reacomodan.
-- Navegación: sidebar completa en desktop, sidebar de íconos en tablet y menú inferior o desplegable en mobile.
+- Navegación: barra lateral flotante expandida en desktop, plegada a íconos por debajo de 1280 px (se puede expandir), y en mobile menú inferior de íconos más un panel lateral desde el botón de menú (D-58, D-60).
 - Áreas táctiles de al menos 48 × 48 px en mobile (igual que 2.1.3 y 2.10).
 - **Verificación automatizada:** test con Playwright que recorre las pantallas principales de cada rol en los 6 anchos, saca capturas en `docs/screenshots/` y falla si `document.documentElement.scrollWidth > clientWidth` o si algún elemento marcado como contenedor desborda. Correrlo antes de cada revisión.
 
@@ -277,6 +293,7 @@ Todos los textos viven en `src/locales/`. Antes de cerrar cada pantalla, revisar
 
 **Formularios: etiqueta, texto de ayuda y placeholder**
 - Cada campo tiene una **etiqueta visible y permanente** arriba del campo (`label-medium`). El placeholder **nunca** reemplaza a la etiqueta: desaparece al escribir y suele tener poco contraste.
+- Los campos ocupan todo el ancho del formulario, y las etiquetas y los textos de ayuda nunca se cortan (D-69).
 - **Debajo de cada campo va un texto de ayuda** (*supporting text* de M3, `body-small`, color `on-surface-variant`) que indica **exactamente qué hay que poner y en qué formato**, con un ejemplo. Por ejemplo:
     - Correo: "Tu correo de trabajo, por ejemplo: nombre.apellido@nortia.demo".
     - Fecha de ingreso: "Formato DD/MM/AAAA, por ejemplo: 13/10/2026".
@@ -405,12 +422,21 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
 - Contenido, en este orden:
     1. Logo y nombre de Rumbo, y una frase que diga qué es y qué problema resuelve (por ejemplo: "Cada persona sabe qué hacer, con quién y para cuándo").
     2. Breve explicación de la demo: es un prototipo con datos ficticios de una empresa inventada, Nortia S.A.
-    3. **Elección del recorrido:** cuatro tarjetas, una por rol (Carla, RRHH; Martín, jefe directo; Sofía, nuevo ingreso; Diego, sistemas). Cada una con qué hace ese rol y qué va a poder recorrer (2 o 3 puntos concretos).
+    3. **Elección del recorrido:** cuatro tarjetas, una por rol (Carla, RRHH; Martín, jefe directo; Sofía, nuevo ingreso; Diego, sistemas). Cada una con la foto de la persona, la barra y el chip del color de su rol, qué hace y qué va a poder recorrer (2 o 3 puntos concretos).
     4. Botones "Ver el case study" y "Ver la documentación" (al `docs/README.md` del repositorio). La URL del case study sale de una constante `CASE_STUDY_URL` en un único archivo de configuración; mientras el case study no esté publicado, apunta al portfolio: `https://lpedaci.github.io/portfolio/`. El botón se muestra siempre.
     5. "Restablecer demo".
 - Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
-- Diseño coherente con el resto del producto (bento, sin degradés, sin sombras); en mobile, las tarjetas en una columna.
-- La vista previa del producto que hoy está en el panel derecho del login se mueve a esta pantalla.
+- **Estructura de página de producto B2B** (D-70, a partir de una referencia de Lourdes):
+    1. Barra superior flotante con el logo, enlaces a las secciones ("Cómo funciona", "Recorridos", "Preguntas") y la acción principal "Elegir un recorrido".
+    2. Hero centrado: etiqueta, titular, texto, "Elegir un recorrido" y "Ver el case study", los datos de la demo (4 roles, datos ficticios, WCAG 2.2 AA, se guarda en el navegador) y el producto dentro de un marco neutro.
+    3. **El problema:** tres tarjetas con una escena hecha con piezas de Rumbo.
+    4. **La solución:** bento de cinco tarjetas (recorridos por etapa, constructor de plantillas, check-ins, panel de seguimiento, seguridad y accesos), cada una con una mini interfaz.
+    5. **Banda de cifras** en `primary` plano con tarjetas blancas; los números salen de los datos de demo, nunca escritos a mano (salvo las 24 pantallas de la fase A, que son un dato de la spec).
+    6. Elección del recorrido (punto 3).
+    7. **Preguntas frecuentes** en acordeón accesible.
+    8. Pie con logo, aviso de demo, enlaces, "Restablecer demo", autoría, crédito de las fotos y la marca "Rumbo" grande como SVG decorativo.
+- **No se usan** logos de otras empresas ("empresas que confían") ni testimonios: serían inventados.
+- Sin degradés ni sombras en tarjetas en reposo; en mobile, todo en una columna (las cifras, de a dos).
 
 **Inicio de sesión (G1)**
 - Pantalla de login limpia, con el logo de Rumbo y el de la empresa ficticia, y el texto "Usa tu cuenta de trabajo de Nortia" (Microsoft desaconseja expresiones como "cuenta corporativa" junto a su botón y recomienda "cuenta de trabajo o educativa").
@@ -420,7 +446,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     - Textos exactos: "Continuar con Microsoft" y "Continuar con Google" (no "Google Workspace").
     - Los dos botones con el mismo tamaño, estilo y peso visual (Google exige igual prominencia frente a otras opciones).
 - Opción secundaria "Iniciar sesión con correo y contraseña" (`carla@nortia.demo`, `martin@nortia.demo`, `sofia@nortia.demo`, `diego@nortia.demo`, contraseña `Demo.2026!`).
-- **Con un rol preseleccionado desde el inicio:** arriba del login aparece un único aviso "Vas a entrar como Carla, RRHH", con el botón principal "Continuar como Carla" (recorre SSO y MFA con el código precargado) y el enlace "Cambiar recorrido", que vuelve a `/`. El resto del login sigue igual.
+- **Con un rol preseleccionado desde el inicio** (`/login?demo=carla`): el login se ve limpio, sin recuadros. El formulario de correo llega con el correo de trabajo de esa persona precargado, y los botones de SSO entran con su cuenta ficticia (ver G2) (D-66).
 - **Sin rol preseleccionado** (quien entra directo a `/login`): login limpio; se puede usar cualquiera de las credenciales de demo.
 - Se mantiene "¿Problemas para iniciar sesión?".
 - Aviso de demo discreto (una línea, sin ocupar el espacio principal): "Demo con datos ficticios: no ingreses datos reales".
@@ -431,6 +457,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
 - **Nunca imitar la página real de inicio de sesión de Microsoft ni de Google** (ni su diseño, ni sus colores, ni sus textos): una copia de esa página funciona igual que una página de phishing, aunque sea para una demo.
 - Puede mencionar que, en producción, esa página mostraría la marca de Nortia (los proveedores permiten que cada empresa personalice su página de inicio de sesión), sin reproducirla.
 - Botón "Continuar" que completa el inicio de sesión simulado y lleva a la verificación en dos pasos.
+- **Con un rol preseleccionado:** la simulación muestra la cuenta ficticia de la persona (foto, nombre y correo) y tilda tres pasos de 1,2 s cada uno (te redirigimos, cuenta de trabajo, el proveedor confirmó tu identidad); sigue sola a MFA con el código precargado, y "Continuar" evita la espera. Sin rol preseleccionado, muestra el selector de cuentas de demo (D-66, D-67).
 
 **Mensajes y protección contra fuerza bruta**
 - Error de credenciales **genérico** ("Correo o contraseña incorrectos"), sin revelar si el correo existe.
@@ -905,8 +932,8 @@ Después de cada paso, verificar que el build compila, que los tests pasan y que
 
 ## 11. Criterios de aceptación del MVP
 
-- [ ] Desde el inicio de la demo se elige cualquiera de los 4 roles y, con "Continuar como…", se entra pasando por SSO o contraseña y MFA simulados.
-- [ ] El login no tiene tarjetas de roles ni panel de marketing; con rol preseleccionado muestra "Vas a entrar como…" y "Cambiar recorrido".
+- [ ] Desde el inicio de la demo se elige cualquiera de los 4 roles y, con "Continuar con Microsoft" o "Continuar con Google", se entra pasando por la simulación de SSO con la cuenta ficticia de la persona y MFA con el código precargado.
+- [ ] El login no tiene tarjetas de roles, panel de marketing ni recuadros de rol preseleccionado; con un rol elegido, el correo llega precargado.
 - [ ] Los botones de SSO usan los logos oficiales sin modificar, con los textos "Continuar con Microsoft" y "Continuar con Google" y la misma prominencia.
 - [ ] La simulación de SSO es neutra, está rotulada como simulación y no imita las páginas de Microsoft ni de Google.
 - [ ] Sin sesión no se puede ver ninguna pantalla interna, y cada rol solo accede a sus rutas; los intentos denegados quedan en la auditoría.

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { type RefObject, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate } from 'react-router';
 import { CASE_STUDY_URL, DOCS_URL } from '@/app/links';
@@ -7,17 +7,20 @@ import { Avatar, ROLE_ACCENT } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/Dialog';
 import { Icon, type IconName } from '@/components/ui/Icon';
-import { IconTile } from '@/components/ui/IconTile';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { DEMO_ACCOUNTS, demoKeyFor, findDemoPerson, resetDemo } from '@/features/auth/auth-service';
 import { useShouldReduceMotion } from '@/lib/motion';
 import { homePath } from '@/lib/permissions';
 import { cn } from '@/lib/utils';
 import { useSessionStore } from '@/store/session-store';
+import { FaqSection } from './FaqSection';
+import { ProblemSection } from './ProblemSection';
 import { ProductPreview } from './ProductPreview';
+import { SolutionSection } from './SolutionSection';
+import { SectionHeading } from './SectionHeading';
+import { StatsBand } from './StatsBand';
 
 const META_ICONS: IconName[] = ['groups', 'apartment', 'verified_user', 'devices'];
-const FEATURE_ICONS: IconName[] = ['route', 'layers', 'event', 'security'];
 
 function ExternalLink({ href, label, variant }: { href: string; label: string; variant: 'text' | 'outlined' }) {
   const { t } = useTranslation();
@@ -32,10 +35,11 @@ function ExternalLink({ href, label, variant }: { href: string; label: string; v
 }
 
 /**
- * G0 · Demo start (CLAUDE.md F0; redesign D-69 with current B2B product-page patterns):
- * floating top bar with the main action, centered hero with the key facts of the demo,
- * the product in a frame, one card per journey with photo and role color, and what the
- * prototype covers. Keeps the portfolio layer out of the product, so the login stays clean.
+ * G0 · Demo start (CLAUDE.md F0; redesign D-70 after Lourdes's B2B reference): floating bar
+ * with section links and the main action, centered hero with the product in a frame, the
+ * problem, the solution in a bento, a figures band, the journeys, questions and a footer with
+ * the wordmark. No logos of other companies nor testimonials: they would be invented.
+ * Keeps the portfolio layer out of the product, so the login stays clean.
  */
 export function DemoHomePage() {
   const { t } = useTranslation();
@@ -43,18 +47,25 @@ export function DemoHomePage() {
   const lastLogout = useSessionStore((s) => s.lastLogout);
   const [resetOpen, setResetOpen] = useState(false);
   const chooseRef = useRef<HTMLHeadingElement>(null);
+  const problemRef = useRef<HTMLHeadingElement>(null);
+  const faqRef = useRef<HTMLHeadingElement>(null);
   const reduce = useShouldReduceMotion();
 
   if (session) return <Navigate to={homePath(session)} replace />;
 
   // In-page jump without a hash link: the hash is the router's (HashRouter).
-  const goToJourneys = () => {
-    chooseRef.current?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
-    chooseRef.current?.focus({ preventScroll: true });
+  const goTo = (ref: RefObject<HTMLHeadingElement | null>) => {
+    ref.current?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+    ref.current?.focus({ preventScroll: true });
   };
+  const goToJourneys = () => goTo(chooseRef);
+  const sections = [
+    { label: t('home.nav.how'), ref: problemRef },
+    { label: t('home.nav.journeys'), ref: chooseRef },
+    { label: t('home.nav.faq'), ref: faqRef },
+  ];
 
   const meta = t('home.meta', { returnObjects: true }) as string[];
-  const features = t('home.features.items', { returnObjects: true }) as { title: string; body: string }[];
 
   return (
     <div className="min-h-dvh bg-surface">
@@ -70,10 +81,15 @@ export function DemoHomePage() {
         <div className="mx-auto flex h-16 w-full max-w-[max(80rem,80%)] min-w-0 items-center gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest px-3 sm:px-4">
           <Logo />
           <div className="flex-1" />
-          <nav aria-label={t('home.linksTitle')} className="hidden items-center gap-1 lg:flex">
-            <ExternalLink href={CASE_STUDY_URL} label={t('home.caseStudy')} variant="text" />
-            <ExternalLink href={DOCS_URL} label={t('home.docs')} variant="text" />
+          {/* Section links (buttons: the hash belongs to the router) */}
+          <nav aria-label={t('home.nav.label')} className="hidden items-center gap-1 md:flex">
+            {sections.map((section) => (
+              <Button key={section.label} variant="text" onClick={() => goTo(section.ref)}>
+                {section.label}
+              </Button>
+            ))}
           </nav>
+          <div className="flex-1" />
           <Button onClick={goToJourneys} trailingIcon="arrow_downward" className="hidden sm:inline-flex">
             {t('home.ctaChoose')}
           </Button>
@@ -141,14 +157,19 @@ export function DemoHomePage() {
           </figure>
         </section>
 
+        <ProblemSection ref={problemRef} />
+        <SolutionSection />
+        <StatsBand />
+
         {/* Journeys: one per role, with photo and role color */}
-        <section aria-labelledby="choose-title" className="flex scroll-mt-28 flex-col gap-8">
-          <div className="flex flex-col gap-2">
-            <h2 id="choose-title" ref={chooseRef} tabIndex={-1} className="scroll-mt-28 text-title-large text-on-surface outline-none">
-              {t('home.chooseTitle')}
-            </h2>
-            <p className="max-w-3xl text-body-large text-on-surface-variant">{t('home.chooseSubtitle')}</p>
-          </div>
+        <section aria-labelledby="choose-title" className="flex flex-col gap-10">
+          <SectionHeading
+            ref={chooseRef}
+            id="choose-title"
+            eyebrow={t('home.nav.journeys')}
+            title={t('home.chooseTitle')}
+            subtitle={t('home.chooseSubtitle')}
+          />
           <ul className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-2 xl:grid-cols-4">
             {DEMO_ACCOUNTS.map(({ personId, role }) => {
               const person = findDemoPerson(personId);
@@ -196,48 +217,52 @@ export function DemoHomePage() {
           </ul>
         </section>
 
-        {/* What the prototype covers */}
-        <section aria-labelledby="features-title" className="flex flex-col gap-8">
-          <div className="flex flex-col gap-2">
-            <h2 id="features-title" className="text-title-large text-on-surface">
-              {t('home.features.title')}
-            </h2>
-            <p className="max-w-3xl text-body-large text-on-surface-variant">{t('home.features.subtitle')}</p>
-          </div>
-          <ul className="grid grid-cols-1 gap-(--space-bento-gap) sm:grid-cols-2 xl:grid-cols-4">
-            {features.map((feature, i) => (
-              <li
-                key={feature.title}
-                className="flex min-w-0 flex-col gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-5"
-              >
-                <IconTile icon={FEATURE_ICONS[i] ?? 'check_circle'} tone={i === 3 ? 'tertiary' : 'primary'} />
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-title-medium text-on-surface">{feature.title}</h3>
-                  <p className="text-body-medium text-on-surface-variant">{feature.body}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <p className="flex max-w-3xl items-start gap-2 text-body-medium text-on-surface-variant">
-            <Icon name="info" className="mt-0.5 shrink-0 text-info" />
-            <span>
-              <strong className="font-medium text-on-surface">{t('home.demoTitle')}: </strong>
-              {t('home.demoBody')}
-            </span>
-          </p>
-        </section>
+        <FaqSection ref={faqRef} />
 
-        <footer className="flex flex-col gap-4 border-t border-outline-variant pt-6 md:flex-row md:items-center md:justify-between">
-          <nav aria-label={t('home.linksFooter')} className="flex flex-wrap gap-2">
-            <ExternalLink href={CASE_STUDY_URL} label={t('home.caseStudy')} variant="outlined" />
-            <ExternalLink href={DOCS_URL} label={t('home.docs')} variant="outlined" />
-          </nav>
-          <div className="flex flex-col gap-2 md:items-end">
-            <Button variant="text" leadingIcon="refresh" className="w-fit" onClick={() => setResetOpen(true)}>
-              {t('home.resetDemo')}
-            </Button>
-            <p className="text-body-small text-on-surface-variant">{t('app.demoNotice')}</p>
+        <footer className="flex flex-col gap-8 overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest px-5 pt-8 sm:px-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+            <div className="flex min-w-0 flex-col gap-3">
+              <Logo />
+              <p className="max-w-md text-body-medium text-on-surface-variant">{t('home.footerTagline')}</p>
+              <p className="flex max-w-xl items-start gap-2 text-body-small text-on-surface-variant">
+                <Icon name="info" size={16} className="mt-0.5 shrink-0 text-info" />
+                <span>
+                  <strong className="font-medium text-on-surface">{t('home.demoTitle')}: </strong>
+                  {t('home.demoBody')}
+                </span>
+              </p>
+            </div>
+            <div className="flex min-w-0 flex-col items-start gap-3 md:items-end">
+              <nav aria-label={t('home.linksFooter')} className="flex flex-wrap gap-2 md:justify-end">
+                <ExternalLink href={CASE_STUDY_URL} label={t('home.caseStudy')} variant="outlined" />
+                <ExternalLink href={DOCS_URL} label={t('home.docs')} variant="outlined" />
+              </nav>
+              <Button variant="text" leadingIcon="refresh" className="w-fit" onClick={() => setResetOpen(true)}>
+                {t('home.resetDemo')}
+              </Button>
+            </div>
           </div>
+          <div className="flex flex-col gap-1 border-t border-outline-variant pt-4 text-body-small text-on-surface-variant sm:flex-row sm:justify-between">
+            <p>{t('home.author')}</p>
+            <p>
+              {t('app.demoNotice')} · {t('home.photoCredit')}
+            </p>
+          </div>
+          {/* Decorative wordmark, flat color and cut by the card edge, as in the reference */}
+          {/* SVG so it scales with the card and is not read as text (2.1.2: no loose text sizes) */}
+          <svg aria-hidden focusable="false" viewBox="0 0 1000 210" className="-mb-2 w-full text-primary-container">
+            <text
+              x="500"
+              y="235"
+              textAnchor="middle"
+              fontSize="300"
+              fontWeight="700"
+              letterSpacing="-14"
+              fill="currentColor"
+            >
+              {t('app.name')}
+            </text>
+          </svg>
         </footer>
       </main>
 

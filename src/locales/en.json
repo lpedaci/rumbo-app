@@ -364,13 +364,46 @@
     ],
     "metaLabel": "About this demo",
     "previewFrame": "Product preview",
-    "features": {
-      "title": "What the prototype shows",
-      "subtitle": "The key flows of a corporate onboarding journey, end to end.",
+    "roleLabel": "Role",
+    "nav": {
+      "how": "How it works",
+      "journeys": "Journeys",
+      "faq": "Questions",
+      "label": "Page sections"
+    },
+    "problem": {
+      "eyebrow": "The problem",
+      "title": "Without a clear journey, the first month is lost in questions",
+      "subtitle": "When onboarding depends on scattered emails and spreadsheets, each team moves on its own and nobody sees the whole picture.",
+      "items": [
+        {
+          "title": "Nobody knows what is due today",
+          "body": "The new hire does not know what to do, with whom or by when, and asks everything over chat."
+        },
+        {
+          "title": "Tasks get stuck between teams",
+          "body": "One missing access holds back the rest of the journey, and nobody knows who to ask."
+        },
+        {
+          "title": "HR finds out too late",
+          "body": "Without progress data, delays only show up at the 90 day meeting."
+        }
+      ],
+      "illo": {
+        "question": "What do I do today?",
+        "waiting": "Waiting for IT",
+        "blocked": "Blocked",
+        "late": "3 overdue"
+      }
+    },
+    "solution": {
+      "eyebrow": "The solution",
+      "title": "The whole onboarding journey in one place",
+      "subtitle": "HR designs it, the direct manager supports and the new hire always knows what comes next.",
       "items": [
         {
           "title": "Journeys by stage",
-          "body": "Preboarding, Week 1, Month 1 and Days 30 to 90, with tasks that unlock through dependencies."
+          "body": "Preboarding, Week 1, Month 1 and Days 30 to 90, with tasks that unlock as others are completed."
         },
         {
           "title": "Template builder",
@@ -378,15 +411,85 @@
         },
         {
           "title": "30, 60 and 90 day check-ins",
-          "body": "The direct manager reviews milestones and, if one is not met, reschedules or escalates to HR."
+          "body": "The direct manager reviews milestones; if one is not met, they reschedule or escalate to HR."
+        },
+        {
+          "title": "Tracking dashboard",
+          "body": "HR sees each hire's progress, overdue tasks by owner and where journeys get stuck."
         },
         {
           "title": "Security and access",
           "body": "SSO sign-in, two-step verification, role-based permissions and audit log, simulated."
         }
+      ],
+      "illo": {
+        "today": "Today",
+        "stages": [
+          "Preboarding",
+          "Week 1",
+          "Month 1",
+          "Days 30 to 90"
+        ],
+        "tasks": [
+          "Sign contract",
+          "Jira access",
+          "First guided analysis"
+        ],
+        "milestones": [
+          "Finished week 1",
+          "Knows the tools",
+          "Bond with the team"
+        ],
+        "met": "Met",
+        "partial": "Partial",
+        "onTime": "Tasks on time",
+        "code": "Verification code",
+        "chips": [
+          "SSO",
+          "Two-step verification",
+          "Audit log"
+        ]
+      }
+    },
+    "stats": {
+      "title": "A navigable prototype with consistent simulated data",
+      "subtitle": "The figures are calculated from the Nortia S.A. demo data.",
+      "roles": "Roles to explore",
+      "screens": "Screens in phase A",
+      "templates": "Journey templates",
+      "hires": "Simulated hires",
+      "tasks": "Tasks in journeys"
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Frequently asked questions",
+      "subtitle": "What to know before exploring the demo.",
+      "items": [
+        {
+          "q": "Is the data real?",
+          "a": "No. Nortia S.A. is a made-up company and every person, email and record is fictitious. Do not enter real data."
+        },
+        {
+          "q": "How do I switch roles?",
+          "a": "Once inside, use the \"View as\" selector in the top bar. Switching roles is the same as signing in with that role's demo user."
+        },
+        {
+          "q": "Are changes saved?",
+          "a": "Yes, only in this browser. You can go back to the initial state with \"Reset demo\", at the bottom of this page or in the user menu."
+        },
+        {
+          "q": "Is the security real?",
+          "a": "SSO sign-in, two-step verification and lockouts are simulated in the interface. The documentation explains how they would work in production."
+        },
+        {
+          "q": "Which accessibility standard does it follow?",
+          "a": "WCAG 2.2 AA: it works with a keyboard, has visible focus, checked contrast and reflows from 320 px wide."
+        }
       ]
     },
-    "roleLabel": "Role"
+    "photoCredit": "People photos: Magnific",
+    "footerTagline": "Clear onboarding journeys for every new hire, their direct manager and HR.",
+    "author": "Design: Lourdes Pedaci, Learning Experience Designer"
   },
   "stages": {
     "preboarding": "Pre-boarding",

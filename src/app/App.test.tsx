@@ -38,6 +38,19 @@ describe('routing and access control', () => {
     ]);
   });
 
+  it('G0 shows figures from the demo data and an accessible FAQ accordion (D-70)', async () => {
+    renderAt('/');
+    await screen.findByRole('heading', { level: 1 });
+    const stats = screen.getByRole('region', { name: es.home.stats.title });
+    const templates = useDataStore.getState().templates.length;
+    expect(within(stats).getByText(es.home.stats.templates).previousElementSibling).toHaveTextContent(String(templates));
+    const question = screen.getByRole('button', { name: new RegExp(es.home.faq.items[0]!.q.replace('?', '\?')) });
+    expect(question).toHaveAttribute('aria-expanded', 'false');
+    fireEvent.click(question);
+    expect(question).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByText(es.home.faq.items[0]!.a)).toBeVisible();
+  });
+
   it('the login is clean: no role cards and no "Vas a entrar como…" notice (D-66)', async () => {
     renderAt('/login?demo=carla');
     expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(es.auth.login.title);
