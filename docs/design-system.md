@@ -414,3 +414,8 @@ Google. (s.f.). *Material Design 3*. https://m3.material.io/
 Google. (s.f.). *Material Symbols* [Conjunto de íconos]. https://fonts.google.com/icons
 
 World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
+
+### Encabezado de ficha y filas de tabla (D-94)
+
+- **`DetailHeader`** (`src/components/layout/DetailHeader.tsx`): persona (foto `lg` y nombre `title-medium`) cuando la ficha es sobre alguien; chips `HeaderChip` (28 px, ícono de 16 px, `label-medium`; `accent` en `tertiary-container` para la fecha que pide atención, neutro con borde para el resto; las píldoras de estado a 28 px); `h1` en `headline-small` y descripción en `body-large`. 24 px entre la persona y el título. Se usa en S2, J3, N3 y N2; A4/J2 usan los mismos chips junto a la foto `xl`.
+- **Filas de tabla:** toda la fila es el enlace (enlace estirado sobre la celda principal), sin subrayado; hover `surface-container-high` y anillo de foco `primary` dentro de la fila.

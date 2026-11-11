@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { HeaderChip } from '@/components/layout/DetailHeader';
 import { Link, useParams } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
 import { Card } from '@/components/ui/Card';
@@ -69,16 +70,18 @@ export function HireDetailPage() {
         </Link>
       </nav>
 
+      {/* The person is the subject of the record: photo next to the h1, facts as the standard chips (D-94) */}
       <header className="mb-(--space-section) flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
         {s.person && <Avatar name={s.person.name} role={s.person.role} size="xl" />}
         <div className="flex min-w-0 flex-col gap-2">
           <h1 className="text-headline-small text-balance text-on-surface">{s.person?.name}</h1>
-          <div className="flex flex-wrap items-center gap-2">
-            <HireStatusPill status={s.status} />
-            <span className="text-body-medium text-on-surface-variant">
-              {s.person?.jobTitle} · {s.person?.area}
-            </span>
-          </div>
+          <ul aria-label={t('hires.detail.facts')} className="flex flex-wrap items-center gap-2">
+            <li>
+              <HireStatusPill status={s.status} className="h-7" />
+            </li>
+            {s.person && <HeaderChip icon="badge">{s.person.jobTitle}</HeaderChip>}
+            {s.person && <HeaderChip icon="apartment">{s.person.area}</HeaderChip>}
+          </ul>
         </div>
       </header>
 

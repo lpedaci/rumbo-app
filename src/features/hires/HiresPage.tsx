@@ -156,14 +156,15 @@ export function HiresPage() {
                   </TableHead>
                   <TableBody>
                     {shown.map((s) => (
-                      <TableRow key={s.hire.id}>
+                      <TableRow key={s.hire.id} className="relative cursor-pointer">
                         <TableCell className="max-w-72">
                           <div className="flex min-w-0 items-center gap-3">
                             {s.person && <Avatar name={s.person.name} role={s.person.role} />}
                             <div className="flex min-w-0 flex-col">
                               <Link
                                 to={`/admin/hires/${s.hire.id}`}
-                                className="truncate rounded-xs text-title-small text-on-surface underline-offset-4 hover:underline"
+                                // Stretched link: the whole row opens the record, no underline (D-94)
+                                className="truncate text-title-small text-on-surface outline-none after:absolute after:inset-0 after:content-[''] focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-primary"
                                 title={s.person?.name}
                               >
                                 {s.person?.name}

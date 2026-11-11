@@ -166,12 +166,13 @@ export function RequestsPage() {
                     </TableHead>
                     <TableBody>
                       {shown.map((r) => (
-                        <TableRow key={r.id}>
+                        <TableRow key={r.id} className="relative cursor-pointer">
                           <TableCell className="whitespace-nowrap">
                             <div className="flex flex-col gap-0.5">
                               <Link
                                 to={`/it/requests/${r.id}`}
-                                className="rounded-xs text-title-small text-primary tabular-nums underline-offset-4 hover:underline"
+                                // Stretched link: the whole row opens the request, no underline (D-94)
+                                className="text-title-small text-on-surface tabular-nums outline-none after:absolute after:inset-0 after:content-[''] focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-primary"
                               >
                                 {r.id}
                               </Link>

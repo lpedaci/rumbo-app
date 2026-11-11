@@ -1192,7 +1192,8 @@
       "selfReviewReady": "La autoevaluación está lista para la reunión.",
       "selfReviewWaiting": "Todavía no envió su autoevaluación.",
       "selfReviewPrivate": "Solo la ven el jefe directo y RRHH",
-      "nextSteps": "Próximos pasos"
+      "nextSteps": "Próximos pasos",
+      "facts": "Datos del ingreso"
     }
   },
   "team": {
@@ -1451,7 +1452,6 @@
     },
     "detail": {
       "back": "Volver a Solicitudes",
-      "subtitle": "{{name}} · {{date}}",
       "step1": "1. Verificar la identidad",
       "step1Help": "Antes de restablecer un acceso, confirma que quien lo pide es la persona.",
       "checkLegend": "Cómo la verificaste (obligatorio)",
@@ -1482,7 +1482,6 @@
       "reject": "Rechazar solicitud",
       "resolvedToast": "Acceso restablecido",
       "rejectedToast": "Solicitud rechazada",
-      "resolvedBy": "Por {{name}} · {{date}}",
       "rejectTitle": "¿Rechazar esta solicitud?",
       "rejectBody": "La persona no va a recuperar el acceso. El motivo queda en la auditoría.",
       "rejectReason": "Motivo (obligatorio)",
@@ -1492,13 +1491,27 @@
       "request": "Quién la pide",
       "area": "Puesto",
       "account": "Estado de la cuenta",
-      "accountLocked": "Bloqueada desde el {{date}}",
-      "accountActive": "Activa, sin bloqueo",
-      "failedAttempts_one": "{{count}} intento fallido",
-      "failedAttempts_other": "{{count}} intentos fallidos",
       "flagPassword": "Tiene que crear una contraseña nueva al iniciar sesión",
       "flagMfa": "Tiene que vincular de nuevo su autenticador",
-      "noCheckTitle": "No hay datos registrados para verificar la identidad"
+      "noCheckTitle": "No hay datos registrados para verificar la identidad",
+      "comment": "Comentario de la solicitud",
+      "notVerifiedShort": "No se verificó",
+      "locked": "Bloqueada",
+      "active": "Activa",
+      "noAccount": "No hay una cuenta de Nortia con este correo.",
+      "rows": {
+        "identity": "Identidad",
+        "by": "Resuelta por",
+        "at": "Fecha",
+        "state": "Estado",
+        "lockedAt": "Bloqueada desde",
+        "attempts": "Intentos fallidos",
+        "pending": "Pendiente"
+      },
+      "facts": "Datos de la solicitud",
+      "requestedOn": "Pedida el {{date}}",
+      "descriptionOpen": "Verifica que quien pide sea {{name}} y después restablece el acceso.",
+      "descriptionClosed": "La solicitud está cerrada. Abajo, cómo se resolvió."
     },
     "history": {
       "title": "Historial",
@@ -1667,6 +1680,12 @@
       "force_password_reset": "Cambio de contraseña forzado",
       "reset_mfa": "Verificación en dos pasos restablecida",
       "reject": "Solicitud rechazada"
+    },
+    "reasonTitles": {
+      "locked": "Cuenta bloqueada",
+      "forgot_password": "Olvidó su contraseña",
+      "mfa_issue": "No recibe el código de verificación",
+      "other": "Otro motivo"
     }
   }
 }

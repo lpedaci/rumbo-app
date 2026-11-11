@@ -1,5 +1,6 @@
 import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DetailHeader, HeaderChip } from '@/components/layout/DetailHeader';
 import { Link, useParams } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -56,23 +57,19 @@ export function TaskDetailPage() {
         </Link>
       </nav>
 
-      <header className="mb-(--space-section) flex min-w-0 flex-col gap-4">
-        <h1 className="text-headline-small text-balance text-on-surface">{task.title}</h1>
-        {/* Key facts as chips (D-65): status, type and stage */}
-        <ul aria-label={t('task.facts')} className="flex flex-wrap items-center gap-2">
-          <li>
-            <TaskStatusPill status={status} />
-          </li>
-          <li className="inline-flex h-6 items-center gap-1 rounded-full border border-outline-variant bg-surface-container-lowest pr-2.5 pl-1.5 text-label-medium text-on-surface">
-            <Icon name={TASK_TYPE_ICON[task.type]} size={16} className="text-on-surface-variant" />
-            {t(`taskTypes.${task.type}`)}
-          </li>
-          <li className="inline-flex h-6 items-center gap-1 rounded-full border border-outline-variant bg-surface-container-lowest pr-2.5 pl-1.5 text-label-medium text-on-surface">
-            <Icon name="flag" size={16} className="text-on-surface-variant" />
-            {t(`stages.${task.stage}`)}
-          </li>
-        </ul>
-      </header>
+      <DetailHeader
+        chipsLabel={t('task.facts')}
+        chips={
+          <>
+            <li>
+              <TaskStatusPill status={status} className="h-7" />
+            </li>
+            <HeaderChip icon={TASK_TYPE_ICON[task.type]}>{t(`taskTypes.${task.type}`)}</HeaderChip>
+            <HeaderChip icon="flag">{t(`stages.${task.stage}`)}</HeaderChip>
+          </>
+        }
+        title={task.title}
+      />
 
       <div className="grid grid-cols-1 gap-(--space-bento-gap) lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)]">
         <div className="flex min-w-0 flex-col gap-(--space-bento-gap)">
@@ -136,7 +133,9 @@ export function TaskDetailPage() {
                           <span
                             className={cn(
                               'inline-flex h-6 items-center gap-1 rounded-full pr-2.5 pl-1.5 text-label-medium',
-                              mine ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container-high text-on-surface',
+                              mine
+                                ? 'bg-primary-container text-on-primary-container'
+                                : 'bg-surface-container-high text-on-surface',
                             )}
                           >
                             <Icon name="person" size={16} />
@@ -148,7 +147,10 @@ export function TaskDetailPage() {
                           </span>
                         </div>
                       </div>
-                      <span className="hidden shrink-0 items-center gap-1 text-label-large text-primary sm:inline-flex" aria-hidden>
+                      <span
+                        className="hidden shrink-0 items-center gap-1 text-label-large text-primary sm:inline-flex"
+                        aria-hidden
+                      >
                         {mine ? t('task.blockerGo') : t('task.blockerSee')}
                         <Icon name="chevron_right" size={20} />
                       </span>
@@ -163,7 +165,6 @@ export function TaskDetailPage() {
           {!ownTask && status !== 'done' && (
             <InlineAlert tone="info">{t('task.otherOwner', { owner: t(`owners.${task.owner}`) })}</InlineAlert>
           )}
-
 
           {task.type === 'course' && (
             <Card title={t('task.about')}>
@@ -229,7 +230,9 @@ export function TaskDetailPage() {
                 </time>
               </DetailRow>
             )}
-            <DetailRow label={t('task.owner')}>{ownTask ? t('journey.yoursShort') : t(`owners.${task.owner}`)}</DetailRow>
+            <DetailRow label={t('task.owner')}>
+              {ownTask ? t('journey.yoursShort') : t(`owners.${task.owner}`)}
+            </DetailRow>
             <DetailRow label={t('task.type')}>{t(`taskTypes.${task.type}`)}</DetailRow>
             <DetailRow label={t('task.stage')}>{t(`stages.${task.stage}`)}</DetailRow>
           </dl>

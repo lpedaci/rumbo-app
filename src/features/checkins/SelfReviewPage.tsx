@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DetailHeader, HeaderChip } from '@/components/layout/DetailHeader';
 import { Link, useNavigate, useParams } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -75,18 +76,15 @@ export function SelfReviewPage() {
           {t('selfReview.back')}
         </Link>
       </nav>
-      <header className="mb-(--space-section) flex min-w-0 flex-col gap-3">
-        <span className="inline-flex h-7 w-fit items-center gap-1.5 rounded-full bg-tertiary-container px-2.5 text-label-medium text-on-tertiary-container">
-          <Icon name="event" size={16} />
-          {t('selfReview.due', { date: formatDate(checkinDueDate(checkin)) })}
-        </span>
-        <div className="flex flex-col gap-1">
-          <h1 className="text-headline-small text-balance text-on-surface">{t('selfReview.title', { days })}</h1>
-          <p className="text-body-large text-pretty text-on-surface-variant">
-            {t('selfReview.description', { manager })}
-          </p>
-        </div>
-      </header>
+      <DetailHeader
+        chips={
+          <HeaderChip icon="event" tone="accent">
+            {t('selfReview.due', { date: formatDate(checkinDueDate(checkin)) })}
+          </HeaderChip>
+        }
+        title={t('selfReview.title', { days })}
+        description={t('selfReview.description', { manager })}
+      />
 
       <div className="grid grid-cols-1 gap-(--space-bento-gap) lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
         <div className="flex min-w-0 flex-col gap-(--space-bento-gap)">

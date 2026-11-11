@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DetailHeader, HeaderChip } from '@/components/layout/DetailHeader';
 import { Link, useParams } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
@@ -31,11 +32,11 @@ const ACTION_ICON: Record<AccessResolutionAction, IconName> = {
   reject: 'block',
 };
 
-function DetailRow({ label, value }: { label: string; value: string }) {
+function DetailRow({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <div className="flex min-w-0 items-baseline justify-between gap-4 border-b border-outline-variant py-3 last:border-b-0">
+    <div className="flex min-w-0 flex-col gap-1 border-b border-outline-variant py-3 last:border-b-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
       <dt className="shrink-0 text-body-medium text-on-surface-variant">{label}</dt>
-      <dd className="min-w-0 text-right text-body-medium break-words text-on-surface">{value}</dd>
+      <dd className="min-w-0 text-body-medium break-words text-on-surface sm:text-right">{value}</dd>
     </div>
   );
 }
@@ -139,151 +140,171 @@ export function RequestDetailPage() {
         </Link>
       </nav>
 
-      <header className="mb-(--space-section) flex min-w-0 flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex h-7 items-center rounded-full border border-outline-variant px-2.5 text-label-medium text-on-surface tabular-nums">
-            {request.id}
-          </span>
-          <RequestStatusPill status={request.status} />
-        </div>
-        <div className="flex flex-col gap-1">
-          <h1 className="text-headline-small text-balance text-on-surface">
-            {t(`accessHelp.reasons.${request.reason}`)}
-          </h1>
-          <p className="text-body-large text-on-surface-variant">
-            {t('it.detail.subtitle', { name: person?.name ?? request.email, date: formatDateTime(request.createdAt) })}
-          </p>
-        </div>
-      </header>
+      <DetailHeader
+        person={person ? { name: person.name, role: person.role } : undefined}
+        chipsLabel={t('it.detail.facts')}
+        chips={
+          <>
+            <li>
+              <RequestStatusPill status={request.status} className="h-7" />
+            </li>
+            <HeaderChip icon="event" tone={open ? 'accent' : 'neutral'}>
+              {t('it.detail.requestedOn', { date: formatDateTime(request.createdAt) })}
+            </HeaderChip>
+            <HeaderChip icon="support_agent">{request.id}</HeaderChip>
+          </>
+        }
+        title={t(`it.reasonTitles.${request.reason}`)}
+        description={
+          open
+            ? t('it.detail.descriptionOpen', { name: person?.name.split(' ')[0] ?? request.email })
+            : t('it.detail.descriptionClosed')
+        }
+      />
 
       <div className="grid grid-cols-1 gap-(--space-bento-gap) lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
         <div className="flex min-w-0 flex-col gap-(--space-bento-gap)">
-          {/* Step 1: who is asking */}
-          <Card
-            title={t('it.detail.step1')}
-            description={t('it.detail.step1Help')}
-            action={
-              request.identityVerified ? (
-                <StatusPill tone="success" icon="verified_user" label={t('it.detail.verified')} />
-              ) : undefined
-            }
-          >
-            {request.identityVerified ? (
-              <p className="flex items-start gap-2 text-body-medium text-on-surface">
-                <Icon name="check_circle" size={20} className="shrink-0 text-success" />
-                {t('it.detail.verifiedBody', {
-                  method:
-                    history.find((e) => e.action === 'access_request.verify_identity')?.detail ??
-                    t('it.detail.verifiedUnknown'),
-                })}
-              </p>
-            ) : open && canResolve ? (
-              <div className="flex flex-col gap-4">
-                {checkOptions.length === 0 && (
-                  <InlineAlert
-                    tone="warning"
-                    title={person ? t('it.detail.noCheckTitle') : t('it.detail.noPersonTitle')}
-                  >
-                    {t('it.detail.noPersonBody')}
-                  </InlineAlert>
-                )}
-                {checkOptions.length > 0 && (
-                  <RadioGroup
-                    name="identity-check"
-                    legend={t('it.detail.checkLegend')}
-                    value={check}
-                    onChange={(e) => {
-                      setCheck(e.target.value as IdentityCheck);
-                      setCheckError(false);
-                    }}
-                    error={checkError ? t('it.detail.checkRequired') : undefined}
-                    options={checkOptions}
-                  />
-                )}
-                {checkOptions.length > 0 && (
-                  <FormFooter note={t('it.detail.checkNote')} noteIcon="info">
-                    <Button leadingIcon="verified_user" onClick={confirmIdentity}>
-                      {t('it.detail.confirmIdentity')}
-                    </Button>
-                  </FormFooter>
-                )}
-              </div>
-            ) : (
-              <p className="text-body-medium text-on-surface-variant">{t('it.detail.notVerified')}</p>
-            )}
-          </Card>
-
-          {/* Step 2: restore the access, or the outcome when the request is closed */}
-          <Card title={open ? t('it.detail.step2') : t('it.detail.outcome')}>
-            {request.resolution ? (
-              <div className="flex flex-col gap-3">
-                <p className="flex items-start gap-2 text-body-large text-on-surface">
-                  <Icon
-                    name={ACTION_ICON[request.resolution.action]}
-                    size={20}
-                    className={request.resolution.action === 'reject' ? 'mt-0.5 text-error' : 'mt-0.5 text-success'}
-                  />
-                  {t(`it.outcomes.${request.resolution.action}`)}
-                </p>
-                <p className="text-body-small text-on-surface-variant tabular-nums">
-                  {t('it.detail.resolvedBy', {
-                    name: nameOf(request.resolution.by),
-                    date: formatDateTime(request.resolution.at),
-                  })}
-                </p>
-                {request.resolution.note && (
-                  <p className="rounded-md bg-surface-container p-3 text-body-medium text-on-surface">
+          {request.resolution ? (
+            <Card
+              title={t('it.detail.outcome')}
+              action={
+                <StatusPill
+                  tone={request.resolution.action === 'reject' ? 'error' : 'success'}
+                  icon={ACTION_ICON[request.resolution.action]}
+                  label={t(`it.outcomes.${request.resolution.action}`)}
+                />
+              }
+            >
+              <dl className="flex flex-col border-t border-outline-variant">
+                <DetailRow
+                  label={t('it.detail.rows.identity')}
+                  value={
+                    request.identityVerified
+                      ? (history.find((e) => e.action === 'access_request.verify_identity')?.detail ??
+                        t('it.detail.verifiedUnknown'))
+                      : t('it.detail.notVerifiedShort')
+                  }
+                />
+                <DetailRow label={t('it.detail.rows.by')} value={nameOf(request.resolution.by)} />
+                <DetailRow label={t('it.detail.rows.at')} value={formatDateTime(request.resolution.at)} />
+              </dl>
+              {request.resolution.note && (
+                <section className="flex flex-col gap-2">
+                  <h2 className="text-label-medium text-on-surface-variant">{t('it.detail.note')}</h2>
+                  <p className="rounded-md bg-surface-container p-4 text-body-medium text-on-surface">
                     {request.resolution.note}
                   </p>
-                )}
-              </div>
-            ) : canResolve ? (
-              <div className="flex flex-col gap-4">
-                {!request.identityVerified && (
-                  <p className="flex items-start gap-2 rounded-md bg-warning-container p-3 text-body-medium text-on-warning-container">
-                    <Icon name="lock" size={20} className="shrink-0 text-warning" />
-                    {t('it.detail.lockedStep')}
+                </section>
+              )}
+            </Card>
+          ) : (
+            <>
+              {/* Step 1: who is asking */}
+              <Card
+                title={t('it.detail.step1')}
+                description={t('it.detail.step1Help')}
+                action={
+                  request.identityVerified ? (
+                    <StatusPill tone="success" icon="verified_user" label={t('it.detail.verified')} />
+                  ) : undefined
+                }
+              >
+                {request.identityVerified ? (
+                  <p className="flex items-start gap-2 text-body-medium text-on-surface">
+                    <Icon name="check_circle" size={20} className="shrink-0 text-success" />
+                    {t('it.detail.verifiedBody', {
+                      method:
+                        history.find((e) => e.action === 'access_request.verify_identity')?.detail ??
+                        t('it.detail.verifiedUnknown'),
+                    })}
                   </p>
+                ) : open && canResolve ? (
+                  <div className="flex flex-col gap-4">
+                    {checkOptions.length === 0 && (
+                      <InlineAlert
+                        tone="warning"
+                        title={person ? t('it.detail.noCheckTitle') : t('it.detail.noPersonTitle')}
+                      >
+                        {t('it.detail.noPersonBody')}
+                      </InlineAlert>
+                    )}
+                    {checkOptions.length > 0 && (
+                      <RadioGroup
+                        name="identity-check"
+                        legend={t('it.detail.checkLegend')}
+                        value={check}
+                        onChange={(e) => {
+                          setCheck(e.target.value as IdentityCheck);
+                          setCheckError(false);
+                        }}
+                        error={checkError ? t('it.detail.checkRequired') : undefined}
+                        options={checkOptions}
+                      />
+                    )}
+                    {checkOptions.length > 0 && (
+                      <FormFooter note={t('it.detail.checkNote')} noteIcon="info">
+                        <Button leadingIcon="verified_user" onClick={confirmIdentity}>
+                          {t('it.detail.confirmIdentity')}
+                        </Button>
+                      </FormFooter>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-body-medium text-on-surface-variant">{t('it.detail.notVerified')}</p>
                 )}
-                <RadioGroup
-                  name="restore-action"
-                  legend={t('it.detail.actionLegend')}
-                  value={action}
-                  disabled={!request.identityVerified}
-                  onChange={(e) => setAction(e.target.value as RestoreAction)}
-                  options={ACTIONS.map((a) => ({
-                    value: a,
-                    label:
-                      a === suggestedAction(request)
-                        ? t('it.detail.suggested', { action: t(`it.actions.${a}`) })
-                        : t(`it.actions.${a}`),
-                    description: t(`it.actionHelp.${a}`),
-                  }))}
-                />
-                <TextArea
-                  label={t('it.detail.note')}
-                  helperText={t('it.detail.noteHelp')}
-                  optional
-                  rows={2}
-                  value={note}
-                  disabled={!request.identityVerified}
-                  onChange={(e) => setNote(e.target.value)}
-                />
-                <FormFooter>
-                  <Button variant="outlined" leadingIcon="block" onClick={() => setRejecting(true)}>
-                    {t('it.detail.reject')}
-                  </Button>
-                  <Button
-                    leadingIcon="check"
-                    disabledReason={request.identityVerified ? undefined : t('it.detail.lockedStep')}
-                    onClick={restore}
-                  >
-                    {t('it.detail.apply')}
-                  </Button>
-                </FormFooter>
-              </div>
-            ) : null}
-          </Card>
+              </Card>
+
+              {/* Step 2: restore the access once the identity is verified */}
+              <Card title={t('it.detail.step2')}>
+                {canResolve ? (
+                  <div className="flex flex-col gap-4">
+                    {!request.identityVerified && (
+                      <p className="flex items-start gap-2 rounded-md bg-warning-container p-3 text-body-medium text-on-warning-container">
+                        <Icon name="lock" size={20} className="shrink-0 text-warning" />
+                        {t('it.detail.lockedStep')}
+                      </p>
+                    )}
+                    <RadioGroup
+                      name="restore-action"
+                      legend={t('it.detail.actionLegend')}
+                      value={action}
+                      disabled={!request.identityVerified}
+                      onChange={(e) => setAction(e.target.value as RestoreAction)}
+                      options={ACTIONS.map((a) => ({
+                        value: a,
+                        label:
+                          a === suggestedAction(request)
+                            ? t('it.detail.suggested', { action: t(`it.actions.${a}`) })
+                            : t(`it.actions.${a}`),
+                        description: t(`it.actionHelp.${a}`),
+                      }))}
+                    />
+                    <TextArea
+                      label={t('it.detail.note')}
+                      helperText={t('it.detail.noteHelp')}
+                      optional
+                      rows={2}
+                      value={note}
+                      disabled={!request.identityVerified}
+                      onChange={(e) => setNote(e.target.value)}
+                    />
+                    <FormFooter>
+                      <Button variant="outlined" leadingIcon="block" onClick={() => setRejecting(true)}>
+                        {t('it.detail.reject')}
+                      </Button>
+                      <Button
+                        leadingIcon="check"
+                        disabledReason={request.identityVerified ? undefined : t('it.detail.lockedStep')}
+                        onClick={restore}
+                      >
+                        {t('it.detail.apply')}
+                      </Button>
+                    </FormFooter>
+                  </div>
+                ) : null}
+              </Card>
+            </>
+          )}
         </div>
 
         <aside className="flex min-w-0 flex-col gap-(--space-bento-gap)">
@@ -294,62 +315,70 @@ export function RequestDetailPage() {
               ) : (
                 <span
                   aria-hidden
-                  className="flex size-12 items-center justify-center rounded-full bg-surface-container"
+                  className="flex size-12 shrink-0 items-center justify-center rounded-full bg-surface-container"
                 >
                   <Icon name="person" className="text-on-surface-variant" />
                 </span>
               )}
-              <div className="flex min-w-0 flex-col">
-                <span className="truncate text-title-medium text-on-surface">
+              <div className="flex min-w-0 flex-col gap-0.5">
+                <span className="text-title-medium break-words text-on-surface">
                   {person?.name ?? t('it.unknownPerson')}
                 </span>
-                <span className="truncate text-body-small text-on-surface-variant">{request.email}</span>
+                <span className="text-body-small break-all text-on-surface-variant">{request.email}</span>
               </div>
             </div>
-            {request.comment && (
-              <blockquote className="rounded-md bg-surface-container p-3 text-body-medium text-on-surface">
-                “{request.comment}”
-              </blockquote>
-            )}
-            <dl className="flex flex-col">
+            <dl className="flex flex-col border-t border-outline-variant">
+              <DetailRow label={t('it.columns.reason')} value={t(`it.reasonTitles.${request.reason}`)} />
               {person?.employeeId && <DetailRow label={t('hires.detail.employeeId')} value={person.employeeId} />}
               {person?.mobile && <DetailRow label={t('hires.detail.mobile')} value={maskPhone(person.mobile)} />}
               {person && <DetailRow label={t('it.detail.area')} value={`${person.jobTitle} · ${person.area}`} />}
               {manager && <DetailRow label={t('hires.detail.manager')} value={manager.name} />}
             </dl>
+            {request.comment && (
+              <section className="flex flex-col gap-2">
+                <h3 className="text-label-medium text-on-surface-variant">{t('it.detail.comment')}</h3>
+                <p className="rounded-md bg-surface-container p-4 text-body-medium text-on-surface">
+                  “{request.comment}”
+                </p>
+              </section>
+            )}
           </Card>
 
           <Card title={t('it.detail.account')}>
-            <ul className="flex flex-col gap-2 text-body-medium text-on-surface">
-              <li className="flex items-start gap-2">
-                <Icon
-                  name={account?.locked ? 'lock' : 'lock_open'}
-                  size={20}
-                  className={account?.locked ? 'shrink-0 text-error' : 'shrink-0 text-success'}
+            {person || account ? (
+              <dl className="flex flex-col border-t border-outline-variant">
+                <DetailRow
+                  label={t('it.detail.rows.state')}
+                  value={
+                    account?.locked ? (
+                      <StatusPill tone="error" icon="lock" label={t('it.detail.locked')} />
+                    ) : (
+                      <StatusPill tone="success" icon="lock_open" label={t('it.detail.active')} />
+                    )
+                  }
                 />
-                <span>
-                  {account?.locked
-                    ? t('it.detail.accountLocked', { date: account.lockedAt ? formatDateTime(account.lockedAt) : '' })
-                    : t('it.detail.accountActive')}
-                </span>
-              </li>
-              <li className="flex items-start gap-2 text-on-surface-variant">
-                <Icon name="history" size={20} className="shrink-0" />
-                {t('it.detail.failedAttempts', { count: account?.failedCount ?? 0 })}
-              </li>
-              {accountFlags?.mustChangePassword && (
-                <li className="flex items-start gap-2 text-on-surface-variant">
-                  <Icon name="password" size={20} className="shrink-0" />
-                  {t('it.detail.flagPassword')}
-                </li>
-              )}
-              {accountFlags?.mfaReset && (
-                <li className="flex items-start gap-2 text-on-surface-variant">
-                  <Icon name="key" size={20} className="shrink-0" />
-                  {t('it.detail.flagMfa')}
-                </li>
-              )}
-            </ul>
+                {account?.locked && account.lockedAt && (
+                  <DetailRow label={t('it.detail.rows.lockedAt')} value={formatDateTime(account.lockedAt)} />
+                )}
+                <DetailRow label={t('it.detail.rows.attempts')} value={String(account?.failedCount ?? 0)} />
+                {(accountFlags?.mustChangePassword || accountFlags?.mfaReset) && (
+                  <DetailRow
+                    label={t('it.detail.rows.pending')}
+                    value={[
+                      accountFlags?.mustChangePassword ? t('it.detail.flagPassword') : null,
+                      accountFlags?.mfaReset ? t('it.detail.flagMfa') : null,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  />
+                )}
+              </dl>
+            ) : (
+              <p className="flex items-start gap-2 text-body-medium text-on-surface-variant">
+                <Icon name="info" size={20} className="shrink-0" />
+                {t('it.detail.noAccount')}
+              </p>
+            )}
           </Card>
 
           <Card title={t('it.history.title')} description={t('it.history.description')}>

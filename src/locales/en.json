@@ -1192,7 +1192,8 @@
       "selfReviewReady": "The self-review is ready for the meeting.",
       "selfReviewWaiting": "They have not sent their self-review yet.",
       "selfReviewPrivate": "Only the direct manager and HR see it",
-      "nextSteps": "Next steps"
+      "nextSteps": "Next steps",
+      "facts": "Hire facts"
     }
   },
   "team": {
@@ -1451,7 +1452,6 @@
     },
     "detail": {
       "back": "Back to Requests",
-      "subtitle": "{{name}} · {{date}}",
       "step1": "1. Verify the identity",
       "step1Help": "Before restoring access, confirm that the person asking is who they say.",
       "checkLegend": "How you verified it (required)",
@@ -1482,7 +1482,6 @@
       "reject": "Reject request",
       "resolvedToast": "Access restored",
       "rejectedToast": "Request rejected",
-      "resolvedBy": "By {{name}} · {{date}}",
       "rejectTitle": "Reject this request?",
       "rejectBody": "The person will not get access back. The reason is saved in the audit log.",
       "rejectReason": "Reason (required)",
@@ -1492,13 +1491,27 @@
       "request": "Who is asking",
       "area": "Role",
       "account": "Account status",
-      "accountLocked": "Locked since {{date}}",
-      "accountActive": "Active, not locked",
-      "failedAttempts_one": "{{count}} failed attempt",
-      "failedAttempts_other": "{{count}} failed attempts",
       "flagPassword": "Must create a new password at sign-in",
       "flagMfa": "Must link their authenticator again",
-      "noCheckTitle": "There is no registered data to verify the identity"
+      "noCheckTitle": "There is no registered data to verify the identity",
+      "comment": "Request comment",
+      "notVerifiedShort": "Not verified",
+      "locked": "Locked",
+      "active": "Active",
+      "noAccount": "There is no company account with this email.",
+      "rows": {
+        "identity": "Identity",
+        "by": "Resolved by",
+        "at": "Date",
+        "state": "Status",
+        "lockedAt": "Locked since",
+        "attempts": "Failed attempts",
+        "pending": "Pending"
+      },
+      "facts": "Request facts",
+      "requestedOn": "Requested on {{date}}",
+      "descriptionOpen": "Check that the person asking is {{name}}, then restore the access.",
+      "descriptionClosed": "The request is closed. Below, how it was resolved."
     },
     "history": {
       "title": "History",
@@ -1667,6 +1680,12 @@
       "force_password_reset": "Password change forced",
       "reset_mfa": "Two-step verification reset",
       "reject": "Request rejected"
+    },
+    "reasonTitles": {
+      "locked": "Locked account",
+      "forgot_password": "Forgot their password",
+      "mfa_issue": "Not getting the verification code",
+      "other": "Other reason"
     }
   }
 }
