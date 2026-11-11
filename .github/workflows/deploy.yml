@@ -42,6 +42,10 @@ jobs:
       - name: Type check and build
         run: npm run build
 
+      # CLAUDE.md 8.2: the published page must carry the Content Security Policy (D-95).
+      - name: Check the Content Security Policy in the build
+        run: grep -q 'http-equiv="Content-Security-Policy"' dist/index.html
+
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3

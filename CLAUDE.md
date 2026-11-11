@@ -876,7 +876,7 @@ Todo lo de F0, F6 y las funciones de seguridad de fase B (F10 a F14): SSO, MFA, 
 - Sin secretos, claves de API ni datos personales reales en el repositorio. Todos los datos son ficticios; los emails usan el dominio `.demo`.
 - Todo input de usuario se valida con Zod antes de guardarse.
 - Nunca usar `dangerouslySetInnerHTML` ni construir HTML con datos ingresados; React escapa el texto por defecto.
-- Política de seguridad de contenido (CSP) mediante `<meta http-equiv="Content-Security-Policy">` en `index.html`, permitiendo solo recursos propios.
+- Política de seguridad de contenido (CSP) mediante `<meta http-equiv="Content-Security-Policy">`, inyectada en el build por un plugin de Vite (en desarrollo Vite necesita scripts en línea), permitiendo solo recursos propios: `script-src 'self'` estricto y `style-src 'self' 'unsafe-inline'` porque Radix, Motion y Recharts aplican estilos en línea con valores calculados (D-95). La CI falla si el build sale sin la política. Las cabeceras que un `<meta>` no puede dar (`frame-ancestors`, HSTS) quedan en `docs/security.md`.
 - Enlaces externos con `rel="noopener noreferrer"`.
 - `npm audit` en el workflow de GitHub Actions; el deploy falla si hay vulnerabilidades altas o críticas.
 - Dependencias mínimas y con versión fija (lockfile versionado).

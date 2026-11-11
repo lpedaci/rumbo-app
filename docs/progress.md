@@ -17,7 +17,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 | 8 | Jefe: J1, J2, J3 y N3 | Hecho | 11/11/2026 |
 | 9 | Panel A1 con alertas | Hecho | 11/11/2026 |
 | 10 | Sistemas: S1, S2, S3 | Hecho | 11/11/2026 |
-| 11 | CSP, `npm audit` en CI y `docs/security.md` | Pendiente | |
+| 11 | CSP, `npm audit` en CI y `docs/security.md` | Hecho | 11/11/2026 |
 | 12 | Pulido de fase A | Pendiente | |
 | 13 | Revisión intermedia (`docs/review-fase-a.md`) | Pendiente | |
 
@@ -290,3 +290,12 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Con este paso todas las pantallas de la fase A tienen su versión funcional.
 
 **Pendiente:** paso 11 (seguridad real del front y `docs/security.md`), paso 12 (pulido) y paso 13 (revisión intermedia).
+
+## Paso 11: seguridad real del front y docs/security.md, 11/11/2026
+
+- **CSP** en el build como `<meta>` (plugin de Vite, solo en producción): solo recursos propios, scripts estrictos y estilos en línea permitidos por Radix, Motion y Recharts. Verificada con `vite preview`: sin violaciones al recorrer pantallas y abrir menús y diálogos.
+- **Referrer policy** `strict-origin-when-cross-origin` en el build.
+- **CI:** nuevo control que falla si el build sale sin CSP; `npm audit --audit-level=high` ya estaba.
+- **`docs/security.md`:** las tres capas, amenazas y mitigaciones, diagrama del inicio de sesión en producción y referencias APA.
+
+**Pendiente:** paso 12 (pulido de fase A) y paso 13 (revisión intermedia).

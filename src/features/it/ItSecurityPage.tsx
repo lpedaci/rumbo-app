@@ -135,11 +135,11 @@ function LockedAccounts() {
             return (
               <li
                 key={a.email}
-                className="flex min-w-0 flex-col gap-3 p-4 sm:flex-row sm:items-center md:px-(--space-card-padding)"
+                className="flex min-w-0 flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center sm:gap-6 md:px-(--space-card-padding)"
               >
                 <div className="flex min-w-0 flex-1 items-center gap-3">
                   {person && <Avatar name={person.name} role={person.role} size="sm" />}
-                  <div className="flex min-w-0 flex-col gap-1">
+                  <div className="flex min-w-0 flex-col gap-1.5">
                     <span className="truncate text-title-small text-on-surface">{person?.name ?? a.email}</span>
                     <span className="truncate text-body-small text-on-surface-variant">{a.email}</span>
                     <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-body-small text-on-surface-variant tabular-nums">
@@ -148,7 +148,7 @@ function LockedAccounts() {
                     </span>
                   </div>
                 </div>
-                <div className="flex shrink-0 flex-wrap gap-2 pl-11 sm:pl-0">
+                <div className="flex shrink-0 flex-wrap gap-3 pl-11 sm:gap-4 sm:pl-0">
                   {request && (
                     <Button asChild variant="text" size="xs" trailingIcon="arrow_forward">
                       <Link to={`/it/requests/${request.id}`}>{t('it.locked.viewRequest', { id: request.id })}</Link>

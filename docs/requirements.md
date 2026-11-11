@@ -238,13 +238,13 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-022 | El repositorio no contiene secretos, claves de API ni datos personales reales; los correos usan `.demo`. | Must | Revisión y búsqueda de patrones antes de cada deploy. | Pendiente |
-| RNF-023 | Todo input se valida con Zod antes de guardarse. | Must | Revisión de código. | Pendiente |
-| RNF-024 | No se usa `dangerouslySetInnerHTML` en ningún archivo. | Must | Regla de ESLint y búsqueda en el código. | Pendiente |
-| RNF-025 | Hay CSP en `index.html` que solo permite recursos propios (incluida la fuente Inter, alojada en el proyecto). | Must | Inspección del deploy; la consola no muestra violaciones. | Pendiente |
-| RNF-026 | `npm audit` corre en CI y el deploy falla con vulnerabilidades altas o críticas. | Must | Workflow de GitHub Actions. | Pendiente |
-| RNF-027 | Los enlaces externos usan `rel="noopener noreferrer"`. | Must | Regla de ESLint. | Pendiente |
-| RNF-028 | En `localStorage` no se guarda nada que simule una contraseña. | Must | Inspección del almacenamiento tras el login. | Pendiente |
+| RNF-022 | El repositorio no contiene secretos, claves de API ni datos personales reales; los correos usan `.demo`. | Must | Revisión y búsqueda de patrones antes de cada deploy. | Hecho |
+| RNF-023 | Todo input se valida con Zod antes de guardarse. | Must | Revisión de código. | En curso (INC-018) |
+| RNF-024 | No se usa `dangerouslySetInnerHTML` en ningún archivo. | Must | Regla de ESLint y búsqueda en el código. | Hecho |
+| RNF-025 | Hay CSP en el `index.html` publicado que solo permite recursos propios (incluida la fuente Inter, alojada en el proyecto). | Must | Inspección del deploy; la consola no muestra violaciones. | Hecho |
+| RNF-026 | `npm audit` corre en CI y el deploy falla con vulnerabilidades altas o críticas. | Must | Workflow de GitHub Actions. | Hecho |
+| RNF-027 | Los enlaces externos usan `rel="noopener noreferrer"`. | Must | Regla de ESLint. | Hecho |
+| RNF-028 | En `localStorage` no se guarda nada que simule una contraseña. | Must | Inspección del almacenamiento tras el login. | Hecho |
 | RNF-029 | El 100 % de las decisiones de permisos en rutas y botones pasan por `can()`. | Must | Búsqueda de comparaciones con nombres de rol en componentes. | Hecho |
 
 ### Mantenibilidad

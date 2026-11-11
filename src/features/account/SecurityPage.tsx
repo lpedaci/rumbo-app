@@ -52,18 +52,19 @@ export function SecurityPage() {
           {/* Who is signed in, then the facts as label and value rows (D-91) */}
           <div className="flex min-w-0 items-center gap-4">
             <Avatar name={person.name} role={person.role} size="lg" />
-            <div className="flex min-w-0 flex-col gap-1.5">
+            <div className="flex min-w-0 flex-1 flex-col gap-1.5">
               <span className="truncate text-title-medium text-on-surface">{person.name}</span>
               <span className="truncate text-body-medium text-on-surface-variant">{person.email}</span>
-              <span
-                className={cn(
-                  'inline-flex h-6 w-fit items-center rounded-full px-2.5 text-label-medium',
-                  ROLE_ACCENT[person.role].chip,
-                )}
-              >
-                {t(`roles.${user.role}`)}
-              </span>
             </div>
+            {/* The role on the right, in its color (D-95) */}
+            <span
+              className={cn(
+                'inline-flex h-6 shrink-0 items-center self-start rounded-full px-2.5 text-label-medium',
+                ROLE_ACCENT[person.role].chip,
+              )}
+            >
+              {t(`roles.${user.role}`)}
+            </span>
           </div>
           <dl className="flex flex-col border-t border-outline-variant">
             {[
