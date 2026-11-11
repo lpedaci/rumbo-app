@@ -856,6 +856,7 @@
       "tableLabel": "Journey templates",
       "columns": {
         "name": "Template",
+        "state": "Status",
         "area": "Area",
         "tasks": "Tasks",
         "usage": "New hires",
@@ -1108,7 +1109,7 @@
       "buddyHelp": "A teammate who helps them day to day.",
       "noBuddy": "No buddy",
       "template": "Template",
-      "templateHelp": "The journey to copy. Choosing it fills in the job title and area if they are empty.",
+      "templateHelp": "The journey to copy: only published templates, with their version in force. Choosing it fills in the job title and area if they are empty.",
       "choose": "Choose an option",
       "submit": "Add hire",
       "submitting": "Saving…",
@@ -1612,6 +1613,8 @@
         "template.create": "Template created",
         "template.update": "Template updated",
         "template.delete": "Template deleted",
+        "template.publish": "Template published",
+        "template.restore": "Template version restored as a draft",
         "hire.create": "New hire added",
         "task.complete": "Task marked as done",
         "checkin.self_review": "Self-review sent",
@@ -2424,5 +2427,100 @@
         }
       }
     }
+  },
+  "templateVersions": {
+    "purpose": "The tasks, by stage and with their due day, that every person joining as {{jobTitle}} gets.",
+    "purposeNew": "Define the tasks, by stage and with their due day, that every person joining in this role will get.",
+    "usageChip_one": "{{count}} hire on this template",
+    "usageChip_other": "{{count}} hires on this template",
+    "state": {
+      "draft": "Draft",
+      "published": "Published · v{{version}}",
+      "published_with_draft": "v{{version}} · with draft"
+    },
+    "stateHelp": {
+      "draft": "Build the tasks by stage and publish the template so it can be assigned to a new hire.",
+      "published": "Edit the tasks and save a draft. New hires get it only once you publish v{{next}}; journeys in progress don't change.",
+      "published_with_draft": "You have saved changes that aren't published. Publish v{{next}} so new hires use them; journeys in progress don't change."
+    },
+    "saveDraft": "Save draft",
+    "publish": "Publish",
+    "publishVersion": "Publish v{{version}}",
+    "history": "Versions",
+    "publishDisabled": {
+      "unsaved": "Save the draft before publishing.",
+      "noChanges": "Nothing to publish: the draft is the same as v{{version}}."
+    },
+    "dialog": {
+      "title": "Publish v{{version}}",
+      "description": "New hires will use this version. Journeys in progress don't change: each keeps the version it was created with.",
+      "first": "First version of the template, with {{count}} tasks.",
+      "summaryTitle": "Changes since v{{version}}",
+      "note": "Version note",
+      "noteHelp": "What changed and why, 10 to 500 characters. For example: Adds the day-60 own project at the team's request.",
+      "noteRequired": "Write a note of at least 10 characters that explains the change.",
+      "noteMax": "The note can have up to 500 characters.",
+      "confirm": "Publish v{{version}}",
+      "published": "Template published (v{{version}})"
+    },
+    "diff": {
+      "added": "Added ({{count}})",
+      "removed": "Removed ({{count}})",
+      "modified": "Changed ({{count}})",
+      "reordered": "Some tasks changed their order within their stage.",
+      "details": "The template details changed: {{fields}}.",
+      "none": "There are no differences between these versions.",
+      "fields": {
+        "title": "title",
+        "description": "description",
+        "type": "type",
+        "owner": "owner",
+        "offsetDays": "due day",
+        "dependsOn": "dependencies",
+        "stage": "stage",
+        "name": "name",
+        "jobTitle": "job title",
+        "area": "area"
+      },
+      "offset": "Due: day {{from}} → day {{to}}",
+      "changed": "Changed: {{fields}}"
+    },
+    "page": {
+      "versionTitle": "Version {{version}}",
+      "previous": "Previous",
+      "facts": "Template facts",
+      "eyebrow": "Templates",
+      "title": "Versions of {{name}}",
+      "description": "Each publication is kept as a version with its note. Journeys use the version they were created with.",
+      "back": "Back to the editor",
+      "listTitle": "History",
+      "draftRow": "Unpublished draft",
+      "draftRowHelp": "Saved changes that no hire uses yet.",
+      "editDraft": "Edit draft",
+      "current": "In force",
+      "publishedBy": "Published on {{date}} by {{name}}",
+      "tasks_one": "{{count}} task",
+      "tasks_other": "{{count}} tasks",
+      "usage_one": "{{count}} hire",
+      "usage_other": "{{count}} hires",
+      "usageNone": "No hires",
+      "restore": "Restore as draft",
+      "restoreTitle": "Restore v{{version}} as a draft?",
+      "restoreBody": "The current draft is replaced by the content of v{{version}}. The version in force and the journeys in progress don't change; publish it to use it.",
+      "restoreConfirm": "Restore version",
+      "restored": "v{{version}} restored as a draft",
+      "compareTitle": "Compare versions",
+      "compareDescription": "Choose two versions to see which tasks were added, removed or changed.",
+      "from": "From",
+      "to": "To",
+      "draftOption": "Draft",
+      "versionOption": "v{{version}}",
+      "empty": "No published versions yet. Publish the template from the editor so it can be assigned."
+    },
+    "hire": {
+      "version": "{{name}} · v{{version}}",
+      "olderNote": "The version in force is v{{version}}; this journey doesn't change."
+    },
+    "assignOnly": "Only published templates are listed. The journey uses the version in force."
   }
 }

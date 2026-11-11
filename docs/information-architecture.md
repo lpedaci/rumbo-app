@@ -143,7 +143,7 @@ flowchart TD
     PLA --> A5["A5 Listado"]
     PLA --> A6["A6 Editor"]
     A6 --> A7["A7 Vista previa"]
-    A6 -.-> A8["A8 Versiones (B)"]
+    A6 -.-> A8["A8 Versiones"]
     RRHH -.-> A9["A9 Personas (B)"]
     A9 -.-> A10["A10 Ficha de persona (B)"]
     RRHH -.-> A11["A11 Ciclo de vida (B)"]

@@ -81,9 +81,8 @@ export function UserMenu({ placement = 'header' }: { placement?: 'header' | 'sid
             <Avatar name={name} role={user.role} />
             <div className="flex min-w-0 flex-col">
               <span className="truncate text-label-large text-on-surface">{name}</span>
-              <span className="truncate text-body-small text-on-surface-variant">
-                {t(`roles.${user.role}`)} · {person?.email}
-              </span>
+              <span className="text-body-small text-on-surface-variant">{t(`roles.${user.role}`)}</span>
+              <span className="text-body-small [overflow-wrap:anywhere] text-on-surface-variant">{person?.email}</span>
             </div>
           </div>
           <DropdownMenuSeparator />

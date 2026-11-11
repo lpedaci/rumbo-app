@@ -10,6 +10,7 @@ import {
   type Progress,
 } from '@/lib/journey';
 import type { Checkin, CheckinStage, Hire, HireStatus, Person, Stage, Template } from '@/types/domain';
+import { asVersion, latestVersion } from './templates';
 
 /** Everything the hire listing (A2) and the hire record (A4) show about one journey. */
 export interface HireSummary {
@@ -120,8 +121,9 @@ export interface NewHireInput {
 }
 
 /**
- * Builds the person and the journey of a new hire (F3): copies the template tasks with
- * real dates (dueDate = startDate + offsetDays) and the 30/60/90 check-ins.
+ * Builds the person and the journey of a new hire (F3): copies the tasks of the published
+ * version in force (F8) with real dates (dueDate = startDate + offsetDays) and the 30/60/90
+ * check-ins.
  */
 export function createHire(
   input: NewHireInput,
@@ -159,6 +161,7 @@ export function createHire(
     mobile: input.mobile.trim(),
   };
   const checkins = generateCheckins(input.startDate, hireId, context.milestones);
+  const version = latestVersion(context.template);
   const hire: Hire = {
     id: hireId,
     personId,
@@ -168,8 +171,10 @@ export function createHire(
     hrId: context.hrId,
     templateId: input.templateId,
     status: hireStatus({ startDate: input.startDate, checkins }, context.today ?? DEMO_TODAY),
-    tasks: generateHireTasks(context.template, input.startDate, hireId),
+    // F8: the journey copies the version in force; publishing later never changes it.
+    tasks: generateHireTasks(version ? asVersion(context.template, version) : context.template, input.startDate, hireId),
     checkins,
+    templateVersion: version?.version,
   };
   return { person, hire };
 }

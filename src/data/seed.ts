@@ -22,10 +22,12 @@ import type {
   Person,
   SecurityPolicy,
   Template,
+  TemplateVersion,
 } from '@/types/domain';
 import { addDays, DEMO_TODAY } from '@/lib/dates';
 import { generateCheckins, generateHireTasks, hireStatus } from '@/lib/journey';
 import { buildSeedNotifications } from '@/lib/notifications';
+import { asVersion } from '@/lib/templates';
 import accessRequests from './access-requests.json';
 import auditEvents from './audit-events.json';
 import authAttempts from './auth-attempts.json';
@@ -134,9 +136,58 @@ function buildCheckins(seed: HireSeed): Checkin[] {
   });
 }
 
+/**
+ * Version history of the seed templates (F8, D-108). Every template has a v1; the data analyst
+ * one also has a v2 that added the own project (d17) and moved the culture handbook (d11) two
+ * days earlier, so the demo shows journeys on each version and a real comparison.
+ */
+const TEMPLATE_HISTORY: Record<
+  string,
+  { publishedAt: string; note: string; removed?: string[]; changes?: Record<string, Partial<Template['tasks'][number]>> }[]
+> = {
+  'tpl-data': [
+    {
+      publishedAt: '2026-05-15T14:00:00.000Z',
+      note: 'Primera versión del recorrido de Analista de Datos, revisada con el equipo de Datos.',
+      removed: ['d17'],
+      changes: { d11: { offsetDays: 6 } },
+    },
+    {
+      publishedAt: '2026-09-15T14:00:00.000Z',
+      note: 'Agrega el proyecto propio del día 60 y adelanta la lectura del manual de cultura a la primera semana, a pedido de los ingresos de julio.',
+    },
+  ],
+  'tpl-frontend': [
+    { publishedAt: '2026-05-20T14:00:00.000Z', note: 'Primera versión del recorrido de Desarrollo Frontend.' },
+  ],
+  'tpl-sales': [{ publishedAt: '2026-05-10T14:00:00.000Z', note: 'Primera versión del recorrido Comercial.' }],
+};
+
+/** Days before the start date when a hire is created and its journey generated (seed rule). */
+const SEED_CREATED_BEFORE_START = 21;
+
+function buildVersions(template: Template): TemplateVersion[] {
+  return (TEMPLATE_HISTORY[template.id] ?? []).map((entry, i) => ({
+    version: i + 1,
+    publishedAt: entry.publishedAt,
+    publishedBy: 'p-carla',
+    note: entry.note,
+    name: template.name,
+    jobTitle: template.jobTitle,
+    area: template.area,
+    tasks: template.tasks
+      .filter((task) => !entry.removed?.includes(task.id))
+      .map((task) => ({ ...task, ...entry.changes?.[task.id] })),
+  }));
+}
+
 function buildHire(seed: HireSeed, templatesById: Map<string, Template>): Hire {
-  const template = templatesById.get(seed.templateId);
-  if (!template) throw new Error(`Seed hire ${seed.id} uses unknown template ${seed.templateId}`);
+  const current = templatesById.get(seed.templateId);
+  if (!current) throw new Error(`Seed hire ${seed.id} uses unknown template ${seed.templateId}`);
+  // The journey comes from the version in force when the hire was created (F8).
+  const created = addDays(seed.startDate, -SEED_CREATED_BEFORE_START);
+  const version = [...current.versions].reverse().find((v) => v.publishedAt.slice(0, 10) <= created) ?? current.versions[0];
+  const template = version ? asVersion(current, version) : current;
   const checkins = buildCheckins(seed);
   return {
     id: seed.id,
@@ -149,12 +200,16 @@ function buildHire(seed: HireSeed, templatesById: Map<string, Template>): Hire {
     status: hireStatus({ startDate: seed.startDate, checkins }),
     tasks: buildTasks(seed, template),
     checkins,
+    templateVersion: version?.version,
   };
 }
 
 /** Fresh copy of the demo data, used on first load and by "Restablecer demo". */
 export function buildSeed(): DemoData {
-  const typedTemplates = templates as Template[];
+  const typedTemplates = (templates as Omit<Template, 'versions'>[]).map((t) => {
+    const template = { ...t, versions: [] } as Template;
+    return { ...template, versions: buildVersions(template) };
+  });
   const templatesById = new Map(typedTemplates.map((t) => [t.id, t]));
   const hires = (hiresSeed as unknown as HireSeed[]).map((seed) => buildHire(seed, templatesById));
   return structuredClone({

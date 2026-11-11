@@ -73,7 +73,7 @@ flowchart TD
     A1 --> A5["A5 Listado de plantillas"]
     A5 --> A6["A6 Editor de plantilla"]
     A6 --> A7["A7 Vista previa"]
-    A6 -. "fase B" .-> A8["A8 Versiones"]
+    A6 -- "Versiones" --> A8["A8 Versiones"]
     A1 -. "fase B" .-> A9["A9 Personas y catálogos"]
     A9 -.-> A10["A10 Ficha de persona"]
     A1 -. "fase B" .-> A11["A11 Altas, cambios y bajas"]

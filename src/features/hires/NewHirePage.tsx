@@ -21,6 +21,7 @@ import { dateField, parseDisplayDate, phoneField, requiredText } from '@/lib/val
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import { HireStatusPill } from './HireStatusPill';
+import { asVersion, isAssignable, latestVersion } from '@/lib/templates';
 
 const schema = z.object({
   name: requiredText,
@@ -79,7 +80,11 @@ export function NewHirePage() {
   );
   const choose = { value: '', label: t('hires.form.choose') };
 
-  const template = templates.find((tp) => tp.id === templateId);
+  // F8: only published templates can be assigned, and the journey uses the version in force.
+  const assignable = templates.filter(isAssignable);
+  const chosenTemplate = assignable.find((tp) => tp.id === templateId);
+  const version = chosenTemplate && latestVersion(chosenTemplate);
+  const template = chosenTemplate && version ? asVersion(chosenTemplate, version) : undefined;
   const start = parseDisplayDate(startDate);
 
   // Choosing a template fills in the job title and area when they are still empty.
@@ -92,7 +97,7 @@ export function NewHirePage() {
   };
 
   const onSubmit = handleSubmit((values) => {
-    const chosen = templates.find((tp) => tp.id === values.templateId);
+    const chosen = assignable.find((tp) => tp.id === values.templateId);
     const startIso = parseDisplayDate(values.startDate);
     if (!user || !chosen || !startIso) return;
     const { person, hire } = createHire(
@@ -186,7 +191,13 @@ export function NewHirePage() {
                 helperText={t('hires.form.templateHelp')}
                 required
                 error={fieldError(errors.templateId)}
-                options={[choose, ...templates.map((tp) => ({ value: tp.id, label: tp.name }))]}
+                options={[
+                  choose,
+                  ...assignable.map((tp) => ({
+                    value: tp.id,
+                    label: `${tp.name} · v${latestVersion(tp)?.version}`,
+                  })),
+                ]}
                 {...templateField}
                 onChange={(e) => {
                   void templateField.onChange(e);

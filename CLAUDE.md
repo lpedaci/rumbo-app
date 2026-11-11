@@ -188,6 +188,7 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 24. **Frase del KPI al lado del número** (D-90) cuando entra; si no, debajo.
 25. **Un toast a la vez** (D-90, D-99, D-109): del ancho de su mensaje (hasta 44 rem: una línea en desktop, dos en celulares); el nuevo reemplaza al anterior; en celulares aparece por encima del menú inferior y desde 768 px arriba al centro, debajo de la barra superior, para no tapar las acciones ni el foco.
 26. **Verificación de identidad antes de restablecer un acceso** (D-90): solo con datos de la ficha (celular registrado o jefe directo), nunca con los que trae la solicitud.
+28. **Descripciones de encabezado con propósito** (D-111): la línea bajo el `h1` dice para qué sirve el apartado, al punto, sin repetir chips ni datos; 8 px entre título y descripción y 12 px bajo la línea superior; las acciones van al lado del título desde 1024 px.
 27. **Encabezado de ficha único** (D-94): `DetailHeader` en todas las fichas de detalle (persona con foto y nombre si corresponde, chips con ícono y texto, `h1` y una línea de propósito). Las filas de las tablas se seleccionan completas, nunca con un texto subrayado.
 15. **Aviso de tarea bloqueada** (D-69): sección en `warning-container` con candado, "Se habilita cuando esté hecha esta tarea" y una fila por tarea previa con tipo, título enlazado, responsable en chip ("Te toca a ti" resaltado), vencimiento e "Ir a la tarea".
 
@@ -790,6 +791,7 @@ interface Notification {
   title: string; body: string; link: string; channels: ('app' | 'email')[];
 }
 
+// Implementado (D-108): Template.versions guarda las versiones publicadas (número, fecha, autor, nota, datos y tareas); Template.tasks es el borrador de trabajo y el estado se deriva; Hire.templateVersion guarda la versión usada.
 interface TemplateVersion {
   id: string; templateId: string; version: number; status: 'draft' | 'published' | 'archived';
   tasks: TemplateTask[]; note?: string; createdBy: string; createdAt: string; publishedAt?: string;

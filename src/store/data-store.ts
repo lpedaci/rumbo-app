@@ -24,6 +24,7 @@ import type {
   Mood,
   Person,
   Template,
+  TemplateVersion,
 } from '@/types/domain';
 
 /**
@@ -34,7 +35,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 6;
+export const DATA_SCHEMA_VERSION = 7;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -49,6 +50,13 @@ interface DataActions {
   addAccessRequest: (request: AccessRequest) => void;
   /** Creates or replaces a template (F2) and records template.create or template.update. */
   saveTemplate: (template: Template, actorId: string) => void;
+  /**
+   * F8: publishes the working copy as the next version, with its note, and records
+   * template.publish. Journeys already created keep their version.
+   */
+  publishTemplate: (templateId: string, note: string, actorId: string) => void;
+  /** F8: copies a published version into the working copy (a new draft) and records template.restore. */
+  restoreTemplateVersion: (templateId: string, version: number, actorId: string) => void;
   /** Deletes a template that no journey uses (D-49) and records template.delete. */
   deleteTemplate: (templateId: string, actorId: string) => void;
   /** Adds a new hire and their journey (A3, F3) and records hire.create. */
@@ -181,6 +189,74 @@ export const useDataStore = create<DataState>()(
                 resource: template.id,
                 result: 'success',
                 detail: template.name,
+              },
+            ],
+          };
+        }),
+
+      publishTemplate: (templateId, note, actorId) =>
+        set((state) => {
+          const template = state.templates.find((t) => t.id === templateId);
+          if (!template) return {};
+          const at = demoNow();
+          const version: TemplateVersion = {
+            version: (template.versions.at(-1)?.version ?? 0) + 1,
+            publishedAt: at,
+            publishedBy: actorId,
+            note: note.trim(),
+            name: template.name,
+            jobTitle: template.jobTitle,
+            area: template.area,
+            tasks: structuredClone(template.tasks),
+          };
+          return {
+            templates: state.templates.map((t) =>
+              t.id === templateId ? { ...t, updatedAt: at.slice(0, 10), versions: [...t.versions, version] } : t,
+            ),
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: 'template.publish',
+                resource: templateId,
+                result: 'success',
+                detail: `${template.name} v${version.version}`,
+              },
+            ],
+          };
+        }),
+
+      restoreTemplateVersion: (templateId, versionNumber, actorId) =>
+        set((state) => {
+          const template = state.templates.find((t) => t.id === templateId);
+          const version = template?.versions.find((v) => v.version === versionNumber);
+          if (!template || !version) return {};
+          const at = demoNow();
+          return {
+            templates: state.templates.map((t) =>
+              t.id === templateId
+                ? {
+                    ...t,
+                    name: version.name,
+                    jobTitle: version.jobTitle,
+                    area: version.area,
+                    tasks: structuredClone(version.tasks),
+                    updatedAt: at.slice(0, 10),
+                  }
+                : t,
+            ),
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: 'template.restore',
+                resource: templateId,
+                result: 'success',
+                detail: `${template.name} v${versionNumber}`,
               },
             ],
           };

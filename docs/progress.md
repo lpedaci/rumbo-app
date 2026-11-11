@@ -356,3 +356,12 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - G9 (`/notifications`): filtros "Todas / No leídas" y por tipo, grupos Hoy, Últimos 7 días y Anteriores, y vista previa del correo simulado.
 - Permiso `notification:view` (cada persona ve solo las suyas), tests unitarios del motor y G9 en el test de Playwright (desbordes y axe) para nuevo ingreso y sistemas.
 - Pendiente: preferencias por tipo y canal (F17) y notificaciones de comentarios (F9), privacidad (F10) y aprobaciones (F14) cuando existan esas funciones.
+
+## Paso 15 · F8 Versiones de plantillas, 11/11/2026 (D-108)
+
+- Modelo: `Template.versions` (publicadas, con nota) y `Template.tasks` como borrador; estado derivado; `Hire.templateVersion`. Esquema de datos 7.
+- A6: "Guardar borrador" y "Publicar" con resumen de cambios y nota obligatoria; el estado y los ingresos que usan la plantilla en el encabezado.
+- A8 (`/admin/templates/:id/versions`): historial, comparación entre versiones o con el borrador y "Restaurar como borrador".
+- A5 muestra el estado de cada plantilla; A3 solo ofrece plantillas publicadas (con su versión); A4 muestra la versión del recorrido y aclara si hay una más nueva.
+- Auditoría: `template.publish` y `template.restore`. Tests de publicación y restauración, y A8 en Playwright.
+- También: correos completos en todo el producto (D-110) y más aire en los encabezados de página (D-111).

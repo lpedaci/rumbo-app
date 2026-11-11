@@ -57,7 +57,7 @@ export function SsoSimulation({ person, providerName, onDone }: SsoSimulationPro
         <Avatar name={person.name} role={person.role} />
         <div className="flex min-w-0 flex-col">
           <span className="truncate text-title-small text-on-surface">{person.name}</span>
-          <span className="truncate text-body-small text-on-surface-variant">{person.email}</span>
+          <span className="text-body-small [overflow-wrap:anywhere] text-on-surface-variant">{person.email}</span>
         </div>
       </div>
 

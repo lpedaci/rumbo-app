@@ -33,6 +33,7 @@ import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { Template } from '@/types/domain';
+import { TemplateStatePill } from './TemplateStatePill';
 
 /**
  * A5 · Templates by job title (CLAUDE.md F2): task count and usage, with create,
@@ -76,6 +77,9 @@ export function TemplatesPage() {
         </DropdownMenuItem>
         <DropdownMenuItem icon="visibility" onSelect={() => navigate(`/admin/templates/${template.id}/preview`)}>
           {t('templates.list.preview')}
+        </DropdownMenuItem>
+        <DropdownMenuItem icon="history" onSelect={() => navigate(`/admin/templates/${template.id}/versions`)}>
+          {t('templateVersions.history')}
         </DropdownMenuItem>
         {canEdit && (
           <>
@@ -150,6 +154,7 @@ export function TemplatesPage() {
                 <TableHead>
                   <TableRow>
                     <TableHeaderCell>{t('templates.list.columns.name')}</TableHeaderCell>
+                    <TableHeaderCell>{t('templates.list.columns.state')}</TableHeaderCell>
                     <TableHeaderCell>{t('templates.list.columns.area')}</TableHeaderCell>
                     <TableHeaderCell className="text-right">{t('templates.list.columns.tasks')}</TableHeaderCell>
                     <TableHeaderCell className="text-right">{t('templates.list.columns.usage')}</TableHeaderCell>
@@ -178,6 +183,9 @@ export function TemplatesPage() {
                           >
                             {template.jobTitle}
                           </span>
+                        </TableCell>
+                        <TableCell>
+                          <TemplateStatePill template={template} />
                         </TableCell>
                         <TableCell>{template.area}</TableCell>
                         <TableCell className="text-right tabular-nums">{template.tasks.length}</TableCell>
@@ -263,9 +271,13 @@ export function TemplatesPage() {
                       {usageText(usage)}
                     </li>
                   </ul>
-                  <p className="mt-auto border-t border-outline-variant pt-3 text-body-small text-on-surface-variant tabular-nums">
-                    {t('templates.list.updatedOn', { date: formatDate(template.updatedAt) })}
-                  </p>
+                  {/* State of the template (F8) next to the last update */}
+                  <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-outline-variant pt-3">
+                    <p className="text-body-small text-on-surface-variant tabular-nums">
+                      {t('templates.list.updatedOn', { date: formatDate(template.updatedAt) })}
+                    </p>
+                    <TemplateStatePill template={template} />
+                  </div>
                 </li>
               );
             })}

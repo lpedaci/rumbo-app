@@ -44,6 +44,7 @@ export function SecurityPage() {
     toast.success(t('security.forgotten'));
   };
 
+  const roleChip = cn('inline-flex h-6 items-center rounded-full px-2.5 text-label-medium', ROLE_ACCENT[person.role].chip);
   return (
     <>
       <PageHeader title={t('security.title')} description={t('security.subtitle')} />
@@ -52,19 +53,14 @@ export function SecurityPage() {
           {/* Who is signed in, then the facts as label and value rows (D-91) */}
           <div className="flex min-w-0 items-center gap-4">
             <Avatar name={person.name} role={person.role} size="lg" />
+            {/* Name and full email (never cut, D-110); the role in its color (D-95) goes under them on
+                phones and on the right from 768 px. Only one of the two chips is displayed. */}
             <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-              <span className="truncate text-title-medium text-on-surface">{person.name}</span>
-              <span className="truncate text-body-medium text-on-surface-variant">{person.email}</span>
+              <span className="text-title-medium text-on-surface">{person.name}</span>
+              <span className="text-body-medium [overflow-wrap:anywhere] text-on-surface-variant">{person.email}</span>
+              <span className={cn(roleChip, 'w-fit md:hidden')}>{t(`roles.${user.role}`)}</span>
             </div>
-            {/* The role on the right, in its color (D-95) */}
-            <span
-              className={cn(
-                'inline-flex h-6 shrink-0 items-center self-start rounded-full px-2.5 text-label-medium',
-                ROLE_ACCENT[person.role].chip,
-              )}
-            >
-              {t(`roles.${user.role}`)}
-            </span>
+            <span className={cn(roleChip, 'hidden shrink-0 self-start md:inline-flex')}>{t(`roles.${user.role}`)}</span>
           </div>
           <dl className="flex flex-col border-t border-outline-variant">
             {[

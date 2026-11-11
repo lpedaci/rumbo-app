@@ -29,6 +29,9 @@ const TemplatesPage = lazy(() =>
 const TemplateEditorPage = lazy(() =>
   import('@/features/templates/TemplateEditorPage').then((m) => ({ default: m.TemplateEditorPage })),
 );
+const TemplateVersionsPage = lazy(() =>
+  import('@/features/templates/TemplateVersionsPage').then((m) => ({ default: m.TemplateVersionsPage })),
+);
 const TemplatePreviewPage = lazy(() =>
   import('@/features/templates/TemplatePreviewPage').then((m) => ({ default: m.TemplatePreviewPage })),
 );
@@ -121,6 +124,7 @@ export function AppRoutes() {
             <Route path="/admin/templates" element={<TemplatesPage />} />
             <Route path="/admin/templates/:id" element={<TemplateEditorPage />} />
             <Route path="/admin/templates/:id/preview" element={<TemplatePreviewPage />} />
+            <Route path="/admin/templates/:id/versions" element={<TemplateVersionsPage />} />
 
             <Route path="/manager" element={<TeamPage />} />
             <Route path="/manager/hires/:id" element={<HireDetailPage />} />

@@ -120,3 +120,10 @@ export const rejectReasonSchema = z.string().trim().min(1, 'it.detail.rejectReas
 export function newPasswordSchema(meetsPolicy: (password: string) => boolean) {
   return z.string().refine(meetsPolicy, 'auth.newPassword.invalid');
 }
+
+/** F8: version note when publishing a template, required, 10 to 500 characters. */
+export const publishNoteSchema = z
+  .string()
+  .trim()
+  .min(10, 'templateVersions.dialog.noteRequired')
+  .max(500, 'templateVersions.dialog.noteMax');

@@ -113,13 +113,35 @@ export interface TemplateTask {
   resourceUrl?: string;
 }
 
+/**
+ * A published version of a template (F8): a frozen copy of its details and tasks. Versions are
+ * never edited; publishing again adds the next one (D-108).
+ */
+export interface TemplateVersion {
+  version: number;
+  publishedAt: string;
+  publishedBy: string;
+  /** Required version note: what changed and why. */
+  note: string;
+  name: string;
+  jobTitle: string;
+  area: string;
+  tasks: TemplateTask[];
+}
+
 export interface Template {
   id: string;
   name: string;
   jobTitle: string;
   area: string;
   updatedAt: string;
+  /**
+   * Working copy edited in the builder (A6). It is the draft when it differs from the latest
+   * published version, or when the template was never published (D-108).
+   */
   tasks: TemplateTask[];
+  /** Published versions, oldest first. The last one is the version in force. */
+  versions: TemplateVersion[];
 }
 
 export interface HireTask extends Omit<TemplateTask, 'offsetDays'> {
@@ -169,6 +191,8 @@ export interface Hire {
   status: HireStatus;
   tasks: HireTask[];
   checkins: Checkin[];
+  /** F8: version of the template the journey was generated from; later versions never change it. */
+  templateVersion?: number;
 }
 
 // ---------- Phase B: F7 notifications ----------

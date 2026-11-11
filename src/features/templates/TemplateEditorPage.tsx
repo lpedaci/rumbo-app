@@ -27,6 +27,8 @@ import {
   type TemplateIssue,
   upsertTask,
   validateTemplate,
+  hasDraftChanges,
+  latestVersion,
 } from '@/lib/templates';
 import { useFieldError } from '@/lib/use-field-error';
 import { requiredText } from '@/lib/validation';
@@ -34,7 +36,9 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
 import type { Stage, Template, TemplateTask } from '@/types/domain';
 import { StageSection } from './StageSection';
+import { PublishDialog } from './PublishDialog';
 import { TaskFormDialog } from './TaskFormDialog';
+import { TemplateStatePill } from './TemplateStatePill';
 
 const NAME_MAX = 80;
 const detailsSchema = z.object({
@@ -79,6 +83,7 @@ function TemplateEditor({ template }: { template?: Template }) {
     stage: 'preboarding',
   });
   const [toDelete, setToDelete] = useState<TemplateTask | null>(null);
+  const [publishOpen, setPublishOpen] = useState(false);
   const [summary, setSummary] = useState<SummaryItem[]>([]);
   const [announcement, setAnnouncement] = useState('');
   const summaryRef = useRef<HTMLDivElement>(null);
@@ -201,6 +206,8 @@ function TemplateEditor({ template }: { template?: Template }) {
       area: values.area.trim(),
       updatedAt: DEMO_TODAY,
       tasks,
+      // Saving never publishes: the versions stay as they are (F8, D-108).
+      versions: template?.versions ?? [],
     };
     useDataStore.getState().saveTemplate(saved, user.personId);
     setBaseline(JSON.stringify({ ...savedDetails, ...values, tasks }));
@@ -271,6 +278,20 @@ function TemplateEditor({ template }: { template?: Template }) {
   };
 
   const dependents = toDelete ? dependentsOf(tasks, toDelete.id) : [];
+  // F8: only a saved draft with changes can be published (D-108).
+  const current = template ? latestVersion(template) : undefined;
+  const publishReason =
+    isNew || dirty
+      ? t('templateVersions.publishDisabled.unsaved')
+      : template && !hasDraftChanges(template)
+        ? t('templateVersions.publishDisabled.noChanges', { version: current?.version })
+        : undefined;
+  const publish = (note: string) => {
+    if (!template || !user) return;
+    useDataStore.getState().publishTemplate(template.id, note, user.personId);
+    setPublishOpen(false);
+    toast.success(t('templateVersions.dialog.published', { version: (current?.version ?? 0) + 1 }));
+  };
   const previewReason = isNew
     ? t('templates.editor.previewNew')
     : dirty
@@ -290,9 +311,26 @@ function TemplateEditor({ template }: { template?: Template }) {
       </nav>
 
       <PageHeader
-        eyebrow={t('templates.editor.eyebrow')}
+        eyebrow={
+          // State of the template (F8) next to the section name, like the chips of a record header
+          <span className="flex flex-wrap items-center gap-2">
+            {t('templates.editor.eyebrow')}
+            {template && <TemplateStatePill template={template} />}
+            {usage > 0 && (
+              <span className="inline-flex h-6 items-center gap-1 rounded-full border border-outline-variant px-2.5 text-label-medium text-on-surface">
+                <Icon name="group" size={16} className="text-on-surface-variant" />
+                {t('templateVersions.usageChip', { count: usage })}
+              </span>
+            )}
+          </span>
+        }
         title={template?.name ?? t('templates.editor.titleNew')}
-        description={usage > 0 ? t('templates.editor.usageNote', { count: usage }) : undefined}
+        description={
+          // What this screen is for, to the point (D-111); the state is in the chips and the publish dialog
+          template
+            ? t('templateVersions.purpose', { jobTitle: template.jobTitle })
+            : t('templateVersions.purposeNew')
+        }
         actions={
           <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
             {dirty && (
@@ -310,8 +348,16 @@ function TemplateEditor({ template }: { template?: Template }) {
                 <Link to={`/admin/templates/${template?.id}/preview`}>{t('templates.editor.preview')}</Link>
               </Button>
             )}
-            <Button leadingIcon="save" onClick={() => void handleSubmit(save, onInvalid)()}>
-              {t('templates.editor.save')}
+            {template && (
+              <Button asChild variant="outlined" leadingIcon="history">
+                <Link to={`/admin/templates/${template.id}/versions`}>{t('templateVersions.history')}</Link>
+              </Button>
+            )}
+            <Button variant="tonal" leadingIcon="save" onClick={() => void handleSubmit(save, onInvalid)()}>
+              {t('templateVersions.saveDraft')}
+            </Button>
+            <Button leadingIcon="publish" disabledReason={publishReason} onClick={() => setPublishOpen(true)}>
+              {t('templateVersions.publish')}
             </Button>
           </div>
         }
@@ -406,6 +452,10 @@ function TemplateEditor({ template }: { template?: Template }) {
         tasks={tasks}
         onSubmit={onTaskSubmit}
       />
+
+      {template && (
+        <PublishDialog template={template} open={publishOpen} onOpenChange={setPublishOpen} onPublish={publish} />
+      )}
 
       <ConfirmDialog
         open={toDelete !== null}

@@ -19,6 +19,7 @@ import {
 } from './journey';
 
 const template: Template = {
+  versions: [],
   id: 'tpl-test',
   name: 'Test',
   jobTitle: 'Test',

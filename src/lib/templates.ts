@@ -1,4 +1,4 @@
-import type { Hire, Stage, Template, TemplateTask } from '@/types/domain';
+import type { Hire, Stage, Template, TemplateTask, TemplateVersion } from '@/types/domain';
 import { STAGES } from './dates';
 import { type DependencyIssue, validateDependencies } from './journey';
 import { TASK_OFFSET_MAX, TASK_OFFSET_MIN } from './validation';
@@ -126,6 +126,8 @@ export function duplicateTemplate(template: Template, copyName: string, today: s
     id: newId('tpl'),
     name: copyName,
     updatedAt: today,
+    // A copy starts as a draft: it has to be published before it can be assigned (F8).
+    versions: [],
     tasks: template.tasks.map((t) => ({
       ...t,
       id: ids.get(t.id)!,
@@ -171,4 +173,92 @@ export function dependencyOptionState(
     stack.push(...(byId.get(id) ?? []));
   }
   return 'ok';
+}
+
+// ---------- F8: versions ----------
+
+/** The version in force (the latest published), or undefined for a template never published. */
+export function latestVersion(template: Pick<Template, 'versions'>): TemplateVersion | undefined {
+  return template.versions.at(-1);
+}
+
+/** Comparable content of a template or version: details and tasks, without dates. */
+function contentOf(x: Pick<Template, 'name' | 'jobTitle' | 'area' | 'tasks'>): string {
+  return JSON.stringify({ name: x.name, jobTitle: x.jobTitle, area: x.area, tasks: sortByStageAndOrder(x.tasks) });
+}
+
+/** True when the working copy has changes that are not published yet. */
+export function hasDraftChanges(template: Template): boolean {
+  const latest = latestVersion(template);
+  return !latest || contentOf(template) !== contentOf(latest);
+}
+
+export type TemplateState = 'draft' | 'published' | 'published_with_draft';
+
+/** Draft (never published), published, or published with a draft in progress (D-108). */
+export function templateState(template: Template): TemplateState {
+  if (!latestVersion(template)) return 'draft';
+  return hasDraftChanges(template) ? 'published_with_draft' : 'published';
+}
+
+/** Only published templates can be assigned to a new hire (F8). */
+export function isAssignable(template: Template): boolean {
+  return template.versions.length > 0;
+}
+
+/** The template as it was in a given version (for generating journeys and previews). */
+export function asVersion(template: Template, version: TemplateVersion): Template {
+  return { ...template, name: version.name, jobTitle: version.jobTitle, area: version.area, tasks: version.tasks };
+}
+
+export type TaskField = 'title' | 'description' | 'type' | 'owner' | 'offsetDays' | 'dependsOn' | 'stage';
+const COMPARED_FIELDS: TaskField[] = ['title', 'description', 'type', 'owner', 'offsetDays', 'dependsOn', 'stage'];
+
+export interface TemplateDiff {
+  added: TemplateTask[];
+  removed: TemplateTask[];
+  modified: { before: TemplateTask; after: TemplateTask; fields: TaskField[] }[];
+  /** Some tasks kept their content but changed position within their stage. */
+  reordered: boolean;
+  /** Name, job title or area changed. */
+  details: ('name' | 'jobTitle' | 'area')[];
+}
+
+/** What changed from one version (or the draft) to another, by task (publish summary and A8). */
+export function diffTemplates(
+  from: Pick<Template, 'name' | 'jobTitle' | 'area' | 'tasks'>,
+  to: Pick<Template, 'name' | 'jobTitle' | 'area' | 'tasks'>,
+): TemplateDiff {
+  const before = new Map(from.tasks.map((t) => [t.id, t]));
+  const after = new Map(to.tasks.map((t) => [t.id, t]));
+  const modified: TemplateDiff['modified'] = [];
+  let reordered = false;
+  for (const task of to.tasks) {
+    const old = before.get(task.id);
+    if (!old) continue;
+    const fields = COMPARED_FIELDS.filter((f) => JSON.stringify(old[f]) !== JSON.stringify(task[f]));
+    if (fields.length) modified.push({ before: old, after: task, fields });
+    else if (old.order !== task.order) reordered = true;
+  }
+  return {
+    added: sortByStageAndOrder(to.tasks.filter((t) => !before.has(t.id))),
+    removed: sortByStageAndOrder(from.tasks.filter((t) => !after.has(t.id))),
+    modified,
+    reordered,
+    details: (['name', 'jobTitle', 'area'] as const).filter((k) => from[k] !== to[k]),
+  };
+}
+
+export function isEmptyDiff(diff: TemplateDiff): boolean {
+  return !diff.added.length && !diff.removed.length && !diff.modified.length && !diff.reordered && !diff.details.length;
+}
+
+/** Hires generated from each version of a template. */
+export function usageByVersion(templateId: string, hires: Pick<Hire, 'templateId' | 'templateVersion'>[]) {
+  const counts = new Map<number, number>();
+  for (const h of hires) {
+    if (h.templateId !== templateId || h.templateVersion === undefined) continue;
+    counts.set(h.templateVersion, (counts.get(h.templateVersion) ?? 0) + 1);
+  }
+  return counts;
 }

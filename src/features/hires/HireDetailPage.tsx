@@ -18,6 +18,7 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import { CheckinTimeline } from './CheckinTimeline';
 import { HireStatusPill } from './HireStatusPill';
+import { latestVersion } from '@/lib/templates';
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
@@ -191,12 +192,27 @@ export function HireDetailPage() {
                 <DetailRow label={t('hires.detail.manager')} value={nameOf(hire.managerId)} />
                 <DetailRow label={t('hires.detail.buddy')} value={nameOf(hire.buddyId)} />
                 <DetailRow label={t('hires.detail.hr')} value={nameOf(hire.hrId)} />
-                <DetailRow label={t('hires.detail.template')} value={s.template?.name ?? t('hires.detail.none')} />
+                <DetailRow
+                  label={t('hires.detail.template')}
+                  value={
+                    s.template
+                      ? hire.templateVersion
+                        ? t('templateVersions.hire.version', { name: s.template.name, version: hire.templateVersion })
+                        : s.template.name
+                      : t('hires.detail.none')
+                  }
+                />
                 <DetailRow label={t('hires.detail.email')} value={s.person?.email ?? ''} />
                 {s.person?.employeeId && <DetailRow label={t('hires.detail.employeeId')} value={s.person.employeeId} />}
                 {/* Only the last digits: personal data shown masked (F10) */}
                 {s.person?.mobile && <DetailRow label={t('hires.detail.mobile')} value={maskPhone(s.person.mobile)} />}
               </dl>
+              {/* F8: a later version never changes this journey */}
+              {s.template && hire.templateVersion && (latestVersion(s.template)?.version ?? 0) > hire.templateVersion && (
+                <p className="pt-2 text-body-small text-on-surface-variant">
+                  {t('templateVersions.hire.olderNote', { version: latestVersion(s.template)?.version })}
+                </p>
+              )}
             </Card>
 
             <Card

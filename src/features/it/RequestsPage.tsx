@@ -251,7 +251,7 @@ function PersonCell({ request, person }: { request: AccessRequest; person: Perso
         <span className="truncate text-title-small text-on-surface" title={person?.name ?? request.email}>
           {person?.name ?? t('it.unknownPerson')}
         </span>
-        <span className="truncate text-body-small text-on-surface-variant" title={request.email}>
+        <span className="text-body-small [overflow-wrap:anywhere] text-on-surface-variant">
           {request.email}
         </span>
       </div>

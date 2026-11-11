@@ -69,7 +69,7 @@ describe('A6 · Template builder', () => {
     fireEvent.click(within(menu).getByRole('menuitem', { name: 'Bajar' }));
     expect(screen.getByText(es.templates.editor.unsaved)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: 'Guardar plantilla' }));
+    fireEvent.click(screen.getByRole('button', { name: es.templateVersions.saveDraft }));
     await waitFor(() => expect(screen.queryByText(es.templates.editor.unsaved)).not.toBeInTheDocument());
     const after = tasksOfStage(template('tpl-data').tasks, 'week1').map((t) => t.title);
     expect(after.slice(0, 2)).toEqual([before[1], before[0]]);
@@ -132,7 +132,7 @@ describe('A6 · Template builder', () => {
   it('shows a summary with the problems instead of saving an incomplete template', async () => {
     renderAt('/admin/templates/new');
     expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(es.templates.editor.titleNew);
-    fireEvent.click(screen.getByRole('button', { name: 'Guardar plantilla' }));
+    fireEvent.click(screen.getByRole('button', { name: es.templateVersions.saveDraft }));
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent(es.templates.editor.issues.title);
     expect(alert).toHaveTextContent(es.templates.editor.issues.no_tasks);
@@ -154,5 +154,59 @@ describe('A7 · Preview', () => {
     // "Acceso a Jira…" is due on day 2: 15/10/2026.
     const row = screen.getByText('Acceso a Jira y Confluence').closest('li')!;
     expect(row).toHaveTextContent('15/10/2026');
+  });
+});
+
+describe('F8 · Template versions', () => {
+  it('publishes a saved draft with a required note and keeps journeys on their version', async () => {
+    act(() => {
+      switchRole('admin');
+    });
+    const before = useDataStore.getState().templates.find((x) => x.id === 'tpl-data')!;
+    // Change the draft and save it, as HR would in the builder.
+    act(() => {
+      useDataStore
+        .getState()
+        .saveTemplate({ ...before, tasks: before.tasks.filter((task) => task.id !== 'd18') }, 'p-carla');
+    });
+    renderAt('/admin/templates/tpl-data');
+    await screen.findByRole('heading', { level: 1, name: before.name });
+    fireEvent.click(screen.getByRole('button', { name: es.templateVersions.publish }));
+    const dialog = await screen.findByRole('dialog');
+    // The summary shows the removed task and the note is required.
+    expect(within(dialog).getByText(/Quitadas \(1\)/)).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole('button', { name: /Publicar v3/ }));
+    expect(await within(dialog).findByText(es.templateVersions.dialog.noteRequired)).toBeInTheDocument();
+    fireEvent.change(within(dialog).getByLabelText(new RegExp(es.templateVersions.dialog.note)), {
+      target: { value: 'Quita la retrospectiva duplicada.' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: /Publicar v3/ }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+
+    const after = useDataStore.getState().templates.find((x) => x.id === 'tpl-data')!;
+    expect(after.versions.map((v) => v.version)).toEqual([1, 2, 3]);
+    expect(after.versions.at(-1)!.tasks.some((task) => task.id === 'd18')).toBe(false);
+    // Sofía's journey was created from v2 and keeps its tasks.
+    const sofia = useDataStore.getState().hires.find((h) => h.id === 'h-sofia')!;
+    expect(sofia.templateVersion).toBe(2);
+    expect(sofia.tasks.some((task) => task.templateTaskId === 'd18')).toBe(true);
+    expect(useDataStore.getState().auditEvents.at(-1)).toMatchObject({ action: 'template.publish', resource: 'tpl-data' });
+  });
+
+  it('restores a previous version as a draft from the history (A8)', async () => {
+    act(() => {
+      switchRole('admin');
+    });
+    renderAt('/admin/templates/tpl-data/versions');
+    await screen.findByRole('heading', { level: 1 });
+    fireEvent.click(screen.getByRole('button', { name: es.templateVersions.page.restore }));
+    const dialog = await screen.findByRole('dialog');
+    fireEvent.click(within(dialog).getByRole('button', { name: es.templateVersions.page.restoreConfirm }));
+    await waitFor(() => {
+      const tpl = useDataStore.getState().templates.find((x) => x.id === 'tpl-data')!;
+      expect(tpl.tasks.some((task) => task.id === 'd17')).toBe(false);
+      expect(tpl.versions).toHaveLength(2);
+    });
+    expect(useDataStore.getState().auditEvents.at(-1)).toMatchObject({ action: 'template.restore' });
   });
 });

@@ -856,6 +856,7 @@
       "tableLabel": "Plantillas de recorrido",
       "columns": {
         "name": "Plantilla",
+        "state": "Estado",
         "area": "Área",
         "tasks": "Tareas",
         "usage": "Ingresos",
@@ -1108,7 +1109,7 @@
       "buddyHelp": "Una persona del equipo que la acompaña en el día a día.",
       "noBuddy": "Sin buddy",
       "template": "Plantilla",
-      "templateHelp": "El recorrido que se copia. Al elegirla, completa el puesto y el área si están vacíos.",
+      "templateHelp": "El recorrido que se copia: solo las plantillas publicadas, con su versión vigente. Al elegirla, completa el puesto y el área si están vacíos.",
       "choose": "Elige una opción",
       "submit": "Dar de alta",
       "submitting": "Guardando…",
@@ -1612,6 +1613,8 @@
         "template.create": "Plantilla creada",
         "template.update": "Plantilla modificada",
         "template.delete": "Plantilla eliminada",
+        "template.publish": "Plantilla publicada",
+        "template.restore": "Versión de plantilla restaurada como borrador",
         "hire.create": "Alta de ingreso",
         "task.complete": "Tarea marcada como hecha",
         "checkin.self_review": "Autoevaluación enviada",
@@ -2424,5 +2427,100 @@
         }
       }
     }
+  },
+  "templateVersions": {
+    "purpose": "Las tareas, por etapa y con su plazo, que recibe cada persona que ingresa como {{jobTitle}}.",
+    "purposeNew": "Define las tareas, por etapa y con su plazo, que va a recibir cada persona que ingrese en este puesto.",
+    "usageChip_one": "{{count}} ingreso con esta plantilla",
+    "usageChip_other": "{{count}} ingresos con esta plantilla",
+    "state": {
+      "draft": "Borrador",
+      "published": "Publicada · v{{version}}",
+      "published_with_draft": "v{{version}} · con borrador"
+    },
+    "stateHelp": {
+      "draft": "Arma las tareas por etapa y publica la plantilla para poder asignarla a un ingreso.",
+      "published": "Edita las tareas y guarda un borrador. Los ingresos nuevos lo usarán recién cuando publiques la v{{next}}; los recorridos en curso no cambian.",
+      "published_with_draft": "Tienes cambios guardados sin publicar. Publica la v{{next}} para que los usen los ingresos nuevos; los recorridos en curso no cambian."
+    },
+    "saveDraft": "Guardar borrador",
+    "publish": "Publicar",
+    "publishVersion": "Publicar v{{version}}",
+    "history": "Versiones",
+    "publishDisabled": {
+      "unsaved": "Guarda el borrador antes de publicar.",
+      "noChanges": "No hay cambios para publicar: el borrador es igual a la v{{version}}."
+    },
+    "dialog": {
+      "title": "Publicar la v{{version}}",
+      "description": "Los ingresos nuevos van a usar esta versión. Los recorridos en curso no cambian: cada uno sigue con la versión con la que se creó.",
+      "first": "Primera versión de la plantilla, con {{count}} tareas.",
+      "summaryTitle": "Cambios respecto de la v{{version}}",
+      "note": "Nota de la versión",
+      "noteHelp": "Qué cambió y por qué, entre 10 y 500 caracteres. Por ejemplo: Agrega el proyecto propio del día 60 a pedido del equipo.",
+      "noteRequired": "Escribe una nota de al menos 10 caracteres que explique el cambio.",
+      "noteMax": "La nota puede tener hasta 500 caracteres.",
+      "confirm": "Publicar v{{version}}",
+      "published": "Plantilla publicada (v{{version}})"
+    },
+    "diff": {
+      "added": "Agregadas ({{count}})",
+      "removed": "Quitadas ({{count}})",
+      "modified": "Modificadas ({{count}})",
+      "reordered": "Cambió el orden de algunas tareas dentro de su etapa.",
+      "details": "Cambiaron los datos de la plantilla: {{fields}}.",
+      "none": "No hay diferencias entre estas versiones.",
+      "fields": {
+        "title": "título",
+        "description": "descripción",
+        "type": "tipo",
+        "owner": "responsable",
+        "offsetDays": "plazo",
+        "dependsOn": "dependencias",
+        "stage": "etapa",
+        "name": "nombre",
+        "jobTitle": "puesto",
+        "area": "área"
+      },
+      "offset": "Plazo: día {{from}} → día {{to}}",
+      "changed": "Cambió: {{fields}}"
+    },
+    "page": {
+      "versionTitle": "Versión {{version}}",
+      "previous": "Anterior",
+      "facts": "Datos de la plantilla",
+      "eyebrow": "Plantillas",
+      "title": "Versiones de {{name}}",
+      "description": "Cada publicación queda como una versión con su nota. Los recorridos usan la versión con la que se crearon.",
+      "back": "Volver al editor",
+      "listTitle": "Historial",
+      "draftRow": "Borrador sin publicar",
+      "draftRowHelp": "Cambios guardados que todavía no usa ningún ingreso.",
+      "editDraft": "Editar borrador",
+      "current": "Vigente",
+      "publishedBy": "Publicada el {{date}} por {{name}}",
+      "tasks_one": "{{count}} tarea",
+      "tasks_other": "{{count}} tareas",
+      "usage_one": "{{count}} ingreso",
+      "usage_other": "{{count}} ingresos",
+      "usageNone": "Sin ingresos",
+      "restore": "Restaurar como borrador",
+      "restoreTitle": "¿Restaurar la v{{version}} como borrador?",
+      "restoreBody": "El borrador actual se reemplaza por el contenido de la v{{version}}. La versión vigente y los recorridos en curso no cambian; para usarla, publícala.",
+      "restoreConfirm": "Restaurar versión",
+      "restored": "v{{version}} restaurada como borrador",
+      "compareTitle": "Comparar versiones",
+      "compareDescription": "Elige dos versiones para ver qué tareas se agregaron, quitaron o modificaron.",
+      "from": "Desde",
+      "to": "Hasta",
+      "draftOption": "Borrador",
+      "versionOption": "v{{version}}",
+      "empty": "Todavía no hay versiones publicadas. Publica la plantilla desde el editor para poder asignarla."
+    },
+    "hire": {
+      "version": "{{name}} · v{{version}}",
+      "olderNote": "La versión vigente es la v{{version}}; este recorrido no cambia."
+    },
+    "assignOnly": "Solo aparecen las plantillas publicadas. El recorrido usa la versión vigente."
   }
 }

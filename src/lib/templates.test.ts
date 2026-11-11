@@ -117,7 +117,7 @@ describe('templates list', () => {
 
   it('duplicates with new ids and dependencies pointing to the copies', () => {
     const copy = duplicateTemplate(
-      { id: 't1', name: 'A', jobTitle: 'A', area: 'X', updatedAt: '2026-01-01', tasks: base },
+      { id: 't1', name: 'A', jobTitle: 'A', area: 'X', updatedAt: '2026-01-01', tasks: base, versions: [] },
       'A (copia)',
       '2026-11-10',
     );
