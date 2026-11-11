@@ -28,7 +28,7 @@ const STATUS_FILTERS: HireStatusFilter[] = ['all', 'upcoming', 'active', 'comple
 
 /**
  * A2 · Hires (CLAUDE.md F3): every journey with its status, progress, overdue tasks and
- * next check-in; filters by status and area. Table from 768 px, cards below (2.7).
+ * next check-in; filters by status and area. Table from 1024 px, compact rows below (2.7).
  */
 export function HiresPage() {
   const { t } = useTranslation();
@@ -76,7 +76,7 @@ export function HiresPage() {
           <div
             role="group"
             aria-label={t('hires.list.statusFilter')}
-            className="-mx-4 flex items-center gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
+            className="scrollbar-none -mx-4 flex items-center gap-3 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
           >
             {STATUS_FILTERS.map((value) => (
               <FilterChip
@@ -139,8 +139,8 @@ export function HiresPage() {
           </div>
         ) : (
           <>
-            {/* From 768 px: table */}
-            <div className="hidden md:block">
+            {/* From 1024 px: table (it does not fit on tablets without scrolling) */}
+            <div className="hidden lg:block">
               <TableContainer label={t('hires.list.tableLabel')} className="rounded-none border-x-0 border-b-0">
                 <Table>
                   <TableHead>
@@ -205,10 +205,10 @@ export function HiresPage() {
               </TableContainer>
             </div>
 
-            {/* Below 768 px: compact rows instead of the table (2.7) */}
-            <ul className="flex flex-col divide-y divide-outline-variant border-t border-outline-variant md:hidden">
+            {/* Below 1024 px: compact rows instead of the table (2.7) */}
+            <ul className="flex flex-col divide-y divide-outline-variant border-t border-outline-variant lg:hidden">
               {shown.map((s) => (
-                <li key={s.hire.id} className="relative flex flex-col gap-2.5 px-4 py-3">
+                <li key={s.hire.id} className="relative flex flex-col gap-3 px-4 pt-4 pb-5">
                   <div className="flex min-w-0 items-center gap-3">
                     {s.person && <Avatar name={s.person.name} role={s.person.role} size="sm" />}
                     <div className="flex min-w-0 flex-1 flex-col">

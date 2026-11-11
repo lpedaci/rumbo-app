@@ -19,7 +19,7 @@ export function TableContainer({ label, children, className }: TableContainerPro
       role="region"
       aria-label={label}
       tabIndex={0}
-      className={cn('w-full max-w-full overflow-x-auto rounded-md border border-outline-variant', className)}
+      className={cn('w-full max-w-full overflow-x-auto rounded-md border border-outline-variant max-lg:scrollbar-none', className)}
     >
       {children}
     </div>

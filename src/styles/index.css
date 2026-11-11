@@ -224,3 +224,12 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M48 0H0V48' fill='none' stroke='%23edf0f3' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 48px 48px;
 }
+
+/* Sideways scrolling without a visible scrollbar (D-78): chip rows and tables on phones and tablets.
+   The content still scrolls with touch, trackpad and keyboard. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
