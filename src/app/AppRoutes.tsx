@@ -73,6 +73,13 @@ const PersonDetailPage = lazy(() =>
 const LifecyclePage = lazy(() =>
   import('@/features/lifecycle/LifecyclePage').then((m) => ({ default: m.LifecyclePage })),
 );
+const ReviewPage = lazy(() => import('@/features/access-review/ReviewPage').then((m) => ({ default: m.ReviewPage })));
+const CampaignsPage = lazy(() =>
+  import('@/features/access-review/CampaignsPage').then((m) => ({ default: m.CampaignsPage })),
+);
+const CampaignDetailPage = lazy(() =>
+  import('@/features/access-review/CampaignDetailPage').then((m) => ({ default: m.CampaignDetailPage })),
+);
 const ApprovalsPage = lazy(() =>
   import('@/features/approvals/ApprovalsPage').then((m) => ({ default: m.ApprovalsPage })),
 );
@@ -166,6 +173,11 @@ export function AppRoutes() {
             <Route path="/it/requests/:id" element={<RequestDetailPage />} />
             <Route path="/it/lifecycle" element={<AccessTasksPage />} />
             <Route path="/it/approvals" element={<ApprovalsPage />} />
+            <Route path="/it/access-reviews" element={<CampaignsPage />} />
+            <Route path="/it/access-reviews/:id" element={<CampaignDetailPage />} />
+            <Route path="/it/access-review" element={<ReviewPage />} />
+            <Route path="/manager/access-review" element={<ReviewPage />} />
+            <Route path="/admin/access-review" element={<ReviewPage />} />
             <Route path="/it/security" element={<ItSecurityPage />} />
 
             {user && <Route path="*" element={<CatchAll />} />}

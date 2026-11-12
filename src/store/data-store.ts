@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, type Mutate, type StoreApi, type UseBoundStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
 import { DEMO_TODAY, demoNow } from '@/lib/dates';
@@ -13,6 +13,7 @@ import {
 } from '@/lib/approvals';
 import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '@/lib/checkins';
 import { completeTask as completeTaskRule, tasksUnlockedBy } from '@/lib/journey';
+import { buildReviewItems, closeBlock, nextCampaignId, revokeBlock } from '@/lib/access-review';
 import { isEffective, joinerTasks, nextLifecycleId } from '@/lib/lifecycle';
 import { needsApproval } from '@/lib/people';
 import {
@@ -21,6 +22,8 @@ import {
   onCheckinCompleted,
   onApprovalDecided,
   onApprovalRequested,
+  onReviewAssigned,
+  onReviewReminder,
   onComment,
   onLifecycle,
   onLoginReported,
@@ -32,6 +35,7 @@ import {
 } from '@/lib/notifications';
 import type {
   AccessRequest,
+  AccessReviewCampaign,
   AccessResolutionAction,
   ApprovalRequest,
   Area,
@@ -47,6 +51,7 @@ import type {
   Person,
   PolicyField,
   PrivacyRequest,
+  ReviewDecision,
   Role,
   SensitiveField,
   Template,
@@ -61,7 +66,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 14;
+export const DATA_SCHEMA_VERSION = 15;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -179,6 +184,28 @@ interface DataActions {
   registerLifecycle: (event: LifecycleEvent, actorId: string) => void;
   /** F12: IT marks an access as granted or revoked. */
   completeAccessTask: (eventId: string, taskId: string, actorId: string) => void;
+  /** F13: IT opens a review campaign; every reviewer is told. Returns the new id. */
+  createReviewCampaign: (
+    input: { name: string; dueDate: string; scope: AccessReviewCampaign['scope'] },
+    actorId: string,
+  ) => string;
+  /**
+   * F13: the reviewer keeps or revokes rows (only their own rows, never their own access). Revoking
+   * an admin role does not apply: it opens a double approval (F14).
+   */
+  decideReviewItems: (
+    campaignId: string,
+    itemIds: string[],
+    decision: ReviewDecision,
+    reason: string,
+    actorId: string,
+  ) => number;
+  /** F13: IT executes a revoked system access. */
+  executeReviewRevocation: (campaignId: string, itemId: string, actorId: string) => void;
+  /** F13: IT reminds a reviewer of their pending rows. */
+  remindReviewer: (campaignId: string, reviewerId: string, actorId: string) => void;
+  /** F13: IT closes a campaign once everything is decided and executed. */
+  closeReviewCampaign: (campaignId: string, actorId: string) => boolean;
   /** F7: marks one notification as read or unread. */
   setNotificationRead: (id: string, read: boolean) => void;
   /** F7: marks every notification of a person as read. */
@@ -235,6 +262,7 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.jobTitles) &&
     Array.isArray(data.approvals) &&
     Array.isArray(data.lifecycle) &&
+    Array.isArray(data.accessReviews) &&
     typeof data.accountFlags === 'object' &&
     data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
@@ -242,7 +270,9 @@ export function isValidDemoData(value: unknown): value is DemoData {
   );
 }
 
-export const useDataStore = create<DataState>()(
+// Explicit type: actions read the store through `useDataStore.getState()`, which TypeScript
+// cannot infer while it is still inferring the store itself.
+export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/persist', unknown]]>> = create<DataState>()(
   persist(
     (set) => ({
       ...buildSeed(),
@@ -1092,6 +1122,178 @@ export const useDataStore = create<DataState>()(
           };
         }),
 
+      createReviewCampaign: (input, actorId) => {
+        const state = useDataStore.getState();
+        const id = nextCampaignId(state.accessReviews);
+        const campaign: AccessReviewCampaign = {
+          id,
+          name: input.name.trim(),
+          scope: input.scope,
+          dueDate: input.dueDate,
+          createdBy: actorId,
+          createdAt: demoNow(),
+          status: 'open',
+          items: buildReviewItems(id, state.people, state.jobTitles, input.scope),
+        };
+        set((s) => ({
+          accessReviews: [...s.accessReviews, campaign],
+          notifications: [...s.notifications, ...onReviewAssigned(campaign, s.people)],
+          auditEvents: [
+            ...s.auditEvents,
+            {
+              id: nextAuditId(),
+              at: campaign.createdAt,
+              actorId,
+              action: 'access_review.create',
+              resource: id,
+              result: 'success',
+              detail: `${campaign.name} · ${campaign.items.length}`,
+            },
+          ],
+        }));
+        return id;
+      },
+
+      decideReviewItems: (campaignId, itemIds, decision, reason, actorId) => {
+        const state = useDataStore.getState();
+        const campaign = state.accessReviews.find((c) => c.id === campaignId);
+        if (!campaign || campaign.status !== 'open') return 0;
+        const rows = campaign.items.filter(
+          (i) =>
+            itemIds.includes(i.id) &&
+            !i.decision &&
+            i.reviewerId === actorId &&
+            i.personId !== actorId &&
+            !(decision === 'revoke' && revokeBlock(i)),
+        );
+        if (!rows.length) return 0;
+        const at = demoNow();
+        // Revoking an admin role goes through the double approval (F14), with the campaign in the reason.
+        const approvalIds = new Map<string, string>();
+        for (const row of rows.filter((r) => decision === 'revoke' && r.kind === 'role')) {
+          const approvalId: string | undefined = useDataStore
+            .getState()
+            .changeRole(row.personId, 'hire', `${campaign.name}: ${reason.trim()}`, actorId);
+          if (approvalId) approvalIds.set(row.id, approvalId);
+        }
+        const nameOf = (id: string): string => state.people.find((p) => p.id === id)?.name ?? id;
+        set((s) => ({
+          accessReviews: s.accessReviews.map((c) =>
+            c.id !== campaignId
+              ? c
+              : {
+                  ...c,
+                  items: c.items.map((i) =>
+                    rows.some((r) => r.id === i.id)
+                      ? {
+                          ...i,
+                          decision,
+                          decidedAt: at,
+                          reason: decision === 'revoke' ? reason.trim() : undefined,
+                          approvalId: approvalIds.get(i.id),
+                        }
+                      : i,
+                  ),
+                },
+          ),
+          auditEvents: [
+            ...s.auditEvents,
+            ...rows.map((r) => ({
+              id: nextAuditId(),
+              at,
+              actorId,
+              action: decision === 'keep' ? 'access_review.keep' : 'access_review.revoke',
+              resource: r.personId,
+              result: 'success' as const,
+              detail: [
+                nameOf(r.personId),
+                r.kind === 'role' ? `rol ${r.access}` : r.access,
+                campaign.name,
+                decision === 'revoke' ? reason.trim() : '',
+                approvalIds.get(r.id) ?? '',
+              ]
+                .filter(Boolean)
+                .join(' · '),
+            })),
+          ],
+        }));
+        return rows.length;
+      },
+
+      executeReviewRevocation: (campaignId, itemId, actorId) =>
+        set((state) => {
+          const campaign = state.accessReviews.find((c) => c.id === campaignId);
+          const item = campaign?.items.find((i) => i.id === itemId);
+          if (!campaign || !item || item.kind !== 'access' || item.decision !== 'revoke' || item.revokedAt) return {};
+          const at = demoNow();
+          return {
+            accessReviews: state.accessReviews.map((c) =>
+              c.id === campaignId
+                ? { ...c, items: c.items.map((i) => (i.id === itemId ? { ...i, revokedAt: at, revokedBy: actorId } : i)) }
+                : c,
+            ),
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: 'access.revoke',
+                resource: item.personId,
+                result: 'success',
+                detail: `${item.access} · ${campaign.name}`,
+              },
+            ],
+          };
+        }),
+
+      remindReviewer: (campaignId, reviewerId, actorId) =>
+        set((state) => {
+          const campaign = state.accessReviews.find((c) => c.id === campaignId);
+          if (!campaign) return {};
+          const at = demoNow();
+          return {
+            notifications: [...state.notifications, onReviewReminder(campaign, reviewerId, state.people, at)],
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: 'access_review.remind',
+                resource: reviewerId,
+                result: 'success',
+                detail: campaign.name,
+              },
+            ],
+          };
+        }),
+
+      closeReviewCampaign: (campaignId, actorId) => {
+        const state = useDataStore.getState();
+        const campaign = state.accessReviews.find((c) => c.id === campaignId);
+        if (!campaign || closeBlock(campaign, state.approvals)) return false;
+        const at = demoNow();
+        set((s) => ({
+          accessReviews: s.accessReviews.map((c) =>
+            c.id === campaignId ? { ...c, status: 'closed' as const, closedAt: at, closedBy: actorId } : c,
+          ),
+          auditEvents: [
+            ...s.auditEvents,
+            {
+              id: nextAuditId(),
+              at,
+              actorId,
+              action: 'access_review.close',
+              resource: campaignId,
+              result: 'success',
+              detail: campaign.name,
+            },
+          ],
+        }));
+        return true;
+      },
+
       completeAccessTask: (eventId, taskId, actorId) =>
         set((state) => {
           const event = state.lifecycle.find((e) => e.id === eventId);
@@ -1167,6 +1369,7 @@ export const useDataStore = create<DataState>()(
         jobTitles,
         approvals,
         lifecycle,
+        accessReviews,
       }) => ({
         people,
         templates,
@@ -1186,6 +1389,7 @@ export const useDataStore = create<DataState>()(
         jobTitles,
         approvals,
         lifecycle,
+        accessReviews,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.
       migrate: () => buildSeed(),

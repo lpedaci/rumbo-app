@@ -840,6 +840,7 @@ interface LifecycleEvent {
   accessTasks: { id: string; system: string; action: 'grant' | 'revoke'; status: 'pending' | 'done'; doneBy?: string; doneAt?: string }[];
 }
 
+// Implementado (D-120): items guarda id, personId, reviewerId, via (manager | hr | it), kind (access | role), access, decision, reason, decidedAt, revokedAt, revokedBy y approvalId; la campaña suma createdBy, createdAt, closedAt y closedBy, y scope usa areaId.
 interface AccessReviewCampaign {
   id: string; name: string; scope: 'company' | { area: string };
   dueDate: string; status: 'open' | 'closed';

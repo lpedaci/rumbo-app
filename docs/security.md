@@ -139,6 +139,7 @@ sequenceDiagram
 
 - Altas, cambios de puesto y bajas sincronizados entre el sistema de RRHH (HRIS), el proveedor de identidad y Rumbo.
 - Revocación automática en la fecha de baja y revisiones periódicas de accesos por jefe (F12, F13).
+- **Revisión de accesos** (F13, D-120): nadie revisa sus propios accesos (sin jefe directo revisa RRHH, y a RRHH la revisa sistemas), las cuentas admin entran en todas las campañas y quitar un rol de admin pasa por la doble aprobación. Cada decisión, recordatorio, revocación y cierre queda en la auditoría con el nombre de la campaña. En producción, las revocaciones se aplican en el proveedor de identidad y en cada sistema (por SCIM o por su API), y el resumen firmado de cada campaña sirve como evidencia para auditorías de ISO/IEC 27001.
 - En la demo (D-117), los accesos de cada puesto salen del catálogo; la baja deshabilita la cuenta y cierra sus sesiones en la fecha efectiva, y cada acceso otorgado o revocado queda en la auditoría con quién y cuándo. En producción, la deshabilitación la hace el proveedor de identidad por SCIM, sin esperar a que alguien marque la tarea.
 
 ### 3.7 Detección y respuesta

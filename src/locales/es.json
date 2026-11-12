@@ -189,6 +189,8 @@
       "lifecycle": "Altas y bajas",
       "accessTasks": "Accesos",
       "approvals": "Aprobaciones",
+      "reviews": "Revisiones",
+      "accessReview": "Revisión de accesos",
       "people": "Personas",
       "privacy": "Privacidad",
       "team": "Mi equipo",
@@ -1638,6 +1640,12 @@
         "person.create": "Persona dada de alta",
         "person.role_change": "Rol cambiado",
         "approval.request": "Aprobación pedida",
+        "access_review.create": "Campaña de revisión creada",
+        "access_review.keep": "Acceso mantenido en revisión",
+        "access_review.revoke": "Revocación pedida en revisión",
+        "access_review.remind": "Recordatorio de revisión enviado",
+        "access_review.close": "Campaña de revisión cerrada",
+        "access_review.export": "Resumen de campaña descargado",
         "approval.approve": "Aprobación concedida",
         "approval.reject": "Aprobación rechazada",
         "policy.update": "Política cambiada",
@@ -1704,6 +1712,8 @@
         "access_task_complete": "Otorgar y revocar accesos",
         "approval_decide": "Aprobar cambios sensibles",
         "policy_propose": "Proponer cambios de políticas",
+        "access_review_manage": "Gestionar campañas de revisión",
+        "access_review_review": "Revisar los accesos asignados",
         "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
@@ -2397,6 +2407,18 @@
       "appOnly": "Este tipo de aviso solo llega dentro de Rumbo, no por correo."
     },
     "types": {
+      "access_review": {
+        "assigned": {
+          "title": "Revisión de accesos",
+          "body_one": "{{campaign}}: te toca revisar los accesos de {{count}} persona antes del {{date}}.",
+          "body_other": "{{campaign}}: te toca revisar los accesos de {{count}} personas antes del {{date}}."
+        },
+        "reminder": {
+          "title": "Recordatorio de revisión",
+          "body_one": "{{campaign}}: te falta {{count}} acceso por revisar. Vence el {{date}}.",
+          "body_other": "{{campaign}}: te faltan {{count}} accesos por revisar. Vence el {{date}}."
+        }
+      },
       "offboarding": {
         "reminder": {
           "title": "Baja en tu equipo",
@@ -3191,6 +3213,139 @@
       "send": "Enviar a aprobación",
       "sent": "Solicitud {{id}} enviada a aprobación",
       "pendingLine": "Cambio a {{value}} pendiente de aprobación ({{id}})."
+    }
+  },
+  "accessReview": {
+    "title": "Revisión de accesos",
+    "description": "Confirma si cada persona que revisas todavía necesita sus accesos. Lo que ya no use se revoca.",
+    "empty": "No tienes revisiones de accesos abiertas. Cuando sistemas abra una campaña, vas a ver acá a las personas que te toca revisar.",
+    "due": "Vence el {{date}}",
+    "dueIn_one": "Vence el {{date}} · falta {{count}} día",
+    "dueIn_other": "Vence el {{date}} · faltan {{count}} días",
+    "dueToday": "Vence hoy",
+    "overdue": "Venció el {{date}}",
+    "progress": "{{done}} de {{total}} accesos revisados",
+    "personProgress": "{{done}} de {{total}} revisados",
+    "kind": {
+      "access": "Acceso del puesto",
+      "role": "Rol en Rumbo"
+    },
+    "roleAccess": "Rol {{role}}",
+    "showRows_one": "Ver el acceso",
+    "showRows_other": "Ver los {{count}} accesos",
+    "hideRows": "Ocultar los accesos",
+    "keep": "Mantener",
+    "revoke": "Revocar",
+    "keepAll_one": "Mantener el pendiente",
+    "keepAll_other": "Mantener los {{count}} pendientes",
+    "keepLabel": "Mantener {{access}} de {{name}}",
+    "revokeLabel": "Revocar {{access}} de {{name}}",
+    "keptToast_one": "Acceso mantenido",
+    "keptToast_other": "{{count}} accesos mantenidos",
+    "state": {
+      "pending": "Sin revisar",
+      "kept": "Se mantiene",
+      "revoke_pending": "Revocación pendiente",
+      "revoke_in_approval": "Revocación en aprobación",
+      "revoked": "Revocado",
+      "revoke_rejected": "Revocación rechazada"
+    },
+    "demoRole": "Es una cuenta de demo: su rol no cambia, para que puedas seguir recorriendo la demo con Ver como.",
+    "via": {
+      "manager": "Jefe directo",
+      "hr": "Sin jefe directo: revisa RRHH",
+      "it": "RRHH no tiene jefe directo: revisa sistemas"
+    },
+    "revokeDialog": {
+      "title": "Revocar {{access}}",
+      "intro": "{{name}} pierde este acceso cuando sistemas ejecute la revocación.",
+      "introRole": "Quitar un rol de admin necesita la aprobación de otra persona de sistemas. Hasta que se decida, la fila queda en Revocación en aprobación y {{name}} conserva su rol.",
+      "reason": "Motivo",
+      "reasonHelp": "Por qué ya no lo necesita. Entre 10 y 300 caracteres. Por ejemplo: Cambió de tareas y ya no usa esta herramienta.",
+      "reasonRequired": "Escribe el motivo, con al menos 10 caracteres.",
+      "reasonMax": "El motivo puede tener hasta 300 caracteres.",
+      "confirm": "Revocar acceso",
+      "confirmRole": "Pedir la revocación",
+      "done": "Revocación registrada",
+      "doneRole": "Revocación enviada a aprobación"
+    },
+    "campaigns": {
+      "title": "Campañas de revisión",
+      "description": "Cada campaña pide a los jefes confirmar los accesos de su equipo. Sigue el avance, recuerda a quien falta y ejecuta las revocaciones.",
+      "create": "Crear campaña",
+      "listTitle": "Campañas",
+      "empty": "Todavía no hay campañas. Crea la primera para que cada jefe revise los accesos de su equipo.",
+      "status": {
+        "open": "Abierta",
+        "closed": "Cerrada"
+      },
+      "scope": {
+        "company": "Toda la empresa",
+        "area": "Área: {{area}}"
+      },
+      "people_one": "{{count}} persona",
+      "people_other": "{{count}} personas",
+      "closedOn": "Cerrada el {{date}}",
+      "progress": "{{done}} de {{total}} revisados",
+      "yourTurn_one": "Te toca revisar a {{count}} persona en {{campaign}}.",
+      "yourTurn_other": "Te toca revisar a {{count}} personas en {{campaign}}.",
+      "reviewNow": "Revisar ahora",
+      "form": {
+        "name": "Nombre",
+        "nameHelp": "Para reconocerla en los avisos. Entre 5 y 80 caracteres. Por ejemplo: Revisión trimestral Q1 2027.",
+        "nameRequired": "Escribe un nombre de entre 5 y 80 caracteres.",
+        "dueDate": "Fecha límite",
+        "dueHelp": "Formato DD/MM/AAAA, entre mañana y dentro de 60 días. Por ejemplo: 10/12/2026.",
+        "dueRequired": "Escribe una fecha con el formato DD/MM/AAAA.",
+        "dueRange": "Elige una fecha entre mañana y dentro de 60 días.",
+        "scope": "Alcance",
+        "scopeHelp": "Toda la empresa o un área. Las cuentas admin de RRHH y sistemas entran siempre.",
+        "preview": "Se revisan {{items}} accesos de {{people}} personas, con {{reviewers}} revisores.",
+        "submit": "Crear campaña",
+        "created": "Campaña {{id}} creada"
+      }
+    },
+    "detail": {
+      "breadcrumb": "Navegación de la campaña",
+      "facts": "Datos de la campaña",
+      "back": "Volver a las campañas",
+      "purpose": "Quién falta revisar, qué revocaciones hay que ejecutar y el cierre con su resumen.",
+      "reviewersTitle": "Avance por revisor",
+      "viaPeople": {
+        "manager": "Jefe directo de {{names}}",
+        "hr": "Revisa por falta de jefe directo: {{names}}",
+        "it": "Revisa a RRHH, que no tiene jefe directo: {{names}}"
+      },
+      "complete": "Completo",
+      "remind": "Enviar recordatorio",
+      "remindLabel": "Enviar recordatorio a {{name}}",
+      "reminded": "Recordatorio enviado a {{name}}",
+      "revocationsTitle": "Revocaciones",
+      "revocationsEmpty": "Todavía no hay revocaciones en esta campaña.",
+      "revocationMeta": "Pidió {{name}} el {{date}}",
+      "execute": "Ejecutar revocación",
+      "executeLabel": "Ejecutar revocación: {{access}} de {{name}}",
+      "executed": "{{access}} revocado",
+      "viewApproval": "Ver en Aprobaciones",
+      "closeTitle": "Cierre",
+      "closeText": "Al cerrarla, la campaña queda como registro y el resumen sigue disponible.",
+      "close": "Cerrar campaña",
+      "closedToast": "Campaña cerrada",
+      "closeBlock": {
+        "undecided_one": "Para cerrarla, falta {{count}} acceso por revisar.",
+        "undecided_other": "Para cerrarla, faltan {{count}} accesos por revisar.",
+        "revocations": "Para cerrarla, faltan revocaciones por ejecutar o por aprobar.",
+        "closed": "Cerrada el {{date}} por {{name}}."
+      },
+      "download": "Descargar resumen (CSV)",
+      "csv": {
+        "person": "Persona",
+        "access": "Acceso",
+        "reviewer": "Revisa",
+        "decision": "Estado",
+        "reason": "Motivo",
+        "date": "Fecha"
+      }
     }
   }
 }

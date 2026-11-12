@@ -1,6 +1,7 @@
 import type { IconName } from '@/components/ui/Icon';
 import type {
   AccessRequest,
+  AccessReviewCampaign,
   ApprovalRequest,
   AppNotification,
   AuthAttempts,
@@ -63,6 +64,8 @@ export const NOTIFICATION_TYPES: Record<NotificationType, TypeMeta> = {
   'approval.policy_pending': { category: 'access', icon: 'rule', tone: 'warning', email: true },
   'approval.approved': { category: 'access', icon: 'check_circle', tone: 'success', email: true },
   'approval.rejected': { category: 'access', icon: 'cancel', tone: 'error', email: true },
+  'access_review.assigned': { category: 'access', icon: 'fact_check', tone: 'primary', email: true },
+  'access_review.reminder': { category: 'access', icon: 'schedule', tone: 'warning', email: true },
   'access_tasks.new': { category: 'access', icon: 'key', tone: 'info', email: true },
   'offboarding.reminder': { category: 'people', icon: 'logout', tone: 'warning', email: true },
 };
@@ -341,6 +344,38 @@ export function onApprovalDecided(approval: ApprovalRequest, people: Person[]): 
   ];
 }
 
+/** F13: where each reviewer reviews (J4 for managers; the same screen for HR and IT). */
+export function reviewLinkFor(role: Person['role'] | undefined): string {
+  return role === 'admin' ? '/admin/access-review' : role === 'it_admin' ? '/it/access-review' : '/manager/access-review';
+}
+
+/** F13: every reviewer of a new campaign gets their list (once, however many people they review). */
+export function onReviewAssigned(campaign: AccessReviewCampaign, people: Person[]): AppNotification[] {
+  const reviewers = [...new Set(campaign.items.map((i) => i.reviewerId))];
+  return reviewers.map((id) => {
+    const count = new Set(campaign.items.filter((i) => i.reviewerId === id).map((i) => i.personId)).size;
+    return makeNotification({
+      recipientId: id,
+      createdAt: campaign.createdAt,
+      type: 'access_review.assigned',
+      params: { campaign: campaign.name, count: String(count), date: campaign.dueDate },
+      link: reviewLinkFor(people.find((p) => p.id === id)?.role),
+    });
+  });
+}
+
+/** F13: IT reminds a reviewer of what is still pending. */
+export function onReviewReminder(campaign: AccessReviewCampaign, reviewerId: string, people: Person[], at: string): AppNotification {
+  const pending = campaign.items.filter((i) => i.reviewerId === reviewerId && !i.decision).length;
+  return makeNotification({
+    recipientId: reviewerId,
+    createdAt: at,
+    type: 'access_review.reminder',
+    params: { campaign: campaign.name, count: String(pending), date: campaign.dueDate },
+    link: reviewLinkFor(people.find((p) => p.id === reviewerId)?.role),
+  });
+}
+
 /** F12: a joiner, mover or leaver gives IT access tasks; a leaver also reminds the manager. */
 export function onLifecycle(event: LifecycleEvent, people: Person[]): AppNotification[] {
   const person = people.find((p) => p.id === event.personId);
@@ -387,6 +422,7 @@ export function buildSeedNotifications(
   deviceSessions: DeviceSession[] = [],
   lifecycle: LifecycleEvent[] = [],
   approvals: ApprovalRequest[] = [],
+  accessReviews: AccessReviewCampaign[] = [],
   today = DEMO_TODAY,
 ): AppNotification[] {
   const nameOf = (id: string) => people.find((p) => p.id === id)?.name ?? '';
@@ -595,6 +631,12 @@ export function buildSeedNotifications(
   for (const approval of approvals) {
     const target = people.find((p) => p.id === approval.targetId)?.name ?? '';
     for (const n of [...onApprovalRequested(approval, people, target), ...onApprovalDecided(approval, people)]) {
+      drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
+    }
+  }
+
+  for (const campaign of accessReviews) {
+    for (const n of onReviewAssigned(campaign, people)) {
       drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
     }
   }

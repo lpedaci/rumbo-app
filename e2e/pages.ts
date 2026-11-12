@@ -53,6 +53,7 @@ export const PAGES: CheckedPage[] = [
   { id: 'j1-team', path: '/#/manager', role: 'manager' },
   { id: 'j2-hire', path: '/#/manager/hires/h-sofia', role: 'manager' },
   { id: 'j3-checkin', path: '/#/manager/hires/h-sofia/checkin/day30', role: 'manager' },
+  { id: 'j4-access-review', path: '/#/manager/access-review', role: 'manager' },
   { id: 'n3-self-review', path: '/#/me/checkin/day30', role: 'hire' },
   { id: 'n1-journey', path: '/#/me', role: 'hire' },
   { id: 'n1-welcome', path: '/#/me', role: 'hire', welcome: true },
@@ -65,6 +66,8 @@ export const PAGES: CheckedPage[] = [
   { id: 's4-access-tasks', path: '/#/it/lifecycle?event=LC-2026-0004', role: 'it_admin' },
   { id: 's7-approvals', path: '/#/it/approvals', role: 'it_admin' },
   { id: 's7-approval', path: '/#/it/approvals?request=APR-2026-0002', role: 'it_admin' },
+  { id: 's5-access-reviews', path: '/#/it/access-reviews', role: 'it_admin' },
+  { id: 's6-access-review', path: '/#/it/access-reviews/AR-2026-0001', role: 'it_admin' },
   { id: 'ds-site', path: '/#/design-system' },
   { id: 'styleguide', path: '/#/styleguide' },
 ];

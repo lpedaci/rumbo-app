@@ -1,0 +1,91 @@
+{
+  "campaigns": [
+    {
+      "id": "AR-2026-0001",
+      "name": "Revisión trimestral Q4 2026",
+      "scope": "company",
+      "dueDate": "2026-11-20",
+      "createdBy": "p-diego",
+      "createdAt": "2026-11-02T09:00:00",
+      "status": "open"
+    }
+  ],
+  "decisions": [
+    {
+      "personId": "p-federico",
+      "all": "keep",
+      "decidedAt": "2026-11-04T10:00:00"
+    },
+    {
+      "personId": "p-camila",
+      "all": "keep",
+      "decidedAt": "2026-11-04T10:05:00"
+    },
+    {
+      "personId": "p-joaquin",
+      "all": "keep",
+      "decidedAt": "2026-11-04T10:10:00",
+      "except": [
+        {
+          "access": "Herramienta de propuestas",
+          "decision": "revoke",
+          "reason": "Pasó a atender cuentas existentes y ya no arma propuestas.",
+          "revokedAt": "2026-11-05T11:30:00",
+          "revokedBy": "p-diego"
+        }
+      ]
+    },
+    {
+      "personId": "p-paula",
+      "all": "keep",
+      "decidedAt": "2026-11-04T10:15:00"
+    },
+    {
+      "personId": "p-mateo",
+      "all": "keep",
+      "decidedAt": "2026-11-04T10:20:00"
+    },
+    {
+      "personId": "p-sofia",
+      "all": "keep",
+      "decidedAt": "2026-11-05T16:00:00"
+    },
+    {
+      "personId": "p-nicolas",
+      "all": "keep",
+      "decidedAt": "2026-11-05T16:05:00"
+    },
+    {
+      "personId": "p-lucas",
+      "all": "keep",
+      "decidedAt": "2026-11-06T09:30:00",
+      "except": [
+        {
+          "access": "Herramienta de BI",
+          "decision": "revoke",
+          "reason": "Todavía no la usa en su puesto. Se pide de nuevo cuando la necesite."
+        }
+      ]
+    },
+    {
+      "personId": "p-julieta",
+      "all": "keep",
+      "decidedAt": "2026-11-06T09:40:00"
+    },
+    {
+      "personId": "p-valentina",
+      "all": "keep",
+      "decidedAt": "2026-11-06T09:45:00"
+    },
+    {
+      "personId": "p-martin",
+      "all": "keep",
+      "decidedAt": "2026-11-07T12:00:00"
+    },
+    {
+      "personId": "p-lucia",
+      "all": "keep",
+      "decidedAt": "2026-11-07T12:05:00"
+    }
+  ]
+}

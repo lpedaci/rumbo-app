@@ -7,6 +7,8 @@
  */
 import type {
   AccessRequest,
+  AccessReviewCampaign,
+  AccessReviewItem,
   AppNotification,
   Comment,
   ApprovalRequest,
@@ -33,12 +35,14 @@ import type {
   Template,
   TemplateVersion,
 } from '@/types/domain';
+import { buildReviewItems } from '@/lib/access-review';
 import { addDays, DEMO_TODAY } from '@/lib/dates';
 import { generateCheckins, generateHireTasks, hireStatus } from '@/lib/journey';
 import { buildSeedNotifications } from '@/lib/notifications';
 import { dueDateFor } from '@/lib/privacy';
 import { asVersion } from '@/lib/templates';
 import accessRequests from './access-requests.json';
+import accessReviews from './access-reviews.json';
 import approvals from './approvals.json';
 import auditEvents from './audit-events.json';
 import authAttempts from './auth-attempts.json';
@@ -112,6 +116,7 @@ export interface DemoData {
   approvals: ApprovalRequest[];
   /** F12: joiners, movers and leavers with their access tasks. */
   lifecycle: LifecycleEvent[];
+  accessReviews: AccessReviewCampaign[];
 }
 
 function whoCompletes(owner: Owner, seed: HireSeed): string {
@@ -240,6 +245,27 @@ function buildHire(seed: HireSeed, templatesById: Map<string, Template>): Hire {
 }
 
 /** Fresh copy of the demo data, used on first load and by "Restablecer demo". */
+interface ReviewDecisionSeed {
+  personId: string;
+  all: 'keep';
+  decidedAt: string;
+  except?: { access: string; decision: 'keep' | 'revoke'; reason?: string; revokedAt?: string; revokedBy?: string }[];
+}
+
+/** F13: the open campaign, with its rows built from the people and the jobs catalog and half decided. */
+function buildAccessReviews(): AccessReviewCampaign[] {
+  const decisions = accessReviews.decisions as ReviewDecisionSeed[];
+  return (accessReviews.campaigns as Omit<AccessReviewCampaign, 'items'>[]).map((c) => ({
+    ...c,
+    items: buildReviewItems(c.id, people as Person[], jobTitles as JobTitle[], c.scope).map((item): AccessReviewItem => {
+      const seed = decisions.find((d) => d.personId === item.personId);
+      if (!seed) return item;
+      const special = seed.except?.find((e) => e.access === item.access);
+      return { ...item, decision: special?.decision ?? seed.all, decidedAt: seed.decidedAt, ...(special ? { reason: special.reason, revokedAt: special.revokedAt, revokedBy: special.revokedBy } : {}) };
+    }),
+  }));
+}
+
 export function buildSeed(): DemoData {
   const typedTemplates = (templates as Omit<Template, 'versions'>[]).map((t) => {
     const template = { ...t, versions: [] } as Template;
@@ -247,6 +273,7 @@ export function buildSeed(): DemoData {
   });
   const templatesById = new Map(typedTemplates.map((t) => [t.id, t]));
   const hires = (hiresSeed as unknown as HireSeed[]).map((seed) => buildHire(seed, templatesById));
+  const reviews = buildAccessReviews();
   return structuredClone({
     people: people as Person[],
     templates: typedTemplates,
@@ -266,6 +293,7 @@ export function buildSeed(): DemoData {
       deviceSessions as DeviceSession[],
       lifecycleEvents as LifecycleEvent[],
       approvals as ApprovalRequest[],
+      reviews,
     ),
     comments: comments as Comment[],
     consents: consents as ConsentRecord[],
@@ -273,6 +301,7 @@ export function buildSeed(): DemoData {
     jobTitles: jobTitles as JobTitle[],
     approvals: approvals as ApprovalRequest[],
     lifecycle: lifecycleEvents as LifecycleEvent[],
+    accessReviews: reviews,
     deviceSessions: deviceSessions as DeviceSession[],
     loginAlerts: loginAlerts as LoginAlert[],
     // Legal deadlines computed from the configuration (src/app/legal.ts), never written by hand.

@@ -62,6 +62,10 @@ export const PERMISSIONS = {
   // F14: double approval (the requester can never decide; see lib/approvals)
   'approval:decide': { it_admin: 'all' },
   'policy:propose': { it_admin: 'all' },
+
+  // F13: access reviews (IT runs the campaigns; each reviewer sees only the rows assigned to them)
+  'access_review:manage': { it_admin: 'all' },
+  'access_review:review': { manager: 'team', admin: 'own', it_admin: 'own' },
   // F7 notifications: each person only sees their own
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)
@@ -134,6 +138,10 @@ export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
   { prefix: '/admin/lifecycle', action: 'lifecycle:manage' },
   { prefix: '/it/lifecycle', action: 'access_task:complete' },
   { prefix: '/it/approvals', action: 'approval:decide' },
+  { prefix: '/it/access-reviews', action: 'access_review:manage' },
+  { prefix: '/it/access-review', action: 'access_review:review' },
+  { prefix: '/manager/access-review', action: 'access_review:review' },
+  { prefix: '/admin/access-review', action: 'access_review:review' },
 ];
 
 export function requiredPermission(pathname: string): Action | null {

@@ -154,7 +154,7 @@ flowchart TD
     JEFE --> J1["J1 Mi equipo"]
     J1 --> J2["J2 Detalle del ingreso"]
     J2 --> J3["J3 Check-in"]
-    JEFE -.-> J4["J4 Revisión de accesos (B)"]
+    JEFE -.-> J4["J4 Revisión de accesos"]
 
     ROOT --> NI["Nuevo ingreso"]
     NI --> N1["N1 Mi recorrido"]
@@ -167,8 +167,8 @@ flowchart TD
     S1 --> S2["S2 Detalle"]
     IT --> S3["S3 Seguridad y auditoría"]
     IT -.-> S4["S4 Tareas de accesos"]
-    IT -.-> S5["S5 Revisiones (B)"]
-    S5 -.-> S6["S6 Detalle de campaña (B)"]
+    IT -.-> S5["S5 Campañas de revisión"]
+    S5 -.-> S6["S6 Detalle de campaña"]
     IT -.-> S7["S7 Aprobaciones"]
 
     ROOT --> CUENTA["Cuenta (todos)"]

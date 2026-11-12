@@ -424,3 +424,13 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Tests de reglas, store y pantallas; S7 en Playwright.
 - Pendiente: revelado masivo de datos sensibles por esta bandeja, con la exportación de F16.
 - Ajuste pedido por Lourdes (12/11/2026, D-118 confirmada): la solicitud de contraseña ahora la pide Diego y espera a Ramiro; la fila dice "Esperando a Ramiro Sosa" y el detalle ofrece "Resolver como Ramiro Sosa (demo)", que decide en su nombre con la marca "decisión simulada en la demo" en la auditoría. `docs/security.md` aclara que en producción hacen falta al menos dos personas de sistemas. Corrección durante la prueba: un selector que devolvía un arreglo nuevo en cada render hacía caer la pantalla.
+
+## Paso 22 · F13 Revisión de accesos, 12/11/2026 (D-120)
+
+- Reglas en `src/lib/access-review.ts`: revisor de cada persona (jefe directo, RRHH o sistemas, nunca uno mismo), alcance con las cuentas admin siempre incluidas, filas por acceso del puesto y por rol de admin, estado derivado de cada fila (incluida la doble aprobación), avance por revisor, condiciones de cierre y resumen CSV.
+- J4 (`/manager/access-review`, también para RRHH en `/admin/access-review` y para sistemas en `/it/access-review`): una sección por persona con "Mantener", "Revocar" (con motivo) y "Mantener los N pendientes"; las personas ya revisadas se pliegan.
+- S5 (`/it/access-reviews`): campañas con avance, alcance y vencimiento, "Crear campaña" (nombre, fecha límite, alcance y vista previa de cuántos accesos y revisores) y un aviso cuando a sistemas le toca revisar.
+- S6 (`/it/access-reviews/:id`): avance por revisor con el motivo de cada asignación y recordatorios, revocaciones para ejecutar o en aprobación, cierre y descarga del resumen.
+- Revocar un rol de admin abre la doble aprobación (F14); avisos a cada revisor al crear la campaña y en los recordatorios; auditoría con el nombre de la campaña. Permisos `access_review:manage` y `access_review:review`.
+- Prueba manual en el navegador: Martín revoca Jira de Agustina (con error de motivo vacío y foco), Carla pide quitar el rol de admin de Ramiro, Diego ejecuta una revocación y aprueba la de Ramiro, y la fila pasa a "Revocado". Correcciones: sin recordatorio a uno mismo, personas revisadas plegadas y la acción principal arriba en celulares.
+- Tests de reglas, store y pantallas; J4, S5 y S6 en Playwright.

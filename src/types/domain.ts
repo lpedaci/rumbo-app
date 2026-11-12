@@ -243,6 +243,8 @@ export type NotificationType =
   | 'approval.policy_pending'
   | 'approval.approved'
   | 'approval.rejected'
+  | 'access_review.assigned'
+  | 'access_review.reminder'
   | 'access_tasks.new'
   | 'offboarding.reminder';
 
@@ -390,6 +392,46 @@ export interface ApprovalRequest {
   decidedBy?: string;
   decidedAt?: string;
   decisionNote?: string;
+}
+
+// ---------- Phase B: F13 access reviews ----------
+
+/** Who reviews a person: the direct manager, or HR (or IT for HR itself) when there is none. */
+export type ReviewerVia = 'manager' | 'hr' | 'it';
+export type ReviewDecision = 'keep' | 'revoke';
+
+/** One access (a system of the job, or an admin role in Rumbo) of one person, to keep or revoke. */
+export interface AccessReviewItem {
+  id: string;
+  personId: string;
+  reviewerId: string;
+  via: ReviewerVia;
+  kind: 'access' | 'role';
+  /** The system name, or the role (`admin`, `it_admin`) when kind is `role`. */
+  access: string;
+  decision?: ReviewDecision;
+  reason?: string;
+  decidedAt?: string;
+  /** Revoked system: IT executes it (S6). */
+  revokedAt?: string;
+  revokedBy?: string;
+  /** Revoked admin role: the double approval it waits for (F14). */
+  approvalId?: string;
+}
+
+export interface AccessReviewCampaign {
+  /** For example `AR-2026-0001`. */
+  id: string;
+  name: string;
+  /** `company`, or the id of one area (admin accounts always enter). */
+  scope: 'company' | { areaId: string };
+  dueDate: string;
+  createdBy: string;
+  createdAt: string;
+  status: 'open' | 'closed';
+  closedAt?: string;
+  closedBy?: string;
+  items: AccessReviewItem[];
 }
 
 // ---------- Phase B: F12 access lifecycle ----------

@@ -189,6 +189,8 @@
       "lifecycle": "Joiners and leavers",
       "accessTasks": "Access",
       "approvals": "Approvals",
+      "reviews": "Reviews",
+      "accessReview": "Access review",
       "people": "People",
       "privacy": "Privacy",
       "team": "My team",
@@ -1638,6 +1640,12 @@
         "person.create": "Person added",
         "person.role_change": "Role changed",
         "approval.request": "Approval requested",
+        "access_review.create": "Review campaign created",
+        "access_review.keep": "Access kept in review",
+        "access_review.revoke": "Revocation requested in review",
+        "access_review.remind": "Review reminder sent",
+        "access_review.close": "Review campaign closed",
+        "access_review.export": "Campaign summary downloaded",
         "approval.approve": "Approval granted",
         "approval.reject": "Approval rejected",
         "policy.update": "Policy changed",
@@ -1704,6 +1712,8 @@
         "access_task_complete": "Grant and revoke access",
         "approval_decide": "Approve sensitive changes",
         "policy_propose": "Propose policy changes",
+        "access_review_manage": "Manage review campaigns",
+        "access_review_review": "Review assigned access",
         "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
@@ -2397,6 +2407,18 @@
       "appOnly": "This type of notice only arrives inside Rumbo, not by email."
     },
     "types": {
+      "access_review": {
+        "assigned": {
+          "title": "Access review",
+          "body_one": "{{campaign}}: review the access of {{count}} person before {{date}}.",
+          "body_other": "{{campaign}}: review the access of {{count}} people before {{date}}."
+        },
+        "reminder": {
+          "title": "Review reminder",
+          "body_one": "{{campaign}}: {{count}} access is still to review. Due on {{date}}.",
+          "body_other": "{{campaign}}: {{count}} accesses are still to review. Due on {{date}}."
+        }
+      },
       "offboarding": {
         "reminder": {
           "title": "Leaver on your team",
@@ -3191,6 +3213,139 @@
       "send": "Send for approval",
       "sent": "Request {{id}} sent for approval",
       "pendingLine": "Change to {{value}} pending approval ({{id}})."
+    }
+  },
+  "accessReview": {
+    "title": "Access review",
+    "description": "Confirm whether each person you review still needs their access. What they no longer use is revoked.",
+    "empty": "You have no open access reviews. When IT opens a campaign, the people you review show up here.",
+    "due": "Due on {{date}}",
+    "dueIn_one": "Due on {{date}} · {{count}} day left",
+    "dueIn_other": "Due on {{date}} · {{count}} days left",
+    "dueToday": "Due today",
+    "overdue": "Was due on {{date}}",
+    "progress": "{{done}} of {{total}} accesses reviewed",
+    "personProgress": "{{done}} of {{total}} reviewed",
+    "kind": {
+      "access": "Job access",
+      "role": "Role in Rumbo"
+    },
+    "roleAccess": "{{role}} role",
+    "showRows_one": "Show the access",
+    "showRows_other": "Show the {{count}} accesses",
+    "hideRows": "Hide the accesses",
+    "keep": "Keep",
+    "revoke": "Revoke",
+    "keepAll_one": "Keep the pending one",
+    "keepAll_other": "Keep the {{count}} pending",
+    "keepLabel": "Keep {{access}} for {{name}}",
+    "revokeLabel": "Revoke {{access}} for {{name}}",
+    "keptToast_one": "Access kept",
+    "keptToast_other": "{{count}} accesses kept",
+    "state": {
+      "pending": "Not reviewed",
+      "kept": "Kept",
+      "revoke_pending": "Revocation pending",
+      "revoke_in_approval": "Revocation in approval",
+      "revoked": "Revoked",
+      "revoke_rejected": "Revocation rejected"
+    },
+    "demoRole": "This is a demo account: its role does not change, so you can keep exploring the demo with View as.",
+    "via": {
+      "manager": "Manager",
+      "hr": "No manager: HR reviews",
+      "it": "HR has no manager: IT reviews"
+    },
+    "revokeDialog": {
+      "title": "Revoke {{access}}",
+      "intro": "{{name}} loses this access when IT executes the revocation.",
+      "introRole": "Removing an admin role needs approval from another person in IT. Until it is decided, the row stays as Revocation in approval and {{name}} keeps the role.",
+      "reason": "Reason",
+      "reasonHelp": "Why it is no longer needed. Between 10 and 300 characters. For example: Changed tasks and no longer uses this tool.",
+      "reasonRequired": "Write the reason, with at least 10 characters.",
+      "reasonMax": "The reason can have up to 300 characters.",
+      "confirm": "Revoke access",
+      "confirmRole": "Request the revocation",
+      "done": "Revocation recorded",
+      "doneRole": "Revocation sent for approval"
+    },
+    "campaigns": {
+      "title": "Review campaigns",
+      "description": "Each campaign asks managers to confirm their team's access. Follow the progress, remind whoever is missing and execute the revocations.",
+      "create": "Create campaign",
+      "listTitle": "Campaigns",
+      "empty": "There are no campaigns yet. Create the first one so each manager reviews their team's access.",
+      "status": {
+        "open": "Open",
+        "closed": "Closed"
+      },
+      "scope": {
+        "company": "Whole company",
+        "area": "Area: {{area}}"
+      },
+      "people_one": "{{count}} person",
+      "people_other": "{{count}} people",
+      "closedOn": "Closed on {{date}}",
+      "progress": "{{done}} of {{total}} reviewed",
+      "yourTurn_one": "You review {{count}} person in {{campaign}}.",
+      "yourTurn_other": "You review {{count}} people in {{campaign}}.",
+      "reviewNow": "Review now",
+      "form": {
+        "name": "Name",
+        "nameHelp": "To recognize it in notifications. Between 5 and 80 characters. For example: Quarterly review Q1 2027.",
+        "nameRequired": "Write a name between 5 and 80 characters.",
+        "dueDate": "Due date",
+        "dueHelp": "Format DD/MM/YYYY, between tomorrow and 60 days from now. For example: 10/12/2026.",
+        "dueRequired": "Write a date in the DD/MM/YYYY format.",
+        "dueRange": "Choose a date between tomorrow and 60 days from now.",
+        "scope": "Scope",
+        "scopeHelp": "The whole company or one area. HR and IT admin accounts always enter.",
+        "preview": "{{items}} accesses of {{people}} people are reviewed, by {{reviewers}} reviewers.",
+        "submit": "Create campaign",
+        "created": "Campaign {{id}} created"
+      }
+    },
+    "detail": {
+      "breadcrumb": "Campaign navigation",
+      "facts": "Campaign facts",
+      "back": "Back to campaigns",
+      "purpose": "Who is missing, which revocations to execute and the closing with its summary.",
+      "reviewersTitle": "Progress by reviewer",
+      "viaPeople": {
+        "manager": "Manager of {{names}}",
+        "hr": "Reviews for lack of a manager: {{names}}",
+        "it": "Reviews HR, which has no manager: {{names}}"
+      },
+      "complete": "Complete",
+      "remind": "Send reminder",
+      "remindLabel": "Send a reminder to {{name}}",
+      "reminded": "Reminder sent to {{name}}",
+      "revocationsTitle": "Revocations",
+      "revocationsEmpty": "There are no revocations in this campaign yet.",
+      "revocationMeta": "Requested by {{name}} on {{date}}",
+      "execute": "Execute revocation",
+      "executeLabel": "Execute revocation: {{access}} for {{name}}",
+      "executed": "{{access}} revoked",
+      "viewApproval": "View in Approvals",
+      "closeTitle": "Closing",
+      "closeText": "Once closed, the campaign stays as a record and the summary is still available.",
+      "close": "Close campaign",
+      "closedToast": "Campaign closed",
+      "closeBlock": {
+        "undecided_one": "To close it, {{count}} access is still to review.",
+        "undecided_other": "To close it, {{count}} accesses are still to review.",
+        "revocations": "To close it, revocations are still to execute or approve.",
+        "closed": "Closed on {{date}} by {{name}}."
+      },
+      "download": "Download summary (CSV)",
+      "csv": {
+        "person": "Person",
+        "access": "Access",
+        "reviewer": "Reviewer",
+        "decision": "Status",
+        "reason": "Reason",
+        "date": "Date"
+      }
     }
   }
 }

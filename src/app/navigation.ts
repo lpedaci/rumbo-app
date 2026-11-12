@@ -21,11 +21,15 @@ export const NAV_ITEMS: NavItem[] = [
   { to: '/admin/people', label: 'layout.nav.people', icon: 'badge', action: 'person:manage' },
   { to: '/admin/lifecycle', label: 'layout.nav.lifecycle', icon: 'swap_horiz', action: 'lifecycle:manage' },
   { to: '/admin/privacy-requests', label: 'layout.nav.privacy', icon: 'policy', action: 'privacy_request:manage' },
+  // F13: HR reviews the people without a direct manager (one item per workspace, never by role name)
+  { to: '/admin/access-review', label: 'layout.nav.accessReview', icon: 'fact_check', action: 'workspace:hr' },
   { to: '/manager', label: 'layout.nav.team', icon: 'groups', action: 'workspace:team' },
+  { to: '/manager/access-review', label: 'layout.nav.accessReview', icon: 'fact_check', action: 'workspace:team' },
   { to: '/me', label: 'layout.nav.journey', icon: 'route', action: 'workspace:journey', end: true },
   { to: '/me/checkin', label: 'layout.nav.checkin', icon: 'fact_check', action: 'checkin:self_review' },
   { to: '/it/requests', label: 'layout.nav.requests', icon: 'support_agent', action: 'access_request:view' },
   { to: '/it/lifecycle', label: 'layout.nav.accessTasks', icon: 'key', action: 'access_task:complete' },
   { to: '/it/approvals', label: 'layout.nav.approvals', icon: 'approval', action: 'approval:decide' },
+  { to: '/it/access-reviews', label: 'layout.nav.reviews', icon: 'fact_check', action: 'access_review:manage' },
   { to: '/it/security', label: 'layout.nav.security', icon: 'security', action: 'security:view' },
 ];
