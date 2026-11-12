@@ -7,7 +7,7 @@
 
 Las **dos fases están completas en funciones**: las 40 pantallas funcionan con datos de demo, los cuatro roles se recorren de punta a punta y se puede cambiar de rol en cualquier momento. La seguridad está en sus tres capas (simulada en la interfaz, aplicada en el front y documentada para producción) y la interfaz está completa en español e inglés.
 
-Están en verde el build, **353 tests unitarios y de componentes**, **612 pruebas de Playwright en Chromium** (desbordes en 6 anchos con capturas, áreas táctiles a 375 px, axe, un botón principal por región y cuatro flujos solo con teclado), **310 en WebKit** (desbordes y teclado), Lighthouse con **98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO** en G0, G1, N1 y A1, y el deploy de GitHub Pages. La prueba con NVDA queda a cargo de Lourdes.
+Están en verde el build, **353 tests unitarios y de componentes**, **612 pruebas de Playwright en Chromium** (desbordes en 6 anchos con capturas, áreas táctiles a 375 px, axe, un botón principal por región y cuatro flujos solo con teclado), **310 en WebKit y 310 en Firefox** (desbordes y teclado, WebKit en local y los dos en GitHub Actions), Lighthouse con **98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO** en G0, G1, N1 y A1, y el deploy de GitHub Pages. La prueba con NVDA queda a cargo de Lourdes.
 
 | Fase | Avance aproximado | Comentario |
 | --- | --- | --- |
@@ -161,11 +161,16 @@ Ninguna categoría quedó por debajo de 90. Antes de los ajustes, G1 y A1 tenía
 | Navegador | Motor | Desbordes en 6 anchos | Flujos con teclado | Dónde corre |
 | --- | --- | --- | --- | --- |
 | Chrome | Chromium | 306 de 306 | 4 de 4 | Local, antes de cada revisión |
-| Edge | Chromium | Cubierto por Chromium | Cubierto por Chromium | Mismo motor que Chrome |
-| Safari | WebKit | 306 de 306 | 4 de 4 | Local y GitHub Actions |
-| Firefox | Gecko | En GitHub Actions | En GitHub Actions | Solo GitHub Actions (INC-031) |
+| Edge | Chromium | Cubierto por Chromium | Cubierto por Chromium | Edge usa el mismo motor que Chrome: no se prueba aparte |
+| Safari | WebKit | 306 de 306 | 4 de 4 | Local y GitHub Actions (en verde en los dos) |
+| Firefox | Gecko | 306 de 306 | 4 de 4 | GitHub Actions (INC-031) |
 
-En WebKit, como en Safari sin la opción "Resaltar cada ítem con Tab", la tecla Tab no se detiene en los enlaces: se llega a ellos con Opción+Tab. Las acciones principales son botones, así que los flujos se completan con Tab; la tarea de Sofía se marca con el botón de su fila. En esta computadora Windows no deja ejecutar el Firefox de Playwright (no está firmado) y no se cambió esa política de seguridad: Firefox corre en GitHub Actions (`.github/workflows/browsers.yml`), aparte del deploy.
+En WebKit, como en Safari sin la opción "Resaltar cada ítem con Tab", la tecla Tab no se detiene en los enlaces: se llega a ellos con Opción+Tab. Las acciones principales son botones, así que los flujos se completan con Tab; la tarea de Sofía se marca con el botón de su fila. En esta computadora Windows no deja ejecutar el Firefox de Playwright (no está firmado) y no se cambió esa política de seguridad: Firefox corre en GitHub Actions (`.github/workflows/browsers.yml`), aparte del deploy. La primera corrida en Firefox falló en el login con teclado por un error del test, no de la app (INC-032); con el ajuste, los dos navegadores quedaron en verde.
+
+### 5.3 Deploy y consola de la demo publicada
+
+- **Deploy:** "CI and deploy to GitHub Pages" en verde para los tres commits de este paso (`998f1bd`, `416b9c5` y `ea97694`). La demo publicada sirve el mismo build que se revisó en local (mismo archivo de entrada, `index-BvIV_TcU.js`).
+- **Consola:** `npm run check:console` contra https://lpedaci.github.io/rumbo-app/ abre 12 pantallas (G0, G1, G4, el sitio del sistema de diseño y pantallas de los cuatro roles con la sesión iniciada por el flujo real). La primera corrida, justo después del deploy, tuvo un 503 momentáneo de GitHub Pages en un archivo (INC-033); las tres corridas siguientes salieron **sin errores ni advertencias**.
 
 ---
 
@@ -206,7 +211,7 @@ Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria 
 | `information-architecture.md` | Completo | G11 sin el rótulo de fase B; resultados de card sorting y tree testing pendientes |
 | `design-system.md` | Completo | Incluye `ErrorSummary`, casilla con área táctil, preferencias y alto contraste |
 | `security.md` | Completo | Producción, separación de funciones y exportaciones |
-| `issues.md` | Completo | 31 incidencias; solo INC-001 sigue abierta |
+| `issues.md` | Completo | 33 incidencias; solo INC-001 sigue abierta |
 | `decisions.md` | Completo | Ver sección 7 |
 | `progress.md` | Completo | Pasos 0 a 25 |
 | `visual-audit.md` | Completo | Del piloto |
