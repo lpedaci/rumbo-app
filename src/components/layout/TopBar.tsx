@@ -18,6 +18,7 @@ import { Logo } from './Logo';
 import { MENU_BUTTON_ID, SIDEBAR_ID } from './MainNav';
 import { RoleSwitcher } from './RoleSwitcher';
 import { NotificationsBell } from '@/features/notifications/NotificationsBell';
+import { GlobalSearch, SearchButton } from '@/features/search/SearchDialog';
 import { UserMenu } from './UserMenu';
 
 /** Mobile only (< 768 px): opens the navigation drawer. From 768 px the panel has its own toggle. */
@@ -93,13 +94,18 @@ export function TopBar() {
           </span>
           <Logo className="hidden sm:inline-flex" />
         </Link>
-        <div className="min-w-2 flex-1" />
+        <div className="flex min-w-2 flex-1 justify-center">
+          {/* F16: the field-like search from 1440 px (with the side menu open, it does not fit before); below, an icon among the tools */}
+          <SearchButton variant="field" className="hidden min-[90rem]:inline-flex" />
+          <GlobalSearch />
+        </div>
         {/* The role selector shrinks first on small screens (its text truncates). */}
         <div className="ml-1 flex min-w-0 shrink justify-end">
           <RoleSwitcher />
         </div>
         <span aria-hidden className="hidden h-8 w-px bg-outline-variant sm:block" />
         <div className="flex items-center gap-2">
+          <SearchButton variant="icon" className={`min-[90rem]:hidden ${TOOL_BUTTON}`} />
           <HelpMenu />
           {/* F7: panel from 640 px; below, the bell opens the notifications page */}
           <NotificationsBell buttonClassName={TOOL_BUTTON} />

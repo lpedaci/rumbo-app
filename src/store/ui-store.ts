@@ -10,6 +10,9 @@ interface UiState {
   navCollapsed: boolean | null;
   /** Mobile navigation drawer open. Not persisted. */
   navDrawerOpen: boolean;
+  /** F16: quick search open. Not persisted. */
+  searchOpen: boolean;
+  setSearchOpen: (open: boolean) => void;
   setNavCollapsed: (collapsed: boolean) => void;
   setNavDrawerOpen: (open: boolean) => void;
 }
@@ -19,6 +22,8 @@ export const useUiStore = create<UiState>()(
     (set) => ({
       navCollapsed: null,
       navDrawerOpen: false,
+      searchOpen: false,
+      setSearchOpen: (searchOpen) => set({ searchOpen }),
       setNavCollapsed: (navCollapsed) => set({ navCollapsed }),
       setNavDrawerOpen: (navDrawerOpen) => set({ navDrawerOpen }),
     }),

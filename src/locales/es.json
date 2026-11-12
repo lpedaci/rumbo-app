@@ -3353,5 +3353,37 @@
     "approveDisabled": "No se puede aprobar mientras sistemas quede con una sola persona. Puedes rechazarla con una nota.",
     "audit": "bloqueado: sistemas quedaría con menos de dos personas",
     "close": "Entendido"
+  },
+  "search": {
+    "open": "Buscar en Rumbo",
+    "shortcut": "Ctrl K",
+    "dialogTitle": "Buscar en Rumbo",
+    "label": "Buscar",
+    "help": "Personas, plantillas, tareas y solicitudes que puedes ver con tu rol. Escribe al menos 2 letras, por ejemplo: Sofía.",
+    "hint": "Escribe al menos 2 letras para ver resultados.",
+    "empty": "No encontramos resultados para \"{{q}}\". Prueba con otro nombre, otra tarea o el número de una solicitud.",
+    "groups": {
+      "people": "Personas",
+      "templates": "Plantillas",
+      "tasks": "Tareas",
+      "requests": "Solicitudes"
+    },
+    "kinds": {
+      "access": "Solicitud de acceso",
+      "privacy": "Datos personales",
+      "approval": "Aprobación"
+    },
+    "seeAll_one": "Ver el resultado en la página de búsqueda",
+    "seeAll_other": "Ver los {{count}} resultados",
+    "shortcutHelp": "Atajo: Ctrl + K o /, desde cualquier pantalla.",
+    "page": {
+      "title": "Resultados de búsqueda",
+      "description": "Encuentra personas, plantillas, tareas y solicitudes entre lo que puedes ver con tu rol.",
+      "filter": "Tipo",
+      "all": "Todos",
+      "results_one": "{{count}} resultado para \"{{q}}\"",
+      "results_other": "{{count}} resultados para \"{{q}}\"",
+      "listTitle": "Resultados"
+    }
   }
 }

@@ -448,3 +448,8 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Valeria Ortiz, Gerenta de Personas, en los datos como jefa directa de Carla (sin cuenta de demo, rol de jefe directo, sin permisos de admin). En la campaña, a Carla la revisa Valeria y en S6 sistemas puede usar "Resolver como Valeria Ortiz (demo)", auditado como decisión simulada.
 - `EmailText`: correos completos en dos líneas antes de la "@" cuando no entran.
 - Tests: revisora de Carla y de Valeria, y el atajo con su registro en la auditoría.
+
+## Paso 23 · F16 Búsqueda, ayuda contextual y exportación, 12/11/2026 (en curso)
+
+- Búsqueda global (D-126): `src/lib/search.ts` arma los resultados con los permisos de cada pantalla; diálogo rápido con `Ctrl+K` y `/` y G12 (`/search?q=`) con filtros por tipo. Tests por rol y de la página; G12 en Playwright.
+- Pendiente en este paso: ayuda contextual por pantalla, bienvenidas guiadas para RRHH, jefe y sistemas, y A13 con exportaciones, impresión y el revelado masivo con doble aprobación.

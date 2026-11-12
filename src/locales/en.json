@@ -3353,5 +3353,37 @@
     "approveDisabled": "It cannot be approved while IT would have only one person. You can reject it with a note.",
     "audit": "blocked: IT would keep fewer than two people",
     "close": "Got it"
+  },
+  "search": {
+    "open": "Search Rumbo",
+    "shortcut": "Ctrl K",
+    "dialogTitle": "Search Rumbo",
+    "label": "Search",
+    "help": "People, templates, tasks and requests your role can see. Type at least 2 letters, for example: Sofía.",
+    "hint": "Type at least 2 letters to see results.",
+    "empty": "No results for \"{{q}}\". Try another name, another task or a request number.",
+    "groups": {
+      "people": "People",
+      "templates": "Templates",
+      "tasks": "Tasks",
+      "requests": "Requests"
+    },
+    "kinds": {
+      "access": "Access request",
+      "privacy": "Personal data",
+      "approval": "Approval"
+    },
+    "seeAll_one": "See the result on the search page",
+    "seeAll_other": "See the {{count}} results",
+    "shortcutHelp": "Shortcut: Ctrl + K or /, from any screen.",
+    "page": {
+      "title": "Search results",
+      "description": "Find people, templates, tasks and requests among what your role can see.",
+      "filter": "Type",
+      "all": "All",
+      "results_one": "{{count}} result for \"{{q}}\"",
+      "results_other": "{{count}} results for \"{{q}}\"",
+      "listTitle": "Results"
+    }
   }
 }

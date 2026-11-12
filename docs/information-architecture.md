@@ -110,17 +110,16 @@ Todos los estados se muestran como píldora con ícono y texto, nunca solo con c
 | **Salto** | "Saltar al contenido" como primer elemento enfocable de cada página. "Volver arriba" en la esquina inferior derecha de las páginas largas, visible solo después de desplazarse (D-104). |
 | **Índice de página** | En el sitio del sistema de diseño: índice lateral fijo desde 1280 px y, por debajo, barra fija "Secciones \| sección actual" que abre el índice en un panel (D-104). |
 
-## 5. Sistema de búsqueda (fase B, F16)
+## 5. Sistema de búsqueda (F16, D-126)
 
 | Aspecto | Definición |
 | --- | --- |
-| Acceso | Campo en el header; atajo `Ctrl+K` o `/`. Página de resultados G12. |
-| Qué se busca | Personas, plantillas, tareas y solicitudes, filtrado por los permisos del rol (`search:global` más el permiso de ver cada tipo). |
-| Por rol | RRHH: personas, ingresos, plantillas, tareas, solicitudes de privacidad. Jefe: personas de su equipo y sus tareas. Nuevo ingreso: sus propias tareas y contactos. Sistemas: personas (datos de identificación), solicitudes de acceso, eventos de auditoría. |
-| Resultados | Agrupados por tipo, con hasta 5 por grupo en la búsqueda rápida y "Ver todos" hacia G12. Cada resultado muestra título, tipo y un dato de contexto (área, estado o fecha). |
-| Filtros en G12 | Tipo, área y estado. |
-| Sin resultados | Explica qué se puede buscar y sugiere revisar la escritura o quitar filtros. |
-| Fase A | No hay búsqueda global; los listados (A2, A5, S1, auditoría) tienen búsqueda y filtros propios. |
+| Acceso | Botón "Buscar en Rumbo" en la barra superior: campo desde 1440 px e ícono por debajo (con el menú lateral abierto, el campo no entra antes). Atajos `Ctrl+K` (o `Cmd+K`) y `/` desde cualquier pantalla. Página de resultados G12 (`/search?q=`). |
+| Qué se busca | Personas, plantillas, tareas y solicitudes, sin tildes ni mayúsculas que importen y con todas las palabras escritas. Mínimo 2 letras. |
+| Por rol (permisos, sin un permiso nuevo) | RRHH: todas las personas (`person:manage`), plantillas, tareas de todos los recorridos y solicitudes de datos personales. Jefe: las personas de su equipo y sus tareas. Nuevo ingreso: sus propias tareas y sus solicitudes de datos personales. Sistemas: solicitudes de acceso y aprobaciones. Cada resultado lleva a la pantalla que ese rol puede abrir. |
+| Resultados | Agrupados por tipo, hasta 4 por grupo en la búsqueda rápida y "Ver los N resultados" hacia G12. Cada fila: persona (foto o iniciales en el color del rol) o ícono del tipo, nombre y un dato de contexto. Flechas arriba y abajo para moverse; `Enter` en el campo abre G12. |
+| Filtros en G12 | Tipo, con chips desde 640 px y menú en celulares (D-107). La búsqueda vive en la dirección, así se puede compartir y el botón Atrás la conserva. |
+| Sin resultados | Dice qué se buscó y sugiere otro nombre, otra tarea o el número de una solicitud. |
 
 ## 6. Mapa del sitio por rol
 
