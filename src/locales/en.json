@@ -648,12 +648,7 @@
       "body": "Choose a journey, sign in with one click and switch roles anytime.",
       "titleHighlight": "any role"
     },
-    "titleHighlight": "by when",
-    "heroCards": {
-      "alert": "HR alert",
-      "escalated": "30-day check-in escalated",
-      "stuck": "Where journeys get stuck"
-    }
+    "titleHighlight": "by when"
   },
   "stages": {
     "preboarding": "Pre-boarding",
@@ -3100,6 +3095,7 @@
       "leaverNote": "On the effective date the account is disabled, its sessions are closed and the manager is told."
     },
     "detail": {
+      "facts": {"type": "Type", "change": "Change", "leaverType": "Type of leaver", "effective": "Effective date", "registered": "Registered", "registeredValue": "{{date}} by {{name}}", "progress": "Progress", "note": "Details"},
       "title": "{{id}} · {{type}}",
       "tasks": "Access",
       "grant": "Grant",
@@ -3289,9 +3285,8 @@
       "people_other": "{{count}} people",
       "closedOn": "Closed on {{date}}",
       "progress": "{{done}} of {{total}} reviewed",
-      "yourTurn_one": "You review {{count}} person in {{campaign}}.",
-      "yourTurn_other": "You review {{count}} people in {{campaign}}.",
-      "reviewNow": "Review now",
+      "yourTurn_one": "You review {{count}} person in {{campaign}}. Do it in <chip>Access review</chip>.",
+      "yourTurn_other": "You review {{count}} people in {{campaign}}. Do it in <chip>Access review</chip>.",
       "form": {
         "name": "Name",
         "nameHelp": "To recognize it in notifications. Between 5 and 80 characters. For example: Quarterly review Q1 2027.",

@@ -124,5 +124,8 @@ export async function prepareSession(page: Page, target: CheckedPage) {
         });
       }
     }, PERSON[target.role]);
+    // The imported store can be another module instance than the app's (dev server updates), so
+    // reload: the app reads the consent back from localStorage (INC-022).
+    await page.reload();
   }
 }

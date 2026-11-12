@@ -1,24 +1,27 @@
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/Dialog';
 import { FilterChip } from '@/components/ui/FilterChip';
 import { FilterMenu } from '@/components/ui/FilterMenu';
+import { ProgressBar } from '@/components/ui/ProgressBar';
 import { RadioGroup } from '@/components/ui/RadioGroup';
 import { Select } from '@/components/ui/Select';
 import { TextArea } from '@/components/ui/TextArea';
+import { StatusPill } from '@/components/ui/StatusPill';
 import { TextField } from '@/components/ui/TextField';
 import { toast } from '@/components/ui/toast-store';
-import { demoNow, formatDateTime } from '@/lib/dates';
+import { demoNow, formatDate, formatDateTime } from '@/lib/dates';
 import { dateMask } from '@/lib/input-masks';
-import { isEffective, leaverTasks, moverTasks, nextLifecycleId } from '@/lib/lifecycle';
+import { isEffective, leaverTasks, moverTasks, nextLifecycleId, progressOfEvent } from '@/lib/lifecycle';
 import { DEMO_PERSON_IDS, itMinimumBlock } from '@/lib/people';
 import { parseDisplayDate } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { AccessTask, LeaverType, LifecycleEvent, LifecycleType } from '@/types/domain';
-import { AccessTaskList, EventSummary } from './LifecycleBits';
+import { AccessTaskList, EventSummary, LifecycleStatePill, MoveFacts, TypeChip } from './LifecycleBits';
 
 type Filter = 'all' | LifecycleType;
 const FILTERS: Filter[] = ['all', 'joiner', 'mover', 'leaver'];
@@ -119,6 +122,27 @@ function EventDetail({ eventId }: { eventId: string }) {
   const event = useDataStore((s) => s.lifecycle.find((e) => e.id === eventId));
   const people = useDataStore((s) => s.people);
   if (!event) return null;
+  const person = people.find((p) => p.id === event.personId);
+  const { done, total } = progressOfEvent(event);
+  const facts: [string, ReactNode][] = [
+    [t('lifecycle.detail.facts.type'), <TypeChip key="type" type={event.type} />],
+    ...(event.type === 'mover'
+      ? ([[t('lifecycle.detail.facts.change'), <MoveFacts key="change" event={event} />]] as [string, ReactNode][])
+      : event.type === 'leaver'
+        ? ([[t('lifecycle.detail.facts.leaverType'), <MoveFacts key="leaver" event={event} />]] as [
+            string,
+            ReactNode,
+          ][])
+        : []),
+    [t('lifecycle.detail.facts.effective'), formatDate(event.effectiveDate)],
+    [
+      t('lifecycle.detail.facts.registered'),
+      t('lifecycle.detail.facts.registeredValue', {
+        date: formatDateTime(event.createdAt),
+        name: people.find((p) => p.id === event.createdBy)?.name ?? '',
+      }),
+    ],
+  ];
   return (
     <DialogContent
       title={t('lifecycle.detail.title', {
@@ -132,16 +156,49 @@ function EventDetail({ eventId }: { eventId: string }) {
         </DialogClose>
       }
     >
-      <EventSummary event={event} />
-      {event.detail && <p className="text-body-medium text-on-surface">{event.detail}</p>}
-      <p className="text-body-small text-on-surface-variant tabular-nums">
-        {t('lifecycle.detail.registeredBy', {
-          date: formatDateTime(event.createdAt),
-          name: people.find((p) => p.id === event.createdBy)?.name ?? '',
-        })}
-      </p>
-      <section className="flex flex-col gap-2 border-t border-outline-variant pt-4">
+      {/* Same anatomy as the other record dialogs (S7, A12): who and the state, then the facts */}
+      <div className="flex min-w-0 items-start gap-3">
+        {person && <Avatar name={person.name} role={person.role} />}
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="text-title-small text-on-surface">{person?.name ?? event.personId}</span>
+          {person && (
+            <span className="text-body-small text-on-surface-variant">
+              {person.jobTitle} · {person.area}
+            </span>
+          )}
+        </div>
+        <span className="flex shrink-0 flex-col items-end gap-1.5">
+          <LifecycleStatePill event={event} />
+          {person?.status === 'offboarded' && (
+            <StatusPill tone="neutral" icon="logout" label={t('lifecycle.offboarded')} />
+          )}
+        </span>
+      </div>
+      <dl className="flex flex-col border-y border-outline-variant">
+        {facts.map(([label, value]) => (
+          <div
+            key={label}
+            className="flex flex-wrap items-center justify-between gap-2 border-b border-outline-variant py-3 last:border-b-0"
+          >
+            <dt className="text-body-medium text-on-surface-variant">{label}</dt>
+            <dd className="text-body-medium text-on-surface tabular-nums">{value}</dd>
+          </div>
+        ))}
+      </dl>
+      {event.detail && (
+        <section className="flex flex-col gap-1">
+          <h3 className="text-title-small text-on-surface">{t('lifecycle.detail.facts.note')}</h3>
+          <p className="text-body-medium text-on-surface">{event.detail}</p>
+        </section>
+      )}
+      <section className="flex flex-col gap-2">
         <h3 className="text-title-small text-on-surface">{t('lifecycle.detail.tasks')}</h3>
+        <div className="flex max-w-md flex-col gap-1">
+          <ProgressBar value={total ? (done / total) * 100 : 0} label={t('lifecycle.progress', { done, total })} />
+          <span className="text-body-small text-on-surface-variant tabular-nums">
+            {t('lifecycle.progress', { done, total })}
+          </span>
+        </div>
         <AccessTaskList event={event} />
       </section>
     </DialogContent>

@@ -11,7 +11,11 @@ import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import type { AccessTask, LifecycleEvent, LifecycleType } from '@/types/domain';
 
-export const TYPE_ICON: Record<LifecycleType, IconName> = { joiner: 'person_add', mover: 'swap_horiz', leaver: 'logout' };
+export const TYPE_ICON: Record<LifecycleType, IconName> = {
+  joiner: 'person_add',
+  mover: 'swap_horiz',
+  leaver: 'logout',
+};
 const STATE: Record<LifecycleState, { tone: StatusTone; icon: IconName }> = {
   scheduled: { tone: 'info', icon: 'schedule' },
   in_progress: { tone: 'warning', icon: 'pending' },
@@ -42,8 +46,6 @@ export function TypeChip({ type }: { type: LifecycleType }) {
 export function EventSummary({ event, trailing }: { event: LifecycleEvent; trailing?: ReactNode }) {
   const { t } = useTranslation();
   const person = useDataStore((s) => s.people.find((p) => p.id === event.personId));
-  const jobs = useDataStore((s) => s.jobTitles);
-  const jobName = (id?: string) => jobs.find((j) => j.id === id)?.name ?? '';
   const { done, total } = progressOfEvent(event);
   return (
     <span className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
@@ -53,19 +55,17 @@ export function EventSummary({ event, trailing }: { event: LifecycleEvent; trail
           <span className="text-title-small text-on-surface">{person?.name ?? event.personId}</span>
           <span className="flex flex-wrap items-center gap-2 text-body-small text-on-surface-variant">
             <TypeChip type={event.type} />
-            {event.type === 'mover' && t('lifecycle.jobChange', { from: jobName(event.fromJobTitleId), to: jobName(event.toJobTitleId) })}
-            {event.type === 'leaver' && event.leaverType && t(`lifecycle.leaverTypes.${event.leaverType}`)}
-            <span className="tabular-nums">
-              {/* The separator only on one line; on phones the date wraps without a stray dot. */}
-              <span aria-hidden="true" className="hidden sm:inline">
-                ·{' '}
-              </span>
-              {t('lifecycle.effective', { date: formatDate(event.effectiveDate) })}
-            </span>
+            <MoveFacts event={event} />
+          </span>
+          {/* Its own line, like the dates of the other lists: never a stray separator when it wraps */}
+          <span className="text-body-small text-on-surface-variant tabular-nums">
+            {t('lifecycle.effective', { date: formatDate(event.effectiveDate) })}
           </span>
           <span className="flex max-w-md flex-col gap-1">
             <ProgressBar value={total ? (done / total) * 100 : 0} label={t('lifecycle.progress', { done, total })} />
-            <span className="text-body-small text-on-surface-variant tabular-nums">{t('lifecycle.progress', { done, total })}</span>
+            <span className="text-body-small text-on-surface-variant tabular-nums">
+              {t('lifecycle.progress', { done, total })}
+            </span>
           </span>
         </span>
       </span>
@@ -80,14 +80,20 @@ export function EventSummary({ event, trailing }: { event: LifecycleEvent; trail
   );
 }
 
+/** What changes in a move: the jobs of a mover, or the type of a leaver. */
+export function MoveFacts({ event }: { event: LifecycleEvent }) {
+  const { t } = useTranslation();
+  const jobs = useDataStore((s) => s.jobTitles);
+  const jobName = (id?: string) => jobs.find((j) => j.id === id)?.name ?? '';
+  if (event.type === 'mover') {
+    return <>{t('lifecycle.jobChange', { from: jobName(event.fromJobTitleId), to: jobName(event.toJobTitleId) })}</>;
+  }
+  if (event.type === 'leaver' && event.leaverType) return <>{t(`lifecycle.leaverTypes.${event.leaverType}`)}</>;
+  return null;
+}
+
 /** The access tasks of a move; `action` renders the control of a pending task (IT only). */
-export function AccessTaskList({
-  event,
-  action,
-}: {
-  event: LifecycleEvent;
-  action?: (task: AccessTask) => ReactNode;
-}) {
+export function AccessTaskList({ event, action }: { event: LifecycleEvent; action?: (task: AccessTask) => ReactNode }) {
   const { t } = useTranslation();
   const people = useDataStore((s) => s.people);
   return (
@@ -98,7 +104,9 @@ export function AccessTaskList({
           className="flex min-h-14 min-w-0 items-start gap-3 border-b border-outline-variant px-2 py-3 last:border-b-0"
         >
           <Icon
-            name={task.status === 'done' ? 'check_circle' : task.action === 'grant' ? 'add_circle' : 'do_not_disturb_on'}
+            name={
+              task.status === 'done' ? 'check_circle' : task.action === 'grant' ? 'add_circle' : 'do_not_disturb_on'
+            }
             size={20}
             className={cn('mt-0.5 shrink-0', task.status === 'done' ? 'text-success' : 'text-on-surface-variant')}
           />

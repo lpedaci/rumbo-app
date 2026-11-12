@@ -28,7 +28,7 @@ import { useSessionStore } from '@/store/session-store';
 import { Band } from './Band';
 import { FaqSection } from './FaqSection';
 import { ProblemSection } from './ProblemSection';
-import { HeroCards } from './HeroCards';
+import { HeroPreview } from './HeroPreview';
 import { Reveal } from './Reveal';
 import { RoleShowcase } from './RoleShowcase';
 import { withHighlight } from './SectionHeading';
@@ -158,7 +158,7 @@ export function DemoHomePage() {
 
           {/* Hero (D-73, reference): centered message with the key words in color, one main action,
               and real product cards floating on both sides from 1280 px (below, in a grid). */}
-          <section className="relative flex flex-col items-center xl:min-h-[40rem] xl:justify-center">
+          <section className="relative flex flex-col items-center">
             <div className="relative z-10 flex w-full max-w-2xl min-w-0 flex-col items-center gap-6 text-center">
               <Reveal trigger="mount">
                 <p className="text-label-large text-balance text-primary">{t('home.eyebrow')}</p>
@@ -192,7 +192,7 @@ export function DemoHomePage() {
                 </div>
               </Reveal>
             </div>
-            <HeroCards />
+            <HeroPreview />
           </section>
         </Band>
         <Band>
@@ -200,7 +200,8 @@ export function DemoHomePage() {
             <ProblemSection ref={problemRef} />
           </Reveal>
         </Band>
-        <Band>
+        {/* The faint grid also behind the solution bento: its cards are white, so no long text sits on it (D-92, D-124) */}
+        <Band tone="hero">
           <Reveal>
             <SolutionSection ref={solutionRef} />
           </Reveal>

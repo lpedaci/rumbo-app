@@ -648,12 +648,7 @@
       "body": "Elige un recorrido, inicia sesión en un clic y cambia de rol cuando quieras.",
       "titleHighlight": "el rol que quieras"
     },
-    "titleHighlight": "para cuándo",
-    "heroCards": {
-      "alert": "Alerta para RRHH",
-      "escalated": "Check-in de 30 días escalado",
-      "stuck": "Dónde se traban"
-    }
+    "titleHighlight": "para cuándo"
   },
   "stages": {
     "preboarding": "Preingreso",
@@ -3100,6 +3095,7 @@
       "leaverNote": "En la fecha efectiva la cuenta queda deshabilitada, se cierran sus sesiones y se avisa a su jefe directo."
     },
     "detail": {
+      "facts": {"type": "Tipo", "change": "Cambio", "leaverType": "Tipo de baja", "effective": "Fecha efectiva", "registered": "Registrado", "registeredValue": "{{date}} por {{name}}", "progress": "Avance", "note": "Detalle"},
       "title": "{{id}} · {{type}}",
       "tasks": "Accesos",
       "grant": "Otorgar",
@@ -3289,9 +3285,8 @@
       "people_other": "{{count}} personas",
       "closedOn": "Cerrada el {{date}}",
       "progress": "{{done}} de {{total}} revisados",
-      "yourTurn_one": "Te toca revisar a {{count}} persona en {{campaign}}.",
-      "yourTurn_other": "Te toca revisar a {{count}} personas en {{campaign}}.",
-      "reviewNow": "Revisar ahora",
+      "yourTurn_one": "Te toca revisar a {{count}} persona en {{campaign}}. Hazlo en <chip>Revisión de accesos</chip>.",
+      "yourTurn_other": "Te toca revisar a {{count}} personas en {{campaign}}. Hazlo en <chip>Revisión de accesos</chip>.",
       "form": {
         "name": "Nombre",
         "nameHelp": "Para reconocerla en los avisos. Entre 5 y 80 caracteres. Por ejemplo: Revisión trimestral Q1 2027.",

@@ -441,3 +441,4 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Revisión del sistema de diseño: los roles que se muestran como dato van en `RoleChip` (S7, J4, S6 y G5, que tenía un chip propio); el texto del cambio pendiente en A10 lee "Acceso básico" como en Personas.
 - G0: las tarjetas del hero solo desde 1280 px.
 - Tests: la revocación del rol de Ramiro queda bloqueada, la nueva verificación al aprobar, el cambio de rol y la baja; y la revocación con tres personas en sistemas sí pasa a aprobación.
+- Ajustes al sistema de diseño (D-123): detalle de movimientos de A11 con la anatomía de las ventanas de detalle; fecha efectiva en su línea en las filas de A11 y S4; "Te toca revisar" de S5 con `RefChip`. G0: tres pantallas chicas superpuestas y desvanecidas desde 640 px, en lugar de las tarjetas flotantes; en celulares, solo el texto. Se registró y resolvió INC-022 (capturas de Sofía con el aviso de privacidad).

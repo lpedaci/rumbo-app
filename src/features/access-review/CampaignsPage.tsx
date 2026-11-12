@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
@@ -8,6 +8,7 @@ import { Dialog, DialogClose, DialogContent } from '@/components/ui/Dialog';
 import { IconTile } from '@/components/ui/IconTile';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { RefChip } from '@/components/ui/RefChip';
 import { Select } from '@/components/ui/Select';
 import { TextField } from '@/components/ui/TextField';
 import { toast } from '@/components/ui/toast-store';
@@ -59,15 +60,13 @@ export function CampaignsPage() {
       <div className="flex flex-col gap-(--space-bento-gap)">
         {myTurn && (
           <InlineAlert tone="info">
-            <span className="flex flex-col items-start gap-2">
-              {t('accessReview.campaigns.yourTurn', { count: myTurn.people, campaign: myTurn.campaign.name })}
-              <Link
-                to="/it/access-review"
-                className="inline-flex min-h-12 items-center text-label-large text-primary underline-offset-4 hover:underline md:min-h-0"
-              >
-                {t('accessReview.campaigns.reviewNow')}
-              </Link>
-            </span>
+            {/* Pattern 16 (D-83): the place it names goes as a chip that takes you there */}
+            <Trans
+              i18nKey="accessReview.campaigns.yourTurn"
+              count={myTurn.people}
+              values={{ campaign: myTurn.campaign.name }}
+              components={{ chip: <RefChip icon="fact_check" to="/it/access-review" /> }}
+            />
           </InlineAlert>
         )}
         <Card title={t('accessReview.campaigns.listTitle')}>
