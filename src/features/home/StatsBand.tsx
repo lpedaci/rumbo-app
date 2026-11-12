@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { SectionHeading } from './SectionHeading';
 
-/** Screens of phase A (CLAUDE.md section 6): a fact of the spec, not a metric. */
-const PHASE_A_SCREENS = 24;
+/** Screens of this version, phases A and B (CLAUDE.md section 6): a fact of the spec, not a metric. */
+export const VERSION_SCREENS = 40;
 
 /**
  * G0 · Figures (D-73, reference): large numbers on the white page, alternating primary and
@@ -26,7 +26,7 @@ export function StatsBand() {
       label: t('home.stats.roles'),
     },
     {
-      value: PHASE_A_SCREENS,
+      value: VERSION_SCREENS,
       label: t('home.stats.screens'),
     },
     {

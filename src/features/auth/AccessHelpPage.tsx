@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
 import { Icon, type IconName } from '@/components/ui/Icon';
@@ -18,6 +18,12 @@ import { createAccessRequest, SIMULATED_ERROR_TRIGGER, switchRole } from './auth
 import { AuthLayout } from './AuthLayout';
 
 const REASONS: AccessRequestReason[] = ['locked', 'forgot_password', 'mfa_issue', 'other'];
+
+/** What the login already knows (WCAG 3.3.7, D-132): prefilled and still editable. */
+export interface AccessHelpState {
+  email?: string;
+  reason?: AccessRequestReason;
+}
 
 const schema = z.object({
   email: emailField,
@@ -40,6 +46,7 @@ const channels: { icon: IconName; key: string }[] = [
 export function AccessHelpPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const carried = (useLocation().state ?? {}) as AccessHelpState;
   const fieldError = useFieldError();
   const [requestId, setRequestId] = useState<string | null>(null);
   const [serverError, setServerError] = useState(false);
@@ -54,7 +61,11 @@ export function AccessHelpPage() {
   } = useForm<HelpValues>({
     resolver: zodResolver(schema),
     mode: 'onTouched',
-    defaultValues: { email: '', comment: '' },
+    defaultValues: {
+      email: carried.email ?? '',
+      comment: '',
+      ...(carried.reason && REASONS.includes(carried.reason) ? { reason: carried.reason } : {}),
+    },
   });
 
   useEffect(() => {

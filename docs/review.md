@@ -7,7 +7,7 @@
 
 Las **dos fases están completas en funciones**: las 40 pantallas funcionan con datos de demo, los cuatro roles se recorren de punta a punta y se puede cambiar de rol en cualquier momento. La seguridad está en sus tres capas (simulada en la interfaz, aplicada en el front y documentada para producción) y la interfaz está completa en español e inglés.
 
-Están en verde el build, **353 tests unitarios y de componentes**, **612 pruebas de Playwright en Chromium** (desbordes en 6 anchos con capturas, áreas táctiles a 375 px, axe, un botón principal por región y cuatro flujos solo con teclado), **310 en WebKit y 310 en Firefox** (desbordes y teclado, WebKit en local y los dos en GitHub Actions), Lighthouse con **98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO** en G0, G1, N1 y A1, y el deploy de GitHub Pages. La prueba con NVDA queda a cargo de Lourdes.
+Están en verde el build, **355 tests unitarios y de componentes**, **612 pruebas de Playwright en Chromium** (desbordes en 6 anchos con capturas, áreas táctiles a 375 px, axe, un botón principal por región y cuatro flujos solo con teclado), **310 en WebKit y 310 en Firefox** (desbordes y teclado, WebKit en local y los dos en GitHub Actions), Lighthouse con **98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO** en G0, G1, N1 y A1, y el deploy de GitHub Pages. La prueba con NVDA queda a cargo de Lourdes.
 
 | Fase | Avance aproximado | Comentario |
 | --- | --- | --- |
@@ -108,9 +108,8 @@ Las **40 pantallas** de la sección 6 están construidas: 24 de fase A (G0 a G7,
 ## 4. Qué falta (por prioridad)
 
 1. **Prueba con NVDA** en login, recorrido del nuevo ingreso y constructor (RNF-052): la hace Lourdes; lo que aparezca va a `issues.md`.
-2. **No pedir dos veces el mismo dato** (RNF-045): falta una revisión formal flujo por flujo.
-3. **Validar las proto-personas y la arquitectura de la información** con usuarios (planes en `personas.md` e `information-architecture.md`).
-4. **Modo oscuro:** los roles están preparados sin contraste verificado (RNF-035); no se implementa, como pide 2.1.
+2. **Validar las proto-personas y la arquitectura de la información** con usuarios (planes en `personas.md` e `information-architecture.md`).
+3. **Modo oscuro:** los roles están preparados sin contraste verificado (RNF-035); no se implementa, como pide 2.1.
 
 ---
 
@@ -120,6 +119,8 @@ Las **40 pantallas** de la sección 6 están construidas: 24 de fase A (G0 a G7,
 - **Áreas táctiles:** el test nuevo (`e2e/touch.spec.ts`) encontró la casilla de `Checkbox` (20 px útiles) y los logos de las pantallas de acceso y del sitio del sistema de diseño (38 y 32 px); quedaron corregidos (INC-025).
 - **Formularios:** faltaba el resumen de errores con enlaces de 2.10 en A3 y A6, y el de J3 no tenía enlaces; ahora hay un `ErrorSummary` común (INC-024, D-130). S5, A11 y G11 validaban sin esquema; ahora usan Zod (INC-026).
 - **Sombras, íconos y animaciones:** sin desvíos de la sección 2 (ver sección 3).
+- **No pedir dos veces el mismo dato (WCAG 3.3.7):** el único caso era el correo del login, que había que volver a escribir en G4; ahora llega con el motivo si la cuenta se bloqueó (INC-034, D-132).
+- **Imagen para compartir:** mostraba el hero anterior; ahora repite el hero actual y la URL lleva la versión (INC-035, D-133).
 - **Voz y tono:** sin voseo, usted ni regionalismos detectados; un solo signo de exclamación, para celebrar una etapa.
 - **Textos sin traducir:** ninguno en la interfaz. A propósito no se traducen los datos que escriben las personas ni los detalles guardados en la auditoría, porque son registros (D-129).
 - **Rendimiento:** ningún fragmento supera 500 kB y Lighthouse queda en 98 o más (ver 5.1). Las pantallas muestran un esqueleto mientras llega su código (INC-030).
@@ -191,9 +192,9 @@ En WebKit, como en Safari sin la opción "Resaltar cada ítem con Tab", la tecla
 
 ## 7. Dudas y decisiones
 
-`docs/decisions.md` registra **131 decisiones** (D-01 a D-131). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Ya no queda ninguna pendiente de confirmación: **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
+`docs/decisions.md` registra **133 decisiones** (D-01 a D-133). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Ya no queda ninguna pendiente de confirmación: **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
 
-Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) y D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región).
+Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región), D-132 (no pedir dos veces el mismo dato) y D-133 (cifra de pantallas, imagen para compartir y numeración de patrones).
 
 ---
 
@@ -205,13 +206,13 @@ Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria 
 | `docs/README.md` | Completo | Índice |
 | `personas.md` | Completo | Proto-personas rotuladas como hipótesis; resultados de validación pendientes |
 | `roles.md` | Completo | Sincronizado con `permissions.ts` por test |
-| `requirements.md` | Completo | 89 RF hechos y 8 Won't; 55 RNF: 51 hechos, 3 parciales y 1 pendiente, cada uno con su evidencia |
+| `requirements.md` | Completo | 89 RF hechos y 8 Won't; 55 RNF: 52 hechos y 3 parciales, cada uno con su evidencia |
 | `use-cases.md` | Completo | 14 casos con diagrama |
 | `flows.md` | Completo | Task flows, user flows, wireflows y diagramas de estados rotulados |
 | `information-architecture.md` | Completo | G11 sin el rótulo de fase B; resultados de card sorting y tree testing pendientes |
 | `design-system.md` | Completo | Incluye `ErrorSummary`, casilla con área táctil, preferencias y alto contraste |
 | `security.md` | Completo | Producción, separación de funciones y exportaciones |
-| `issues.md` | Completo | 33 incidencias; solo INC-001 sigue abierta |
+| `issues.md` | Completo | 36 incidencias; solo INC-001 sigue abierta |
 | `decisions.md` | Completo | Ver sección 7 |
 | `progress.md` | Completo | Pasos 0 a 25 |
 | `visual-audit.md` | Completo | Del piloto |
@@ -234,7 +235,6 @@ Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria 
 
 1. Prueba con NVDA (Lourdes) y registrar lo que aparezca en `issues.md`.
 2. Recorrer la demo publicada en un iPhone y en un Android reales.
-3. Revisar flujo por flujo que no se pida dos veces el mismo dato (RNF-045).
-4. Publicar el case study y apuntar `CASE_STUDY_URL` a su página.
-5. Validar proto-personas e IA con usuarios y completar las secciones de resultados.
-6. Líneas futuras de la sección 9: vista de dirección y asistente conversacional.
+3. Publicar el case study y apuntar `CASE_STUDY_URL` a su página.
+4. Validar proto-personas e IA con usuarios y completar las secciones de resultados.
+5. Líneas futuras de la sección 9: vista de dirección y asistente conversacional.

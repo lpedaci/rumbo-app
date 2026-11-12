@@ -106,7 +106,7 @@ export function MySessions({ personId }: { personId: string }) {
             <SessionRow
               key={s.id}
               session={s}
-              // The control it names goes as a chip (pattern 16, D-83)
+              // The control it names goes as a chip (pattern 15, D-83)
               note={
                 s.current ? (
                   <Trans i18nKey="sessions.currentHelp" components={{ signOut: <RefChip icon="logout" /> }} />

@@ -482,3 +482,9 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Lighthouse en G0, G1, N1 y A1, celular y escritorio, con resultados en `docs/perf/`.
 - Firefox y WebKit en Playwright y en GitHub Actions; flujos con teclado (`e2e/keyboard.spec.ts`) y un botón principal por región (`e2e/filled-button.spec.ts`).
 - `npm run check:console` para revisar la consola del build y de la demo publicada.
+
+## Paso 27 · Versión 1.0.0, 12/11/2026
+
+- RNF-045 revisado flujo por flujo; G4 recibe el correo y el motivo desde el login (D-132).
+- G0: "Pantallas en esta versión" en 40; imagen para compartir con el hero actual; patrones de 2.2.1 numerados del 1 al 29 (D-133).
+- Tag y release v1.0.0 en GitHub.

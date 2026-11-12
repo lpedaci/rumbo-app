@@ -15,6 +15,7 @@ import { emailField, requiredText } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useSessionStore } from '@/store/session-store';
 import { findDemoPerson, personIdForDemoKey, signInWithPassword } from './auth-service';
+import type { AccessHelpState } from './AccessHelpPage';
 import { AuthLayout } from './AuthLayout';
 import { LoginShowcase } from './LoginShowcase';
 import { SsoButton } from './SsoButton';
@@ -54,6 +55,7 @@ export function LoginPage() {
     handleSubmit,
     resetField,
     setFocus,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<LoginValues>({
     resolver: zodResolver(schema),
@@ -67,6 +69,19 @@ export function LoginPage() {
   }, [problem]);
 
   if (session) return <Navigate to={homePath(session)} replace />;
+
+  // WCAG 3.3.7 (RNF-045): G4 receives the email already typed here, and the reason when the
+  // account was just locked, so nothing is asked twice in the same process (D-132).
+  const helpState = (): AccessHelpState => ({
+    email: getValues('email')?.trim() || preselected?.email || undefined,
+    reason: problem?.kind === 'locked' ? 'locked' : undefined,
+  });
+
+  // Read when the link is used: the form does not re-render on every keystroke
+  const goToHelp = (event: React.MouseEvent) => {
+    event.preventDefault();
+    navigate('/access-help', { state: helpState() });
+  };
 
   const ssoPath = (provider: 'microsoft' | 'google') =>
     `/login/sso?provider=${provider}${preselected ? `&account=${preselected.id}&demo=1` : ''}`;
@@ -152,7 +167,11 @@ export function LoginPage() {
                 live="alert"
                 title={t('auth.login.lockedTitle')}
                 action={
-                  <Link to="/access-help" className="text-label-large text-on-error-container underline underline-offset-4">
+                  <Link
+                    to="/access-help"
+                    onClick={goToHelp}
+                    className="text-label-large text-on-error-container underline underline-offset-4"
+                  >
                     {t('auth.login.troubleLink')}
                   </Link>
                 }
@@ -203,7 +222,9 @@ export function LoginPage() {
       {/* Same place on every access screen (WCAG 3.2.6, consistent help). */}
       <div className="flex flex-col gap-3 border-t border-outline-variant pt-4">
         <Button asChild variant="text" className="w-fit -ml-3">
-          <Link to="/access-help">{t('auth.login.troubleLink')}</Link>
+          <Link to="/access-help" onClick={goToHelp}>
+            {t('auth.login.troubleLink')}
+          </Link>
         </Button>
         <p role="note" className="text-body-small text-on-surface-variant">
           {t('app.demoNotice')}

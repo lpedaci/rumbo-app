@@ -60,7 +60,7 @@ export function CampaignsPage() {
       <div className="flex flex-col gap-(--space-bento-gap)">
         {myTurn && (
           <InlineAlert tone="info">
-            {/* Pattern 16 (D-83): the place it names goes as a chip that takes you there */}
+            {/* Pattern 15 (D-83): the place it names goes as a chip that takes you there */}
             <Trans
               i18nKey="accessReview.campaigns.yourTurn"
               count={myTurn.people}
