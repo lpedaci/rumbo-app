@@ -36,6 +36,7 @@ const HELP_ROUTES: [RegExp, string][] = [
   [/^\/search$/, 'search'],
   [/^\/account\/security$/, 'mySecurity'],
   [/^\/account\/privacy$/, 'myPrivacy'],
+  [/^\/account\/preferences$/, 'preferences'],
 ];
 
 export function helpKeyFor(pathname: string): string | undefined {

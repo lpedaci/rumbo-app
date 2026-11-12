@@ -82,6 +82,7 @@ Leyenda: ✅ todo · 👥 solo su equipo · 🙋 solo lo propio · — no permit
 | `report:export` | Exportar reportes a CSV con los datos sensibles ocultos y pedir una exportación sin ocultar, que aprueba sistemas (A13) | ✅ | — | — | — |
 | `notification:view` | Ver sus propias notificaciones (G9) | 🙋 | 🙋 | 🙋 | 🙋 |
 | `account:security_own` | Ver "Mi seguridad" (G5) | 🙋 | 🙋 | 🙋 | 🙋 |
+| `preferences:own` | Ver y cambiar sus propias preferencias: idioma, fechas, avisos y accesibilidad (G11) | 🙋 | 🙋 | 🙋 | 🙋 |
 | `demo:switch_role` | Usar el selector de rol de demo | ✅ | ✅ | ✅ | ✅ |
 | `demo:reset` | Restablecer la demo | ✅ | ✅ | ✅ | ✅ |
 <!-- permissions:end -->

@@ -454,3 +454,11 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Búsqueda global (D-126): `src/lib/search.ts` arma los resultados con los permisos de cada pantalla; diálogo rápido con `Ctrl+K` y `/` y G12 (`/search?q=`) con filtros por tipo. Tests por rol y de la página; G12 en Playwright.
 - Ayuda contextual y bienvenidas (D-127): "Ayuda de esta pantalla" en el menú Ayuda para 27 pantallas y bienvenidas de tres pasos para RRHH, jefe y sistemas. Tests de ayuda y bienvenidas.
 - A13 Reportes y exportaciones (D-128): cuatro listados en CSV con datos sensibles ocultos, exportación de personas sin ocultar con doble aprobación y de un solo uso, e Imprimir en A1, A4 y S6 con estilos de impresión. Tests de CSV, enmascarado, aprobación y uso único; A13 en Playwright.
+
+## Paso 24 · F17 Preferencias e inglés completo, 12/11/2026
+
+- G11 Preferencias (`/account/preferences`, permiso `preferences:own` para los cuatro roles), en el menú lateral y en el menú de usuario: idioma, zona horaria y formato de fecha, avisos por tipo (App, Correo, Ambos) y accesibilidad (reducir animaciones y alto contraste), con pie de formulario anclado (D-129).
+- Las preferencias son de cada persona y se aplican al iniciar sesión y al cambiar de rol; las fechas, las horas y los números siguen lo elegido. El centro de notificaciones, los toasts y la vista previa del correo respetan los canales (F7).
+- Inglés completo: las 2.508 claves de `es.json` tienen su traducción en `en.json`; los números pasan al formato de Estados Unidos en inglés.
+- Tests de la lógica de preferencias, fechas, horas y números, y de G11 (guardar, aplicar y cambiar de rol); G11 en Playwright.
+- Pendiente: pulido final, README e informe final (`docs/review.md`).

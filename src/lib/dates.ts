@@ -1,4 +1,4 @@
-import { addDays as addDaysFns, differenceInCalendarDays, format, parseISO } from 'date-fns';
+import { addDays as addDaysFns, addMinutes, differenceInCalendarDays, format, parseISO } from 'date-fns';
 import { enUS, es } from 'date-fns/locale';
 import type { Stage } from '@/types/domain';
 
@@ -27,14 +27,50 @@ export function daysBetween(from: string, to: string): number {
   return differenceInCalendarDays(parseISO(to.slice(0, 10)), parseISO(from.slice(0, 10)));
 }
 
-/** DD/MM/AAAA for the interface (CLAUDE.md 2.9). */
-export function formatDate(isoDate: string): string {
-  return format(parseISO(isoDate.slice(0, 10)), 'dd/MM/yyyy');
+// ---------- Display preferences (F17, D-129) ----------
+// The data keeps its dates and Buenos Aires wall-clock times; only the way they are shown changes.
+
+/** Time zone of the demo data. */
+export const DATA_TIMEZONE = 'America/Argentina/Buenos_Aires';
+let displayDateFormat: 'dmy' | 'iso' = 'dmy';
+let displayTimezone: string = DATA_TIMEZONE;
+let numberLanguage: 'es' | 'en' = 'es';
+
+/** Numbers follow the interface language (set by the i18n setup on every change). */
+export function setNumberLanguage(language: string): void {
+  numberLanguage = language === 'en' ? 'en' : 'es';
 }
 
-/** DD/MM/AAAA HH:mm for audit logs and timestamps. */
+export function setDisplayPreferences({ dateFormat, timezone }: { dateFormat: 'dmy' | 'iso'; timezone: string }): void {
+  displayDateFormat = dateFormat;
+  displayTimezone = timezone;
+}
+
+const datePattern = () => (displayDateFormat === 'iso' ? 'yyyy-MM-dd' : 'dd/MM/yyyy');
+
+/** Minutes ahead of UTC of a time zone on a given day (daylight saving included). */
+export function offsetMinutes(timezone: string, date: Date): number {
+  const name =
+    new Intl.DateTimeFormat('en-US', { timeZone: timezone, timeZoneName: 'longOffset' })
+      .formatToParts(date)
+      .find((part) => part.type === 'timeZoneName')?.value ?? 'GMT';
+  const match = /GMT([+-])(\d{2}):?(\d{2})?/.exec(name);
+  if (!match) return 0;
+  const minutes = Number(match[2]) * 60 + Number(match[3] ?? 0);
+  return match[1] === '-' ? -minutes : minutes;
+}
+
+/** DD/MM/AAAA for the interface (CLAUDE.md 2.9), or AAAA-MM-DD if the person chose it. */
+export function formatDate(isoDate: string): string {
+  return format(parseISO(isoDate.slice(0, 10)), datePattern());
+}
+
+/** Date and time in the person's time zone (the stored times are Buenos Aires times). */
 export function formatDateTime(isoDateTime: string): string {
-  return format(parseISO(isoDateTime), 'dd/MM/yyyy HH:mm');
+  const date = parseISO(isoDateTime);
+  const shift =
+    displayTimezone === DATA_TIMEZONE ? 0 : offsetMinutes(displayTimezone, date) - offsetMinutes(DATA_TIMEZONE, date);
+  return format(addMinutes(date, shift), `${datePattern()} HH:mm`);
 }
 
 /** Long date for headings, for example "martes, 10 de noviembre". */
@@ -57,16 +93,16 @@ export function stageForOffset(offsetDays: number): Stage {
 
 export const STAGES: Stage[] = ['preboarding', 'week1', 'month1', 'days30to90'];
 
-/** Numbers with dot thousands separator and comma decimals (CLAUDE.md 2.9). */
+/** Numbers with dot thousands separator and comma decimals (CLAUDE.md 2.9); US style in English. */
 export function formatNumber(value: number, maximumFractionDigits = 0): string {
-  return new Intl.NumberFormat('es-AR', { maximumFractionDigits }).format(value);
+  return new Intl.NumberFormat(numberLanguage === 'en' ? 'en-US' : 'es-AR', { maximumFractionDigits }).format(value);
 }
 
 const NBSP = String.fromCharCode(0xa0);
 
-/** Percentage with a non-breaking space before the sign, as in "84 %" (CLAUDE.md 2.9). */
+/** Percentage with a non-breaking space before the sign, as in "84 %" (CLAUDE.md 2.9); "84%" in English. */
 export function formatPercent(value: number): string {
-  return `${formatNumber(Math.round(value))}${NBSP}%`;
+  return `${formatNumber(Math.round(value))}${numberLanguage === 'en' ? '' : NBSP}%`;
 }
 
 export type RelativeDue =

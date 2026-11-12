@@ -42,6 +42,7 @@ export const ACTION_DESCRIPTIONS: Record<Action, string> = {
   'report:export': 'Exportar reportes a CSV con los datos sensibles ocultos y pedir una exportación sin ocultar, que aprueba sistemas (A13)',
   'access_review:review': 'Revisar los accesos de las personas asignadas: el equipo propio o, sin jefe directo, por RRHH o sistemas (J4)',
   'notification:view': 'Ver sus propias notificaciones (G9)',
+  'preferences:own': 'Ver y cambiar sus propias preferencias: idioma, fechas, avisos y accesibilidad (G11)',
   'account:security_own': 'Ver "Mi seguridad" (G5)',
   'demo:switch_role': 'Usar el selector de rol de demo',
   'demo:reset': 'Restablecer la demo',

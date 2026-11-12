@@ -174,7 +174,7 @@ flowchart TD
     CUENTA --> G5["G5 Mi seguridad"]
     CUENTA -.-> G9["G9 Notificaciones"]
     CUENTA -.-> G10["G10 Mi privacidad"]
-    CUENTA -.-> G11["G11 Preferencias (B)"]
+    CUENTA -.-> G11["G11 Preferencias"]
     CUENTA -.-> G12["G12 Búsqueda"]
     ROOT --> G7["G7 Acceso no permitido / 404"]
 ```

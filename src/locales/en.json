@@ -208,6 +208,7 @@
     "userMenu": "User menu for {{name}}",
     "mySecurity": "My security",
     "myPrivacy": "My privacy",
+    "myPreferences": "Preferences",
     "sessionDemo": "Show the session warning (demo)",
     "resetDemo": "Reset demo",
     "signOut": "Sign out",
@@ -1786,6 +1787,7 @@
         "access_review_manage": "Manage review campaigns",
         "access_review_review": "Review assigned access",
         "report_export": "Export reports",
+        "preferences_own": "View and change their preferences",
         "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
@@ -3475,6 +3477,7 @@
     "generic": "This screen",
     "genericPurpose": "Use the menu to move through your role's sections. If something does not work as expected, write to the help desk.",
     "screens": {
+      "preferences": {"title": "Preferences", "purpose": "How you see Rumbo and where you get notifications.", "points": ["Change the language, time zone and date format.", "Choose whether each kind of notification arrives in the app, by email or both.", "Turn on reduced motion or high contrast."]},
       "dashboard": {
         "title": "Tracking dashboard",
         "purpose": "Shows how every journey is going and where they get stuck.",
@@ -3799,5 +3802,60 @@
       "title": "Views to print or save as PDF",
       "body": "In <panel>Dashboard</panel> and in each hire's record, from <hires>Hires</hires>, the Print button opens the view to print or save as PDF, without the menu or the top bar."
     }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "description": "How you want to see Rumbo and where to get notifications. They are saved for your account.",
+    "language": {
+      "title": "Language",
+      "label": "Interface language",
+      "help": "Changes every text in Rumbo. What people write is not translated.",
+      "es": "Español",
+      "en": "English"
+    },
+    "dates": {
+      "title": "Date and time",
+      "timezone": "Time zone",
+      "timezoneHelp": "Times are shown in this zone. For example, 10:00 in Buenos Aires: {{example}}.",
+      "format": "Date format",
+      "formatHelp": "How dates are written across the platform. Today looks like: {{example}}.",
+      "formats": {
+        "dmy": "DD/MM/YYYY",
+        "iso": "YYYY-MM-DD"
+      },
+      "zones": {
+        "America/Argentina/Buenos_Aires": "Buenos Aires",
+        "America/Montevideo": "Montevideo",
+        "America/Santiago": "Santiago, Chile",
+        "America/Bogota": "Bogotá",
+        "America/Mexico_City": "Mexico City",
+        "Europe/Madrid": "Madrid"
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "For each kind of notification, choose where to get it. Email is simulated: nothing is sent.",
+      "choices": {
+        "app": "App",
+        "email": "Email",
+        "both": "Both"
+      },
+      "help": {
+        "tasks": "Tasks due soon, overdue and unblocked.",
+        "checkins": "Self-reviews and 30, 60 and 90-day check-ins.",
+        "people": "Hires, leavers and comments.",
+        "access": "Requests, approvals, access and reviews."
+      }
+    },
+    "accessibility": {
+      "title": "Accessibility",
+      "reduceMotion": "Reduce motion",
+      "reduceMotionHelp": "Screens change without movement, only with fades. It also turns on if your system asks for it.",
+      "highContrast": "High contrast",
+      "highContrastHelp": "Darker secondary text and stronger borders across the platform."
+    },
+    "note": "Changes apply when you save.",
+    "save": "Save preferences",
+    "saved": "Preferences saved"
   }
 }

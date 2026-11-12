@@ -138,6 +138,19 @@
 }
 
 /*
+ * High contrast (F17, D-129): chosen in Preferences, stored as data-contrast="high" on <html>.
+ * Secondary text as dark as the main text, borders and dividers that read as lines (outline at
+ * 7:1, outline-variant at 4.5:1) and a darker primary, so every pairing passes AAA for text.
+ */
+:root[data-contrast='high'] {
+  --md-sys-color-primary: #0f4f56;
+  --md-sys-color-on-surface-variant: #1f2937;
+  --md-sys-color-outline: #4b5563;
+  --md-sys-color-outline-variant: #6b7280;
+  --md-sys-color-surface: #ffffff;
+}
+
+/*
  * Dark color roles: PREPARED, NOT IMPLEMENTED in phase A (CLAUDE.md 2.1).
  * Tonal counterparts of the light roles; contrast has to be verified with
  * Material Theme Builder before enabling `data-theme="dark"`.

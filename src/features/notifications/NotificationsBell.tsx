@@ -6,13 +6,15 @@ import { Icon } from '@/components/ui/Icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/Popover';
 import { toast } from '@/components/ui/toast-store';
 import { Tooltip } from '@/components/ui/Tooltip';
-import { notificationsFor, unreadCount } from '@/lib/notifications';
+import { notificationsFor } from '@/lib/notifications';
 import { useMediaQuery } from '@/lib/use-media-query';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import { NotificationItem } from './NotificationItem';
 import { useNotificationText } from './use-notification-text';
+import { useMyPreferences } from '@/features/preferences/use-preferences';
+import { shownInApp } from '@/lib/preferences';
 
 /** Newest notices shown in the panel; the rest live on G9. */
 const PANEL_LIMIT = 5;
@@ -51,8 +53,13 @@ export function NotificationsBell({ buttonClassName }: { buttonClassName?: strin
   if (openedAt !== pathname) setOpenedAt(pathname);
   const wide = useMediaQuery('(min-width: 640px)');
   const personId = user?.personId ?? '';
-  const mine = useMemo(() => notificationsFor(all, personId), [all, personId]);
-  const unread = unreadCount(all, personId);
+  const prefs = useMyPreferences();
+  // F17: the kinds the person moved to email only do not show in the app
+  const mine = useMemo(
+    () => notificationsFor(all, personId).filter((n) => !prefs || shownInApp(n, prefs)),
+    [all, personId, prefs],
+  );
+  const unread = mine.filter((n) => !n.readAt).length;
   useSessionToasts(personId);
 
   const label = unread ? t('notifications.bellLabelUnread', { count: unread }) : t('notifications.bellLabel');
@@ -122,6 +129,7 @@ export function NotificationsBell({ buttonClassName }: { buttonClassName?: strin
 function useSessionToasts(personId: string) {
   const text = useNotificationText();
   const all = useDataStore((s) => s.notifications);
+  const prefs = useMyPreferences();
   const known = useRef<Set<string> | null>(null);
   const owner = useRef(personId);
 
@@ -134,7 +142,7 @@ function useSessionToasts(personId: string) {
     }
     const fresh = all.filter((n) => !known.current!.has(n.id));
     for (const n of fresh) known.current.add(n.id);
-    const mine = fresh.filter((n) => n.recipientId === personId);
+    const mine = fresh.filter((n) => n.recipientId === personId && (!prefs || shownInApp(n, prefs)));
     if (mine.length) toast.info(text(mine[mine.length - 1]!).title);
-  }, [all, personId, text]);
+  }, [all, personId, text, prefs]);
 }

@@ -73,6 +73,8 @@ export const PERMISSIONS = {
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)
   'account:security_own': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
+  // F17: own preferences (G11)
+  'preferences:own': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Demo controls, available to every visitor
   'demo:switch_role': { admin: 'all', manager: 'all', hire: 'all', it_admin: 'all' },
   'demo:reset': { admin: 'all', manager: 'all', hire: 'all', it_admin: 'all' },
@@ -136,6 +138,7 @@ export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
   { prefix: '/account/security', action: 'account:security_own' },
   { prefix: '/notifications', action: 'notification:view' },
   { prefix: '/account/privacy', action: 'privacy:own' },
+  { prefix: '/account/preferences', action: 'preferences:own' },
   { prefix: '/admin/privacy-requests', action: 'privacy_request:manage' },
   { prefix: '/admin/people', action: 'person:manage' },
   { prefix: '/admin/lifecycle', action: 'lifecycle:manage' },

@@ -146,6 +146,17 @@ function NavContent({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
             />
           </li>
         )}
+        {can(user, 'preferences:own') && (
+          <li>
+            <SideLink
+              to="/account/preferences"
+              icon="settings"
+              label={t('layout.myPreferences')}
+              collapsed={collapsed}
+              onNavigate={onNavigate}
+            />
+          </li>
+        )}
         <li>
           <WithTooltip collapsed={collapsed} label={t('layout.signOut')}>
             <button

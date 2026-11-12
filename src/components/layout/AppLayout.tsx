@@ -9,6 +9,7 @@ import { TopBar } from './TopBar';
 import { GuidedWelcome } from '@/features/welcome/GuidedWelcome';
 import { useDataStore } from '@/store/data-store';
 import { hasConsent } from '@/lib/privacy';
+import { useApplyPreferences, useMyPreferences } from '@/features/preferences/use-preferences';
 
 /**
  * G6 · Layout of the signed-in app: header with the "Ver como" selector and the user
@@ -20,6 +21,9 @@ export function AppLayout() {
   const user = useCurrentUser();
   const location = useLocation();
   const navigate = useNavigate();
+  // F17: the person's language, date format, time zone and accessibility settings
+  const prefs = useMyPreferences();
+  useApplyPreferences(prefs);
   const consented = useDataStore((s) =>
     user ? hasConsent(s.consents, user.personId, s.securityPolicy.privacyNoticeVersion) : true,
   );
@@ -63,7 +67,10 @@ export function AppLayout() {
           >
             {/* Full width, aligned with the top bar; from 1920 px, 10 % inner padding per side (D-82) */}
             <div className="w-full min-w-0 min-[120rem]:px-[10%]">
-              <Outlet />
+              {/* Remounted when the date format or time zone change, so every date is shown again */}
+              <div key={`${prefs?.dateFormat}-${prefs?.timezone}`} className="contents">
+                <Outlet />
+              </div>
             </div>
           </main>
         </div>

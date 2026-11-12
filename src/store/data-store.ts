@@ -56,6 +56,7 @@ import type {
   SensitiveField,
   Template,
   TemplateVersion,
+  UserPreferences,
 } from '@/types/domain';
 
 /**
@@ -66,7 +67,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 16;
+export const DATA_SCHEMA_VERSION = 17;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -212,6 +213,8 @@ interface DataActions {
   remindReviewer: (campaignId: string, reviewerId: string, actorId: string) => void;
   /** F13: IT closes a campaign once everything is decided and executed. */
   closeReviewCampaign: (campaignId: string, actorId: string) => boolean;
+  /** F17: saves a person's preferences (language, dates, notifications, accessibility). */
+  savePreferences: (preferences: UserPreferences) => void;
   /** F7: marks one notification as read or unread. */
   setNotificationRead: (id: string, read: boolean) => void;
   /** F7: marks every notification of a person as read. */
@@ -272,6 +275,7 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.approvals) &&
     Array.isArray(data.lifecycle) &&
     Array.isArray(data.accessReviews) &&
+    Array.isArray(data.preferences) &&
     typeof data.accountFlags === 'object' &&
     data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
@@ -1444,6 +1448,11 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
           };
         }),
 
+      savePreferences: (preferences) =>
+        set((state) => ({
+          preferences: [...state.preferences.filter((p) => p.personId !== preferences.personId), preferences],
+        })),
+
       setNotificationRead: (id, read) =>
         set((state) => ({
           notifications: state.notifications.map((n) =>
@@ -1488,6 +1497,7 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
         approvals,
         lifecycle,
         accessReviews,
+        preferences,
       }) => ({
         people,
         templates,
@@ -1508,6 +1518,7 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
         approvals,
         lifecycle,
         accessReviews,
+        preferences,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.
       migrate: () => buildSeed(),

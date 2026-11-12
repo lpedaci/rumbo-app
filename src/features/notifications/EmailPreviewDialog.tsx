@@ -8,6 +8,8 @@ import { formatDateTime } from '@/lib/dates';
 import { useDataStore } from '@/store/data-store';
 import type { AppNotification } from '@/types/domain';
 import { useNotificationText } from './use-notification-text';
+import { useMyPreferences } from '@/features/preferences/use-preferences';
+import { sentByEmail } from '@/lib/preferences';
 
 /**
  * "Ver cómo llega por correo" (F7): the email template of a notification, drawn inside Rumbo.
@@ -25,7 +27,9 @@ export function EmailPreviewDialog({
   const text = useNotificationText();
   const person = useDataStore((s) => s.people.find((p) => p.id === notification?.recipientId));
   const content = notification ? text(notification) : null;
-  const byEmail = notification?.channels.includes('email');
+  const prefs = useMyPreferences();
+  // F17: by email only if the kind sends email and the person kept email on for it
+  const byEmail = notification ? (prefs ? sentByEmail(notification, prefs) : notification.channels.includes('email')) : false;
 
   return (
     <Dialog open={Boolean(notification)} onOpenChange={onOpenChange}>

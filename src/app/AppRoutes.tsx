@@ -81,6 +81,9 @@ const CampaignDetailPage = lazy(() =>
   import('@/features/access-review/CampaignDetailPage').then((m) => ({ default: m.CampaignDetailPage })),
 );
 const ReportsPage = lazy(() => import('@/features/reports/ReportsPage').then((m) => ({ default: m.ReportsPage })));
+const PreferencesPage = lazy(() =>
+  import('@/features/preferences/PreferencesPage').then((m) => ({ default: m.PreferencesPage })),
+);
 const SearchPage = lazy(() => import('@/features/search/SearchPage').then((m) => ({ default: m.SearchPage })));
 const ApprovalsPage = lazy(() =>
   import('@/features/approvals/ApprovalsPage').then((m) => ({ default: m.ApprovalsPage })),
@@ -148,6 +151,7 @@ export function AppRoutes() {
             <Route path="/account/security" element={<SecurityPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/account/privacy" element={<MyPrivacyPage />} />
+            <Route path="/account/preferences" element={<PreferencesPage />} />
             <Route path="/admin/privacy-requests" element={<PrivacyRequestsPage />} />
             <Route path="/admin/people" element={<PeoplePage />} />
             <Route path="/admin/people/:id" element={<PersonDetailPage />} />

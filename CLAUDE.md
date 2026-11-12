@@ -862,6 +862,7 @@ interface ApprovalRequest {
 interface Area { id: string; name: string }
 interface JobTitle { id: string; name: string; areaId: string; suggestedTemplateId?: string; suggestedAccess: string[] }
 
+// Implementado (D-129): dateFormat es 'dmy' | 'iso'; notifications usa las categorías de F7 (tasks, checkins, people, access); se guardan en data.preferences y, sin guardar, valen las de defecto.
 interface UserPreferences {
   personId: string; language: 'es' | 'en'; timezone: string; dateFormat: string;
   notifications: Record<string, ('app' | 'email')[]>; reduceMotion: boolean; highContrast: boolean;

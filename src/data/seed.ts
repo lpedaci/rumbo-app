@@ -34,6 +34,7 @@ import type {
   SecurityPolicy,
   Template,
   TemplateVersion,
+  UserPreferences,
 } from '@/types/domain';
 import { buildReviewItems } from '@/lib/access-review';
 import { addDays, DEMO_TODAY } from '@/lib/dates';
@@ -117,6 +118,8 @@ export interface DemoData {
   /** F12: joiners, movers and leavers with their access tasks. */
   lifecycle: LifecycleEvent[];
   accessReviews: AccessReviewCampaign[];
+  /** F17: saved preferences, one per person who changed them (the rest use the defaults). */
+  preferences: UserPreferences[];
 }
 
 function whoCompletes(owner: Owner, seed: HireSeed): string {
@@ -302,6 +305,7 @@ export function buildSeed(): DemoData {
     approvals: approvals as ApprovalRequest[],
     lifecycle: lifecycleEvents as LifecycleEvent[],
     accessReviews: reviews,
+    preferences: [] as UserPreferences[],
     deviceSessions: deviceSessions as DeviceSession[],
     loginAlerts: loginAlerts as LoginAlert[],
     // Legal deadlines computed from the configuration (src/app/legal.ts), never written by hand.

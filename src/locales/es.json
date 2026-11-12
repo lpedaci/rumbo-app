@@ -208,6 +208,7 @@
     "userMenu": "Menú de usuario de {{name}}",
     "mySecurity": "Mi seguridad",
     "myPrivacy": "Mi privacidad",
+    "myPreferences": "Preferencias",
     "sessionDemo": "Ver el aviso de sesión (demo)",
     "resetDemo": "Restablecer demo",
     "signOut": "Cerrar sesión",
@@ -1786,6 +1787,7 @@
         "access_review_manage": "Gestionar campañas de revisión",
         "access_review_review": "Revisar los accesos asignados",
         "report_export": "Exportar reportes",
+        "preferences_own": "Ver y cambiar sus preferencias",
         "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
@@ -3475,6 +3477,7 @@
     "generic": "Esta pantalla",
     "genericPurpose": "Usa el menú para moverte por las secciones de tu rol. Si algo no funciona como esperas, escribe a la mesa de ayuda.",
     "screens": {
+      "preferences": {"title": "Preferencias", "purpose": "Cómo ves Rumbo y dónde recibes los avisos.", "points": ["Cambia el idioma, la zona horaria y el formato de fecha.", "Elige si cada tipo de aviso llega en la app, por correo o en ambos.", "Activa reducir animaciones o alto contraste."]},
       "dashboard": {
         "title": "Panel de seguimiento",
         "purpose": "Muestra cómo avanzan todos los recorridos y dónde se traban.",
@@ -3799,5 +3802,60 @@
       "title": "Vistas para imprimir o guardar como PDF",
       "body": "En <panel>Panel</panel> y en la ficha de cada ingreso, desde <hires>Ingresos</hires>, el botón Imprimir abre la vista para imprimir o guardar como PDF, sin el menú ni la barra superior."
     }
+  },
+  "preferences": {
+    "title": "Preferencias",
+    "description": "Cómo quieres ver Rumbo y dónde recibir los avisos. Se guardan para tu cuenta.",
+    "language": {
+      "title": "Idioma",
+      "label": "Idioma de la interfaz",
+      "help": "Cambia todos los textos de Rumbo. Los datos que escriben las personas no se traducen.",
+      "es": "Español",
+      "en": "English"
+    },
+    "dates": {
+      "title": "Fecha y hora",
+      "timezone": "Zona horaria",
+      "timezoneHelp": "Las horas se muestran en esta zona. Por ejemplo, las 10:00 de Buenos Aires: {{example}}.",
+      "format": "Formato de fecha",
+      "formatHelp": "Cómo se escriben las fechas en toda la plataforma. Así se ve hoy: {{example}}.",
+      "formats": {
+        "dmy": "DD/MM/AAAA",
+        "iso": "AAAA-MM-DD"
+      },
+      "zones": {
+        "America/Argentina/Buenos_Aires": "Buenos Aires",
+        "America/Montevideo": "Montevideo",
+        "America/Santiago": "Santiago de Chile",
+        "America/Bogota": "Bogotá",
+        "America/Mexico_City": "Ciudad de México",
+        "Europe/Madrid": "Madrid"
+      }
+    },
+    "notifications": {
+      "title": "Avisos",
+      "description": "Por cada tipo de aviso, elige dónde recibirlo. El correo es simulado: no se envía nada.",
+      "choices": {
+        "app": "App",
+        "email": "Correo",
+        "both": "Ambos"
+      },
+      "help": {
+        "tasks": "Tareas por vencer, vencidas y desbloqueadas.",
+        "checkins": "Autoevaluaciones y check-ins de 30, 60 y 90 días.",
+        "people": "Ingresos, bajas y comentarios.",
+        "access": "Solicitudes, aprobaciones, accesos y revisiones."
+      }
+    },
+    "accessibility": {
+      "title": "Accesibilidad",
+      "reduceMotion": "Reducir animaciones",
+      "reduceMotionHelp": "Las pantallas cambian sin movimientos, solo con fundidos. También se activa si tu sistema lo pide.",
+      "highContrast": "Alto contraste",
+      "highContrastHelp": "Textos secundarios más oscuros y bordes más marcados en toda la plataforma."
+    },
+    "note": "Los cambios se aplican al guardar.",
+    "save": "Guardar preferencias",
+    "saved": "Preferencias guardadas"
   }
 }

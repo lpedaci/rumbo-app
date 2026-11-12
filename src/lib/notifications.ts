@@ -1,5 +1,6 @@
 import type { IconName } from '@/components/ui/Icon';
 import type {
+  NotificationCategory,
   AccessRequest,
   AccessReviewCampaign,
   ApprovalRequest,
@@ -26,7 +27,7 @@ import { CHECKIN_OFFSETS, isPastDue, taskStatus } from './journey';
  * translates them, so they read well in Spanish and English (D-105).
  */
 
-export type NotificationCategory = 'tasks' | 'checkins' | 'people' | 'access';
+export type { NotificationCategory };
 
 interface TypeMeta {
   category: NotificationCategory;

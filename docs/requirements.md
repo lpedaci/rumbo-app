@@ -152,7 +152,7 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-082 | El sistema debe ofrecer búsqueda global (`Ctrl+K` o `/`) filtrada por permisos y agrupada por tipo. | Todos | F16 | G6, G12 | Should | Sofía no encuentra recorridos ajenos. | Hecho |
 | RF-083 | El sistema debe ofrecer ayuda contextual por pantalla y un recorrido guiado de 3 a 5 pasos por rol. | Todos | F16 | Todas | Should | Se puede saltar y volver a ver desde el menú. | Hecho |
 | RF-084 | El sistema debe exportar listados a CSV y ofrecer vistas imprimibles del panel, la ficha del ingreso y el resumen de campañas. | RRHH, Sistemas | F16 | A13 | Should | Respetan el enmascarado y quedan en la auditoría. | Hecho |
-| RF-085 | El sistema debe permitir elegir idioma, preferencias de notificación, zona horaria, formato de fecha, reducir animaciones y alto contraste. | Todos | F17 | G11 | Should | Los cambios se aplican sin recargar. | Pendiente |
+| RF-085 | El sistema debe permitir elegir idioma, preferencias de notificación, zona horaria, formato de fecha, reducir animaciones y alto contraste. | Todos | F17 | G11 | Should | Los cambios se aplican sin recargar al guardar, son de cada persona y se aplican al iniciar sesión o cambiar de rol (D-129). | Hecho |
 
 ### Won't (fuera del alcance del MVP)
 
@@ -278,7 +278,7 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | --- | --- | --- | --- | --- |
 | RNF-034 | Agregar un rol o una acción requiere modificar solo `permissions.ts` y las rutas nuevas. | Should | Revisión de arquitectura. | Pendiente |
 | RNF-035 | Los tokens están preparados para modo oscuro (pares claro y oscuro por rol de color). | Should | Styleguide con conmutador de prueba. | Pendiente |
-| RNF-036 | Toda la interfaz está disponible en español e inglés. | Should (fase B) | Cambiar idioma y recorrer cada rol. | Pendiente |
+| RNF-036 | Toda la interfaz está disponible en español e inglés. | Should (fase B) | Cambiar idioma y recorrer cada rol; script que compara las claves de `es.json` y `en.json` (2.508 en cada uno, sin textos sin traducir). | Hecho |
 
 ### Protección (privacidad, idioma y voz y tono)
 

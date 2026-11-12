@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { setNumberLanguage } from '@/lib/dates';
 import es from '@/locales/es.json';
 
 export const SUPPORTED_LANGUAGES = ['es', 'en'] as const;
@@ -23,8 +24,9 @@ void i18n.use(initReactI18next).init({
   returnNull: false,
 });
 
-// Keep <html lang> in sync with the active language (WCAG 3.1.1).
+// Keep <html lang> and the number format in sync with the active language (WCAG 3.1.1, F17).
 const syncDocumentLanguage = (lng: string) => {
+  setNumberLanguage(lng);
   if (typeof document !== 'undefined') {
     document.documentElement.lang = lng;
   }

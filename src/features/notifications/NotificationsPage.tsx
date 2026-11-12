@@ -18,6 +18,8 @@ import { useCurrentUser } from '@/store/session-store';
 import type { AppNotification } from '@/types/domain';
 import { EmailPreviewDialog } from './EmailPreviewDialog';
 import { NotificationItem } from './NotificationItem';
+import { useMyPreferences } from '@/features/preferences/use-preferences';
+import { shownInApp } from '@/lib/preferences';
 
 type ReadFilter = 'all' | 'unread';
 const READ_FILTERS: ReadFilter[] = ['all', 'unread'];
@@ -38,7 +40,12 @@ export function NotificationsPage() {
   const [preview, setPreview] = useState<AppNotification | null>(null);
   const personId = user?.personId ?? '';
 
-  const mine = useMemo(() => notificationsFor(all, personId), [all, personId]);
+  const prefs = useMyPreferences();
+  // F17: the kinds the person moved to email only do not show in the app
+  const mine = useMemo(
+    () => notificationsFor(all, personId).filter((n) => !prefs || shownInApp(n, prefs)),
+    [all, personId, prefs],
+  );
   const unread = mine.filter((n) => !n.readAt).length;
   const shown = mine.filter(
     (n) =>

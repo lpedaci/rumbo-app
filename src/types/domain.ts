@@ -398,6 +398,24 @@ export interface ApprovalRequest {
   usedAt?: string;
 }
 
+// ---------- Phase B: F17 preferences ----------
+
+export type NotificationCategory = 'tasks' | 'checkins' | 'people' | 'access';
+
+/** Preferences of one person (F17): never demo-wide, each person has their own. */
+export interface UserPreferences {
+  personId: string;
+  language: 'es' | 'en';
+  /** IANA time zone; times are shown converted from Buenos Aires, where the demo data lives. */
+  timezone: string;
+  /** `dmy` = DD/MM/AAAA, `iso` = AAAA-MM-DD. */
+  dateFormat: 'dmy' | 'iso';
+  /** Channels by kind of event; never empty (in the app, by email or both). */
+  notifications: Record<NotificationCategory, ('app' | 'email')[]>;
+  reduceMotion: boolean;
+  highContrast: boolean;
+}
+
 // ---------- Phase B: F13 access reviews ----------
 
 /** Who reviews a person: the direct manager, or HR (or IT for HR itself) when there is none. */
