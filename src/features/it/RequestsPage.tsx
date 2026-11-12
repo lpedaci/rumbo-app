@@ -33,6 +33,7 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { AccessRequest, Person } from '@/types/domain';
 import { RequestStatusPill } from './RequestStatusPill';
+import { StatusPill } from '@/components/ui/StatusPill';
 
 /**
  * S1 · Access request inbox (CLAUDE.md F6): requests from "¿Problemas para iniciar sesión?"
@@ -186,7 +187,10 @@ export function RequestsPage() {
                           </TableCell>
                           <TableCell className="text-body-medium">{t(`accessHelp.reasons.${r.reason}`)}</TableCell>
                           <TableCell>
-                            <RequestStatusPill status={r.status} />
+                            <span className="flex flex-wrap items-center gap-2">
+                              <RequestStatusPill status={r.status} />
+                              {r.urgent && isOpen(r) && <UrgentPill />}
+                            </span>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -214,6 +218,7 @@ export function RequestsPage() {
                         </span>
                         <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
                           <RequestStatusPill status={r.status} />
+                          {r.urgent && isOpen(r) && <UrgentPill />}
                           <span className="text-body-small text-on-surface-variant tabular-nums">
                             {r.id} · {formatDateTime(r.createdAt)}
                           </span>
@@ -258,3 +263,10 @@ function PersonCell({ request, person }: { request: AccessRequest; person: Perso
     </div>
   );
 }
+
+/** F11: a request from "No fui yo" is urgent; state color with icon and text (2.1.1). */
+function UrgentPill() {
+  const { t } = useTranslation();
+  return <StatusPill tone="error" icon="gpp_maybe" label={t('sessions.org.urgent')} />;
+}
+

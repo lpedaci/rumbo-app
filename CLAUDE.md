@@ -812,6 +812,7 @@ interface PrivacyRequest {
   status: 'new' | 'in_progress' | 'answered' | 'rejected'; response?: string; handledBy?: string;
 }
 
+// Implementado (D-114): DeviceSession suma kind (desktop | mobile); LoginAlert suma requestId; AccessRequest suma urgent y el motivo unrecognized_login.
 interface DeviceSession {
   id: string; personId: string; device: string; browser: string; approxLocation: string;
   startedAt: string; lastSeenAt: string; current: boolean; revokedAt?: string; revokedBy?: string;

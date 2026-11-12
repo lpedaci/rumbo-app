@@ -103,7 +103,7 @@ Todos los estados se muestran como píldora con ícono y texto, nunca solo con c
 | --- | --- |
 | **Global** | Menú lateral por rol (3.1). Desktop: sidebar completa. Tablet: sidebar de íconos con tooltip. Mobile: menú inferior con hasta 4 ítems, o menú desplegable si hay más. El ítem activo usa ícono relleno. |
 | **Utilitaria** | Header fijo: selector "Ver como" (demo), búsqueda (B), notificaciones (campana con contador de no leídas: panel desde 640 px y, en celulares, enlace directo a G9; D-105), ayuda y menú de usuario. Siempre en el mismo lugar (WCAG 3.2.6). |
-| **Local** | Pestañas dentro de una sección: S3 (Usuarios bloqueados, Auditoría, Permisos, Políticas, *Sesiones (B)*), A4 (Datos, Recorrido, Check-ins), A9 (Personas, Áreas, Puestos). Filtros como chips o botones segmentados. |
+| **Local** | Pestañas dentro de una sección: S3 (Usuarios bloqueados, Auditoría, Permisos, Políticas, Sesiones), A4 (Datos, Recorrido, Check-ins), A9 (Personas, Áreas, Puestos). Filtros como chips o botones segmentados. |
 | **Contextual** | Alertas de A1 → ficha del ingreso. Notificaciones → lugar de la acción. "Lo próximo" → detalle de tarea. Motivo de bloqueo de una tarea → tarea que la bloquea. |
 | **Migas de pan** | En pantallas de detalle y de segundo nivel: "Ingresos / Sofía Ramírez", "Plantillas / Analista de Datos / Vista previa", "Mi equipo / Sofía Ramírez / Check-in de 30 días". En mobile se reducen al nivel anterior ("‹ Ingresos"). |
 | **Ayuda** | Ícono de ayuda contextual por pantalla (B) y, en el login, "¿Problemas para iniciar sesión?" siempre debajo del formulario. Reservado el lugar del botón de ayuda flotante (línea futura). |

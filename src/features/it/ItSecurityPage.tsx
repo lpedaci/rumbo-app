@@ -26,10 +26,12 @@ import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { AuditEvent } from '@/types/domain';
+import { OrgSessions } from './OrgSessions';
 
-type Tab = 'locked' | 'audit' | 'permissions' | 'policies';
+type Tab = 'locked' | 'sessions' | 'audit' | 'permissions' | 'policies';
 const TABS: { value: Tab; icon: IconName }[] = [
   { value: 'locked', icon: 'lock' },
+  { value: 'sessions', icon: 'devices' },
   { value: 'audit', icon: 'history' },
   { value: 'permissions', icon: 'admin_panel_settings' },
   { value: 'policies', icon: 'policy' },
@@ -53,7 +55,8 @@ export function ItSecurityPage() {
         <Tabs.List
           aria-label={t('it.security.tabsLabel')}
           // Every tab visible, never cut or scrolled (D-90): a 2 × 2 grid on phones, one row from 640 px
-          className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap"
+          // 5 tabs: the last one takes the whole row on phones, so none is left alone at half width
+          className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap [&>*:last-child:nth-child(odd)]:col-span-2"
         >
           {TABS.map((item) => (
             <Tabs.Trigger
@@ -73,6 +76,9 @@ export function ItSecurityPage() {
         </Tabs.List>
         <Tabs.Content value="locked" className="outline-none">
           <LockedAccounts />
+        </Tabs.Content>
+        <Tabs.Content value="sessions" className="outline-none">
+          <OrgSessions />
         </Tabs.Content>
         <Tabs.Content value="audit" className="outline-none">
           <AuditLog />

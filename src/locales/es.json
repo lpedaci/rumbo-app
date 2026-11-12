@@ -160,7 +160,8 @@
       "locked": "Mi cuenta está bloqueada",
       "forgot_password": "Olvidé mi contraseña",
       "mfa_issue": "No recibo el código de verificación",
-      "other": "Otro motivo"
+      "other": "Otro motivo",
+      "unrecognized_login": "Inicio de sesión no reconocido"
     },
     "reasonRequired": "Elige el motivo de tu solicitud.",
     "commentLabel": "Comentario",
@@ -1528,6 +1529,7 @@
       "description": "Cuentas bloqueadas, registro de eventos, permisos por rol y políticas de la organización.",
       "tabsLabel": "Secciones de seguridad",
       "tabs": {
+        "sessions": "Sesiones",
         "locked": "Bloqueos",
         "audit": "Auditoría",
         "permissions": "Permisos",
@@ -1623,6 +1625,11 @@
         "privacy_request.answered": "Solicitud de datos respondida",
         "privacy_request.rejected": "Solicitud de datos rechazada",
         "pii.reveal": "Dato sensible mostrado",
+        "session.revoke": "Sesión cerrada",
+        "session.revoke_others": "Sesiones de otros dispositivos cerradas",
+        "session.force_close": "Cierre forzado de sesiones",
+        "login_alert.confirm": "Inicio de sesión confirmado",
+        "login_alert.report": "Inicio de sesión no reconocido reportado",
         "hire.create": "Alta de ingreso",
         "task.complete": "Tarea marcada como hecha",
         "checkin.self_review": "Autoevaluación enviada",
@@ -1668,6 +1675,7 @@
         "privacy_own": "Ver \"Mi privacidad\"",
         "privacy_request_manage": "Atender solicitudes de datos",
         "pii_reveal": "Revelar datos sensibles",
+        "session_manage": "Gestionar sesiones de la organización",
         "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
@@ -2361,6 +2369,16 @@
       "appOnly": "Este tipo de aviso solo llega dentro de Rumbo, no por correo."
     },
     "types": {
+      "login": {
+        "unusual": {
+          "title": "¿Fuiste tú?",
+          "body": "Nuevo inicio de sesión desde {{device}}, en {{place}}. Si no lo reconoces, avísanos."
+        },
+        "reported": {
+          "title": "Inicio de sesión no reconocido",
+          "body": "{{person}} reportó un inicio de sesión que no reconoce. Solicitud urgente {{request}}."
+        }
+      },
       "privacy_request": {
         "new": {
           "title": "Solicitud de datos nueva",
@@ -2763,6 +2781,51 @@
       "years_other": "{{count}} años",
       "notice": "Aviso de privacidad",
       "noticeDetail": "Versión vigente; una nueva versión pide aceptarlo otra vez."
+    }
+  },
+  "sessions": {
+    "title": "Sesiones activas",
+    "description": "Los dispositivos donde tu cuenta tiene una sesión abierta. Si no reconoces alguno, ciérralo.",
+    "current": "Esta sesión",
+    "activeNow": "Activa ahora",
+    "lastSeen": "Último uso: {{date}}",
+    "started": "Inició el {{date}}",
+    "revoke": "Cerrar esta sesión",
+    "revokeTitle": "¿Cerrar la sesión en {{device}}?",
+    "revokeBody": "Ese dispositivo va a tener que volver a iniciar sesión.",
+    "revokeConfirm": "Cerrar sesión en {{device}}",
+    "revoked": "Sesión cerrada en {{device}}",
+    "revokeOthers": "Cerrar las demás sesiones",
+    "revokeOthersTitle": "¿Cerrar sesión en los demás dispositivos?",
+    "revokeOthersBody": "Quedas conectado solo en esta computadora. Los demás dispositivos van a tener que volver a iniciar sesión.",
+    "revokeOthersConfirm": "Cerrar las demás sesiones",
+    "revokedOthers": "Cerraste las demás sesiones",
+    "onlyThis": "Solo tienes abierta esta sesión.",
+    "currentHelp": "Para cerrar esta sesión, usa Cerrar sesión.",
+    "alert": {
+      "title": "¿Fuiste tú?",
+      "body": "Hubo un inicio de sesión nuevo en tu cuenta desde {{device}}, en {{place}}, el {{date}}.",
+      "yes": "Sí, fui yo",
+      "no": "No fui yo",
+      "confirmed": "Listo, mantuvimos esa sesión",
+      "reportedTitle": "Cerramos esa sesión y avisamos a sistemas",
+      "reportedBody": "Sistemas revisa tu cuenta con la solicitud {{id}}. Comunícate con la mesa de ayuda para confirmar tu identidad: interno 4400 o soporte.it@nortia.demo, de lunes a viernes de 8 a 18."
+    },
+    "org": {
+      "title": "Sesiones activas de la organización",
+      "description": "Quién tiene sesiones abiertas y desde dónde. Forzar el cierre obliga a la persona a iniciar sesión de nuevo en todos sus dispositivos.",
+      "count_one": "{{count}} sesión",
+      "count_other": "{{count}} sesiones",
+      "force": "Forzar cierre",
+      "forceLabel": "Forzar el cierre de las sesiones de {{name}}",
+      "forceTitle": "¿Cerrar todas las sesiones de {{name}}?",
+      "forceBody": "La persona tendrá que volver a iniciar sesión en todos sus dispositivos. Queda en la auditoría.",
+      "forceConfirm": "Cerrar todas sus sesiones",
+      "forced": "Sesiones de {{name}} cerradas",
+      "yourAccount": "Tu cuenta: ciérralas desde Mi seguridad.",
+      "empty": "No hay sesiones activas.",
+      "unrecognized": "Reportada como no reconocida",
+      "urgent": "Urgente"
     }
   }
 }

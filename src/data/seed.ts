@@ -10,6 +10,8 @@ import type {
   AppNotification,
   Comment,
   ConsentRecord,
+  DeviceSession,
+  LoginAlert,
   PrivacyRequest,
   AccountFlags,
   AuditEvent,
@@ -38,6 +40,8 @@ import authAttempts from './auth-attempts.json';
 import checkinMilestones from './checkin-milestones.json';
 import comments from './comments.json';
 import consents from './consents.json';
+import deviceSessions from './device-sessions.json';
+import loginAlerts from './login-alerts.json';
 import hiresSeed from './hires.json';
 import people from './people.json';
 import privacyRequests from './privacy-requests.json';
@@ -90,6 +94,9 @@ export interface DemoData {
   consents: ConsentRecord[];
   /** F10: requests about personal data (Ley 25.326). */
   privacyRequests: PrivacyRequest[];
+  /** F11: signed-in devices and "¿Fuiste tú?" alerts. */
+  deviceSessions: DeviceSession[];
+  loginAlerts: LoginAlert[];
 }
 
 function whoCompletes(owner: Owner, seed: HireSeed): string {
@@ -240,9 +247,13 @@ export function buildSeed(): DemoData {
       accessRequests as AccessRequest[],
       authAttempts as AuthAttempts[],
       comments as Comment[],
+      loginAlerts as LoginAlert[],
+      deviceSessions as DeviceSession[],
     ),
     comments: comments as Comment[],
     consents: consents as ConsentRecord[],
+    deviceSessions: deviceSessions as DeviceSession[],
+    loginAlerts: loginAlerts as LoginAlert[],
     // Legal deadlines computed from the configuration (src/app/legal.ts), never written by hand.
     privacyRequests: (privacyRequests as Omit<PrivacyRequest, 'dueAt'>[]).map((r) => ({
       ...r,

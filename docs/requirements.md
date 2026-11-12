@@ -142,9 +142,9 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-072 | El sistema debe permitir enviar solicitudes de acceso, rectificación o supresión y gestionarlas con plazo y estado. | Todos, RRHH | F10 | G10, A12 | Should | El plazo de respuesta es visible en ambas vistas. | Hecho |
 | RF-073 | DNI, CUIL y datos bancarios deben mostrarse enmascarados; revelarlos requiere `pii:reveal`, motivo y auditoría. | RRHH | F10 | A10 | Should | También enmascarados en exportaciones. | Hecho |
 | RF-074 | El sistema debe mostrar la política de retención y la fecha programada de anonimización de ingresos finalizados. | RRHH, Sistemas | F10 | A4, S3 | Could | | Hecho |
-| RF-075 | El sistema debe listar las sesiones activas propias y permitir cerrarlas. | Todos | F11 | G5 | Should | La sesión actual está marcada. | Pendiente |
-| RF-076 | El sistema debe alertar de inicios de sesión inusuales con "Sí, fui yo" o "No fui yo"; esta última cierra la sesión y genera una solicitud urgente. | Todos | F11 | G6, G9, S1 | Should | Sofía tiene una alerta semilla pendiente. | Pendiente |
-| RF-077 | Sistemas debe ver las sesiones de toda la organización y forzar su cierre. | Sistemas | F11 | S3 | Should | Queda en la auditoría. | Pendiente |
+| RF-075 | El sistema debe listar las sesiones activas propias y permitir cerrarlas. | Todos | F11 | G5 | Should | La sesión actual está marcada. | Hecho |
+| RF-076 | El sistema debe alertar de inicios de sesión inusuales con "Sí, fui yo" o "No fui yo"; esta última cierra la sesión y genera una solicitud urgente. | Todos | F11 | G6, G9, S1 | Should | Sofía tiene una alerta semilla pendiente. | Hecho |
+| RF-077 | Sistemas debe ver las sesiones de toda la organización y forzar su cierre. | Sistemas | F11 | S3 | Should | Queda en la auditoría. | Hecho |
 | RF-078 | El sistema debe generar tareas de accesos para sistemas en altas, cambios de puesto y bajas. | RRHH, Sistemas | F12 | A11, S4 | Should | La baja deshabilita la cuenta en la fecha efectiva. | Pendiente |
 | RF-079 | El sistema debe permitir crear campañas de revisión de accesos que los jefes completan y sistemas cierra con resumen. | Sistemas, Jefe | F13 | S5, S6, J4 | Should | Avance en % por jefe; resumen descargable. | Pendiente |
 | RF-080 | Las acciones sensibles deben requerir doble aprobación, sin que quien pide pueda aprobar. | RRHH, Sistemas | F14 | S7 | Should | El botón de aprobar no está disponible para quien solicitó. | Pendiente |

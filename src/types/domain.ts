@@ -62,7 +62,8 @@ export interface AccountFlags {
   mfaReset?: boolean;
 }
 
-export type AccessRequestReason = 'locked' | 'forgot_password' | 'mfa_issue' | 'other';
+/** `unrecognized_login`: created by "No fui yo" (F11), urgent. */
+export type AccessRequestReason = 'locked' | 'forgot_password' | 'mfa_issue' | 'other' | 'unrecognized_login';
 export type AccessRequestStatus = 'new' | 'verifying' | 'resolved' | 'rejected';
 export type AccessResolutionAction = 'unlock' | 'force_password_reset' | 'reset_mfa' | 'reject';
 
@@ -76,6 +77,8 @@ export interface AccessRequest {
   comment?: string;
   status: AccessRequestStatus;
   identityVerified: boolean;
+  /** F11: reported unrecognized sign-in; shown first and marked as urgent in S1. */
+  urgent?: boolean;
   resolution?: { action: AccessResolutionAction; by: string; at: string; note?: string };
 }
 
@@ -228,7 +231,9 @@ export type NotificationType =
   | 'comment.new'
   | 'comment.mention'
   | 'privacy_request.new'
-  | 'privacy_request.answered';
+  | 'privacy_request.answered'
+  | 'login.unusual'
+  | 'login.reported';
 
 export type NotificationChannel = 'app' | 'email';
 
@@ -299,3 +304,33 @@ export interface PrivacyRequest {
 }
 
 export type SensitiveField = 'dni' | 'cuil' | 'bankAccount';
+
+// ---------- Phase B: F11 sessions and sign-in alerts ----------
+
+/** A signed-in device (F11). Simulated: there are no real tokens behind it. */
+export interface DeviceSession {
+  id: string;
+  personId: string;
+  /** Operating system or device, for example "Windows" or "iPhone". */
+  device: string;
+  kind: 'desktop' | 'mobile';
+  browser: string;
+  approxLocation: string;
+  startedAt: string;
+  lastSeenAt: string;
+  /** The session of this browser (the one in use). It is closed with "Cerrar sesión". */
+  current: boolean;
+  revokedAt?: string;
+  revokedBy?: string;
+}
+
+/** "¿Fuiste tú?" after a sign-in from a new device or place (F11). */
+export interface LoginAlert {
+  id: string;
+  personId: string;
+  sessionId: string;
+  createdAt: string;
+  status: 'pending' | 'confirmed' | 'reported';
+  /** Access request created when the person answered "No fui yo". */
+  requestId?: string;
+}

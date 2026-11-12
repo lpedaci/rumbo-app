@@ -4,8 +4,10 @@ import type {
   AppNotification,
   AuthAttempts,
   Comment,
+  DeviceSession,
   Hire,
   HireTask,
+  LoginAlert,
   NotificationType,
   Person,
   PrivacyRequest,
@@ -53,6 +55,8 @@ export const NOTIFICATION_TYPES: Record<NotificationType, TypeMeta> = {
   'comment.mention': { category: 'tasks', icon: 'alternate_email', tone: 'tertiary', email: true },
   'privacy_request.new': { category: 'people', icon: 'policy', tone: 'info', email: true },
   'privacy_request.answered': { category: 'people', icon: 'policy', tone: 'success', email: true },
+  'login.unusual': { category: 'access', icon: 'gpp_maybe', tone: 'warning', email: true },
+  'login.reported': { category: 'access', icon: 'gpp_maybe', tone: 'error', email: true },
 };
 
 export const NOTIFICATION_CATEGORIES: NotificationCategory[] = ['tasks', 'checkins', 'people', 'access'];
@@ -261,6 +265,34 @@ export function onPrivacyAnswered(request: PrivacyRequest, when: string): AppNot
   ];
 }
 
+/** F11: "¿Fuiste tú?" for the person; it opens the alert in Mi seguridad. */
+export function onUnusualLogin(alert: LoginAlert, session: DeviceSession): AppNotification[] {
+  return [
+    makeNotification({
+      recipientId: alert.personId,
+      createdAt: alert.createdAt,
+      type: 'login.unusual',
+      params: { device: `${session.device} · ${session.browser}`, place: session.approxLocation },
+      link: '/account/security#login-alerts',
+    }),
+  ];
+}
+
+/** F11: "No fui yo" reaches every IT admin with the urgent request. */
+export function onLoginReported(request: AccessRequest, people: Person[], personName: string): AppNotification[] {
+  return people
+    .filter((p) => p.role === 'it_admin')
+    .map((it) =>
+      makeNotification({
+        recipientId: it.id,
+        createdAt: request.createdAt,
+        type: 'login.reported',
+        params: { request: request.id, person: personName },
+        link: `/it/requests/${request.id}`,
+      }),
+    );
+}
+
 // ---------- Seed ----------
 
 /**
@@ -274,6 +306,8 @@ export function buildSeedNotifications(
   accessRequests: AccessRequest[],
   authAttempts: AuthAttempts[],
   comments: Comment[] = [],
+  loginAlerts: LoginAlert[] = [],
+  deviceSessions: DeviceSession[] = [],
   today = DEMO_TODAY,
 ): AppNotification[] {
   const nameOf = (id: string) => people.find((p) => p.id === id)?.name ?? '';
@@ -459,6 +493,15 @@ export function buildSeedNotifications(
       .filter((c) => c.hireTaskId === comment.hireTaskId && c.createdAt < comment.createdAt)
       .map((c) => c.authorId);
     for (const n of onComment(hire, task, comment, earlier, nameOf(comment.authorId))) {
+      drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
+    }
+  }
+
+  // F11: pending "¿Fuiste tú?" alerts.
+  for (const alert of loginAlerts) {
+    const session = deviceSessions.find((s) => s.id === alert.sessionId);
+    if (!session) continue;
+    for (const n of onUnusualLogin(alert, session)) {
       drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
     }
   }

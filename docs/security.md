@@ -71,6 +71,7 @@ upgrade-insecure-requests
 | Permisos del workflow | `contents: read` por defecto; `pages: write` e `id-token: write` solo en el job de deploy |
 | Almacenamiento local | `localStorage` guarda solo datos de demo, la sesión simulada y preferencias de interfaz; nunca algo que simule una contraseña ni un token. Si los datos guardados no tienen la forma esperada, se reemplazan por los datos semilla |
 | Datos enmascarados | El celular, el DNI, el CUIL y la cuenta bancaria (ficticios) se muestran enmascarados; RRHH puede mostrar uno escribiendo un motivo, que queda en la auditoría como `pii.reveal` (F10, D-113) |
+| Sesiones y alertas | "Mi seguridad" lista los dispositivos con sesión abierta y permite cerrarlos; un inicio desde un dispositivo o lugar nuevo genera "¿Fuiste tú?", y "No fui yo" cierra esa sesión y abre una solicitud urgente para sistemas. Sistemas ve las sesiones de la organización y puede forzar su cierre (F11, D-114). Todo simulado: no hay tokens detrás |
 | Aviso de privacidad | Nadie entra a la app sin aceptar la versión vigente del aviso (G8); la aceptación queda con fecha, versión y evento `privacy.consent` (F10, D-113) |
 
 ---

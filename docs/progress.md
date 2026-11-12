@@ -385,3 +385,11 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Avisos: "Solicitud de datos nueva" a RRHH y "RRHH respondió tu solicitud" a la persona. Permisos `privacy:own`, `privacy_request:manage` y `pii:reveal`.
 - Tests de reglas, del aviso, de solicitudes y del revelado; G8, G10 y A12 en Playwright con axe.
 - Plazos legales confirmados por Lourdes y llevados a `src/app/legal.ts` (`PRIVACY_DEADLINES`); la semilla y los textos los toman de ahí. Tests con una solicitud creada un viernes y de que ningún plazo en días hábiles caiga en fin de semana.
+
+## Paso 18 · F11 Sesiones y alertas de inicio de sesión, 11/11/2026 (D-114)
+
+- Modelo `DeviceSession` y `LoginAlert`, semilla con sesiones por persona y una alerta pendiente para Sofía (esquema de datos 10).
+- "Mi seguridad": "¿Fuiste tú?" con "Sí, fui yo" y "No fui yo", sesiones activas con "Esta sesión", "Cerrar esta sesión" y "Cerrar las demás sesiones".
+- "No fui yo": cierra la sesión, crea la solicitud urgente para sistemas (primera en S1, píldora "Urgente") y avisa a sistemas.
+- S3: pestaña "Sesiones" con las sesiones de la organización y "Forzar cierre". Permiso `session:manage`.
+- Avisos "¿Fuiste tú?" e "Inicio de sesión no reconocido"; eventos de auditoría de sesiones y alertas. Tests de las tres acciones y del cierre forzado.

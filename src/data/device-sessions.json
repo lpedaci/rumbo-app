@@ -1,0 +1,112 @@
+[
+  {
+    "id": "ds-carla-1",
+    "personId": "p-carla",
+    "device": "Windows",
+    "kind": "desktop",
+    "browser": "Chrome",
+    "approxLocation": "Buenos Aires, Argentina",
+    "startedAt": "2026-11-10T11:58:00.000Z",
+    "lastSeenAt": "2026-11-10T21:00:00.000Z",
+    "current": true
+  },
+  {
+    "id": "ds-carla-2",
+    "personId": "p-carla",
+    "device": "iPhone",
+    "kind": "mobile",
+    "browser": "Safari",
+    "approxLocation": "Buenos Aires, Argentina",
+    "startedAt": "2026-11-03T13:10:00.000Z",
+    "lastSeenAt": "2026-11-09T22:40:00.000Z",
+    "current": false
+  },
+  {
+    "id": "ds-martin-1",
+    "personId": "p-martin",
+    "device": "Windows",
+    "kind": "desktop",
+    "browser": "Edge",
+    "approxLocation": "Buenos Aires, Argentina",
+    "startedAt": "2026-11-10T12:20:00.000Z",
+    "lastSeenAt": "2026-11-10T21:00:00.000Z",
+    "current": true
+  },
+  {
+    "id": "ds-martin-2",
+    "personId": "p-martin",
+    "device": "Android",
+    "kind": "mobile",
+    "browser": "Chrome",
+    "approxLocation": "Rosario, Argentina",
+    "startedAt": "2026-11-06T18:05:00.000Z",
+    "lastSeenAt": "2026-11-08T14:30:00.000Z",
+    "current": false
+  },
+  {
+    "id": "ds-sofia-1",
+    "personId": "p-sofia",
+    "device": "Windows",
+    "kind": "desktop",
+    "browser": "Chrome",
+    "approxLocation": "Buenos Aires, Argentina",
+    "startedAt": "2026-11-10T12:02:00.000Z",
+    "lastSeenAt": "2026-11-10T21:00:00.000Z",
+    "current": true
+  },
+  {
+    "id": "ds-sofia-2",
+    "personId": "p-sofia",
+    "device": "iPhone",
+    "kind": "mobile",
+    "browser": "Safari",
+    "approxLocation": "Córdoba, Argentina",
+    "startedAt": "2026-11-10T05:14:00.000Z",
+    "lastSeenAt": "2026-11-10T05:31:00.000Z",
+    "current": false
+  },
+  {
+    "id": "ds-diego-1",
+    "personId": "p-diego",
+    "device": "Linux",
+    "kind": "desktop",
+    "browser": "Firefox",
+    "approxLocation": "Buenos Aires, Argentina",
+    "startedAt": "2026-11-10T11:30:00.000Z",
+    "lastSeenAt": "2026-11-10T21:00:00.000Z",
+    "current": true
+  },
+  {
+    "id": "ds-lucia-1",
+    "personId": "p-lucia",
+    "device": "macOS",
+    "kind": "desktop",
+    "browser": "Safari",
+    "approxLocation": "Buenos Aires, Argentina",
+    "startedAt": "2026-11-10T12:45:00.000Z",
+    "lastSeenAt": "2026-11-10T19:10:00.000Z",
+    "current": false
+  },
+  {
+    "id": "ds-lucas-1",
+    "personId": "p-lucas",
+    "device": "Windows",
+    "kind": "desktop",
+    "browser": "Chrome",
+    "approxLocation": "La Plata, Argentina",
+    "startedAt": "2026-11-10T12:10:00.000Z",
+    "lastSeenAt": "2026-11-10T18:55:00.000Z",
+    "current": false
+  },
+  {
+    "id": "ds-camila-1",
+    "personId": "p-camila",
+    "device": "Android",
+    "kind": "mobile",
+    "browser": "Chrome",
+    "approxLocation": "Mendoza, Argentina",
+    "startedAt": "2026-11-09T20:15:00.000Z",
+    "lastSeenAt": "2026-11-10T13:05:00.000Z",
+    "current": false
+  }
+]

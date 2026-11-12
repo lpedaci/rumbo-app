@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
-import { demoNow } from '@/lib/dates';
+import { DEMO_TODAY, demoNow } from '@/lib/dates';
 import type { IdentityCheck } from '@/lib/access';
 import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '@/lib/checkins';
 import { completeTask as completeTaskRule, tasksUnlockedBy } from '@/lib/journey';
@@ -10,6 +10,7 @@ import {
   onAccessRequestClosed,
   onCheckinCompleted,
   onComment,
+  onLoginReported,
   onPrivacyAnswered,
   onPrivacyRequest,
   onHireCreated,
@@ -41,7 +42,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 9;
+export const DATA_SCHEMA_VERSION = 10;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -112,6 +113,17 @@ interface DataActions {
   ) => void;
   /** F10: records who revealed a masked value, of whom and why (pii.reveal). */
   logPiiReveal: (personId: string, field: SensitiveField, reason: string, actorId: string) => void;
+  /** F11: closes one session of the signed-in person (not the current one). */
+  revokeSession: (sessionId: string, actorId: string) => void;
+  /** F11: closes every session of a person except the current one (own) or all of them (IT). */
+  revokeOtherSessions: (personId: string, actorId: string, includeCurrent?: boolean) => void;
+  /** F11: "Sí, fui yo": the alert is closed and the session stays. */
+  confirmLoginAlert: (alertId: string) => void;
+  /**
+   * F11: "No fui yo": closes that session, creates an urgent access request for IT and returns
+   * its id so the screen can show it.
+   */
+  reportLoginAlert: (alertId: string) => string | undefined;
   /** F7: marks one notification as read or unread. */
   setNotificationRead: (id: string, read: boolean) => void;
   /** F7: marks every notification of a person as read. */
@@ -127,6 +139,12 @@ function selfReviewNotice(state: DemoData, hireId: string, stage: CheckinStage) 
   const hire = state.hires.find((h) => h.id === hireId);
   if (!hire) return [];
   return onSelfReview(hire, state.people.find((p) => p.id === hire.personId), stage, demoNow());
+}
+
+/** Next access request id, `IT-2026-0142` style (F11 urgent requests). */
+function nextAccessRequestId(existing: AccessRequest[]): string {
+  const numbers = existing.map((r) => Number(r.id.split('-').at(-1)) || 0);
+  return `IT-${DEMO_TODAY.slice(0, 4)}-${String(Math.max(0, ...numbers) + 1).padStart(4, '0')}`;
 }
 
 let commentCounter = 0;
@@ -156,6 +174,8 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.comments) &&
     Array.isArray(data.consents) &&
     Array.isArray(data.privacyRequests) &&
+    Array.isArray(data.deviceSessions) &&
+    Array.isArray(data.loginAlerts) &&
     typeof data.accountFlags === 'object' &&
     data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
@@ -638,6 +658,93 @@ export const useDataStore = create<DataState>()(
           ],
         })),
 
+      revokeSession: (sessionId, actorId) =>
+        set((state) => {
+          const session = state.deviceSessions.find((s) => s.id === sessionId);
+          if (!session || session.current || session.revokedAt) return {};
+          const at = demoNow();
+          return {
+            deviceSessions: state.deviceSessions.map((s) =>
+              s.id === sessionId ? { ...s, revokedAt: at, revokedBy: actorId } : s,
+            ),
+            auditEvents: [
+              ...state.auditEvents,
+              { id: nextAuditId(), at, actorId, action: 'session.revoke', resource: sessionId, result: 'success', detail: `${session.device} · ${session.browser}` },
+            ],
+          };
+        }),
+
+      revokeOtherSessions: (personId, actorId, includeCurrent = false) =>
+        set((state) => {
+          const at = demoNow();
+          const closing = state.deviceSessions.filter(
+            (s) => s.personId === personId && !s.revokedAt && (includeCurrent || !s.current),
+          );
+          if (!closing.length) return {};
+          const ids = new Set(closing.map((s) => s.id));
+          return {
+            deviceSessions: state.deviceSessions.map((s) => (ids.has(s.id) ? { ...s, revokedAt: at, revokedBy: actorId } : s)),
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: actorId === personId ? 'session.revoke_others' : 'session.force_close',
+                resource: personId,
+                result: 'success',
+                detail: String(closing.length),
+              },
+            ],
+          };
+        }),
+
+      confirmLoginAlert: (alertId) =>
+        set((state) => {
+          const alert = state.loginAlerts.find((a) => a.id === alertId);
+          if (!alert) return {};
+          return {
+            loginAlerts: state.loginAlerts.map((a) => (a.id === alertId ? { ...a, status: 'confirmed' as const } : a)),
+            auditEvents: [
+              ...state.auditEvents,
+              { id: nextAuditId(), at: demoNow(), actorId: alert.personId, action: 'login_alert.confirm', resource: alert.sessionId, result: 'success' },
+            ],
+          };
+        }),
+
+      reportLoginAlert: (alertId) => {
+        const state = useDataStore.getState();
+        const alert = state.loginAlerts.find((a) => a.id === alertId);
+        const person = alert && state.people.find((p) => p.id === alert.personId);
+        if (!alert || !person) return undefined;
+        const session = state.deviceSessions.find((s) => s.id === alert.sessionId);
+        const at = demoNow();
+        const request: AccessRequest = {
+          id: nextAccessRequestId(state.accessRequests),
+          email: person.email,
+          personId: person.id,
+          createdAt: at,
+          reason: 'unrecognized_login',
+          comment: session ? `${session.device} · ${session.browser} · ${session.approxLocation}` : undefined,
+          status: 'new',
+          identityVerified: false,
+          urgent: true,
+        };
+        set((s) => ({
+          loginAlerts: s.loginAlerts.map((a) => (a.id === alertId ? { ...a, status: 'reported' as const, requestId: request.id } : a)),
+          deviceSessions: s.deviceSessions.map((d) =>
+            d.id === alert.sessionId ? { ...d, revokedAt: at, revokedBy: alert.personId } : d,
+          ),
+          accessRequests: [...s.accessRequests, request],
+          notifications: [...s.notifications, ...onLoginReported(request, s.people, person.name)],
+          auditEvents: [
+            ...s.auditEvents,
+            { id: nextAuditId(), at, actorId: person.id, action: 'login_alert.report', resource: alert.sessionId, result: 'success', detail: request.id },
+          ],
+        }));
+        return request.id;
+      },
+
       setNotificationRead: (id, read) =>
         set((state) => ({
           notifications: state.notifications.map((n) =>
@@ -675,6 +782,8 @@ export const useDataStore = create<DataState>()(
         comments,
         consents,
         privacyRequests,
+        deviceSessions,
+        loginAlerts,
       }) => ({
         people,
         templates,
@@ -688,6 +797,8 @@ export const useDataStore = create<DataState>()(
         comments,
         consents,
         privacyRequests,
+        deviceSessions,
+        loginAlerts,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.
       migrate: () => buildSeed(),

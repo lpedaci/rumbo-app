@@ -50,6 +50,8 @@ export const PERMISSIONS = {
   'privacy:own': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   'privacy_request:manage': { admin: 'all' },
   'pii:reveal': { admin: 'all' },
+  // F11 sessions: each person their own (in G5); IT sees and closes those of the organization (S3)
+  'session:manage': { it_admin: 'all' },
   // F7 notifications: each person only sees their own
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)

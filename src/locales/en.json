@@ -160,7 +160,8 @@
       "locked": "My account is locked",
       "forgot_password": "I forgot my password",
       "mfa_issue": "I don't receive the verification code",
-      "other": "Something else"
+      "other": "Something else",
+      "unrecognized_login": "Unrecognized sign-in"
     },
     "reasonRequired": "Choose the reason for your request.",
     "commentLabel": "Comment",
@@ -1528,6 +1529,7 @@
       "description": "Locked accounts, event log, permissions by role and organization policies.",
       "tabsLabel": "Security sections",
       "tabs": {
+        "sessions": "Sessions",
         "locked": "Lockouts",
         "audit": "Audit log",
         "permissions": "Permissions",
@@ -1623,6 +1625,11 @@
         "privacy_request.answered": "Data request answered",
         "privacy_request.rejected": "Data request rejected",
         "pii.reveal": "Sensitive data shown",
+        "session.revoke": "Session closed",
+        "session.revoke_others": "Sessions on other devices closed",
+        "session.force_close": "Sessions force-closed",
+        "login_alert.confirm": "Sign-in confirmed",
+        "login_alert.report": "Unrecognized sign-in reported",
         "hire.create": "New hire added",
         "task.complete": "Task marked as done",
         "checkin.self_review": "Self-review sent",
@@ -1668,6 +1675,7 @@
         "privacy_own": "View \"My privacy\"",
         "privacy_request_manage": "Handle personal data requests",
         "pii_reveal": "Reveal sensitive data",
+        "session_manage": "Manage organization sessions",
         "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
@@ -2361,6 +2369,16 @@
       "appOnly": "This type of notice only arrives inside Rumbo, not by email."
     },
     "types": {
+      "login": {
+        "unusual": {
+          "title": "Was it you?",
+          "body": "New sign-in from {{device}}, in {{place}}. If you don't recognize it, let us know."
+        },
+        "reported": {
+          "title": "Unrecognized sign-in",
+          "body": "{{person}} reported a sign-in they don't recognize. Urgent request {{request}}."
+        }
+      },
       "privacy_request": {
         "new": {
           "title": "New data request",
@@ -2763,6 +2781,51 @@
       "years_other": "{{count}} years",
       "notice": "Privacy notice",
       "noticeDetail": "Version in force; a new version asks everyone to accept it again."
+    }
+  },
+  "sessions": {
+    "title": "Active sessions",
+    "description": "The devices where your account has an open session. If you don't recognize one, close it.",
+    "current": "This session",
+    "activeNow": "Active now",
+    "lastSeen": "Last used: {{date}}",
+    "started": "Started on {{date}}",
+    "revoke": "Close this session",
+    "revokeTitle": "Close the session on {{device}}?",
+    "revokeBody": "That device will have to sign in again.",
+    "revokeConfirm": "Close session on {{device}}",
+    "revoked": "Session closed on {{device}}",
+    "revokeOthers": "Sign out other devices",
+    "revokeOthersTitle": "Sign out of the other devices?",
+    "revokeOthersBody": "You stay signed in only on this computer. The other devices will have to sign in again.",
+    "revokeOthersConfirm": "Close the other sessions",
+    "revokedOthers": "You closed the other sessions",
+    "onlyThis": "Only this session is open.",
+    "currentHelp": "To close this session, use Sign out.",
+    "alert": {
+      "title": "Was it you?",
+      "body": "There was a new sign-in to your account from {{device}}, in {{place}}, on {{date}}.",
+      "yes": "Yes, it was me",
+      "no": "It wasn't me",
+      "confirmed": "Done, we kept that session",
+      "reportedTitle": "We closed that session and told IT",
+      "reportedBody": "IT is reviewing your account with request {{id}}. Contact the help desk to confirm your identity: extension 4400 or soporte.it@nortia.demo, Monday to Friday from 8 to 18."
+    },
+    "org": {
+      "title": "Active sessions in the organization",
+      "description": "Who has open sessions and from where. Forcing a sign-out makes the person sign in again on all their devices.",
+      "count_one": "{{count}} session",
+      "count_other": "{{count}} sessions",
+      "force": "Force sign-out",
+      "forceLabel": "Force sign-out of {{name}}'s sessions",
+      "forceTitle": "Close all of {{name}}'s sessions?",
+      "forceBody": "The person will have to sign in again on all their devices. It is recorded in the audit log.",
+      "forceConfirm": "Close all their sessions",
+      "forced": "{{name}}'s sessions closed",
+      "yourAccount": "Your account: close them from My security.",
+      "empty": "There are no active sessions.",
+      "unrecognized": "Reported as not recognized",
+      "urgent": "Urgent"
     }
   }
 }

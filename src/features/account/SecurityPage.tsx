@@ -11,6 +11,7 @@ import { formatDate, formatDateTime } from '@/lib/dates';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
+import { MySessions } from './MySessions';
 
 /**
  * G5 · Mi seguridad: account, two-step verification (required or optional by role,
@@ -110,6 +111,9 @@ export function SecurityPage() {
             </Button>
           </div>
         </Card>
+
+        {/* F11: "¿Fuiste tú?" alerts and active sessions */}
+        <MySessions personId={person.id} />
 
         <Card title={t('security.devicesTitle')} className="lg:col-span-2">
           {rememberedUntil ? (

@@ -18,12 +18,18 @@ export const REQUEST_FILTERS: RequestFilter[] = ['all', 'new', 'verifying', 'res
 /** Ways IT confirms who is asking before restoring access (social engineering on the help desk, 8.3). */
 export type IdentityCheck = 'callback' | 'manager';
 
-/** Open requests first (new, then in verification), newest first inside each group. */
+/**
+ * Open requests first (new, then in verification), urgent ones on top of each group (F11,
+ * "No fui yo"), newest first inside each group.
+ */
 const STATUS_ORDER: Record<AccessRequestStatus, number> = { new: 0, verifying: 1, resolved: 2, rejected: 3 };
 
 export function sortRequests(requests: AccessRequest[]): AccessRequest[] {
   return [...requests].sort(
-    (a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || b.createdAt.localeCompare(a.createdAt),
+    (a, b) =>
+      STATUS_ORDER[a.status] - STATUS_ORDER[b.status] ||
+      Number(Boolean(b.urgent)) - Number(Boolean(a.urgent)) ||
+      b.createdAt.localeCompare(a.createdAt),
   );
 }
 
