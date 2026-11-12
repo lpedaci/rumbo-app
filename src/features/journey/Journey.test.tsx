@@ -157,7 +157,7 @@ describe('N2 · Task detail', () => {
 describe('Guided welcome (F16, 2.2.1)', () => {
   it('opens on the first visit, moves between steps and is not shown again', async () => {
     useSessionStore.setState({ welcomeSeen: [] });
-    renderAt('/me');
+    renderAt('/me', { welcome: true });
     const dialog = await screen.findByRole('dialog');
     expect(within(dialog).getByRole('heading', { name: 'Te damos la bienvenida, Sofía' })).toBeInTheDocument();
     // First step: nothing to go back to.
@@ -174,7 +174,7 @@ describe('Guided welcome (F16, 2.2.1)', () => {
 
   it('can be skipped', async () => {
     useSessionStore.setState({ welcomeSeen: [] });
-    renderAt('/me');
+    renderAt('/me', { welcome: true });
     const dialog = await screen.findByRole('dialog');
     fireEvent.click(within(dialog).getByRole('button', { name: es.welcome.skip }));
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());

@@ -11,7 +11,19 @@ import { duration, easing, useShouldReduceMotion } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
+import type { Role } from '@/types/domain';
 import { CheckinIllustration, JourneyIllustration, TasksIllustration } from './HireWelcomeIllustrations';
+import {
+  AccessReviewIllustration,
+  AuditIllustration,
+  CheckinReviewIllustration,
+  HrAlertIllustration,
+  HrPanelIllustration,
+  HrTemplatesIllustration,
+  RequestIllustration,
+  TeamIllustration,
+  TwoPeopleIllustration,
+} from './RoleWelcomeIllustrations';
 import { hasGuidedWelcome } from './welcome-steps';
 
 interface Step {
@@ -37,7 +49,39 @@ export function GuidedWelcome() {
   }, [user, seen]);
 
   if (!user || !hasGuidedWelcome(user.role) || !open) return null;
-  return <HireWelcome personId={user.personId} />;
+  if (user.role === 'hire') return <HireWelcome personId={user.personId} />;
+  return <RoleWelcome personId={user.personId} role={user.role} />;
+}
+
+/** HR, manager and IT (D-127): three steps on what each role does first, with mini pieces of their screens. */
+function RoleWelcome({ personId, role }: { personId: string; role: Exclude<Role, 'hire'> }) {
+  const { t } = useTranslation();
+  const reduce = useShouldReduceMotion();
+  const person = useDataStore((s) => s.people.find((p) => p.id === personId));
+  const key = role === 'admin' ? 'hr' : role === 'manager' ? 'manager' : 'it';
+  const illustrations: Record<typeof key, ReactNode[]> = {
+    hr: [
+      <HrPanelIllustration key="0" reduce={reduce} />,
+      <HrTemplatesIllustration key="1" reduce={reduce} />,
+      <HrAlertIllustration key="2" reduce={reduce} />,
+    ],
+    manager: [
+      <TeamIllustration key="0" reduce={reduce} managerId={personId} />,
+      <CheckinReviewIllustration key="1" reduce={reduce} />,
+      <AccessReviewIllustration key="2" reduce={reduce} />,
+    ],
+    it: [
+      <RequestIllustration key="0" reduce={reduce} />,
+      <TwoPeopleIllustration key="1" reduce={reduce} />,
+      <AuditIllustration key="2" reduce={reduce} />,
+    ],
+  };
+  const steps: Step[] = illustrations[key].map((illustration, i) => ({
+    title: t(`welcome.${key}.steps.${i}.title`, { name: person?.name.split(' ')[0] ?? '' }),
+    body: t(`welcome.${key}.steps.${i}.body`),
+    illustration,
+  }));
+  return <WelcomeDialog personId={personId} steps={steps} finish={t(`welcome.${key}.finish`)} />;
 }
 
 function HireWelcome({ personId }: { personId: string }) {
@@ -45,8 +89,6 @@ function HireWelcome({ personId }: { personId: string }) {
   const reduce = useShouldReduceMotion();
   const hire = useOwnHire();
   const people = useDataStore((s) => s.people);
-  const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
 
   const person = people.find((p) => p.id === personId);
   const manager = people.find((p) => p.id === hire?.managerId);
@@ -88,6 +130,15 @@ function HireWelcome({ personId }: { personId: string }) {
       ),
     },
   ];
+  return <WelcomeDialog personId={personId} steps={steps} finish={t('welcome.hire.finish')} />;
+}
+
+/** The welcome dialog itself: illustration, dots, title and text, and Anterior / Continuar. */
+function WelcomeDialog({ personId, steps, finish }: { personId: string; steps: Step[]; finish: string }) {
+  const { t } = useTranslation();
+  const reduce = useShouldReduceMotion();
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
   const step = steps[index]!;
   const last = index === steps.length - 1;
 
@@ -175,7 +226,7 @@ function HireWelcome({ personId }: { personId: string }) {
                   </Button>
                 )}
                 <Button onClick={() => (last ? close() : go(1))} fullWidth className="sm:w-auto">
-                  {last ? t('welcome.hire.finish') : t('welcome.next')}
+                  {last ? finish : t('welcome.next')}
                 </Button>
               </div>
             </div>

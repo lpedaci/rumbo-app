@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { DOCS_URL } from '@/app/links';
@@ -9,7 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
+import { Dialog } from '@/components/ui/Dialog';
 import { IconButton } from '@/components/ui/IconButton';
+import { ScreenHelpDialog } from '@/features/help/ScreenHelp';
 import { hasGuidedWelcome } from '@/features/welcome/welcome-steps';
 import { homePath } from '@/lib/permissions';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
@@ -46,26 +49,36 @@ const TOOL_BUTTON = 'bg-surface-container text-on-surface';
 function HelpMenu() {
   const { t } = useTranslation();
   const user = useCurrentUser();
+  const [screenHelp, setScreenHelp] = useState(false);
   if (!user) return null;
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <IconButton icon="help" label={t('layout.help.title')} className={TOOL_BUTTON} />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent label={t('layout.help.title')}>
-        <DropdownMenuLabel>{t('layout.help.title')}</DropdownMenuLabel>
-        {hasGuidedWelcome(user.role) && (
-          <DropdownMenuItem icon="school" onSelect={() => useSessionStore.getState().setWelcomeOpen(true)}>
-            {t('welcome.reopen')}
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <IconButton icon="help" label={t('layout.help.title')} className={TOOL_BUTTON} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent label={t('layout.help.title')}>
+          <DropdownMenuLabel>{t('layout.help.title')}</DropdownMenuLabel>
+          {/* F16: what this screen is for (D-127) */}
+          <DropdownMenuItem icon="info" onSelect={() => setScreenHelp(true)}>
+            {t('help.menuItem')}
           </DropdownMenuItem>
-        )}
-        <DropdownMenuItem icon="open_in_new" onSelect={() => window.open(DOCS_URL, '_blank', 'noopener,noreferrer')}>
-          {t('layout.help.docs')}
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <p className="max-w-64 px-3 py-2 text-body-small text-on-surface-variant">{t('layout.help.desk')}</p>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          {hasGuidedWelcome(user.role) && (
+            <DropdownMenuItem icon="school" onSelect={() => useSessionStore.getState().setWelcomeOpen(true)}>
+              {t('welcome.reopen')}
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuItem icon="open_in_new" onSelect={() => window.open(DOCS_URL, '_blank', 'noopener,noreferrer')}>
+            {t('layout.help.docs')}
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <p className="max-w-64 px-3 py-2 text-body-small text-on-surface-variant">{t('layout.help.desk')}</p>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <Dialog open={screenHelp} onOpenChange={setScreenHelp}>
+        {screenHelp && <ScreenHelpDialog />}
+      </Dialog>
+    </>
   );
 }
 

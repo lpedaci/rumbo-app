@@ -1014,6 +1014,78 @@
     }
   },
   "welcome": {
+    "hr": {
+      "finish": "Go to my dashboard",
+      "steps": [
+        {
+          "title": "Welcome, {{name}}",
+          "body": "Your dashboard shows how many people are in their onboarding journey, how many are about to start and how they are doing."
+        },
+        {
+          "title": "One journey per job",
+          "body": "Build each journey once as a template and assign it when you add a new hire."
+        },
+        {
+          "title": "What needs your attention",
+          "body": "Alerts tell you when a journey falls behind or a manager escalates a check-in. Each alert takes you to the record."
+        }
+      ]
+    },
+    "manager": {
+      "finish": "See my team",
+      "steps": [
+        {
+          "title": "Welcome, {{name}}",
+          "body": "Here you see the people on your team who are in their onboarding journey and how far each one has come."
+        },
+        {
+          "title": "Check-ins at 30, 60 and 90 days",
+          "body": "Before each meeting, the person completes a self-review. You assess the milestones and, if one is not met, reschedule or escalate to HR."
+        },
+        {
+          "title": "Access review",
+          "body": "When IT opens a campaign, you confirm whether each person on your team still needs their access."
+        }
+      ]
+    },
+    "it": {
+      "finish": "Go to the inbox",
+      "steps": [
+        {
+          "title": "Welcome, {{name}}",
+          "body": "Access requests arrive in your inbox. Verify the identity with the record's data before restoring any access."
+        },
+        {
+          "title": "Two people for sensitive changes",
+          "body": "Admin role and policy changes need approval from another person in IT. Nobody approves what they asked for."
+        },
+        {
+          "title": "Everything is recorded",
+          "body": "The audit log keeps every sign-in, denied access, unlock and permission change, with who and when."
+        }
+      ]
+    },
+    "mini": {
+      "activeHires": "Active hires",
+      "upcoming": "Starting soon",
+      "tasks_one": "{{count}} task",
+      "tasks_other": "{{count}} tasks",
+      "alert": "Alert for HR",
+      "escalated": "30-day check-in escalated",
+      "checkin": "30-day check-in",
+      "milestone1": "Knows the team's tools",
+      "milestone2": "First analysis delivered",
+      "met": "Met",
+      "partial": "Partial",
+      "keep": "Kept",
+      "review": "Review",
+      "new": "New",
+      "verify": "Verify identity",
+      "twoPeople": "Double approval",
+      "auditLogin": "Sign-in · Sofía Ramírez",
+      "auditDenied": "Access denied · /it/security",
+      "auditUnlock": "Account unlocked · Joaquín Benítez"
+    },
     "reopen": "See the welcome",
     "close": "Close the welcome",
     "skip": "Skip",
@@ -3384,6 +3456,258 @@
       "results_one": "{{count}} result for \"{{q}}\"",
       "results_other": "{{count}} results for \"{{q}}\"",
       "listTitle": "Results"
+    }
+  },
+  "help": {
+    "menuItem": "Help for this screen",
+    "dialogTitle": "Help: {{screen}}",
+    "whatYouCanDo": "What you can do here",
+    "generic": "This screen",
+    "genericPurpose": "Use the menu to move through your role's sections. If something does not work as expected, write to the help desk.",
+    "screens": {
+      "dashboard": {
+        "title": "Tracking dashboard",
+        "purpose": "Shows how every journey is going and where they get stuck.",
+        "points": [
+          "Check the indicators and their change over the last month.",
+          "Switch the chart between start cohorts and people.",
+          "Open an alert to go to the hire's record."
+        ]
+      },
+      "hires": {
+        "title": "Hires",
+        "purpose": "Lists the people about to start, in their journey or who finished it.",
+        "points": [
+          "Filter by status and area.",
+          "Open each hire's record.",
+          "Add a new hire with their template."
+        ]
+      },
+      "hireNew": {
+        "title": "New hire",
+        "purpose": "Creates a new person's journey from a published template.",
+        "points": [
+          "Fill in the details and the start date.",
+          "Choose manager, buddy and template.",
+          "On saving, each task's date is calculated."
+        ]
+      },
+      "hireRecord": {
+        "title": "Hire record",
+        "purpose": "Gathers a person's journey, check-ins and details.",
+        "points": [
+          "Mark HR, IT or buddy tasks as done.",
+          "Review check-ins and self-reviews.",
+          "Open each task's comments."
+        ]
+      },
+      "templates": {
+        "title": "Templates",
+        "purpose": "Catalog of journeys by job, with their state and versions.",
+        "points": [
+          "Create, duplicate or open a template.",
+          "Switch between cards and table.",
+          "Only published templates can be assigned."
+        ]
+      },
+      "templateEditor": {
+        "title": "Template editor",
+        "purpose": "Builds the tasks of each stage of the journey.",
+        "points": [
+          "Add tasks, drag them or use Move up and Move down.",
+          "Set owner, due offset and dependencies.",
+          "Save a draft or publish a new version with its note."
+        ]
+      },
+      "people": {
+        "title": "People and catalogs",
+        "purpose": "Who works at Nortia and the areas and jobs catalogs.",
+        "points": [
+          "Search and filter by area, role and status.",
+          "Open a person's record to edit their details or role.",
+          "Admin roles need IT's approval."
+        ]
+      },
+      "lifecycle": {
+        "title": "Joiners, movers and leavers",
+        "purpose": "Moves of people that change their access.",
+        "points": [
+          "Register a job change or a leaver.",
+          "See what access IT grants or revokes.",
+          "IT never keeps fewer than two people."
+        ]
+      },
+      "privacyRequests": {
+        "title": "Personal data requests",
+        "purpose": "Access, rectification or deletion requests with their legal deadline.",
+        "points": [
+          "Filter by status and see the earliest due first.",
+          "Take a request and answer it in writing.",
+          "The answer reaches the person in My privacy."
+        ]
+      },
+      "reports": {
+        "title": "Reports and exports",
+        "purpose": "Download Rumbo's data to analyze or present it.",
+        "points": [
+          "Export lists to CSV, always with sensitive data hidden.",
+          "Print the dashboard or save it as PDF.",
+          "Request an export with unhidden data: it needs IT's approval."
+        ]
+      },
+      "accessReview": {
+        "title": "Access review",
+        "purpose": "Confirm whether each person you review still needs their access.",
+        "points": [
+          "Keep or revoke each access, with a reason if you revoke.",
+          "Use Keep the pending to resolve a person at once.",
+          "Removing an admin role goes through double approval."
+        ]
+      },
+      "team": {
+        "title": "My team in onboarding",
+        "purpose": "The people on your team in their onboarding journey.",
+        "points": [
+          "See each one's progress and next check-in.",
+          "Open their record to see the journey.",
+          "Complete the check-in when it is due."
+        ]
+      },
+      "teamRecord": {
+        "title": "Hire detail",
+        "purpose": "The journey of a person on your team and their check-ins.",
+        "points": [
+          "Mark your own tasks as done.",
+          "Read their self-review before the check-in.",
+          "Complete the stage check-in."
+        ]
+      },
+      "checkin": {
+        "title": "Check-in",
+        "purpose": "The follow-up meeting of the stage.",
+        "points": [
+          "Assess each milestone: met, partial or not met.",
+          "If one is not met, reschedule or escalate to HR.",
+          "Write the next steps."
+        ]
+      },
+      "journey": {
+        "title": "My journey",
+        "purpose": "Everything you need to do in your onboarding, by stage.",
+        "points": [
+          "Check Up next to know what follows.",
+          "Mark your tasks as done.",
+          "Write to your key contacts if you have questions."
+        ]
+      },
+      "task": {
+        "title": "Task detail",
+        "purpose": "What needs doing, who does it and by when.",
+        "points": [
+          "Mark it as done when you finish.",
+          "If it is blocked, see which task comes first.",
+          "Leave a comment for your manager or HR."
+        ]
+      },
+      "selfReview": {
+        "title": "My check-in",
+        "purpose": "Your self-review before the meeting with your manager.",
+        "points": [
+          "Choose how you feel.",
+          "Tell what was hard and what helped.",
+          "Only your manager and HR see it."
+        ]
+      },
+      "requests": {
+        "title": "Access requests",
+        "purpose": "Requests for help signing in: lockouts, passwords and verification.",
+        "points": [
+          "Urgent ones come first.",
+          "Open a request to verify the identity and resolve it.",
+          "Everything you do goes to the audit log."
+        ]
+      },
+      "requestDetail": {
+        "title": "Request detail",
+        "purpose": "Verify the identity and resolve the request.",
+        "points": [
+          "Verify with the record's data, never with the request's.",
+          "Unlock, force a password change or reset verification.",
+          "If you reject, explain why."
+        ]
+      },
+      "accessTasks": {
+        "title": "Access tasks",
+        "purpose": "Access to grant or revoke for joiners, movers and leavers.",
+        "points": [
+          "Filter the pending ones.",
+          "Mark each access as you complete it.",
+          "The leaver already disabled the account; here you close its access."
+        ]
+      },
+      "approvals": {
+        "title": "Approvals",
+        "purpose": "Sensitive changes waiting for a second person in IT.",
+        "points": [
+          "Approve or reject with a note.",
+          "Nobody approves what they asked for or what affects them.",
+          "IT never keeps fewer than two people."
+        ]
+      },
+      "campaigns": {
+        "title": "Review campaigns",
+        "purpose": "Periodic reviews of everyone's access.",
+        "points": [
+          "Create a campaign with scope and due date.",
+          "Follow the progress and remind whoever is missing.",
+          "Execute the revocations and close with the summary."
+        ]
+      },
+      "security": {
+        "title": "Security and audit",
+        "purpose": "The organization's security status.",
+        "points": [
+          "Unlock accounts and close sessions.",
+          "Filter and export the audit log.",
+          "Check the permissions matrix and propose policy changes."
+        ]
+      },
+      "notifications": {
+        "title": "Notifications",
+        "purpose": "Notices about what happened and what you need to do.",
+        "points": [
+          "Filter unread ones or by type.",
+          "Each notice takes you to the action.",
+          "See how it arrives by email."
+        ]
+      },
+      "search": {
+        "title": "Search",
+        "purpose": "Find people, templates, tasks and requests.",
+        "points": [
+          "Open search with Ctrl + K or /.",
+          "Filter results by type.",
+          "You only see what your role can open."
+        ]
+      },
+      "mySecurity": {
+        "title": "My security",
+        "purpose": "How access to your account is protected.",
+        "points": [
+          "Turn on or check two-step verification.",
+          "See your open sessions and close the ones you do not recognize.",
+          "Answer Was it you? after an unusual sign-in."
+        ]
+      },
+      "myPrivacy": {
+        "title": "My privacy",
+        "purpose": "The privacy notice and the data of yours Rumbo uses.",
+        "points": [
+          "Check what data the platform has.",
+          "Request access, rectification or deletion.",
+          "Follow each request's deadline."
+        ]
+      }
     }
   }
 }

@@ -1014,6 +1014,78 @@
     }
   },
   "welcome": {
+    "hr": {
+      "finish": "Ir a mi panel",
+      "steps": [
+        {
+          "title": "Te damos la bienvenida, {{name}}",
+          "body": "En tu panel ves cuántas personas están en su recorrido de ingreso, cuántas están por ingresar y cómo avanzan."
+        },
+        {
+          "title": "Un recorrido por puesto",
+          "body": "Arma cada recorrido una sola vez como plantilla y asígnalo al dar de alta a una persona nueva."
+        },
+        {
+          "title": "Lo que pide tu atención",
+          "body": "Las alertas te avisan cuando un recorrido se atrasa o un jefe escala un check-in. Desde cada alerta vas a la ficha."
+        }
+      ]
+    },
+    "manager": {
+      "finish": "Ver mi equipo",
+      "steps": [
+        {
+          "title": "Te damos la bienvenida, {{name}}",
+          "body": "Acá ves a las personas de tu equipo que están en su recorrido de ingreso y cuánto avanzó cada una."
+        },
+        {
+          "title": "Check-ins a los 30, 60 y 90 días",
+          "body": "Antes de cada reunión, la persona completa su autoevaluación. Tú evalúas los hitos y, si algo no se cumple, reprogramas o escalas a RRHH."
+        },
+        {
+          "title": "Revisión de accesos",
+          "body": "Cuando sistemas abre una campaña, confirmas si cada persona de tu equipo todavía necesita sus accesos."
+        }
+      ]
+    },
+    "it": {
+      "finish": "Ir a la bandeja",
+      "steps": [
+        {
+          "title": "Te damos la bienvenida, {{name}}",
+          "body": "Las solicitudes de acceso llegan a tu bandeja. Verifica la identidad con los datos de la ficha antes de restablecer un acceso."
+        },
+        {
+          "title": "Dos personas para lo sensible",
+          "body": "Los cambios de rol de admin y de políticas necesitan la aprobación de otra persona de sistemas. Nadie aprueba lo que pidió."
+        },
+        {
+          "title": "Todo queda registrado",
+          "body": "La auditoría guarda cada inicio de sesión, acceso denegado, desbloqueo y cambio de permisos, con quién y cuándo."
+        }
+      ]
+    },
+    "mini": {
+      "activeHires": "Ingresos activos",
+      "upcoming": "Por ingresar",
+      "tasks_one": "{{count}} tarea",
+      "tasks_other": "{{count}} tareas",
+      "alert": "Alerta para RRHH",
+      "escalated": "Check-in de 30 días escalado",
+      "checkin": "Check-in de 30 días",
+      "milestone1": "Conoce las herramientas del equipo",
+      "milestone2": "Primer análisis entregado",
+      "met": "Cumplido",
+      "partial": "Parcial",
+      "keep": "Se mantiene",
+      "review": "Revisar",
+      "new": "Nueva",
+      "verify": "Verificar identidad",
+      "twoPeople": "Doble aprobación",
+      "auditLogin": "Inicio de sesión · Sofía Ramírez",
+      "auditDenied": "Acceso denegado · /it/security",
+      "auditUnlock": "Cuenta desbloqueada · Joaquín Benítez"
+    },
     "reopen": "Ver la bienvenida",
     "close": "Cerrar la bienvenida",
     "skip": "Saltar",
@@ -3384,6 +3456,258 @@
       "results_one": "{{count}} resultado para \"{{q}}\"",
       "results_other": "{{count}} resultados para \"{{q}}\"",
       "listTitle": "Resultados"
+    }
+  },
+  "help": {
+    "menuItem": "Ayuda de esta pantalla",
+    "dialogTitle": "Ayuda: {{screen}}",
+    "whatYouCanDo": "Qué puedes hacer acá",
+    "generic": "Esta pantalla",
+    "genericPurpose": "Usa el menú para moverte por las secciones de tu rol. Si algo no funciona como esperas, escribe a la mesa de ayuda.",
+    "screens": {
+      "dashboard": {
+        "title": "Panel de seguimiento",
+        "purpose": "Muestra cómo avanzan todos los recorridos y dónde se traban.",
+        "points": [
+          "Mira los indicadores y su variación del último mes.",
+          "Cambia el gráfico entre cohortes de ingreso y personas.",
+          "Abre una alerta para ir a la ficha del ingreso."
+        ]
+      },
+      "hires": {
+        "title": "Ingresos",
+        "purpose": "Lista a las personas que están por ingresar, en su recorrido o que ya lo terminaron.",
+        "points": [
+          "Filtra por estado y por área.",
+          "Abre la ficha de cada ingreso.",
+          "Da de alta un ingreso nuevo con su plantilla."
+        ]
+      },
+      "hireNew": {
+        "title": "Alta de ingreso",
+        "purpose": "Crea el recorrido de una persona nueva a partir de una plantilla publicada.",
+        "points": [
+          "Completa los datos y la fecha de ingreso.",
+          "Elige jefe directo, buddy y plantilla.",
+          "Al guardar, las fechas de cada tarea se calculan solas."
+        ]
+      },
+      "hireRecord": {
+        "title": "Ficha del ingreso",
+        "purpose": "Reúne el recorrido de una persona, sus check-ins y sus datos.",
+        "points": [
+          "Marca como hechas las tareas de RRHH, sistemas o buddy.",
+          "Revisa los check-ins y las autoevaluaciones.",
+          "Abre los comentarios de cada tarea."
+        ]
+      },
+      "templates": {
+        "title": "Plantillas",
+        "purpose": "Catálogo de recorridos por puesto, con su estado y sus versiones.",
+        "points": [
+          "Crea, duplica o abre una plantilla.",
+          "Cambia entre tarjetas y tabla.",
+          "Solo las plantillas publicadas se pueden asignar."
+        ]
+      },
+      "templateEditor": {
+        "title": "Editor de plantilla",
+        "purpose": "Arma las tareas de cada etapa del recorrido.",
+        "points": [
+          "Agrega tareas, arrástralas o usa Subir y Bajar.",
+          "Define responsable, plazo y dependencias.",
+          "Guarda un borrador o publica una versión nueva con su nota."
+        ]
+      },
+      "people": {
+        "title": "Personas y catálogos",
+        "purpose": "Quién trabaja en Nortia y los catálogos de áreas y puestos.",
+        "points": [
+          "Busca y filtra por área, rol y estado.",
+          "Abre la ficha de una persona para editar sus datos o su rol.",
+          "Los roles de admin necesitan la aprobación de sistemas."
+        ]
+      },
+      "lifecycle": {
+        "title": "Altas, cambios y bajas",
+        "purpose": "Movimientos de personas que cambian sus accesos.",
+        "points": [
+          "Registra un cambio de puesto o una baja.",
+          "Mira qué accesos otorga o revoca sistemas.",
+          "Sistemas nunca queda con menos de dos personas."
+        ]
+      },
+      "privacyRequests": {
+        "title": "Solicitudes sobre datos personales",
+        "purpose": "Pedidos de acceso, rectificación o supresión con su plazo legal.",
+        "points": [
+          "Filtra por estado y mira primero las que vencen antes.",
+          "Toma una solicitud y respóndela por escrito.",
+          "La respuesta le llega a la persona en Mi privacidad."
+        ]
+      },
+      "reports": {
+        "title": "Reportes y exportaciones",
+        "purpose": "Descarga los datos de Rumbo para analizarlos o presentarlos.",
+        "points": [
+          "Exporta listados a CSV, siempre con los datos sensibles ocultos.",
+          "Imprime el panel o guárdalo como PDF.",
+          "Pide una exportación con datos sin ocultar: necesita la aprobación de sistemas."
+        ]
+      },
+      "accessReview": {
+        "title": "Revisión de accesos",
+        "purpose": "Confirma si cada persona que revisas todavía necesita sus accesos.",
+        "points": [
+          "Mantén o revoca cada acceso, con motivo si lo revocas.",
+          "Usa Mantener los pendientes para resolver una persona de una vez.",
+          "Quitar un rol de admin pasa por la doble aprobación."
+        ]
+      },
+      "team": {
+        "title": "Mi equipo en onboarding",
+        "purpose": "Las personas de tu equipo en su recorrido de ingreso.",
+        "points": [
+          "Mira el avance y el próximo check-in de cada una.",
+          "Abre su ficha para ver su recorrido.",
+          "Completa el check-in cuando le toque."
+        ]
+      },
+      "teamRecord": {
+        "title": "Detalle del ingreso",
+        "purpose": "El recorrido de una persona de tu equipo y sus check-ins.",
+        "points": [
+          "Marca como hechas tus propias tareas.",
+          "Lee su autoevaluación antes del check-in.",
+          "Completa el check-in de la etapa."
+        ]
+      },
+      "checkin": {
+        "title": "Check-in",
+        "purpose": "La reunión de seguimiento de la etapa.",
+        "points": [
+          "Evalúa cada hito: cumplido, parcial o no cumplido.",
+          "Si algo no se cumple, reprograma o escala a RRHH.",
+          "Escribe los próximos pasos."
+        ]
+      },
+      "journey": {
+        "title": "Mi recorrido",
+        "purpose": "Todo lo que te toca hacer en tu ingreso, por etapa.",
+        "points": [
+          "Mira Lo próximo para saber qué sigue.",
+          "Marca tus tareas como hechas.",
+          "Escribe a tus contactos clave si tienes dudas."
+        ]
+      },
+      "task": {
+        "title": "Detalle de la tarea",
+        "purpose": "Qué hay que hacer, quién lo hace y para cuándo.",
+        "points": [
+          "Márcala como hecha cuando termines.",
+          "Si está bloqueada, mira qué tarea falta antes.",
+          "Deja un comentario para tu jefe o RRHH."
+        ]
+      },
+      "selfReview": {
+        "title": "Mi check-in",
+        "purpose": "Tu autoevaluación antes de la reunión con tu jefe directo.",
+        "points": [
+          "Elige cómo te sientes.",
+          "Cuenta qué te costó y qué te sirvió.",
+          "Solo la ven tu jefe directo y RRHH."
+        ]
+      },
+      "requests": {
+        "title": "Solicitudes de acceso",
+        "purpose": "Pedidos de ayuda para iniciar sesión: bloqueos, contraseñas y verificación.",
+        "points": [
+          "Las urgentes van primero.",
+          "Abre una solicitud para verificar la identidad y resolverla.",
+          "Todo lo que haces queda en la auditoría."
+        ]
+      },
+      "requestDetail": {
+        "title": "Detalle de la solicitud",
+        "purpose": "Verifica la identidad y resuelve el pedido.",
+        "points": [
+          "Verifica con los datos de la ficha, nunca con los de la solicitud.",
+          "Desbloquea, fuerza el cambio de contraseña o restablece la verificación.",
+          "Si rechazas, explica el motivo."
+        ]
+      },
+      "accessTasks": {
+        "title": "Tareas de accesos",
+        "purpose": "Accesos para otorgar o revocar por altas, cambios y bajas.",
+        "points": [
+          "Filtra los pendientes.",
+          "Marca cada acceso cuando lo completes.",
+          "La baja ya deshabilitó la cuenta; acá cierras sus accesos."
+        ]
+      },
+      "approvals": {
+        "title": "Aprobaciones",
+        "purpose": "Cambios sensibles que esperan a una segunda persona de sistemas.",
+        "points": [
+          "Aprueba o rechaza con una nota.",
+          "Nadie aprueba lo que pidió ni lo que lo afecta.",
+          "Sistemas nunca queda con menos de dos personas."
+        ]
+      },
+      "campaigns": {
+        "title": "Campañas de revisión",
+        "purpose": "Revisiones periódicas de los accesos de toda la organización.",
+        "points": [
+          "Crea una campaña con alcance y fecha límite.",
+          "Sigue el avance y recuerda a quien falta.",
+          "Ejecuta las revocaciones y cierra con el resumen."
+        ]
+      },
+      "security": {
+        "title": "Seguridad y auditoría",
+        "purpose": "El estado de seguridad de la organización.",
+        "points": [
+          "Desbloquea cuentas y cierra sesiones.",
+          "Filtra y exporta la auditoría.",
+          "Revisa la matriz de permisos y propone cambios de políticas."
+        ]
+      },
+      "notifications": {
+        "title": "Notificaciones",
+        "purpose": "Los avisos de lo que pasó y lo que te toca hacer.",
+        "points": [
+          "Filtra las no leídas o por tipo.",
+          "Cada aviso lleva al lugar de la acción.",
+          "Mira cómo llega por correo."
+        ]
+      },
+      "search": {
+        "title": "Búsqueda",
+        "purpose": "Encuentra personas, plantillas, tareas y solicitudes.",
+        "points": [
+          "Abre la búsqueda con Ctrl + K o /.",
+          "Filtra los resultados por tipo.",
+          "Solo ves lo que tu rol puede abrir."
+        ]
+      },
+      "mySecurity": {
+        "title": "Mi seguridad",
+        "purpose": "Cómo se protege el acceso a tu cuenta.",
+        "points": [
+          "Activa o revisa la verificación en dos pasos.",
+          "Mira tus sesiones abiertas y cierra las que no reconoces.",
+          "Responde ¿Fuiste tú? si hubo un inicio inusual."
+        ]
+      },
+      "myPrivacy": {
+        "title": "Mi privacidad",
+        "purpose": "El aviso de privacidad y los datos tuyos que usa Rumbo.",
+        "points": [
+          "Revisa qué datos tiene la plataforma.",
+          "Pide acceso, rectificación o supresión.",
+          "Sigue el plazo de cada solicitud."
+        ]
+      }
     }
   }
 }

@@ -452,4 +452,5 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 ## Paso 23 · F16 Búsqueda, ayuda contextual y exportación, 12/11/2026 (en curso)
 
 - Búsqueda global (D-126): `src/lib/search.ts` arma los resultados con los permisos de cada pantalla; diálogo rápido con `Ctrl+K` y `/` y G12 (`/search?q=`) con filtros por tipo. Tests por rol y de la página; G12 en Playwright.
-- Pendiente en este paso: ayuda contextual por pantalla, bienvenidas guiadas para RRHH, jefe y sistemas, y A13 con exportaciones, impresión y el revelado masivo con doble aprobación.
+- Ayuda contextual y bienvenidas (D-127): "Ayuda de esta pantalla" en el menú Ayuda para 27 pantallas y bienvenidas de tres pasos para RRHH, jefe y sistemas. Tests de ayuda y bienvenidas.
+- Pendiente en este paso: A13 con exportaciones, impresión y el revelado masivo con doble aprobación.

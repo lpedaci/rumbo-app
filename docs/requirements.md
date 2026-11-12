@@ -150,7 +150,7 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-080 | Las acciones sensibles deben requerir doble aprobación, sin que quien pide pueda aprobar. | RRHH, Sistemas | F14 | S7 | Should | El botón de aprobar no está disponible para quien solicitó. | Hecho |
 | RF-081 | El sistema debe permitir gestionar personas, áreas y puestos (con plantilla y accesos sugeridos). | RRHH | F15 | A9, A10 | Should | El cambio de rol a admin pasa por doble aprobación. | Hecho |
 | RF-082 | El sistema debe ofrecer búsqueda global (`Ctrl+K` o `/`) filtrada por permisos y agrupada por tipo. | Todos | F16 | G6, G12 | Should | Sofía no encuentra recorridos ajenos. | Hecho |
-| RF-083 | El sistema debe ofrecer ayuda contextual por pantalla y un recorrido guiado de 3 a 5 pasos por rol. | Todos | F16 | Todas | Should | Se puede saltar y volver a ver desde el menú. | Pendiente |
+| RF-083 | El sistema debe ofrecer ayuda contextual por pantalla y un recorrido guiado de 3 a 5 pasos por rol. | Todos | F16 | Todas | Should | Se puede saltar y volver a ver desde el menú. | Hecho |
 | RF-084 | El sistema debe exportar listados a CSV y ofrecer vistas imprimibles del panel, la ficha del ingreso y el resumen de campañas. | RRHH, Sistemas | F16 | A13 | Should | Respetan el enmascarado y quedan en la auditoría. | Pendiente |
 | RF-085 | El sistema debe permitir elegir idioma, preferencias de notificación, zona horaria, formato de fecha, reducir animaciones y alto contraste. | Todos | F17 | G11 | Should | Los cambios se aplican sin recargar. | Pendiente |
 
