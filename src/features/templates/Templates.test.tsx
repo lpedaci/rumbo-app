@@ -1,10 +1,11 @@
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { switchRole } from '@/features/auth/auth-service';
 import { tasksOfStage } from '@/lib/templates';
 import es from '@/locales/es.json';
 import { useDataStore } from '@/store/data-store';
 import { useSessionStore } from '@/store/session-store';
+import { useUiStore } from '@/store/ui-store';
 import { renderAt } from '@/test/render-app';
 
 
@@ -117,7 +118,7 @@ describe('A6 · Template builder', () => {
     });
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toHaveTextContent(es.templates.editor.leave.title);
-    fireEvent.click(within(dialog).getByRole('button', { name: es.ui.cancel }));
+    fireEvent.click(within(dialog).getByRole('button', { name: es.templates.editor.leave.stay }));
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(router.state.location.pathname).toBe('/admin/templates/tpl-data');
     expect(name).toHaveValue('Analista de Datos 2');
@@ -125,8 +126,52 @@ describe('A6 · Template builder', () => {
     act(() => {
       void router.navigate('/admin');
     });
-    fireEvent.click(within(await screen.findByRole('dialog')).getByRole('button', { name: es.templates.editor.leave.confirm }));
+    fireEvent.click(within(await screen.findByRole('dialog')).getByRole('button', { name: es.templates.editor.leave.discard }));
     await waitFor(() => expect(router.state.location.pathname).toBe('/admin'));
+    expect(useDataStore.getState().templates.find((x) => x.id === 'tpl-data')?.name).not.toBe('Analista de Datos 2');
+  });
+
+  it('"Ver como" with unsaved changes asks the same: save the draft and switch, or stay (D-53)', async () => {
+    const { router } = renderAt('/admin/templates/tpl-data');
+    await screen.findByRole('heading', { level: 1 });
+    fireEvent.change(screen.getByLabelText(/Nombre de la plantilla/), { target: { value: 'Analista de Datos 2' } });
+
+    // The guard holds the switch back and opens the dialog; the session does not change
+    const proceed = vi.fn();
+    let held = false;
+    act(() => {
+      held = useUiStore.getState().leaveGuard?.(proceed) ?? false;
+    });
+    expect(held).toBe(true);
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toHaveTextContent(es.templates.editor.leave.title);
+    fireEvent.click(within(dialog).getByRole('button', { name: es.templates.editor.leave.stay }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(proceed).not.toHaveBeenCalled();
+    expect(useSessionStore.getState().session?.personId).toBe('p-carla');
+
+    // Save the draft and leave: the change is kept and the switch goes on
+    act(() => {
+      useUiStore.getState().leaveGuard?.(proceed);
+    });
+    fireEvent.click(within(await screen.findByRole('dialog')).getByRole('button', { name: es.templates.editor.leave.save }));
+    await waitFor(() => expect(proceed).toHaveBeenCalledTimes(1));
+    expect(useDataStore.getState().templates.find((x) => x.id === 'tpl-data')?.name).toBe('Analista de Datos 2');
+    expect(router.state.location.pathname).toBe('/admin/templates/tpl-data');
+  });
+
+  it('"Ver como" from the top bar switches only after choosing in the dialog (D-53)', async () => {
+    const { router } = renderAt('/admin/templates/tpl-data');
+    await screen.findByRole('heading', { level: 1 });
+    fireEvent.change(screen.getByLabelText(/Nombre de la plantilla/), { target: { value: 'Otra' } });
+    const [trigger] = screen.getAllByRole('button', { name: new RegExp(es.layout.viewAs) });
+    fireEvent.pointerDown(trigger!, { button: 0, ctrlKey: false });
+    fireEvent.click(await screen.findByRole('menuitemradio', { name: new RegExp(es.roles.manager) }));
+    const dialog = await screen.findByRole('dialog');
+    expect(useSessionStore.getState().session?.personId).toBe('p-carla');
+    fireEvent.click(within(dialog).getByRole('button', { name: es.templates.editor.leave.discard }));
+    await waitFor(() => expect(useSessionStore.getState().session?.personId).toBe('p-martin'));
+    await waitFor(() => expect(router.state.location.pathname).toBe('/manager'));
   });
 
   it('shows a summary with the problems instead of saving an incomplete template', async () => {

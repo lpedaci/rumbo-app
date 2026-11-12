@@ -975,9 +975,11 @@
         "done": "Tarea eliminada"
       },
       "leave": {
-        "title": "¿Salir sin guardar?",
-        "body": "Los cambios que hiciste en la plantilla se van a perder.",
-        "confirm": "Salir sin guardar"
+        "title": "Tienes cambios sin guardar",
+        "body": "Guarda la plantilla como borrador antes de salir o descarta los cambios. El borrador no cambia la versión publicada.",
+        "stay": "Quedarme",
+        "discard": "Descartar cambios",
+        "save": "Guardar borrador y salir"
       }
     },
     "taskForm": {

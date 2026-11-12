@@ -1,4 +1,8 @@
 import { z } from 'zod';
+
+// The CSP has no 'unsafe-eval' (8.2): Zod must not try to compile validators with
+// `new Function`, which the browser blocks and reports as a policy violation (INC-029).
+z.config({ jitless: true });
 import { addDays } from './dates';
 import { DATE_FORMATS, TIMEZONES } from './preferences';
 
@@ -8,9 +12,9 @@ import { DATE_FORMATS, TIMEZONES } from './preferences';
  * what to fix (CLAUDE.md 2.9 and 2.10).
  */
 
-/** Allowed range for a task offset, in days from the start date (D-27). */
-export const TASK_OFFSET_MIN = -30;
-export const TASK_OFFSET_MAX = 90;
+import { TASK_OFFSET_MAX, TASK_OFFSET_MIN } from './templates';
+
+export { TASK_OFFSET_MAX, TASK_OFFSET_MIN };
 
 /** Parses DD/MM/AAAA into an ISO date (YYYY-MM-DD), or null if the date does not exist. */
 export function parseDisplayDate(value: string): string | null {

@@ -13,6 +13,13 @@ interface UiState {
   /** F16: quick search open. Not persisted. */
   searchOpen: boolean;
   setSearchOpen: (open: boolean) => void;
+  /**
+   * D-53: a screen with unsaved changes (the template editor) can hold back actions that leave
+   * it without a route change it can block, such as "Ver como". Returns true when it took
+   * over: it asks first and calls `proceed` if the person chooses to leave. Not persisted.
+   */
+  leaveGuard: ((proceed: () => void) => boolean) | null;
+  setLeaveGuard: (guard: ((proceed: () => void) => boolean) | null) => void;
   setNavCollapsed: (collapsed: boolean) => void;
   setNavDrawerOpen: (open: boolean) => void;
 }
@@ -24,6 +31,8 @@ export const useUiStore = create<UiState>()(
       navDrawerOpen: false,
       searchOpen: false,
       setSearchOpen: (searchOpen) => set({ searchOpen }),
+      leaveGuard: null,
+      setLeaveGuard: (leaveGuard) => set({ leaveGuard }),
       setNavCollapsed: (navCollapsed) => set({ navCollapsed }),
       setNavDrawerOpen: (navDrawerOpen) => set({ navDrawerOpen }),
     }),

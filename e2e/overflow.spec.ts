@@ -10,7 +10,7 @@ import { PAGES, prepareSession, WIDTHS } from './pages';
  */
 for (const page of PAGES) {
   for (const width of WIDTHS) {
-    test(`${page.id} @ ${width}px has no horizontal overflow`, async ({ page: browserPage }) => {
+    test(`${page.id} @ ${width}px has no horizontal overflow`, async ({ page: browserPage }, testInfo) => {
       await browserPage.setViewportSize({ width, height: 900 });
       await prepareSession(browserPage, page);
       await browserPage.goto(page.path);
@@ -72,9 +72,12 @@ for (const page of PAGES) {
         return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, overflowing, offenders, squeezed, stickingOut };
       });
 
+      // The screenshots in docs/screenshots/ come from Chromium; Firefox and WebKit only check (D-131).
+      const capture = testInfo.project.name === 'chromium';
+
       // Sections that appear on scroll (G0, D-92) only show once they enter the viewport:
       // scroll through the page first so the full-page capture shows everything.
-      await browserPage.evaluate(async () => {
+      if (capture) await browserPage.evaluate(async () => {
         for (let y = 0; y < document.body.scrollHeight; y += 400) {
           window.scrollTo(0, y);
           await new Promise((r) => setTimeout(r, 40));
@@ -85,7 +88,7 @@ for (const page of PAGES) {
 
       // On Windows another process (a viewer, the indexer) can hold the file for a moment:
       // retry the capture before failing (INC-012). The checks above do not depend on it.
-      for (let attempt = 1; ; attempt += 1) {
+      for (let attempt = 1; capture; attempt += 1) {
         try {
           await browserPage.screenshot({
             path: `docs/screenshots/${page.id}-${width}.jpg`,

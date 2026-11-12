@@ -473,3 +473,12 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Requerimientos no funcionales actualizados con su evidencia, o marcados como parciales o pendientes cuando no se pudieron verificar.
 - README con las funciones de las dos fases, las 40 pantallas, capturas de las principales y el estado final.
 - Informe final en `docs/review.md`.
+
+## Paso 26 · Listo para el portfolio, 12/11/2026
+
+- D-53: "Ver como" con cambios sin guardar en el editor pregunta con el mismo diálogo que toda salida: guardar borrador, descartar o quedarse; tests de las tres opciones (D-131).
+- D-105 confirmada; CLAUDE.md con 7 a 11 notificaciones por persona generadas a partir de los datos.
+- Carga: `PageSkeleton` mientras llega una pantalla, librerías pesadas en fragmentos propios, Zod fuera de la carga inicial. Ningún fragmento supera 500 kB.
+- Lighthouse en G0, G1, N1 y A1, celular y escritorio, con resultados en `docs/perf/`.
+- Firefox y WebKit en Playwright y en GitHub Actions; flujos con teclado (`e2e/keyboard.spec.ts`) y un botón principal por región (`e2e/filled-button.spec.ts`).
+- `npm run check:console` para revisar la consola del build y de la demo publicada.

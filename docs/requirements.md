@@ -200,7 +200,7 @@ Organizados según las características de calidad de **ISO/IEC 25010:2023** (IS
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-004 | Lighthouse Performance ≥ 85 en mobile para G1, N1 y A1 en el deploy de GitHub Pages. | Should | Lighthouse en la revisión de fase. | Pendiente (Lighthouse no se corrió en la revisión final) |
+| RNF-004 | Lighthouse Performance ≥ 85 en mobile para G1, N1 y A1 en el deploy de GitHub Pages. | Should | Lighthouse en la revisión de fase. | Hecho (Lighthouse en G0, G1, N1 y A1 contra el build: rendimiento 98 a 100 en celular y 100 en escritorio; `docs/perf/`) |
 | RNF-005 | El JavaScript inicial (gzip) no supera 300 KB; las rutas de cada rol se cargan de forma diferida. | Should | Reporte de build de Vite. | Hecho |
 | RNF-006 | Los íconos se importan como SVG individuales; no se carga la fuente completa de Material Symbols. | Must | Revisión del bundle. | Hecho |
 | RNF-007 | Las animaciones duran entre 150 y 300 ms y solo animan `transform` y `opacity`. | Must | Revisión de código. | Hecho, con excepción (D-99) |
@@ -209,7 +209,7 @@ Organizados según las características de calidad de **ISO/IEC 25010:2023** (IS
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-008 | Funciona en las dos últimas versiones de Chrome, Edge, Firefox y Safari. | Should | Prueba manual de los flujos críticos. | Parcial (verificado en Chromium con Playwright; faltan Firefox, Safari y Edge) |
+| RNF-008 | Funciona en las dos últimas versiones de Chrome, Edge, Firefox y Safari. | Should | Prueba manual de los flujos críticos. | Hecho (Playwright en Chromium, WebKit y Firefox: WebKit en local y los dos en GitHub Actions; Edge usa Chromium) |
 | RNF-009 | Usa `HashRouter` para que todas las rutas funcionen en GitHub Pages, incluida la recarga directa. | Must | Recargar rutas profundas en el deploy. | Hecho |
 
 ### Capacidad de interacción (usabilidad y accesibilidad)
@@ -219,7 +219,7 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
 | RNF-010 | Contraste mínimo 4,5:1 en texto normal y 3:1 en texto grande, bordes de controles (`outline`) e indicadores de foco, en todas las combinaciones de tokens. | Must | Script de contraste sobre los tokens y axe en cada pantalla. | Hecho |
-| RNF-011 | Todas las acciones se pueden hacer con teclado, en orden lógico, con foco siempre visible (anillo `primary` de 2 px) y nunca tapado por el header, toasts u otros elementos (2.4.11). | Must | Recorrido con teclado de cada flujo principal. | Parcial (teclado cubierto en los tests de componentes, del constructor y de los diálogos; falta un recorrido manual completo por rol) |
+| RNF-011 | Todas las acciones se pueden hacer con teclado, en orden lógico, con foco siempre visible (anillo `primary` de 2 px) y nunca tapado por el header, toasts u otros elementos (2.4.11). | Must | Recorrido con teclado de cada flujo principal. | Hecho (`e2e/keyboard.spec.ts`: login con MFA, completar una tarea, Subir y Bajar y un check-in sin clics, en tres navegadores) |
 | RNF-012 | El 100 % de los campos tiene etiqueta visible y permanente y texto de ayuda debajo con el formato y un ejemplo, asociado con `aria-describedby`; ningún placeholder reemplaza a una etiqueta o instrucción. | Must | axe y revisión de cada formulario. | Hecho (`helperText` obligatorio en `TextField`, `Select` y `TextArea`; axe en cada pantalla) |
 | RNF-013 | Ninguna pantalla tiene desborde horizontal en 320, 375, 768, 1024, 1280 y 1440 px, ni con zoom al 200 %. | Must | Test de Playwright en verde y capturas en `docs/screenshots/`. | Hecho |
 | RNF-014 | Las áreas táctiles miden al menos 48 × 48 px en mobile y 24 × 24 px en desktop (2.5.8). | Must | Test de Playwright sobre elementos interactivos a 375 px y 1280 px. | Hecho (`e2e/touch.spec.ts` a 375 px en todas las pantallas; en desktop ningún control mide menos de 32 px) |
@@ -237,10 +237,10 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | RNF-049 | Cada gráfico tiene título, resumen en texto del dato principal y la misma información en una tabla para lectores de pantalla (D-83). | Must | Revisión de A1 y demás gráficos. | Hecho |
 | RNF-050 | Los estados se comunican con ícono y texto, nunca solo con color. | Must | Revisión en escala de grises. | Hecho (`StatusPill`, `InlineAlert` y los chips de estado llevan siempre ícono y texto) |
 | RNF-051 | El acceso a la ayuda y a "¿Problemas para iniciar sesión?" está siempre en el mismo lugar (3.2.6). | Must | Revisión de las pantallas de acceso y del layout. | Hecho |
-| RNF-052 | axe no reporta errores en ninguna pantalla, y login, recorrido del nuevo ingreso y constructor se prueban con un lector de pantalla. | Must | `@axe-core/playwright` en el test y prueba manual con NVDA o VoiceOver; hallazgos en `issues.md`. | Parcial: axe en verde; la prueba con lector de pantalla queda para líneas futuras (decisión de Lourdes, 11/11/2026) |
+| RNF-052 | axe no reporta errores en ninguna pantalla, y login, recorrido del nuevo ingreso y constructor se prueban con un lector de pantalla. | Must | `@axe-core/playwright` en el test y prueba manual con NVDA o VoiceOver; hallazgos en `issues.md`. | Parcial: axe en verde; la prueba con NVDA la hace Lourdes |
 | RNF-053 | Todo texto usa un rol tipográfico de 2.1.2 (ningún tamaño suelto), mínimo 12 px para texto de lectura, 11 px solo en insignias, cifras tabulares en números y unidades `rem`. | Must | Búsqueda de tamaños fuera de los tokens. | Hecho (sin tamaños sueltos en las pantallas; solo `OgCard`, que genera la imagen para compartir) |
 | RNF-055 | Los campos de fecha, número, código y correo no aceptan caracteres que no correspondan al dato, ni al escribir ni al pegar (máscaras), y las fechas se validan contra el calendario. Si se descarta un carácter, el lector de pantalla anuncia que no se aceptó y lee el valor final. | Must | Tests unitarios de `input-masks.ts`, `validation.ts` y `TextField`; prueba manual en `/styleguide`. | Hecho |
-| RNF-054 | Hay un solo botón filled por región visible; todos los botones tienen los estados de 2.1.3 (reposo, hover, foco, presionado, deshabilitado y cargando) y los deshabilitados explican por qué. | Must | Revisión en `/styleguide` y en cada pantalla. | Parcial (estados completos en `Button`; un solo filled por región revisado en las pantallas principales, no en todas) |
+| RNF-054 | Hay un solo botón filled por región visible; todos los botones tienen los estados de 2.1.3 (reposo, hover, foco, presionado, deshabilitado y cargando) y los deshabilitados explican por qué. | Must | Revisión en `/styleguide` y en cada pantalla. | Hecho (`e2e/filled-button.spec.ts` en todas las pantallas a 375 y 1280 px; estados completos en `Button`) |
 
 ### Fiabilidad
 

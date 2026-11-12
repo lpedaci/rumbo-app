@@ -18,6 +18,7 @@ import {
   NOTIFICATION_CATEGORIES,
   TIMEZONES,
 } from '@/lib/preferences';
+import { preferencesSchema } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import type { UserPreferences } from '@/types/domain';
 import { useMyPreferences } from './use-preferences';
@@ -64,6 +65,8 @@ export function PreferencesPage() {
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
+    // RNF-023: only the offered values are saved
+    if (!preferencesSchema.safeParse(draft).success) return;
     useDataStore.getState().savePreferences(draft);
     toast.success(t('preferences.saved', { lng: draft.language }));
   };

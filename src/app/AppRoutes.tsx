@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { PageSkeleton } from '@/components/ui/PageSkeleton';
 import { Navigate, Route, Routes } from 'react-router';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { NextCheckinRedirect } from '@/features/journey/NextCheckinRedirect';
@@ -126,7 +127,7 @@ export function AppRoutes() {
   const user = useCurrentUser();
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<PageSkeleton standalone />}>
       <Routes>
         {/* Demo start (G0) and access (G1 to G4): public */}
         <Route path="/" element={<RootRoute />} />

@@ -14,6 +14,7 @@ import { toast } from '@/components/ui/toast-store';
 import { DEMO_ACCOUNTS, findDemoPerson, switchRole } from '@/features/auth/auth-service';
 import { can } from '@/lib/permissions';
 import { useCurrentUser } from '@/store/session-store';
+import { useUiStore } from '@/store/ui-store';
 import type { Role } from '@/types/domain';
 
 /**
@@ -29,15 +30,20 @@ export function RoleSwitcher() {
   const onChange = (value: string) => {
     const role = value as Role;
     if (role === user.role) return;
-    const path = switchRole(role);
-    const person = findDemoPerson(DEMO_ACCOUNTS.find((a) => a.role === role)!.personId);
-    navigate(path);
-    toast.info(
-      t('layout.switched', {
-        name: person?.name ?? '',
-        role: t(`rolesInline.${role}`),
-      }),
-    );
+    const go = () => {
+      const path = switchRole(role);
+      const person = findDemoPerson(DEMO_ACCOUNTS.find((a) => a.role === role)!.personId);
+      navigate(path);
+      toast.info(
+        t('layout.switched', {
+          name: person?.name ?? '',
+          role: t(`rolesInline.${role}`),
+        }),
+      );
+    };
+    // D-53: unsaved changes ask first, as when leaving the editor any other way
+    if (useUiStore.getState().leaveGuard?.(go)) return;
+    go();
   };
 
   return (

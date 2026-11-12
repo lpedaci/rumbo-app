@@ -1,4 +1,3 @@
-import { preferencesSchema } from '@/lib/validation';
 import { create, type Mutate, type StoreApi, type UseBoundStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
@@ -1449,9 +1448,9 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
           };
         }),
 
+      // Validated with `preferencesSchema` in G11 before saving (RNF-023); the store does not load
+      // Zod so that it stays out of the first load (D-131).
       savePreferences: (preferences) => {
-        // RNF-023: only the listed values are stored
-        if (!preferencesSchema.safeParse(preferences).success) return;
         set((state) => ({
           preferences: [...state.preferences.filter((p) => p.personId !== preferences.personId), preferences],
         }));

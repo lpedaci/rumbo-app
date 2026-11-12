@@ -1,0 +1,42 @@
+name: Other browsers (Firefox and WebKit)
+
+# D-131: the overflow test at 6 widths and the main flows with the keyboard, in Firefox and in
+# WebKit (Safari's engine). Chromium (and so Edge) runs every check locally before each review.
+# Separate from the deploy so a browser-only finding never blocks publishing.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browsers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browsers:
+    name: ${{ matrix.browser }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies (lockfile only)
+        run: npm ci
+
+      - name: Install ${{ matrix.browser }}
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Overflow at 6 widths and keyboard flows
+        run: npx playwright test e2e/overflow.spec.ts e2e/keyboard.spec.ts --project=${{ matrix.browser }} --reporter=line

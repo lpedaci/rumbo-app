@@ -1,0 +1,141 @@
+[
+  {
+    "page": "G0",
+    "formFactor": "mobile",
+    "finalUrl": "http://localhost:4173/#/",
+    "performance": 98,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "2.1 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "failing": [
+      "forced-reflow-insight (0)",
+      "image-delivery-insight (Est savings of 30 KiB)",
+      "network-dependency-tree-insight (0)",
+      "render-blocking-insight (Est savings of 430 ms)"
+    ]
+  },
+  {
+    "page": "G0",
+    "formFactor": "desktop",
+    "finalUrl": "http://localhost:4173/#/",
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.3 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "failing": [
+      "forced-reflow-insight (0)",
+      "lcp-discovery-insight (0)",
+      "network-dependency-tree-insight (0)",
+      "render-blocking-insight (50)"
+    ]
+  },
+  {
+    "page": "G1",
+    "formFactor": "mobile",
+    "finalUrl": "http://localhost:4173/#/login",
+    "performance": 99,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.8 s",
+    "tbt": "10 ms",
+    "cls": "0",
+    "failing": [
+      "unused-javascript (Est savings of 28 KiB)",
+      "image-delivery-insight (Est savings of 33 KiB)",
+      "network-dependency-tree-insight (0)",
+      "render-blocking-insight (Est savings of 150 ms)"
+    ]
+  },
+  {
+    "page": "G1",
+    "formFactor": "desktop",
+    "finalUrl": "http://localhost:4173/#/login",
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.4 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "failing": [
+      "network-dependency-tree-insight (0)",
+      "render-blocking-insight (50)"
+    ]
+  },
+  {
+    "page": "N1",
+    "formFactor": "mobile",
+    "finalUrl": "http://localhost:4173/#/me",
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.4 s",
+    "tbt": "60 ms",
+    "cls": "0",
+    "failing": [
+      "image-delivery-insight (Est savings of 8 KiB)",
+      "network-dependency-tree-insight (0)",
+      "render-blocking-insight (Est savings of 150 ms)"
+    ]
+  },
+  {
+    "page": "N1",
+    "formFactor": "desktop",
+    "finalUrl": "http://localhost:4173/#/me",
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.4 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "failing": [
+      "image-delivery-insight (Est savings of 20 KiB)",
+      "network-dependency-tree-insight (0)",
+      "render-blocking-insight (50)"
+    ]
+  },
+  {
+    "page": "A1",
+    "formFactor": "mobile",
+    "finalUrl": "http://localhost:4173/#/admin",
+    "performance": 98,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "2.2 s",
+    "tbt": "50 ms",
+    "cls": "0",
+    "failing": [
+      "unused-javascript (Est savings of 53 KiB)",
+      "forced-reflow-insight (0)",
+      "image-delivery-insight (Est savings of 8 KiB)",
+      "network-dependency-tree-insight (0)",
+      "render-blocking-insight (Est savings of 150 ms)"
+    ]
+  },
+  {
+    "page": "A1",
+    "formFactor": "desktop",
+    "finalUrl": "http://localhost:4173/#/admin",
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.4 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "failing": [
+      "network-dependency-tree-insight (0)",
+      "render-blocking-insight (50)"
+    ]
+  }
+]

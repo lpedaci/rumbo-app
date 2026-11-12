@@ -975,9 +975,11 @@
         "done": "Task deleted"
       },
       "leave": {
-        "title": "Leave without saving?",
-        "body": "The changes you made to the template will be lost.",
-        "confirm": "Leave without saving"
+        "title": "You have unsaved changes",
+        "body": "Save the template as a draft before leaving, or discard the changes. The draft does not change the published version.",
+        "stay": "Stay",
+        "discard": "Discard changes",
+        "save": "Save draft and leave"
       }
     },
     "taskForm": {

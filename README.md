@@ -224,14 +224,16 @@ e2e/            pruebas de desbordes, áreas táctiles y accesibilidad con Playw
 
 ## Calidad
 
-![Vitest](https://img.shields.io/badge/Vitest-351%20tests-6E9F18?logo=vitest&logoColor=white)
-![Playwright](https://img.shields.io/badge/Playwright-510%20pruebas-2EAD33?logo=playwright&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-353%20tests-6E9F18?logo=vitest&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-612%20pruebas-2EAD33?logo=playwright&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI-2088FF?logo=githubactions&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deploy-222222?logo=githubpages&logoColor=white)
 
 - **Tests unitarios y de componentes** (Vitest y Testing Library): reglas de negocio, permisos, contraste de tokens y flujos de cada rol.
 - **Desbordes en 6 anchos** (320, 375, 768, 1024, 1280 y 1440 px) con capturas en [`docs/screenshots/`](docs/screenshots/), **áreas táctiles de 48 px** en mobile y **axe** en cada pantalla (Playwright).
+- **Tres navegadores:** Chromium (y con él Edge), WebKit (el motor de Safari) y Firefox para desbordes y para cuatro flujos hechos solo con el teclado; un botón principal por región verificado en todas las pantallas.
+- **Rendimiento:** Lighthouse contra el build de producción con 98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO ([`docs/review.md`](docs/review.md)).
 - **CI en cada push:** auditoría de dependencias, lint, tests, build, control de la CSP y deploy a GitHub Pages.
 
 ---
@@ -252,6 +254,9 @@ npm run dev
 | `npm test` | Tests unitarios y de componentes |
 | `npm run test:e2e` | Desbordes, áreas táctiles y accesibilidad en 6 anchos, con capturas |
 | `npm run lint` | ESLint |
+| `npm run preview` | Sirve el build de producción en `http://localhost:4173` |
+| `npm run perf:lighthouse` | Lighthouse en G0, G1, N1 y A1 contra el build (con `npm run preview` abierto) |
+| `npm run check:console` | Revisa la consola de 12 pantallas del build o de la demo publicada (`BASE_URL`) |
 
 En la portada, elige un recorrido e inicia sesión con un clic; todo está precargado. Credenciales de demo, por si entras directo al login: `carla@nortia.demo`, `martin@nortia.demo`, `sofia@nortia.demo` o `diego@nortia.demo`, con la contraseña `Demo.2026!` y el código `246810`. **Restablecer demo** vuelve todo al estado inicial.
 

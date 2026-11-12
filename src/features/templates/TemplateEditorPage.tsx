@@ -7,11 +7,12 @@ import { z } from 'zod';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { ConfirmDialog } from '@/components/ui/Dialog';
+import { ConfirmDialog, Dialog, DialogContent } from '@/components/ui/Dialog';
 import { Icon } from '@/components/ui/Icon';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { TextField } from '@/components/ui/TextField';
 import { toast } from '@/components/ui/toast-store';
+import { useUiStore } from '@/store/ui-store';
 import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { DEMO_TODAY, STAGES } from '@/lib/dates';
 import {
@@ -106,8 +107,8 @@ function TemplateEditor({ template }: { template?: Template }) {
   const allowLeave = useRef(false);
 
   // Any in-app navigation with unsaved changes asks first: back link, side navigation
-  // or browser back (D-50, D-53). A role switch already closed this session, so it is
-  // not held back (the next role could not see this screen anyway).
+  // or browser back (D-50, D-53). "Ver como" asks through the leave guard below, before the
+  // session changes; once it changed, the navigation is not held back.
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
       dirty &&
@@ -116,6 +117,55 @@ function TemplateEditor({ template }: { template?: Template }) {
       useSessionStore.getState().session?.personId === user?.personId,
   );
   const usage = template ? templateUsage(template.id, hires) : 0;
+
+  // One dialog for every way out (D-53): save the draft, discard or stay. A route change comes
+  // through the blocker; "Ver como", through the leave guard, which keeps the switch pending.
+  const [pendingSwitch, setPendingSwitch] = useState<(() => void) | null>(null);
+  const blocked = blocker.state === 'blocked';
+  const leave = blocked
+    ? { proceed: () => blocker.proceed?.(), stay: () => blocker.reset?.() }
+    : pendingSwitch
+      ? { proceed: pendingSwitch, stay: () => {} }
+      : null;
+  useEffect(() => {
+    const { setLeaveGuard } = useUiStore.getState();
+    setLeaveGuard((proceed) => {
+      if (!dirty) return false;
+      setPendingSwitch(() => proceed);
+      return true;
+    });
+    return () => setLeaveGuard(null);
+  }, [dirty]);
+  const stay = () => {
+    leave?.stay();
+    setPendingSwitch(null);
+  };
+  const discardAndLeave = () => {
+    const next = leave;
+    setPendingSwitch(null);
+    allowLeave.current = true;
+    next?.proceed();
+  };
+  const saveAndLeave = () => {
+    const next = leave;
+    void handleSubmit(
+      (values) => {
+        setPendingSwitch(null);
+        if (!save(values, { leaving: true })) {
+          next?.stay();
+          return;
+        }
+        allowLeave.current = true;
+        next?.proceed();
+      },
+      (fieldErrors) => {
+        // Errors to fix first: stay on the editor and show them
+        setPendingSwitch(null);
+        next?.stay();
+        onInvalid(fieldErrors);
+      },
+    )();
+  };
 
   // Leaving the page with unsaved changes asks the browser to confirm (D-50).
   useEffect(() => {
@@ -191,12 +241,13 @@ function TemplateEditor({ template }: { template?: Template }) {
   const detailErrorText = (message?: string) =>
     message === 'templates.taskForm.titleMax' ? t(message, { max: NAME_MAX }) : fieldError({ type: 'custom', message });
 
-  const save = (values: DetailsValues) => {
-    if (!user) return;
+  /** Saves the draft; false when the template has problems to fix. */
+  const save = (values: DetailsValues, { leaving = false }: { leaving?: boolean } = {}): boolean => {
+    if (!user) return false;
     const issues = validateTemplate(tasks).map(issueMessage);
     if (issues.length > 0) {
       setSummary(issues);
-      return;
+      return false;
     }
     setSummary([]);
     const saved: Template = {
@@ -212,10 +263,11 @@ function TemplateEditor({ template }: { template?: Template }) {
     useDataStore.getState().saveTemplate(saved, user.personId);
     setBaseline(JSON.stringify({ ...savedDetails, ...values, tasks }));
     toast.success(isNew ? t('templates.editor.created') : t('templates.editor.saved'));
-    if (isNew) {
+    if (isNew && !leaving) {
       allowLeave.current = true;
       navigate(`/admin/templates/${saved.id}`, { replace: true });
     }
+    return true;
   };
 
   const onInvalid = (fieldErrors: FieldErrors<DetailsValues>) => {
@@ -353,7 +405,7 @@ function TemplateEditor({ template }: { template?: Template }) {
                 <Link to={`/admin/templates/${template.id}/versions`}>{t('templateVersions.history')}</Link>
               </Button>
             )}
-            <Button variant="tonal" leadingIcon="save" onClick={() => void handleSubmit(save, onInvalid)()}>
+            <Button variant="tonal" leadingIcon="save" onClick={() => void handleSubmit((values) => save(values), onInvalid)()}>
               {t('templateVersions.saveDraft')}
             </Button>
             <Button leadingIcon="publish" disabledReason={publishReason} onClick={() => setPublishOpen(true)}>
@@ -387,7 +439,7 @@ function TemplateEditor({ template }: { template?: Template }) {
         <Card title={t('templates.editor.details.title')}>
           <form
             noValidate
-            onSubmit={(event) => void handleSubmit(save, onInvalid)(event)}
+            onSubmit={(event) => void handleSubmit((values) => save(values), onInvalid)(event)}
             className="grid grid-cols-1 gap-5 md:grid-cols-3"
           >
             <TextField
@@ -473,16 +525,30 @@ function TemplateEditor({ template }: { template?: Template }) {
         onConfirm={onDeleteConfirmed}
       />
 
-      <ConfirmDialog
-        open={blocker.state === 'blocked'}
+      <Dialog
+        open={leave !== null}
         onOpenChange={(open) => {
-          if (!open && blocker.state === 'blocked') blocker.reset();
+          if (!open) stay();
         }}
-        title={t('templates.editor.leave.title')}
-        description={t('templates.editor.leave.body')}
-        confirmLabel={t('templates.editor.leave.confirm')}
-        onConfirm={() => blocker.proceed?.()}
-      />
+      >
+        <DialogContent
+          title={t('templates.editor.leave.title')}
+          description={t('templates.editor.leave.body')}
+          actions={
+            <>
+              <Button variant="outlined" fullWidth className="sm:w-auto" onClick={stay}>
+                {t('templates.editor.leave.stay')}
+              </Button>
+              <Button variant="outlined" fullWidth className="sm:w-auto" leadingIcon="delete" onClick={discardAndLeave}>
+                {t('templates.editor.leave.discard')}
+              </Button>
+              <Button fullWidth className="sm:w-auto" leadingIcon="save" onClick={saveAndLeave}>
+                {t('templates.editor.leave.save')}
+              </Button>
+            </>
+          }
+        />
+      </Dialog>
     </>
   );
 }

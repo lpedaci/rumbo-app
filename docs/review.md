@@ -1,18 +1,18 @@
 # Informe de revisión final
 
-> Paso 25 de CLAUDE.md, sección 10, con la estructura de la sección 13. Fecha: 12/11/2026. Revisó: Claude, contra CLAUDE.md completo.
-> Se corrieron el chequeo de tipos, ESLint, los tests unitarios, el build, `npm audit`, las pruebas de Playwright (desbordes en 6 anchos, áreas táctiles y axe) y se recorrieron roles en el navegador. Lo que no se pudo verificar se dice en cada punto; la revisión intermedia está en [`review-fase-a.md`](review-fase-a.md).
+> Pasos 25 y 26 de CLAUDE.md, sección 10, con la estructura de la sección 13. Fecha: 12/11/2026. Revisó: Claude, contra CLAUDE.md completo.
+> Se corrieron el chequeo de tipos, ESLint, los tests unitarios, el build, `npm audit`, Playwright en Chromium (desbordes en 6 anchos, áreas táctiles, axe, un botón principal por región y flujos con teclado), WebKit y Firefox (desbordes y teclado), Lighthouse contra el build de producción y una revisión de la consola del build y de la demo publicada. Lo que no se pudo verificar se dice en cada punto; la revisión intermedia está en [`review-fase-a.md`](review-fase-a.md).
 
 ## 1. Resumen
 
 Las **dos fases están completas en funciones**: las 40 pantallas funcionan con datos de demo, los cuatro roles se recorren de punta a punta y se puede cambiar de rol en cualquier momento. La seguridad está en sus tres capas (simulada en la interfaz, aplicada en el front y documentada para producción) y la interfaz está completa en español e inglés.
 
-Están en verde el build, **351 tests unitarios y de componentes**, **510 pruebas de Playwright** (desbordes en 6 anchos con capturas, áreas táctiles a 375 px y axe en cada pantalla) y el deploy de GitHub Pages (run 88, con F17). Lo que falta es **verificación manual**: Lighthouse en el deploy, Firefox, Safari y Edge, un recorrido completo solo con teclado por rol y la prueba con lector de pantalla.
+Están en verde el build, **353 tests unitarios y de componentes**, **612 pruebas de Playwright en Chromium** (desbordes en 6 anchos con capturas, áreas táctiles a 375 px, axe, un botón principal por región y cuatro flujos solo con teclado), **310 en WebKit** (desbordes y teclado), Lighthouse con **98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO** en G0, G1, N1 y A1, y el deploy de GitHub Pages. La prueba con NVDA queda a cargo de Lourdes.
 
 | Fase | Avance aproximado | Comentario |
 | --- | --- | --- |
-| A · Núcleo (F0 a F6) | **99 %** | Funciones, documentación y verificación automática completas; quedan las pruebas manuales de la sección 4 |
-| B · Base corporativa (F7 a F17) | **98 %** | Las 16 pantallas y todas las reglas; quedan las mismas pruebas manuales y la confirmación de D-105 |
+| A · Núcleo (F0 a F6) | **100 %** | Funciones, documentación y verificación automática completas; solo queda la prueba con NVDA |
+| B · Base corporativa (F7 a F17) | **100 %** | Las 16 pantallas y todas las reglas; D-53 y D-105 confirmadas |
 
 ---
 
@@ -75,8 +75,8 @@ Las **40 pantallas** de la sección 6 están construidas: 24 de fase A (G0 a G7,
 | Español neutro con tuteo y vocabulario fijo | Cumple | Revisión de `es.json` en esta revisión: sin voseo ni usted, sin términos a evitar; test de vocabulario |
 | Etiqueta visible y texto de ayuda en todos los campos | Cumple | `helperText` obligatorio en los campos; axe |
 | Errores al salir del campo, se van al corregir, no borran datos; error de servidor con "Reintentar" | Cumple | Tests de `TextField`; G4 con `error-servidor` |
-| axe sin errores, flujos con teclado y alternativa al arrastre | Cumple parcialmente | axe en verde en las 51 vistas y alternativa al arrastre con test; falta un recorrido manual completo solo con teclado |
-| Tipografía, colores y botones solo con los roles de 2.1.1 a 2.1.3 | Cumple parcialmente | Sin tamaños sueltos (salvo `OgCard`); un solo filled por región revisado en las pantallas principales, no en todas |
+| axe sin errores, flujos con teclado y alternativa al arrastre | Cumple | axe en verde en las 51 vistas; `e2e/keyboard.spec.ts` hace login con MFA, completa una tarea, usa Subir y Bajar del constructor y un check-in sin clics, en Chromium, WebKit y Firefox |
+| Tipografía, colores y botones solo con los roles de 2.1.1 a 2.1.3 | Cumple | Sin tamaños sueltos (salvo `OgCard`); `e2e/filled-button.spec.ts` verifica un solo botón filled por región en todas las pantallas a 375 y 1280 px |
 | `docs/flows.md` con task flows, user flows y wireflows rotulados | Cumple | Wireflows con capturas reales desde `/wireflows` |
 | Documentación de la sección 14 completa con Mermaid | Cumple | Ver sección 8 |
 | Contraste AA, foco visible y teclado en formularios y constructor | Cumple | Test de contraste de tokens; anillo de foco en todos los controles |
@@ -107,13 +107,10 @@ Las **40 pantallas** de la sección 6 están construidas: 24 de fase A (G0 a G7,
 
 ## 4. Qué falta (por prioridad)
 
-1. **Lighthouse en el deploy** (RNF-004): medir G1, N1 y A1 en mobile. El bundle principal supera el aviso de 500 kB de Vite; si el puntaje queda bajo 85, dividir más el código por ruta.
-2. **Prueba en Firefox, Safari y Edge** (RNF-008): todo lo automático corre en Chromium.
-3. **Recorrido completo solo con teclado** de cada flujo principal (RNF-011).
-4. **Prueba con NVDA o VoiceOver** en login, recorrido del nuevo ingreso y constructor (RNF-048, 2.10).
-5. **Revisión de "un solo filled por región"** en todas las pantallas (RNF-054) y de "no pedir dos veces el mismo dato" por flujo (RNF-045).
-6. **Confirmar D-105** (volumen de notificaciones semilla) y **D-53** (excepción del cambio de rol en el aviso de cambios sin guardar).
-7. **Validar las proto-personas y la arquitectura de la información** con usuarios (planes en `personas.md` e `information-architecture.md`).
+1. **Prueba con NVDA** en login, recorrido del nuevo ingreso y constructor (RNF-052): la hace Lourdes; lo que aparezca va a `issues.md`.
+2. **No pedir dos veces el mismo dato** (RNF-045): falta una revisión formal flujo por flujo.
+3. **Validar las proto-personas y la arquitectura de la información** con usuarios (planes en `personas.md` e `information-architecture.md`).
+4. **Modo oscuro:** los roles están preparados sin contraste verificado (RNF-035); no se implementa, como pide 2.1.
 
 ---
 
@@ -125,9 +122,50 @@ Las **40 pantallas** de la sección 6 están construidas: 24 de fase A (G0 a G7,
 - **Sombras, íconos y animaciones:** sin desvíos de la sección 2 (ver sección 3).
 - **Voz y tono:** sin voseo, usted ni regionalismos detectados; un solo signo de exclamación, para celebrar una etapa.
 - **Textos sin traducir:** ninguno en la interfaz. A propósito no se traducen los datos que escriben las personas ni los detalles guardados en la auditoría, porque son registros (D-129).
-- **Rendimiento:** el build avisa que un chunk supera 500 kB; no se midió el efecto en la carga (ver sección 4).
+- **Rendimiento:** ningún fragmento supera 500 kB y Lighthouse queda en 98 o más (ver 5.1). Las pantallas muestran un esqueleto mientras llega su código (INC-030).
 - **Tests:** dos tests que montan la app completa pasaron el límite de 5 s una vez con todo en paralelo; el límite quedó en 15 s (INC-027).
 - **Modo oscuro:** los roles están preparados en `tokens.css` sin contraste verificado; no se implementa, como pide 2.1 (RNF-035).
+- **Build de producción:** al dividir el paquete, A1 se rompía solo en el build (INC-028); se encontró antes de publicar con la revisión de consola del build, que ahora es un comando (`npm run check:console`). Zod intentaba `new Function` contra la CSP (INC-029).
+
+### 5.1 Rendimiento: paquete y Lighthouse
+
+**JavaScript que descarga cada pantalla en su primera carga** (build de producción, `npm run perf:js`; antes = commit `053e4a9`, después = este paso):
+
+| Pantalla | Antes | Después | Mayor fragmento antes | Mayor fragmento después |
+| --- | --- | --- | --- | --- |
+| G0 inicio | 1.246 kB (373 kB gzip) | 1.170 kB (346 kB gzip) | 498 kB | 231 kB |
+| G1 login | 1.241 kB (374 kB gzip) | 1.264 kB (377 kB gzip) | 498 kB | 231 kB |
+| N1 mi recorrido | 1.230 kB (371 kB gzip) | 1.160 kB (346 kB gzip) | 498 kB | 231 kB |
+| A1 panel | 1.598 kB (466 kB gzip) | 1.537 kB (444 kB gzip) | 498 kB | 382 kB |
+| A6 constructor | 1.302 kB (394 kB gzip) | 1.326 kB (398 kB gzip) | 498 kB | 231 kB |
+
+Las rutas ya eran diferidas; lo que cambió es que las librerías pesadas viven en fragmentos propios: Recharts (391 kB) solo se descarga en las pantallas con gráficos, dnd-kit solo en el constructor y Zod ya no está en la carga inicial. El fragmento más grande bajó de 498 kB a 231 kB, salvo A1, que necesita Recharts. G1 y A6 suben unos 24 kB porque ahora descargan Zod y dnd-kit como archivos aparte en lugar de compartidos; el total que se ahorra es modesto (4 a 7 % en G0, N1 y A1) y la ganancia principal es que cada pantalla trae solo lo que usa y el caché se reutiliza entre pantallas.
+
+**Lighthouse 13.5** contra el build (`npm run perf:lighthouse`; N1 como Sofía y A1 como Carla, con la sesión iniciada por el flujo real). Resultados completos en [`perf/lighthouse-2026-11-12.json`](perf/lighthouse-2026-11-12.json):
+
+| Pantalla | Dispositivo | Rendimiento | Accesibilidad | Buenas prácticas | SEO | LCP | TBT | CLS |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| G0 | Celular | 98 | 100 | 100 | 100 | 2,1 s | 0 ms | 0 |
+| G0 | Escritorio | 100 | 100 | 100 | 100 | 0,3 s | 0 ms | 0 |
+| G1 | Celular | 99 | 100 | 100 | 100 | 1,8 s | 10 ms | 0 |
+| G1 | Escritorio | 100 | 100 | 100 | 100 | 0,4 s | 0 ms | 0 |
+| N1 | Celular | 100 | 100 | 100 | 100 | 1,4 s | 60 ms | 0 |
+| N1 | Escritorio | 100 | 100 | 100 | 100 | 0,4 s | 0 ms | 0 |
+| A1 | Celular | 98 | 100 | 100 | 100 | 2,2 s | 50 ms | 0 |
+| A1 | Escritorio | 100 | 100 | 100 | 100 | 0,4 s | 0 ms | 0 |
+
+Ninguna categoría quedó por debajo de 90. Antes de los ajustes, G1 y A1 tenían 96 en buenas prácticas: G1 por la violación de CSP de Zod (INC-029) y A1 porque la pantalla fallaba en el build (INC-028). Las sugerencias que siguen abiertas son menores (JavaScript sin usar estimado en 28 a 53 kB y avisos informativos sobre imágenes y bloqueo de render).
+
+### 5.2 Navegadores
+
+| Navegador | Motor | Desbordes en 6 anchos | Flujos con teclado | Dónde corre |
+| --- | --- | --- | --- | --- |
+| Chrome | Chromium | 306 de 306 | 4 de 4 | Local, antes de cada revisión |
+| Edge | Chromium | Cubierto por Chromium | Cubierto por Chromium | Mismo motor que Chrome |
+| Safari | WebKit | 306 de 306 | 4 de 4 | Local y GitHub Actions |
+| Firefox | Gecko | En GitHub Actions | En GitHub Actions | Solo GitHub Actions (INC-031) |
+
+En WebKit, como en Safari sin la opción "Resaltar cada ítem con Tab", la tecla Tab no se detiene en los enlaces: se llega a ellos con Opción+Tab. Las acciones principales son botones, así que los flujos se completan con Tab; la tarea de Sofía se marca con el botón de su fila. En esta computadora Windows no deja ejecutar el Firefox de Playwright (no está firmado) y no se cambió esa política de seguridad: Firefox corre en GitHub Actions (`.github/workflows/browsers.yml`), aparte del deploy.
 
 ---
 
@@ -148,12 +186,9 @@ Las **40 pantallas** de la sección 6 están construidas: 24 de fase A (G0 a G7,
 
 ## 7. Dudas y decisiones
 
-`docs/decisions.md` registra **130 decisiones** (D-01 a D-130). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Necesitan confirmación:
+`docs/decisions.md` registra **131 decisiones** (D-01 a D-131). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Ya no queda ninguna pendiente de confirmación: **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
 
-- **D-53:** el aviso de cambios sin guardar del editor de plantillas con `createHashRouter` y `useBlocker`, con la excepción del cambio de rol con "Ver como", que no se bloquea.
-- **D-105:** el volumen de notificaciones semilla por rol: F7 pide 15 a 20 y la semilla tiene entre 7 y 11 por persona de demo, porque se generan desde los datos y llegar a 15 obligaría a inventar hechos.
-
-Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma) y D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas).
+Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) y D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región).
 
 ---
 
@@ -165,13 +200,13 @@ Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria 
 | `docs/README.md` | Completo | Índice |
 | `personas.md` | Completo | Proto-personas rotuladas como hipótesis; resultados de validación pendientes |
 | `roles.md` | Completo | Sincronizado con `permissions.ts` por test |
-| `requirements.md` | Completo | 89 RF hechos y 8 Won't; 55 RNF: 47 hechos, 6 parciales y 2 pendientes, cada uno con su evidencia |
+| `requirements.md` | Completo | 89 RF hechos y 8 Won't; 55 RNF: 51 hechos, 3 parciales y 1 pendiente, cada uno con su evidencia |
 | `use-cases.md` | Completo | 14 casos con diagrama |
 | `flows.md` | Completo | Task flows, user flows, wireflows y diagramas de estados rotulados |
 | `information-architecture.md` | Completo | G11 sin el rótulo de fase B; resultados de card sorting y tree testing pendientes |
 | `design-system.md` | Completo | Incluye `ErrorSummary`, casilla con área táctil, preferencias y alto contraste |
 | `security.md` | Completo | Producción, separación de funciones y exportaciones |
-| `issues.md` | Completo | 27 incidencias; solo INC-001 sigue abierta |
+| `issues.md` | Completo | 31 incidencias; solo INC-001 sigue abierta |
 | `decisions.md` | Completo | Ver sección 7 |
 | `progress.md` | Completo | Pasos 0 a 25 |
 | `visual-audit.md` | Completo | Del piloto |
@@ -185,17 +220,16 @@ Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria 
 - **La sesión vence a los 15 minutos de inactividad**, como pide la spec: un visitante que deja la pestaña vuelve al login. El aviso lo explica y entrar de nuevo es un clic desde G0.
 - **Los datos quedan en el navegador del visitante:** lo que cambia persiste hasta "Restablecer demo". Si alguien deja la demo en un estado raro, el botón está en G0 y en el menú de usuario.
 - **El idioma elegido queda** al cerrar sesión, a propósito; el formato de fecha y el contraste vuelven a los de defecto.
-- **Sin probar en Safari:** es el navegador más probable de quien mira el portfolio en un iPhone (ver sección 4).
+- **Safari en iPhone:** WebKit pasa los desbordes y los flujos con teclado, pero no se probó en un iPhone real (tacto, barra del navegador que se oculta).
 - **Rótulos de atajo de demo** ("Ver como sistemas (demo)", "Resolver como Ramiro (demo)", "Resolver como Valeria (demo)"): están rotulados para que no se confundan con funciones del producto.
 
 ---
 
 ## 10. Próximos pasos recomendados
 
-1. Medir con Lighthouse en el deploy y, si hace falta, dividir el bundle principal.
-2. Probar los flujos críticos en Safari (iPhone), Firefox y Edge.
-3. Recorrido manual con teclado y con lector de pantalla; registrar lo que aparezca en `issues.md`.
-4. Confirmar D-53 y D-105.
-5. Publicar el case study y apuntar `CASE_STUDY_URL` a su página.
-6. Validar proto-personas e IA con usuarios y completar las secciones de resultados.
-7. Líneas futuras de la sección 9: vista de dirección y asistente conversacional.
+1. Prueba con NVDA (Lourdes) y registrar lo que aparezca en `issues.md`.
+2. Recorrer la demo publicada en un iPhone y en un Android reales.
+3. Revisar flujo por flujo que no se pida dos veces el mismo dato (RNF-045).
+4. Publicar el case study y apuntar `CASE_STUDY_URL` a su página.
+5. Validar proto-personas e IA con usuarios y completar las secciones de resultados.
+6. Líneas futuras de la sección 9: vista de dirección y asistente conversacional.

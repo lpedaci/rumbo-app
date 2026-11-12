@@ -1,7 +1,11 @@
 import type { Hire, Stage, Template, TemplateTask, TemplateVersion } from '@/types/domain';
 import { STAGES } from './dates';
 import { type DependencyIssue, validateDependencies } from './journey';
-import { TASK_OFFSET_MAX, TASK_OFFSET_MIN } from './validation';
+
+/** Allowed range for a task offset, in days from the start date (D-27). Here and not in
+ * `validation.ts`, so the data store does not load Zod on the first screen (D-131). */
+export const TASK_OFFSET_MIN = -30;
+export const TASK_OFFSET_MAX = 90;
 
 /**
  * Template builder rules (CLAUDE.md F2). Pure functions: the editor keeps a draft
