@@ -12,6 +12,8 @@
     "backHome": "Back to home"
   },
   "ui": {
+    "print": "Print",
+    "printLabel": "Print or save as PDF",
     "required": "required",
     "optional": "optional",
     "loading": "Loading…",
@@ -191,6 +193,7 @@
       "approvals": "Approvals",
       "reviews": "Reviews",
       "accessReview": "Access review",
+      "reports": "Reports",
       "people": "People",
       "privacy": "Privacy",
       "team": "My team",
@@ -1707,6 +1710,7 @@
         "person.create": "Person added",
         "person.role_change": "Role changed",
         "approval.request": "Approval requested",
+        "report.export": "Report exported",
         "access_review.create": "Review campaign created",
         "access_review.keep": "Access kept in review",
         "access_review.revoke": "Revocation requested in review",
@@ -1781,6 +1785,7 @@
         "policy_propose": "Propose policy changes",
         "access_review_manage": "Manage review campaigns",
         "access_review_review": "Review assigned access",
+        "report_export": "Export reports",
         "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
@@ -2503,6 +2508,7 @@
           "title": "Role change to approve",
           "body": "{{request}}: role change for {{person}}. It needs a second IT person."
         },
+        "export_pending": {"title": "Export with sensitive data to approve", "body": "{{request}}: {{person}} asks to export people with DNI, CUIL and bank account unhidden."},
         "policy_pending": {
           "title": "Policy change to approve",
           "body": "{{request}}: change to the {{policy}}. It needs a second person in IT."
@@ -3196,6 +3202,9 @@
     "standInNote": "Demo shortcut: {{name}} has no demo account, so you decide in their name to see the whole circuit. The audit log records {{name}} with the simulated decision mark.",
     "standInBack": "Go back without deciding",
     "ownWaiting": "You cannot decide this request because you asked for it. {{name}} decides it.",
+    "piiTitle": "Export with sensitive data",
+    "piiChange": "People · DNI, CUIL and bank account unhidden",
+    "applyPii": "Once approved, {{name}} can download the list of people with this data unhidden once.",
     "listTitle": "Requests",
     "filter": "Show",
     "filters": {
@@ -3210,7 +3219,8 @@
     },
     "actions": {
       "role.change": "Role change",
-      "policy.change": "Policy change"
+      "policy.change": "Policy change",
+      "pii.export": "Unhidden export"
     },
     "roleTitle": "Role change for {{name}}",
     "policyTitle": "Policy change: {{policy}}",
@@ -3708,6 +3718,86 @@
           "Follow each request's deadline."
         ]
       }
+    }
+  },
+  "reports": {
+    "title": "Reports and exports",
+    "description": "Download Rumbo's data to analyze or present it. Sensitive data always goes out hidden.",
+    "listTitle": "CSV lists",
+    "listHelp": "They open in any spreadsheet app. DNI, CUIL and bank account go out hidden.",
+    "rows_one": "{{count}} row",
+    "rows_other": "{{count}} rows",
+    "download": "Download CSV",
+    "downloadLabel": "Download CSV: {{report}}",
+    "downloaded": "{{report}} downloaded",
+    "items": {
+      "hires": {
+        "title": "Hires",
+        "body": "Each journey with its status, progress, overdue tasks, manager and template."
+      },
+      "overdue": {
+        "title": "Overdue tasks",
+        "body": "The overdue tasks of every journey, with their owner and days late."
+      },
+      "checkins": {
+        "title": "Check-ins",
+        "body": "The 30, 60 and 90-day check-ins with their due date, status and milestones met."
+      },
+      "people": {
+        "title": "People",
+        "body": "Work details, role and status of each person, with DNI, CUIL and bank account hidden."
+      }
+    },
+    "columns": {
+      "name": "Person",
+      "email": "Email",
+      "jobTitle": "Job",
+      "area": "Area",
+      "role": "Role in Rumbo",
+      "status": "Status",
+      "dni": "DNI",
+      "cuil": "CUIL",
+      "bankAccount": "Bank account",
+      "startDate": "Start date",
+      "progress": "Progress",
+      "overdue": "Overdue tasks",
+      "manager": "Manager",
+      "template": "Template",
+      "task": "Task",
+      "owner": "Owner",
+      "dueDate": "Due date",
+      "daysLate": "Days late",
+      "checkin": "Check-in",
+      "milestones": "Milestones"
+    },
+    "stages": {
+      "day30": "30 days",
+      "day60": "60 days",
+      "day90": "90 days"
+    },
+    "milestones": "{{met}} of {{total}} met",
+    "unmasked": {
+      "title": "People with unhidden data",
+      "description": "For procedures that require it (for example, payroll). It needs another person in IT to approve it and it downloads only once.",
+      "request": "Request the unhidden export",
+      "dialogTitle": "Request the unhidden export",
+      "intro": "IT reviews the request. If approved, you can download the list of people with DNI, CUIL and bank account once, and the download goes to the audit log.",
+      "reason": "Reason",
+      "reasonHelp": "Why you need the data unhidden. Between 10 and 300 characters. For example: Payroll accounts for November.",
+      "reasonRequired": "Write the reason, with at least 10 characters.",
+      "reasonMax": "The reason can have up to 300 characters.",
+      "send": "Send for approval",
+      "sent": "Request {{id}} sent to IT",
+      "pending": "Your request {{id}} is waiting for IT's approval. Meanwhile you cannot request another.",
+      "approved": "{{name}} approved your request {{id}}. You can download the list once.",
+      "rejected": "{{name}} rejected your request {{id}}: {{note}}",
+      "used": "You already downloaded the list of request {{id}} on {{date}}. For another download, request a new approval.",
+      "download": "Download unhidden",
+      "downloaded": "List downloaded. It is recorded in the audit log."
+    },
+    "print": {
+      "title": "Views to print or save as PDF",
+      "body": "In <panel>Dashboard</panel> and in each hire's record, from <hires>Hires</hires>, the Print button opens the view to print or save as PDF, without the menu or the top bar."
     }
   }
 }

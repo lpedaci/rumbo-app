@@ -62,6 +62,7 @@ export const NOTIFICATION_TYPES: Record<NotificationType, TypeMeta> = {
   'login.reported': { category: 'access', icon: 'gpp_maybe', tone: 'error', email: true },
   'approval.pending': { category: 'access', icon: 'admin_panel_settings', tone: 'warning', email: true },
   'approval.policy_pending': { category: 'access', icon: 'rule', tone: 'warning', email: true },
+  'approval.export_pending': { category: 'access', icon: 'visibility', tone: 'warning', email: true },
   'approval.approved': { category: 'access', icon: 'check_circle', tone: 'success', email: true },
   'approval.rejected': { category: 'access', icon: 'cancel', tone: 'error', email: true },
   'access_review.assigned': { category: 'access', icon: 'fact_check', tone: 'primary', email: true },
@@ -312,11 +313,18 @@ export function onApprovalRequested(approval: ApprovalRequest, people: Person[],
       makeNotification({
         recipientId: it.id,
         createdAt: approval.createdAt,
-        type: approval.action === 'policy.change' ? 'approval.policy_pending' : 'approval.pending',
+        type:
+          approval.action === 'policy.change'
+            ? 'approval.policy_pending'
+            : approval.action === 'pii.export'
+              ? 'approval.export_pending'
+              : 'approval.pending',
         params:
           approval.action === 'policy.change'
             ? { request: approval.id, policy: approval.targetId }
-            : { request: approval.id, person: targetName },
+            : approval.action === 'pii.export'
+              ? { request: approval.id, person: people.find((p) => p.id === approval.requestedBy)?.name ?? '' }
+              : { request: approval.id, person: targetName },
         link: `/it/approvals?request=${approval.id}`,
       }),
     );
@@ -337,9 +345,11 @@ export function onApprovalDecided(approval: ApprovalRequest, people: Person[]): 
         note: approval.decisionNote ?? '',
       },
       link:
-        approval.action === 'role.change' && requester.role === 'admin'
-          ? `/admin/people/${approval.targetId}`
-          : `/it/approvals?request=${approval.id}`,
+        approval.action === 'pii.export'
+          ? '/admin/reports'
+          : approval.action === 'role.change' && requester.role === 'admin'
+            ? `/admin/people/${approval.targetId}`
+            : `/it/approvals?request=${approval.id}`,
     }),
   ];
 }

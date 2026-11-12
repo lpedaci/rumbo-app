@@ -66,6 +66,9 @@ export const PERMISSIONS = {
   // F13: access reviews (IT runs the campaigns; each reviewer sees only the rows assigned to them)
   'access_review:manage': { it_admin: 'all' },
   'access_review:review': { manager: 'team', admin: 'own', it_admin: 'own' },
+
+  // F16: reports and exports (sensitive data always hidden; unhidden only with double approval)
+  'report:export': { admin: 'all' },
   // F7 notifications: each person only sees their own
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)
@@ -142,6 +145,7 @@ export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
   { prefix: '/it/access-review', action: 'access_review:review' },
   { prefix: '/manager/access-review', action: 'access_review:review' },
   { prefix: '/admin/access-review', action: 'access_review:review' },
+  { prefix: '/admin/reports', action: 'report:export' },
 ];
 
 export function requiredPermission(pathname: string): Action | null {

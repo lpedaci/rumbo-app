@@ -12,6 +12,8 @@
     "backHome": "Volver al inicio"
   },
   "ui": {
+    "print": "Imprimir",
+    "printLabel": "Imprimir o guardar como PDF",
     "required": "obligatorio",
     "optional": "opcional",
     "loading": "Cargando…",
@@ -191,6 +193,7 @@
       "approvals": "Aprobaciones",
       "reviews": "Revisiones",
       "accessReview": "Revisión de accesos",
+      "reports": "Reportes",
       "people": "Personas",
       "privacy": "Privacidad",
       "team": "Mi equipo",
@@ -1707,6 +1710,7 @@
         "person.create": "Persona dada de alta",
         "person.role_change": "Rol cambiado",
         "approval.request": "Aprobación pedida",
+        "report.export": "Reporte exportado",
         "access_review.create": "Campaña de revisión creada",
         "access_review.keep": "Acceso mantenido en revisión",
         "access_review.revoke": "Revocación pedida en revisión",
@@ -1781,6 +1785,7 @@
         "policy_propose": "Proponer cambios de políticas",
         "access_review_manage": "Gestionar campañas de revisión",
         "access_review_review": "Revisar los accesos asignados",
+        "report_export": "Exportar reportes",
         "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
@@ -2503,6 +2508,7 @@
           "title": "Cambio de rol por aprobar",
           "body": "{{request}}: cambio de rol de {{person}}. Necesita una segunda persona de sistemas."
         },
+        "export_pending": {"title": "Exportación con datos sensibles por aprobar", "body": "{{request}}: {{person}} pide exportar personas con DNI, CUIL y cuenta bancaria sin ocultar."},
         "policy_pending": {
           "title": "Cambio de política por aprobar",
           "body": "{{request}}: cambio de {{policy}}. Necesita una segunda persona de sistemas."
@@ -3196,6 +3202,9 @@
     "standInNote": "Atajo de demo: {{name}} no tiene cuenta de demo, así que decides en su nombre para ver el circuito completo. La auditoría registra a {{name}} con la marca de decisión simulada.",
     "standInBack": "Volver sin decidir",
     "ownWaiting": "No puedes decidir esta solicitud porque la pediste tú. La decide {{name}}.",
+    "piiTitle": "Exportación con datos sensibles",
+    "piiChange": "Personas · DNI, CUIL y cuenta bancaria sin ocultar",
+    "applyPii": "Al aprobarla, {{name}} puede descargar una vez la lista de personas con estos datos sin ocultar.",
     "listTitle": "Solicitudes",
     "filter": "Mostrar",
     "filters": {
@@ -3210,7 +3219,8 @@
     },
     "actions": {
       "role.change": "Cambio de rol",
-      "policy.change": "Cambio de política"
+      "policy.change": "Cambio de política",
+      "pii.export": "Exportación sin ocultar"
     },
     "roleTitle": "Cambio de rol de {{name}}",
     "policyTitle": "Cambio de política: {{policy}}",
@@ -3708,6 +3718,86 @@
           "Sigue el plazo de cada solicitud."
         ]
       }
+    }
+  },
+  "reports": {
+    "title": "Reportes y exportaciones",
+    "description": "Descarga los datos de Rumbo para analizarlos o presentarlos. Los datos sensibles salen siempre ocultos.",
+    "listTitle": "Listados en CSV",
+    "listHelp": "Se abren en cualquier planilla de cálculo. DNI, CUIL y cuenta bancaria salen ocultos.",
+    "rows_one": "{{count}} fila",
+    "rows_other": "{{count}} filas",
+    "download": "Descargar CSV",
+    "downloadLabel": "Descargar CSV: {{report}}",
+    "downloaded": "{{report}} descargado",
+    "items": {
+      "hires": {
+        "title": "Ingresos",
+        "body": "Cada recorrido con su estado, avance, tareas vencidas, jefe directo y plantilla."
+      },
+      "overdue": {
+        "title": "Tareas vencidas",
+        "body": "Las tareas atrasadas de todos los recorridos, con su responsable y los días de atraso."
+      },
+      "checkins": {
+        "title": "Check-ins",
+        "body": "Los check-ins de 30, 60 y 90 días con su vencimiento, estado e hitos cumplidos."
+      },
+      "people": {
+        "title": "Personas",
+        "body": "Datos laborales, rol y estado de cada persona, con DNI, CUIL y cuenta bancaria ocultos."
+      }
+    },
+    "columns": {
+      "name": "Persona",
+      "email": "Correo",
+      "jobTitle": "Puesto",
+      "area": "Área",
+      "role": "Rol en Rumbo",
+      "status": "Estado",
+      "dni": "DNI",
+      "cuil": "CUIL",
+      "bankAccount": "Cuenta bancaria",
+      "startDate": "Ingreso",
+      "progress": "Avance",
+      "overdue": "Tareas vencidas",
+      "manager": "Jefe directo",
+      "template": "Plantilla",
+      "task": "Tarea",
+      "owner": "Responsable",
+      "dueDate": "Vencimiento",
+      "daysLate": "Días de atraso",
+      "checkin": "Check-in",
+      "milestones": "Hitos"
+    },
+    "stages": {
+      "day30": "30 días",
+      "day60": "60 días",
+      "day90": "90 días"
+    },
+    "milestones": "{{met}} de {{total}} cumplidos",
+    "unmasked": {
+      "title": "Personas con datos sin ocultar",
+      "description": "Para trámites que lo exigen (por ejemplo, la liquidación de sueldos). Necesita la aprobación de otra persona de sistemas y se descarga una sola vez.",
+      "request": "Pedir la exportación sin ocultar",
+      "dialogTitle": "Pedir la exportación sin ocultar",
+      "intro": "Sistemas va a revisar el pedido. Si lo aprueba, puedes descargar la lista de personas con DNI, CUIL y cuenta bancaria una sola vez, y la descarga queda en la auditoría.",
+      "reason": "Motivo",
+      "reasonHelp": "Para qué necesitas los datos sin ocultar. Entre 10 y 300 caracteres. Por ejemplo: Alta de cuentas sueldo para la liquidación de noviembre.",
+      "reasonRequired": "Escribe el motivo, con al menos 10 caracteres.",
+      "reasonMax": "El motivo puede tener hasta 300 caracteres.",
+      "send": "Enviar a aprobación",
+      "sent": "Pedido {{id}} enviado a sistemas",
+      "pending": "Tu pedido {{id}} espera la aprobación de sistemas. Mientras tanto no se puede pedir otro.",
+      "approved": "{{name}} aprobó tu pedido {{id}}. Puedes descargar la lista una sola vez.",
+      "rejected": "{{name}} rechazó tu pedido {{id}}: {{note}}",
+      "used": "Ya descargaste la lista del pedido {{id}} el {{date}}. Para otra descarga, pide una nueva aprobación.",
+      "download": "Descargar sin ocultar",
+      "downloaded": "Lista descargada. Quedó registrada en la auditoría."
+    },
+    "print": {
+      "title": "Vistas para imprimir o guardar como PDF",
+      "body": "En <panel>Panel</panel> y en la ficha de cada ingreso, desde <hires>Ingresos</hires>, el botón Imprimir abre la vista para imprimir o guardar como PDF, sin el menú ni la barra superior."
     }
   }
 }

@@ -18,6 +18,7 @@ import { AlertList } from './AlertList';
 import { BottleneckCard } from './BottleneckCard';
 import { ProgressCard } from './ProgressCard';
 import { UpcomingHiresCard } from './UpcomingHiresCard';
+import { PrintButton } from '@/components/ui/PrintButton';
 
 /**
  * A1 · HR follow-up panel (CLAUDE.md F4), in bento (2.4): greeting, KPIs, the main progress
@@ -64,9 +65,12 @@ export function DashboardPage() {
             : []),
         ]}
         actions={
-          <Button asChild leadingIcon="add">
-            <Link to="/admin/hires/new">{t('dashboard.newHire')}</Link>
-          </Button>
+          <div className="flex flex-col gap-3 sm:flex-row" data-print-hide>
+            <PrintButton />
+            <Button asChild leadingIcon="add">
+              <Link to="/admin/hires/new">{t('dashboard.newHire')}</Link>
+            </Button>
+          </div>
         }
       />
 

@@ -233,7 +233,9 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
           <p className="text-body-medium text-on-surface">
             {a.action === 'role.change'
               ? t('approvals.applyRole', { name: target?.name ?? '', role: text.roleName(a.toRole, a.targetId) })
-              : t('approvals.applyPolicy')}
+              : a.action === 'pii.export'
+                ? t('approvals.applyPii', { name: text.nameOf(a.requestedBy) })
+                : t('approvals.applyPolicy')}
           </p>
           <TextArea
             id="approval-note"

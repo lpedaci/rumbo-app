@@ -21,6 +21,7 @@ import { RoleChip } from '@/features/people/PeopleBits';
 import type { AccessReviewCampaign, Role } from '@/types/domain';
 import { CampaignStatusPill, ReviewStatePill, useReviewText } from './ReviewBits';
 import { PersonReview } from './ReviewPage';
+import { PrintButton } from '@/components/ui/PrintButton';
 
 /**
  * S6 · Review campaign (F13): progress by reviewer (and why each one reviews: manager, or HR or IT
@@ -328,6 +329,7 @@ function Closing({ campaign }: { campaign: AccessReviewCampaign }) {
       </p>
       {/* Phones: full width with the main action on top (2.1.3) */}
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <PrintButton />
         <Button variant="outlined" leadingIcon="download" onClick={download}>
           {t('accessReview.detail.download')}
         </Button>

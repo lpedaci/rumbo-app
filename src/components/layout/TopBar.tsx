@@ -95,7 +95,7 @@ export function TopBar() {
 
   return (
     // White floating bar on the gray page, like the sidebar (D-69, reference of the top bar).
-    <header className="sticky top-0 z-40 bg-surface px-2 pt-2 md:pr-(--space-gutter) md:pl-4 md:pt-3">
+    <header data-print-hide className="sticky top-0 z-40 bg-surface px-2 pt-2 md:pr-(--space-gutter) md:pl-4 md:pt-3">
       <div className="flex h-16 min-w-0 items-center gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest px-2 sm:gap-4 sm:px-4">
         <MenuButton />
         {/* Below 768 px the logo lives in the menu drawer, so the bar stays light (D-79) */}

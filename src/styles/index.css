@@ -299,3 +299,18 @@ html[data-reduce-motion='true'] [data-stagger] > * {
     display: none;
   }
 }
+
+/* F16: print or save as PDF. Without the menu, the top bar, toasts or controls; white page. */
+@media print {
+  [data-print-hide] {
+    display: none !important;
+  }
+  body,
+  .bg-surface {
+    background: #ffffff !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+}
+

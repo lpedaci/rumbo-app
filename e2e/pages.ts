@@ -68,6 +68,7 @@ export const PAGES: CheckedPage[] = [
   { id: 's7-approval', path: '/#/it/approvals?request=APR-2026-0002', role: 'it_admin' },
   { id: 's5-access-reviews', path: '/#/it/access-reviews', role: 'it_admin' },
   { id: 'g12-search', path: '/#/search?q=manual', role: 'admin' },
+  { id: 'a13-reports', path: '/#/admin/reports', role: 'admin' },
   { id: 's6-access-review', path: '/#/it/access-reviews/AR-2026-0001', role: 'it_admin' },
   { id: 'ds-site', path: '/#/design-system' },
   { id: 'styleguide', path: '/#/styleguide' },

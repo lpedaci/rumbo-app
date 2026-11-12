@@ -241,6 +241,7 @@ export type NotificationType =
   | 'login.reported'
   | 'approval.pending'
   | 'approval.policy_pending'
+  | 'approval.export_pending'
   | 'approval.approved'
   | 'approval.rejected'
   | 'access_review.assigned'
@@ -366,7 +367,8 @@ export interface JobTitle {
 
 /** F14: security policies that change only with a second person's approval. */
 export type PolicyField = 'sessionIdleMinutes' | 'lockoutAttempts' | 'passwordMinLength';
-export type ApprovalAction = 'role.change' | 'policy.change';
+/** `pii.export`: an export of people with DNI, CUIL and bank account unhidden (F14, F16). */
+export type ApprovalAction = 'role.change' | 'policy.change' | 'pii.export';
 export type ApprovalStatus = 'pending' | 'approved' | 'rejected';
 
 /**
@@ -392,6 +394,8 @@ export interface ApprovalRequest {
   decidedBy?: string;
   decidedAt?: string;
   decisionNote?: string;
+  /** `pii.export`: when the approved export was downloaded (it can be used once). */
+  usedAt?: string;
 }
 
 // ---------- Phase B: F13 access reviews ----------

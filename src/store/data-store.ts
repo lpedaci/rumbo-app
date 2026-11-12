@@ -157,6 +157,10 @@ interface DataActions {
    * second person (F14) and return the approval id; the rest apply at once.
    */
   changeRole: (personId: string, toRole: Role, reason: string, actorId: string) => string | undefined;
+  /** F16: HR asks for an export of people with sensitive data unhidden; it needs IT's approval (F14). */
+  requestPiiExport: (reason: string, actorId: string) => string;
+  /** F16: the approved unhidden export is downloaded, once, and audited. */
+  consumeUnmaskedExport: (approvalId: string, actorId: string) => boolean;
   /** F14: IT proposes a new value for a security policy; it applies only when someone else approves it. */
   requestPolicyChange: (field: PolicyField, toValue: number, reason: string, actorId: string) => string | undefined;
   /**
@@ -937,6 +941,59 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
           ],
         }));
         return undefined;
+      },
+
+      requestPiiExport: (reason, actorId) => {
+        const state = useDataStore.getState();
+        const approval: ApprovalRequest = {
+          id: nextApprovalId(state.approvals),
+          action: 'pii.export',
+          targetId: 'people',
+          requestedBy: actorId,
+          reason: reason.trim(),
+          createdAt: demoNow(),
+          status: 'pending',
+        };
+        set((s) => ({
+          approvals: [...s.approvals, approval],
+          notifications: [...s.notifications, ...onApprovalRequested(approval, s.people, '')],
+          auditEvents: [
+            ...s.auditEvents,
+            {
+              id: nextAuditId(),
+              at: approval.createdAt,
+              actorId,
+              action: 'approval.request',
+              resource: 'pii.export',
+              result: 'success',
+              detail: `${approval.id} · ${approval.reason}`,
+            },
+          ],
+        }));
+        return approval.id;
+      },
+
+      consumeUnmaskedExport: (approvalId, actorId) => {
+        const approval = useDataStore.getState().approvals.find((a) => a.id === approvalId);
+        if (!approval || approval.action !== 'pii.export' || approval.status !== 'approved' || approval.usedAt) return false;
+        if (approval.requestedBy !== actorId) return false;
+        const at = demoNow();
+        set((s) => ({
+          approvals: s.approvals.map((a) => (a.id === approvalId ? { ...a, usedAt: at } : a)),
+          auditEvents: [
+            ...s.auditEvents,
+            {
+              id: nextAuditId(),
+              at,
+              actorId,
+              action: 'report.export',
+              resource: 'people',
+              result: 'success',
+              detail: `unmasked · ${approvalId}`,
+            },
+          ],
+        }));
+        return true;
       },
 
       requestPolicyChange: (field, toValue, reason, actorId) => {

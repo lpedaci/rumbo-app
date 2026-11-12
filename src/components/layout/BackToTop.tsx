@@ -48,6 +48,7 @@ export function BackToTop({ aboveBottomNav = false }: { aboveBottomNav?: boolean
 
   return (
     <div
+      data-print-hide
       className={cn(
         'fixed right-4 z-30 transition-[opacity,transform] duration-200 ease-standard motion-reduce:transition-opacity md:right-6 md:bottom-6',
         aboveBottomNav ? 'bottom-[5.5rem]' : 'bottom-4',

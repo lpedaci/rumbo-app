@@ -147,7 +147,7 @@ flowchart TD
     A9 -.-> A10["A10 Ficha de persona"]
     RRHH -.-> A11["A11 Altas, cambios y bajas"]
     RRHH -.-> A12["A12 Solicitudes de privacidad"]
-    RRHH -.-> A13["A13 Reportes (B)"]
+    RRHH -.-> A13["A13 Reportes"]
 
     ROOT --> JEFE["Jefe directo"]
     JEFE --> J1["J1 Mi equipo"]
@@ -175,7 +175,7 @@ flowchart TD
     CUENTA -.-> G9["G9 Notificaciones"]
     CUENTA -.-> G10["G10 Mi privacidad"]
     CUENTA -.-> G11["G11 Preferencias (B)"]
-    CUENTA -.-> G12["G12 Búsqueda (B)"]
+    CUENTA -.-> G12["G12 Búsqueda"]
     ROOT --> G7["G7 Acceso no permitido / 404"]
 ```
 

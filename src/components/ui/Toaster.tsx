@@ -45,7 +45,7 @@ export function Toaster() {
       ))}
       {/* Phones: above the bottom navigation. From 768 px: top center, under the top bar, away from
           the actions at the bottom right of forms and cards, so it never hides the focus (2.4.11, D-99). */}
-      <Toast.Viewport className="fixed inset-x-0 bottom-20 z-60 mx-auto flex w-full max-w-[44rem] flex-col items-center gap-2 p-2 outline-none sm:p-4 md:top-20 md:bottom-auto" />
+      <Toast.Viewport data-print-hide className="fixed inset-x-0 bottom-20 z-60 mx-auto flex w-full max-w-[44rem] flex-col items-center gap-2 p-2 outline-none sm:p-4 md:top-20 md:bottom-auto" />
     </Toast.Provider>
   );
 }

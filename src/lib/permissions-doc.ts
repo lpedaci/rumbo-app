@@ -39,6 +39,7 @@ export const ACTION_DESCRIPTIONS: Record<Action, string> = {
   'approval:decide': 'Aprobar o rechazar cambios sensibles pedidos por otra persona (S7)',
   'policy:propose': 'Proponer cambios en las políticas de seguridad, que aprueba otra persona (S3)',
   'access_review:manage': 'Crear campañas de revisión de accesos, seguirlas, ejecutar las revocaciones y cerrarlas (S5, S6)',
+  'report:export': 'Exportar reportes a CSV con los datos sensibles ocultos y pedir una exportación sin ocultar, que aprueba sistemas (A13)',
   'access_review:review': 'Revisar los accesos de las personas asignadas: el equipo propio o, sin jefe directo, por RRHH o sistemas (J4)',
   'notification:view': 'Ver sus propias notificaciones (G9)',
   'account:security_own': 'Ver "Mi seguridad" (G5)',

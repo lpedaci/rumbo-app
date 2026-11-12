@@ -24,6 +24,7 @@ import { CommentThread } from '@/features/comments/CommentThread';
 import { activeCount } from '@/lib/comments';
 import { MaskedValue } from '@/features/privacy/MaskedValue';
 import { anonymizationDate } from '@/lib/privacy';
+import { PrintButton } from '@/components/ui/PrintButton';
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
@@ -74,7 +75,7 @@ export function HireDetailPage() {
 
   return (
     <>
-      <nav aria-label={t('hires.detail.breadcrumb')} className="mb-4 md:mb-6">
+      <nav aria-label={t('hires.detail.breadcrumb')} className="mb-4 flex flex-wrap items-center justify-between gap-3 md:mb-6">
         <Link
           to={backTo}
           className="inline-flex min-h-12 items-center gap-1 rounded-sm text-label-large text-primary underline-offset-4 hover:underline md:min-h-0"
@@ -82,6 +83,7 @@ export function HireDetailPage() {
           <Icon name="arrow_back" />
           {isManager ? t('hires.detail.backTeam') : t('hires.detail.back')}
         </Link>
+        <PrintButton />
       </nav>
 
       {/* The person is the subject of the record: photo next to the h1, facts as the standard chips (D-94) */}

@@ -23,6 +23,7 @@ export const NAV_ITEMS: NavItem[] = [
   { to: '/admin/privacy-requests', label: 'layout.nav.privacy', icon: 'policy', action: 'privacy_request:manage' },
   // F13: HR reviews the people without a direct manager (one item per workspace, never by role name)
   { to: '/admin/access-review', label: 'layout.nav.accessReview', icon: 'fact_check', action: 'workspace:hr' },
+  { to: '/admin/reports', label: 'layout.nav.reports', icon: 'bar_chart', action: 'report:export' },
   { to: '/manager', label: 'layout.nav.team', icon: 'groups', action: 'workspace:team' },
   { to: '/manager/access-review', label: 'layout.nav.accessReview', icon: 'fact_check', action: 'workspace:team' },
   { to: '/me', label: 'layout.nav.journey', icon: 'route', action: 'workspace:journey', end: true },

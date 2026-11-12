@@ -177,7 +177,7 @@ export function SideNav() {
   const collapsed = useNavCollapsed();
 
   return (
-    <div className="sticky top-0 hidden h-dvh shrink-0 py-3 pl-3 md:block">
+    <div data-print-hide className="sticky top-0 hidden h-dvh shrink-0 py-3 pl-3 md:block">
       <nav
         id={SIDEBAR_ID}
         aria-label={t('layout.mainNav')}
@@ -267,6 +267,7 @@ export function BottomNav() {
 
   return (
     <nav
+      data-print-hide
       aria-label={t('layout.bottomNav')}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-outline-variant bg-surface-container-lowest pb-[env(safe-area-inset-bottom)] md:hidden"
     >

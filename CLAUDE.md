@@ -852,7 +852,7 @@ interface AccessReviewCampaign {
   items: { personId: string; reviewerId: string; access: string; decision?: 'keep' | 'revoke'; reason?: string; decidedAt?: string }[];
 }
 
-// Implementado (D-118): action es 'role.change' | 'policy.change'; targetId es la persona o el campo de la política; suma fromValue y toValue (políticas) y decisionNote.
+// Implementado (D-118, D-128): action es 'role.change' | 'policy.change' | 'pii.export' (exportación de personas con datos sin ocultar, de un solo uso: usedAt); targetId es la persona o el campo de la política; suma fromValue y toValue (políticas) y decisionNote.
 interface ApprovalRequest {
   id: string; action: string; targetId: string; requestedBy: string; reason: string;
   createdAt: string; status: 'pending' | 'approved' | 'rejected'; decidedBy?: string; decidedAt?: string;

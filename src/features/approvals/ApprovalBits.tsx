@@ -38,9 +38,13 @@ export function useApprovalText() {
     title: (a: ApprovalRequest) =>
       a.action === 'role.change'
         ? t('approvals.roleTitle', { name: nameOf(a.targetId) })
-        : t('approvals.policyTitle', { policy: t(`approvals.policyNames.${a.targetId}`) }),
+        : a.action === 'pii.export'
+          ? t('approvals.piiTitle')
+          : t('approvals.policyTitle', { policy: t(`approvals.policyNames.${a.targetId}`) }),
     change: (a: ApprovalRequest) =>
-      a.action === 'role.change'
+      a.action === 'pii.export'
+        ? t('approvals.piiChange')
+        : a.action === 'role.change'
         ? t('approvals.change', { from: roleName(a.fromRole, a.targetId), to: roleName(a.toRole, a.targetId) })
         : t('approvals.change', {
             from: policyValue(a.targetId as PolicyField, a.fromValue),
@@ -122,7 +126,7 @@ export function ApprovalRow({
           {target ? (
             <Avatar name={target.name} role={target.role} size="md" />
           ) : (
-            <IconTile icon="rule" tone="neutral" />
+            <IconTile icon={a.action === 'pii.export' ? 'visibility' : 'rule'} tone="neutral" />
           )}
           <span className="flex min-w-0 flex-1 flex-col gap-1.5">
             <span className="text-title-small text-on-surface">{text.title(a)}</span>

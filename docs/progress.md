@@ -449,8 +449,8 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - `EmailText`: correos completos en dos líneas antes de la "@" cuando no entran.
 - Tests: revisora de Carla y de Valeria, y el atajo con su registro en la auditoría.
 
-## Paso 23 · F16 Búsqueda, ayuda contextual y exportación, 12/11/2026 (en curso)
+## Paso 23 · F16 Búsqueda, ayuda contextual y exportación, 12/11/2026
 
 - Búsqueda global (D-126): `src/lib/search.ts` arma los resultados con los permisos de cada pantalla; diálogo rápido con `Ctrl+K` y `/` y G12 (`/search?q=`) con filtros por tipo. Tests por rol y de la página; G12 en Playwright.
 - Ayuda contextual y bienvenidas (D-127): "Ayuda de esta pantalla" en el menú Ayuda para 27 pantallas y bienvenidas de tres pasos para RRHH, jefe y sistemas. Tests de ayuda y bienvenidas.
-- Pendiente en este paso: A13 con exportaciones, impresión y el revelado masivo con doble aprobación.
+- A13 Reportes y exportaciones (D-128): cuatro listados en CSV con datos sensibles ocultos, exportación de personas sin ocultar con doble aprobación y de un solo uso, e Imprimir en A1, A4 y S6 con estilos de impresión. Tests de CSV, enmascarado, aprobación y uso único; A13 en Playwright.
