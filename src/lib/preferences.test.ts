@@ -67,3 +67,31 @@ describe('F17 · Preferences', () => {
     expect(formatPercent(84)).toBe('84%');
   });
 });
+
+describe('RNF-023 · Validation of the new forms', () => {
+  it('rejects preferences with values that are not offered', async () => {
+    const { preferencesSchema } = await import('./validation');
+    expect(preferencesSchema.safeParse(defaultPreferences('p-carla')).success).toBe(true);
+    expect(preferencesSchema.safeParse({ ...defaultPreferences('p-carla'), timezone: 'Mars/Base' }).success).toBe(false);
+    const noChannel = { ...defaultPreferences('p-carla').notifications, tasks: [] };
+    expect(preferencesSchema.safeParse({ ...defaultPreferences('p-carla'), notifications: noChannel }).success).toBe(false);
+  });
+
+  it('checks a review campaign and a lifecycle event field by field', async () => {
+    const { campaignSchema, issuesByPath, lifecycleSchema } = await import('./validation');
+    const campaign = campaignSchema('2026-11-10', 60);
+    expect(issuesByPath(campaign.safeParse({ name: 'Q4', dueDate: undefined }))).toEqual({
+      name: 'accessReview.campaigns.form.nameRequired',
+      dueDate: 'accessReview.campaigns.form.dueRequired',
+    });
+    expect(issuesByPath(campaign.safeParse({ name: 'Revisión Q4', dueDate: '2026-11-10' })).dueDate).toBe(
+      'accessReview.campaigns.form.dueRange',
+    );
+    const base = { kind: 'mover', personId: 'p-x', jobTitleId: 'j-1', effectiveDate: '2026-12-01', leaverType: '', detail: '' };
+    expect(issuesByPath(lifecycleSchema('j-1').safeParse(base)).jobTitleId).toBe('lifecycle.form.jobSame');
+    expect(issuesByPath(lifecycleSchema('j-1').safeParse({ ...base, kind: 'leaver' })).leaverType).toBe(
+      'lifecycle.form.typeRequired',
+    );
+    expect(lifecycleSchema('j-2').safeParse(base).success).toBe(true);
+  });
+});

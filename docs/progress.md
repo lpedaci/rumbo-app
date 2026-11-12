@@ -462,3 +462,14 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Inglés completo: las 2.508 claves de `es.json` tienen su traducción en `en.json`; los números pasan al formato de Estados Unidos en inglés.
 - Tests de la lógica de preferencias, fechas, horas y números, y de G11 (guardar, aplicar y cambiar de rol); G11 en Playwright.
 - Pendiente: pulido final, README e informe final (`docs/review.md`).
+
+## Paso 25 · Pulido final, README e informe final, 12/11/2026
+
+- Resumen de errores con enlaces a cada campo en A3, A6 y J3 (`ErrorSummary`, D-130, INC-024).
+- Esquemas de Zod para S5, A11 y G11 (INC-026); RNF-023 completo.
+- Áreas táctiles de 48 px en las casillas y en los logos de acceso; test nuevo `e2e/touch.spec.ts` a 375 px en todas las pantallas (INC-025).
+- Tests nuevos: G4 a S2 con "Ver como sistemas (demo)" (RF-010), reducir animaciones (RNF-015) y validación de los formularios nuevos.
+- Revisión de voz y tono sobre `es.json`: sin voseo ni usted, vocabulario fijo respetado y un solo signo de exclamación.
+- Requerimientos no funcionales actualizados con su evidencia, o marcados como parciales o pendientes cuando no se pudieron verificar.
+- README con las funciones de las dos fases, las 40 pantallas, capturas de las principales y el estado final.
+- Informe final en `docs/review.md`.

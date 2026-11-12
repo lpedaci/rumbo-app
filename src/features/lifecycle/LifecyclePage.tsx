@@ -17,7 +17,7 @@ import { demoNow, formatDate, formatDateTime } from '@/lib/dates';
 import { dateMask } from '@/lib/input-masks';
 import { isEffective, leaverTasks, moverTasks, nextLifecycleId, progressOfEvent } from '@/lib/lifecycle';
 import { DEMO_PERSON_IDS, itMinimumBlock } from '@/lib/people';
-import { parseDisplayDate } from '@/lib/validation';
+import { issuesByPath, lifecycleSchema, parseDisplayDate } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { AccessTask, LeaverType, LifecycleEvent, LifecycleType } from '@/types/domain';
@@ -232,23 +232,25 @@ function MoveForm({ kind, onDone }: { kind: 'mover' | 'leaver'; onDone: () => vo
   const toJob = jobs.find((j) => j.id === jobId);
   const iso = parseDisplayDate(date);
 
+  const issues = issuesByPath(
+    lifecycleSchema(person?.jobTitleId).safeParse({
+      kind,
+      personId,
+      jobTitleId: jobId,
+      effectiveDate: iso ?? undefined,
+      leaverType,
+      detail,
+    }),
+  );
+  const message = (key?: string) => (key ? t(key) : undefined);
   const errors = {
-    person: !personId
-      ? t('lifecycle.form.personRequired')
-      : kind === 'leaver' && itMinimumBlock(people, personId, { leaves: true })
-        ? t('itMinimum.leaver')
-        : undefined,
-    job:
-      kind !== 'mover'
-        ? undefined
-        : !jobId
-          ? t('lifecycle.form.jobRequired')
-          : jobId === person?.jobTitleId
-            ? t('lifecycle.form.jobSame')
-            : undefined,
-    date: iso ? undefined : t('lifecycle.form.dateRequired'),
-    type: kind === 'leaver' && !leaverType ? t('lifecycle.form.typeRequired') : undefined,
-    detail: detail.trim().length > 300 ? t('lifecycle.form.detailMax') : undefined,
+    person:
+      message(issues.personId) ??
+      (kind === 'leaver' && itMinimumBlock(people, personId, { leaves: true }) ? t('itMinimum.leaver') : undefined),
+    job: message(issues.jobTitleId),
+    date: message(issues.effectiveDate),
+    type: message(issues.leaverType),
+    detail: message(issues.detail),
   };
   const shown = (e?: string) => (tried ? e : undefined);
   const tasks: AccessTask[] = !person

@@ -38,7 +38,7 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-007 | El sistema debe exigir MFA a RRHH y sistemas y dejarlo opcional para jefe y nuevo ingreso. | Todos | G3, G5 | Must | RRHH y sistemas no pueden desactivarlo en G5; jefe y nuevo ingreso sí. | Hecho |
 | RF-008 | El sistema debe ofrecer "¿Problemas para iniciar sesión?" con canales de la mesa de ayuda y un formulario de solicitud a sistemas. | Todos | G4 | Must | El formulario valida correo y motivo y genera un número `IT-2026-NNNN`. | Hecho |
 | RF-009 | La confirmación de la solicitud debe ser idéntica exista o no el correo, e informar que sistemas verificará la identidad. | Todos | G4 | Must | Mismo texto con correo existente e inexistente. | Hecho |
-| RF-010 | La confirmación debe incluir "Ver como sistemas (demo)", que entra como Diego directo a la solicitud creada. | Todos | G4, S2 | Must | El enlace abre S2 con la solicitud recién creada. | En curso (S2 se construye en el paso 10) |
+| RF-010 | La confirmación debe incluir "Ver como sistemas (demo)", que entra como Diego directo a la solicitud creada. | Todos | G4, S2 | Must | El enlace abre S2 con la solicitud recién creada. | Hecho (test de G4 a S2 como Diego) |
 | RF-011 | Tras un cambio forzado de contraseña, el sistema debe pedir una nueva con la política visible y validada en vivo e indicador de fortaleza. | Todos | G1 | Must | No se acepta una contraseña de menos de 12 caracteres o sin mayúscula, minúscula, número y símbolo, ni una anterior. | Hecho |
 | RF-012 | El sistema debe cerrar la sesión tras 15 minutos de inactividad, avisando en el minuto 13 con un modal accesible. | Todos | G6 | Must | El modal ofrece "Seguir conectado" y "Cerrar sesión"; sin respuesta, se cierra. Existe un control de demo para acelerarlo. | Hecho |
 | RF-013 | El sistema debe permitir cerrar sesión y volver al login con un mensaje de confirmación. | Todos | G6, G1 | Must | El estado de sesión se limpia y G1 muestra la confirmación. | Hecho |
@@ -200,7 +200,7 @@ Organizados según las características de calidad de **ISO/IEC 25010:2023** (IS
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-004 | Lighthouse Performance ≥ 85 en mobile para G1, N1 y A1 en el deploy de GitHub Pages. | Should | Lighthouse en la revisión de fase. | Pendiente |
+| RNF-004 | Lighthouse Performance ≥ 85 en mobile para G1, N1 y A1 en el deploy de GitHub Pages. | Should | Lighthouse en la revisión de fase. | Pendiente (Lighthouse no se corrió en la revisión final) |
 | RNF-005 | El JavaScript inicial (gzip) no supera 300 KB; las rutas de cada rol se cargan de forma diferida. | Should | Reporte de build de Vite. | Hecho |
 | RNF-006 | Los íconos se importan como SVG individuales; no se carga la fuente completa de Material Symbols. | Must | Revisión del bundle. | Hecho |
 | RNF-007 | Las animaciones duran entre 150 y 300 ms y solo animan `transform` y `opacity`. | Must | Revisión de código. | Hecho, con excepción (D-99) |
@@ -209,7 +209,7 @@ Organizados según las características de calidad de **ISO/IEC 25010:2023** (IS
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-008 | Funciona en las dos últimas versiones de Chrome, Edge, Firefox y Safari. | Should | Prueba manual de los flujos críticos. | Pendiente |
+| RNF-008 | Funciona en las dos últimas versiones de Chrome, Edge, Firefox y Safari. | Should | Prueba manual de los flujos críticos. | Parcial (verificado en Chromium con Playwright; faltan Firefox, Safari y Edge) |
 | RNF-009 | Usa `HashRouter` para que todas las rutas funcionen en GitHub Pages, incluida la recarga directa. | Must | Recargar rutas profundas en el deploy. | Hecho |
 
 ### Capacidad de interacción (usabilidad y accesibilidad)
@@ -219,35 +219,35 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
 | RNF-010 | Contraste mínimo 4,5:1 en texto normal y 3:1 en texto grande, bordes de controles (`outline`) e indicadores de foco, en todas las combinaciones de tokens. | Must | Script de contraste sobre los tokens y axe en cada pantalla. | Hecho |
-| RNF-011 | Todas las acciones se pueden hacer con teclado, en orden lógico, con foco siempre visible (anillo `primary` de 2 px) y nunca tapado por el header, toasts u otros elementos (2.4.11). | Must | Recorrido con teclado de cada flujo principal. | Pendiente |
-| RNF-012 | El 100 % de los campos tiene etiqueta visible y permanente y texto de ayuda debajo con el formato y un ejemplo, asociado con `aria-describedby`; ningún placeholder reemplaza a una etiqueta o instrucción. | Must | axe y revisión de cada formulario. | Pendiente |
+| RNF-011 | Todas las acciones se pueden hacer con teclado, en orden lógico, con foco siempre visible (anillo `primary` de 2 px) y nunca tapado por el header, toasts u otros elementos (2.4.11). | Must | Recorrido con teclado de cada flujo principal. | Parcial (teclado cubierto en los tests de componentes, del constructor y de los diálogos; falta un recorrido manual completo por rol) |
+| RNF-012 | El 100 % de los campos tiene etiqueta visible y permanente y texto de ayuda debajo con el formato y un ejemplo, asociado con `aria-describedby`; ningún placeholder reemplaza a una etiqueta o instrucción. | Must | axe y revisión de cada formulario. | Hecho (`helperText` obligatorio en `TextField`, `Select` y `TextArea`; axe en cada pantalla) |
 | RNF-013 | Ninguna pantalla tiene desborde horizontal en 320, 375, 768, 1024, 1280 y 1440 px, ni con zoom al 200 %. | Must | Test de Playwright en verde y capturas en `docs/screenshots/`. | Hecho |
-| RNF-014 | Las áreas táctiles miden al menos 48 × 48 px en mobile y 24 × 24 px en desktop (2.5.8). | Must | Test de Playwright sobre elementos interactivos a 375 px y 1280 px. | Pendiente |
-| RNF-015 | Las animaciones se reducen a solo opacidad, o se eliminan, con `prefers-reduced-motion` o la preferencia "reducir animaciones". | Must | Prueba con la emulación de reducción de movimiento. | Pendiente |
+| RNF-014 | Las áreas táctiles miden al menos 48 × 48 px en mobile y 24 × 24 px en desktop (2.5.8). | Must | Test de Playwright sobre elementos interactivos a 375 px y 1280 px. | Hecho (`e2e/touch.spec.ts` a 375 px en todas las pantallas; en desktop ningún control mide menos de 32 px) |
+| RNF-015 | Las animaciones se reducen a solo opacidad, o se eliminan, con `prefers-reduced-motion` o la preferencia "reducir animaciones". | Must | Prueba con la emulación de reducción de movimiento. | Hecho (CSS global, `useShouldReduceMotion` y test) |
 | RNF-016 | Cada lista vacía muestra qué va a aparecer y cómo empezar. | Must | Revisión de estados vacíos con datos limpios. | Hecho |
 | RNF-017 | Los accesos de demo llevan al inicio de cualquier rol en 1 clic más la confirmación del paso MFA precargado, sin escribir nada. | Must | Prueba manual de los 4 roles. | Hecho |
 | RNF-018 | No hay sombras en tarjetas en reposo ni fondos con degradé; solo se usan `--elevation-1` y `--elevation-2`. | Must | Búsqueda en el código (`shadow`, `gradient`) y revisión visual. | Hecho |
-| RNF-042 | Los errores de formulario cumplen las 5 reglas de 2.10: no aparecen mientras se escribe por primera vez, se muestran en el campo con ícono y `aria-invalid`, son concretos, desaparecen al corregirse y nunca borran lo cargado (salvo contraseñas). | Must | Prueba manual con una lista de verificación por formulario. | Pendiente |
-| RNF-043 | Los formularios largos (A3, A6, J3) muestran además un resumen de errores arriba con enlaces a cada campo y mueven el foco ahí. | Must | Prueba con teclado y lector de pantalla. | Pendiente |
+| RNF-042 | Los errores de formulario cumplen las 5 reglas de 2.10: no aparecen mientras se escribe por primera vez, se muestran en el campo con ícono y `aria-invalid`, son concretos, desaparecen al corregirse y nunca borran lo cargado (salvo contraseñas). | Must | Prueba manual con una lista de verificación por formulario. | Hecho (patrón compartido en los campos y `useFieldError`, con tests de campo) |
+| RNF-043 | Los formularios largos (A3, A6, J3) muestran además un resumen de errores arriba con enlaces a cada campo y mueven el foco ahí. | Must | Prueba con teclado y lector de pantalla. | Hecho (`ErrorSummary` en A3, A6 y J3, con enlaces a cada campo y test en J3; D-130) |
 | RNF-044 | Los campos usan `autocomplete` (`email`, `current-password`, `new-password`, `one-time-code`) y tipos de input adecuados; se permite pegar y usar gestores de contraseñas (3.3.8). | Must | Revisión de código e inspección del DOM. | Hecho |
-| RNF-045 | Ningún flujo pide dos veces el mismo dato (3.3.7). | Must | Revisión de cada flujo. | Pendiente |
+| RNF-045 | Ningún flujo pide dos veces el mismo dato (3.3.7). | Must | Revisión de cada flujo. | Pendiente (revisión manual por flujo) |
 | RNF-046 | Toda acción de arrastrar tiene una alternativa de un solo clic (2.5.7). | Must | Prueba del constructor sin arrastrar. | Hecho |
 | RNF-047 | Cada pantalla tiene landmarks, un único `h1`, encabezados sin saltos, enlace "Saltar al contenido" y `lang` según el idioma. | Must | axe y revisión de la estructura. | Hecho |
-| RNF-048 | Toasts y estados se anuncian con `aria-live="polite"`; errores críticos con `role="alert"`. | Must | Prueba con NVDA o VoiceOver. | Pendiente |
+| RNF-048 | Toasts y estados se anuncian con `aria-live="polite"`; errores críticos con `role="alert"`. | Must | Prueba con NVDA o VoiceOver. | Parcial (avisos y campos con `aria-live`, errores críticos con `role="alert"`; falta la prueba con NVDA o VoiceOver) |
 | RNF-049 | Cada gráfico tiene título, resumen en texto del dato principal y la misma información en una tabla para lectores de pantalla (D-83). | Must | Revisión de A1 y demás gráficos. | Hecho |
-| RNF-050 | Los estados se comunican con ícono y texto, nunca solo con color. | Must | Revisión en escala de grises. | Pendiente |
+| RNF-050 | Los estados se comunican con ícono y texto, nunca solo con color. | Must | Revisión en escala de grises. | Hecho (`StatusPill`, `InlineAlert` y los chips de estado llevan siempre ícono y texto) |
 | RNF-051 | El acceso a la ayuda y a "¿Problemas para iniciar sesión?" está siempre en el mismo lugar (3.2.6). | Must | Revisión de las pantallas de acceso y del layout. | Hecho |
 | RNF-052 | axe no reporta errores en ninguna pantalla, y login, recorrido del nuevo ingreso y constructor se prueban con un lector de pantalla. | Must | `@axe-core/playwright` en el test y prueba manual con NVDA o VoiceOver; hallazgos en `issues.md`. | Parcial: axe en verde; la prueba con lector de pantalla queda para líneas futuras (decisión de Lourdes, 11/11/2026) |
-| RNF-053 | Todo texto usa un rol tipográfico de 2.1.2 (ningún tamaño suelto), mínimo 12 px para texto de lectura, 11 px solo en insignias, cifras tabulares en números y unidades `rem`. | Must | Búsqueda de tamaños fuera de los tokens. | Pendiente |
+| RNF-053 | Todo texto usa un rol tipográfico de 2.1.2 (ningún tamaño suelto), mínimo 12 px para texto de lectura, 11 px solo en insignias, cifras tabulares en números y unidades `rem`. | Must | Búsqueda de tamaños fuera de los tokens. | Hecho (sin tamaños sueltos en las pantallas; solo `OgCard`, que genera la imagen para compartir) |
 | RNF-055 | Los campos de fecha, número, código y correo no aceptan caracteres que no correspondan al dato, ni al escribir ni al pegar (máscaras), y las fechas se validan contra el calendario. Si se descarta un carácter, el lector de pantalla anuncia que no se aceptó y lee el valor final. | Must | Tests unitarios de `input-masks.ts`, `validation.ts` y `TextField`; prueba manual en `/styleguide`. | Hecho |
-| RNF-054 | Hay un solo botón filled por región visible; todos los botones tienen los estados de 2.1.3 (reposo, hover, foco, presionado, deshabilitado y cargando) y los deshabilitados explican por qué. | Must | Revisión en `/styleguide` y en cada pantalla. | Pendiente |
+| RNF-054 | Hay un solo botón filled por región visible; todos los botones tienen los estados de 2.1.3 (reposo, hover, foco, presionado, deshabilitado y cargando) y los deshabilitados explican por qué. | Must | Revisión en `/styleguide` y en cada pantalla. | Parcial (estados completos en `Button`; un solo filled por región revisado en las pantallas principales, no en todas) |
 
 ### Fiabilidad
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-019 | Todos los cambios persisten en `localStorage` al recargar. | Must | Prueba manual por función. | Pendiente |
-| RNF-020 | "Restablecer demo" deja la aplicación igual a la primera visita. | Must | Prueba manual tras modificar datos de cada rol. | Pendiente |
+| RNF-019 | Todos los cambios persisten en `localStorage` al recargar. | Must | Prueba manual por función. | Hecho (test de persistencia en `data-store.test.ts`) |
+| RNF-020 | "Restablecer demo" deja la aplicación igual a la primera visita. | Must | Prueba manual tras modificar datos de cada rol. | Hecho (test de `resetData` y del menú de usuario) |
 | RNF-021 | Si `localStorage` tiene datos corruptos o de una versión anterior del esquema, la app recarga los datos semilla en lugar de romperse. | Should | Test unitario con datos inválidos. | Hecho |
 
 ### Seguridad
@@ -255,7 +255,7 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
 | RNF-022 | El repositorio no contiene secretos, claves de API ni datos personales reales; los correos usan `.demo`. | Must | Revisión y búsqueda de patrones antes de cada deploy. | Hecho |
-| RNF-023 | Todo input se valida con Zod antes de guardarse. | Must | Revisión de código. | En curso (INC-018) |
+| RNF-023 | Todo input se valida con Zod antes de guardarse. | Must | Revisión de código. | Hecho (esquemas de Zod en todos los formularios y en el guardado de preferencias; D-130) |
 | RNF-024 | No se usa `dangerouslySetInnerHTML` en ningún archivo. | Must | Regla de ESLint y búsqueda en el código. | Hecho |
 | RNF-025 | Hay CSP en el `index.html` publicado que solo permite recursos propios (incluida la fuente Inter, alojada en el proyecto). | Must | Inspección del deploy; la consola no muestra violaciones. | Hecho |
 | RNF-026 | `npm audit` corre en CI y el deploy falla con vulnerabilidades altas o críticas. | Must | Workflow de GitHub Actions. | Hecho |
@@ -267,7 +267,7 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-030 | Ningún texto de interfaz está escrito directo en los componentes; todo vive en `src/locales/`. | Must | Regla de ESLint de i18n y revisión. | Pendiente |
+| RNF-030 | Ningún texto de interfaz está escrito directo en los componentes; todo vive en `src/locales/`. | Must | Regla de ESLint de i18n y revisión. | Hecho (sin textos fijos fuera de las páginas internas de desarrollo; `es.json` y `en.json` con las mismas 2.509 claves) |
 | RNF-031 | Los colores (roles de M3 de 2.1.1), radios, espaciados y sombras se usan solo a través de tokens; no hay valores hexadecimales en los componentes y los colores de estado nunca se usan como decoración ni como series de gráficos. | Must | Búsqueda en el código. | Hecho |
 | RNF-032 | Las funciones de `lib/` tienen tests unitarios y el build compila sin errores de TypeScript en modo estricto. | Must | CI. | Hecho |
 | RNF-033 | Todos los íconos pasan por el componente `<Icon />`, con estilo Rounded, peso 300. | Must | Búsqueda de importaciones de íconos fuera de `<Icon />`. | Hecho |
@@ -276,9 +276,9 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 
 | ID | Descripción medible | Prioridad | Cómo se verifica | Estado |
 | --- | --- | --- | --- | --- |
-| RNF-034 | Agregar un rol o una acción requiere modificar solo `permissions.ts` y las rutas nuevas. | Should | Revisión de arquitectura. | Pendiente |
-| RNF-035 | Los tokens están preparados para modo oscuro (pares claro y oscuro por rol de color). | Should | Styleguide con conmutador de prueba. | Pendiente |
-| RNF-036 | Toda la interfaz está disponible en español e inglés. | Should (fase B) | Cambiar idioma y recorrer cada rol; script que compara las claves de `es.json` y `en.json` (2.508 en cada uno, sin textos sin traducir). | Hecho |
+| RNF-034 | Agregar un rol o una acción requiere modificar solo `permissions.ts` y las rutas nuevas. | Should | Revisión de arquitectura. | Hecho (F17 sumó la acción `preferences:own` tocando solo `permissions.ts` y la ruta) |
+| RNF-035 | Los tokens están preparados para modo oscuro (pares claro y oscuro por rol de color). | Should | Styleguide con conmutador de prueba. | Parcial (roles oscuros en `tokens.css` sin verificar su contraste; no se implementa, como pide 2.1) |
+| RNF-036 | Toda la interfaz está disponible en español e inglés. | Should (fase B) | Cambiar idioma y recorrer cada rol; script que compara las claves de `es.json` y `en.json` (2.509 en cada uno, sin textos sin traducir). | Hecho |
 
 ### Protección (privacidad, idioma y voz y tono)
 
@@ -288,7 +288,7 @@ Accesibilidad según **WCAG 2.2 nivel AA** (W3C, 2023), equivalente a ISO/IEC 40
 | RNF-038 | Los datos de ánimo nunca aparecen asociados a una persona en el panel general. | Must | Revisión de A1. | Hecho |
 | RNF-039 | Todos los textos usan español latinoamericano neutro con tuteo; 0 casos de voseo o "usted". | Must | Script que busca formas de voseo (`-á`, `-é` imperativas, "vos") y "usted" en `es.json`. | Hecho |
 | RNF-040 | Los textos usan el vocabulario fijo de la sección 2.9 y no contienen guiones largos (—). | Must | Script de búsqueda de términos prohibidos en `es.json`. | Hecho |
-| RNF-041 | Como máximo un signo de exclamación por pantalla, solo para celebrar avances. | Should | Revisión manual de cada pantalla. | Pendiente |
+| RNF-041 | Como máximo un signo de exclamación por pantalla, solo para celebrar avances. | Should | Revisión manual de cada pantalla. | Hecho (un solo signo, en "¡Completaste {{stage}}!") |
 
 ---
 

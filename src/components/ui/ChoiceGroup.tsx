@@ -19,6 +19,8 @@ interface ChoiceGroupProps {
   error?: string;
   /** `row` for 2 to 3 short choices, `scale` for a 1 to 5 scale such as the mood. */
   layout?: 'row' | 'scale';
+  /** Id of the fieldset, to reach it from an error summary. */
+  id?: string;
   className?: string;
 }
 
@@ -42,6 +44,7 @@ export function ChoiceGroup({
   helperText,
   error,
   layout = 'row',
+  id: fieldsetId,
   className,
 }: ChoiceGroupProps) {
   const id = useId();
@@ -49,6 +52,7 @@ export function ChoiceGroup({
 
   return (
     <fieldset
+      id={fieldsetId}
       className={cn('@container flex min-w-0 flex-col gap-2', className)}
       aria-describedby={helperText || error ? supportId : undefined}
       aria-invalid={error ? true : undefined}

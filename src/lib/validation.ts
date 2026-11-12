@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { addDays } from './dates';
+import { DATE_FORMATS, TIMEZONES } from './preferences';
 
 /**
  * Reusable Zod field schemas. Error messages are i18n keys (`validation.*`),
@@ -135,3 +137,60 @@ export const commentSchema = z
   .trim()
   .min(1, 'comments.required')
   .max(COMMENT_MAX, 'comments.max');
+
+/** F13: a review campaign has a name of 5 to 80 characters and a due date after today, up to `maxDays` ahead. */
+export function campaignSchema(today: string, maxDays: number) {
+  const last = addDays(today, maxDays);
+  return z.object({
+    name: z
+      .string()
+      .trim()
+      .min(5, 'accessReview.campaigns.form.nameRequired')
+      .max(80, 'accessReview.campaigns.form.nameRequired'),
+    dueDate: z
+      .string({ error: 'accessReview.campaigns.form.dueRequired' })
+      .refine((iso) => iso > today && iso <= last, 'accessReview.campaigns.form.dueRange'),
+  });
+}
+
+/**
+ * F12: a job change or a leaver. The person and the date are required; a job change needs a
+ * different job, a leaver needs its type; the detail is optional up to 300 characters. The rule
+ * of the two IT people (D-121) is checked by the store, not here.
+ */
+export function lifecycleSchema(currentJobTitleId: string | undefined) {
+  return z
+    .object({
+      kind: z.enum(['mover', 'leaver']),
+      personId: z.string().min(1, 'lifecycle.form.personRequired'),
+      jobTitleId: z.string(),
+      effectiveDate: z.string({ error: 'lifecycle.form.dateRequired' }),
+      leaverType: z.string(),
+      detail: z.string().trim().max(300, 'lifecycle.form.detailMax'),
+    })
+    .superRefine((value, ctx) => {
+      if (value.kind === 'mover' && !value.jobTitleId)
+        ctx.addIssue({ code: 'custom', path: ['jobTitleId'], message: 'lifecycle.form.jobRequired' });
+      else if (value.kind === 'mover' && value.jobTitleId === currentJobTitleId)
+        ctx.addIssue({ code: 'custom', path: ['jobTitleId'], message: 'lifecycle.form.jobSame' });
+      if (value.kind === 'leaver' && !value.leaverType)
+        ctx.addIssue({ code: 'custom', path: ['leaverType'], message: 'lifecycle.form.typeRequired' });
+    });
+}
+
+/** F17: preferences only take the listed values; anything else is rejected before saving. */
+export const preferencesSchema = z.object({
+  personId: z.string().min(1),
+  language: z.enum(['es', 'en']),
+  timezone: z.enum(TIMEZONES),
+  dateFormat: z.enum(DATE_FORMATS),
+  notifications: z.object({
+    tasks: z.array(z.enum(['app', 'email'])).min(1),
+    checkins: z.array(z.enum(['app', 'email'])).min(1),
+    people: z.array(z.enum(['app', 'email'])).min(1),
+    access: z.array(z.enum(['app', 'email'])).min(1),
+  }),
+  reduceMotion: z.boolean(),
+  highContrast: z.boolean(),
+});
+

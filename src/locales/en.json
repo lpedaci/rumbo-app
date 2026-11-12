@@ -12,6 +12,8 @@
     "backHome": "Back to home"
   },
   "ui": {
+    "errorSummary_one": "Check 1 field before continuing",
+    "errorSummary_other": "Check {{count}} fields before continuing",
     "print": "Print",
     "printLabel": "Print or save as PDF",
     "required": "required",
@@ -1351,8 +1353,7 @@
     "cancel": "Cancel",
     "done": "Check-in completed",
     "escalated": "Check-in completed and escalated to HR",
-    "alreadyDone": "This check-in is already completed.",
-    "errors": "Check these points before saving"
+    "alreadyDone": "This check-in is already completed."
   },
   "selfReview": {
     "title": "Your {{days}} day self-review",

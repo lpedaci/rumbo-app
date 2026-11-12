@@ -7,6 +7,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { FormFooter } from '@/components/ui/FormFooter';
+import { ErrorSummary, type ErrorSummaryItem } from '@/components/ui/ErrorSummary';
 import { Icon } from '@/components/ui/Icon';
 import { Select } from '@/components/ui/Select';
 import { TextField } from '@/components/ui/TextField';
@@ -55,10 +56,13 @@ export function NewHirePage() {
     handleSubmit,
     getValues,
     setValue,
-    formState: { errors, isSubmitting },
+    setFocus,
+    formState: { errors, isSubmitting, submitCount },
   } = useForm<Values>({
     resolver: zodResolver(schema),
     mode: 'onTouched',
+    // The focus goes to the error summary instead (2.10, RNF-043)
+    shouldFocusError: false,
     defaultValues: {
       name: '',
       jobTitle: '',
@@ -109,6 +113,22 @@ export function NewHirePage() {
     navigate(`/admin/hires/${hire.id}`);
   });
 
+  // Error summary above the form, in the order of the fields (2.10, RNF-043)
+  const FIELD_LABELS: [keyof Values, string][] = [
+    ['name', 'hires.form.name'],
+    ['startDate', 'hires.form.startDate'],
+    ['jobTitle', 'hires.form.jobTitle'],
+    ['area', 'hires.form.area'],
+    ['templateId', 'hires.form.template'],
+    ['managerId', 'hires.form.manager'],
+    ['buddyId', 'hires.form.buddy'],
+    ['mobile', 'hires.form.mobile'],
+  ];
+  const problems: ErrorSummaryItem[] = FIELD_LABELS.flatMap(([field, label]) => {
+    const message = fieldError(errors[field]);
+    return message ? [{ key: field, label: t(label), message, focus: () => setFocus(field) }] : [];
+  });
+
   // Summary of what will be created
   const offsets = template?.tasks.map((task) => task.offsetDays) ?? [];
   const summary =
@@ -147,6 +167,7 @@ export function NewHirePage() {
         className="grid grid-cols-1 gap-(--space-bento-gap) lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]"
       >
         <div className="flex min-w-0 flex-col gap-(--space-bento-gap)">
+          {submitCount > 0 && <ErrorSummary items={problems} attempt={submitCount} />}
           <Card title={t('hires.form.person')}>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <TextField

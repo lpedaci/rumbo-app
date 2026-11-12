@@ -70,5 +70,7 @@ export default defineConfig({
     include: ['src/**/*.test.{ts,tsx}'],
     // Only tokens.css is processed in tests (read as ?raw by the contrast test).
     css: { include: [/tokens\.css/] },
+    // Some tests render the whole app; with every file in parallel they can pass 5 s (INC-027).
+    testTimeout: 15000,
   },
 });

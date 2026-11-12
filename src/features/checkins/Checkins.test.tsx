@@ -46,7 +46,12 @@ describe('J3 · Manager check-in (F5)', () => {
   it('asks for a result in every milestone before saving', async () => {
     renderAt('/manager/hires/h-sofia/checkin/day30');
     fireEvent.click(await screen.findByRole('button', { name: es.managerCheckin.submit }));
-    expect(await screen.findByText(es.managerCheckin.errors)).toBeInTheDocument();
+    // Error summary with one link per milestone (2.10, RNF-043); each link moves the focus to its field
+    expect(await screen.findByText(es.ui.errorSummary_other.replace('{{count}}', '3'))).toBeInTheDocument();
+    const label = sofia().checkins[0]!.milestones[0]!.label;
+    const firstLink = screen.getAllByRole('button').find((b) => b.textContent?.startsWith(label))!;
+    fireEvent.click(firstLink);
+    expect(document.activeElement?.closest('fieldset')?.id).toBe('ci-milestone-0');
     expect(sofia().checkins[0]!.status).not.toBe('completed');
   });
 

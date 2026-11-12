@@ -13,10 +13,10 @@ import { Select } from '@/components/ui/Select';
 import { TextField } from '@/components/ui/TextField';
 import { toast } from '@/components/ui/toast-store';
 import { buildReviewItems, campaignProgress, nextCampaignId } from '@/lib/access-review';
-import { addDays, DEMO_TODAY, formatDate } from '@/lib/dates';
+import { DEMO_TODAY, formatDate } from '@/lib/dates';
 import { dateMask } from '@/lib/input-masks';
 import { cn } from '@/lib/utils';
-import { parseDisplayDate } from '@/lib/validation';
+import { campaignSchema, issuesByPath, parseDisplayDate } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { AccessReviewCampaign } from '@/types/domain';
@@ -144,12 +144,9 @@ function CreateCampaignDialog({ onDone }: { onDone: () => void }) {
   const [tried, setTried] = useState(false);
 
   const iso = parseDisplayDate(date);
-  const nameIssue = name.trim().length < 5 || name.trim().length > 80 ? 'accessReview.campaigns.form.nameRequired' : undefined;
-  const dateIssue = !iso
-    ? 'accessReview.campaigns.form.dueRequired'
-    : iso <= DEMO_TODAY || iso > addDays(DEMO_TODAY, MAX_DAYS)
-      ? 'accessReview.campaigns.form.dueRange'
-      : undefined;
+  const issues = issuesByPath(campaignSchema(DEMO_TODAY, MAX_DAYS).safeParse({ name, dueDate: iso ?? undefined }));
+  const nameIssue = issues.name;
+  const dateIssue = issues.dueDate;
   const scopeValue: AccessReviewCampaign['scope'] = scope === 'company' ? 'company' : { areaId: scope };
   const preview = buildReviewItems(nextCampaignId(campaigns), people, jobTitles, scopeValue);
 

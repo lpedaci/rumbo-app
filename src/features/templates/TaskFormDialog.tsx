@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/Dialog';
+import { ErrorSummary, type ErrorSummaryItem, focusField } from '@/components/ui/ErrorSummary';
 import { Icon } from '@/components/ui/Icon';
 import { Select } from '@/components/ui/Select';
 import { TextArea } from '@/components/ui/TextArea';
@@ -84,8 +85,15 @@ export function TaskFormDialog({ open, onOpenChange, task, stage, tasks, onSubmi
     clearErrors,
     getValues,
     trigger,
-    formState: { errors, isSubmitted },
-  } = useForm<TaskFormValues>({ resolver: zodResolver(schema), mode: 'onTouched', defaultValues: defaults() });
+    setFocus,
+    formState: { errors, isSubmitted, submitCount },
+  } = useForm<TaskFormValues>({
+    resolver: zodResolver(schema),
+    mode: 'onTouched',
+    defaultValues: defaults(),
+    // The focus goes to the error summary instead (2.10, RNF-043)
+    shouldFocusError: false,
+  });
 
   // Fresh values every time the dialog opens.
   useEffect(() => {
@@ -119,7 +127,7 @@ export function TaskFormDialog({ open, onOpenChange, task, stage, tasks, onSubmi
 
   const submit = (values: TaskFormValues) => {
     if (laterSelected.length > 0) {
-      setError('dependsOn', { type: 'custom', message: 'later' }, { shouldFocus: true });
+      setError('dependsOn', { type: 'custom', message: 'later' });
       return;
     }
     onSubmit({
@@ -155,6 +163,30 @@ export function TaskFormDialog({ open, onOpenChange, task, stage, tasks, onSubmi
       ? t('templates.taskForm.titleMax', { max: DESCRIPTION_MAX })
       : fieldError(errors.description);
   const depsErrorId = `${taskId}-deps-error`;
+  const depsId = `${taskId}-deps`;
+
+  // Error summary at the top of the dialog, in the order of the fields (2.10, RNF-043)
+  const fields: [keyof TaskFormValues, string, string | undefined][] = [
+    ['title', t('templates.taskForm.title'), titleError],
+    ['description', t('templates.taskForm.description'), descriptionError],
+    ['type', t('templates.taskForm.type'), fieldError(errors.type)],
+    ['owner', t('templates.taskForm.owner'), fieldError(errors.owner)],
+    ['stage', t('templates.taskForm.stage'), fieldError(errors.stage)],
+    ['offset', t('templates.taskForm.offset'), offsetError],
+  ];
+  const problems: ErrorSummaryItem[] = [
+    ...fields.flatMap(([field, label, message]) =>
+      message ? [{ key: field, label, message, focus: () => setFocus(field) }] : [],
+    ),
+    ...(errors.dependsOn
+      ? laterSelected.map((x) => ({
+          key: `dep-${x.id}`,
+          label: t('templates.taskForm.deps'),
+          message: t('templates.taskForm.depLaterError', { task: x.title, day: x.offsetDays }),
+          focus: () => focusField(depsId),
+        }))
+      : []),
+  ];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -163,6 +195,7 @@ export function TaskFormDialog({ open, onOpenChange, task, stage, tasks, onSubmi
         className="max-w-2xl"
       >
         <form noValidate onSubmit={handleSubmit(submit)} className="flex flex-col gap-5">
+          {submitCount > 0 && <ErrorSummary items={problems} attempt={submitCount} />}
           <TextField
             label={t('templates.taskForm.title')}
             required
@@ -215,6 +248,7 @@ export function TaskFormDialog({ open, onOpenChange, task, stage, tasks, onSubmi
           </div>
 
           <fieldset
+            id={depsId}
             className="flex min-w-0 flex-col gap-2"
             aria-describedby={errors.dependsOn ? depsErrorId : `${taskId}-deps-help`}
           >

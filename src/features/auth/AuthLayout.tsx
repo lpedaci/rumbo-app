@@ -55,7 +55,7 @@ export function AuthLayout({ children, aside, showcase }: AuthLayoutProps) {
           )}
         >
           {/* The logo goes back to the demo start (G0). */}
-          <Link to="/" className="w-fit rounded-sm">
+          <Link to="/" className="flex min-h-12 w-fit items-center rounded-sm md:min-h-0">
             <Logo />
           </Link>
           {children}

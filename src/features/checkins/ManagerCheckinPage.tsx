@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DetailHeader, HeaderChip } from '@/components/layout/DetailHeader';
 import { Link, useNavigate, useParams } from 'react-router';
@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card';
 import { FormFooter } from '@/components/ui/FormFooter';
 import { ChoiceGroup } from '@/components/ui/ChoiceGroup';
 import { Icon, type IconName } from '@/components/ui/Icon';
+import { ErrorSummary, type ErrorSummaryItem, focusField } from '@/components/ui/ErrorSummary';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { TextArea } from '@/components/ui/TextArea';
 import { TextField } from '@/components/ui/TextField';
@@ -51,7 +52,7 @@ export function ManagerCheckinPage() {
   const [newDate, setNewDate] = useState('');
   const [note, setNote] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const summaryRef = useRef<HTMLDivElement>(null);
+  const [attempt, setAttempt] = useState(0);
 
   if (!hire || !checkin || !canViewHire(user, hire) || !can(user, 'checkin:fill')) {
     return <AccessDeniedPage reason="not_found" />;
@@ -74,21 +75,21 @@ export function ManagerCheckinPage() {
     newDate: message('newDate'),
     note: message('note'),
   };
+  const item = (key: string, label: string, message?: string): ErrorSummaryItem[] =>
+    message ? [{ key, label, message, focus: () => focusField(key) }] : [];
   const problems = [
-    ...errors.results.flatMap((e, i) => (e ? [`${checkin.milestones[i]!.label}: ${e}`] : [])),
-    ...(errors.action ? [`${t('managerCheckin.action')}: ${errors.action}`] : []),
-    ...(errors.newDate ? [`${t('managerCheckin.newDate')}: ${errors.newDate}`] : []),
-    ...(errors.note ? [`${t('managerCheckin.note')}: ${errors.note}`] : []),
+    ...errors.results.flatMap((e, i) => item(`ci-milestone-${i}`, checkin.milestones[i]!.label, e)),
+    ...item('ci-action', t('managerCheckin.action'), errors.action),
+    ...item('ci-new-date', t('managerCheckin.newDate'), errors.newDate),
+    ...item('ci-note', t('managerCheckin.note'), errors.note),
   ];
   const show = (error?: string) => (submitted ? error : undefined);
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitted(true);
-    if (problems.length > 0 || !user) {
-      requestAnimationFrame(() => summaryRef.current?.focus());
-      return;
-    }
+    setAttempt((n) => n + 1);
+    if (problems.length > 0 || !user) return;
     const action: CheckinAction | undefined = askAction
       ? actionType === 'reschedule'
         ? { type: 'reschedule', newDate: newDateIso! }
@@ -141,23 +142,14 @@ export function ManagerCheckinPage() {
           className="grid grid-cols-1 gap-(--space-bento-gap) lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]"
         >
           <div className="flex min-w-0 flex-col gap-(--space-bento-gap)">
-            {submitted && problems.length > 0 && (
-              <div ref={summaryRef} tabIndex={-1} className="outline-none">
-                <InlineAlert tone="error" title={t('managerCheckin.errors')}>
-                  <ul className="list-disc pl-5">
-                    {problems.map((p) => (
-                      <li key={p}>{p}</li>
-                    ))}
-                  </ul>
-                </InlineAlert>
-              </div>
-            )}
+            {submitted && <ErrorSummary items={problems} attempt={attempt} />}
 
             <Card title={t('managerCheckin.milestones')} description={t('managerCheckin.milestonesHelp')}>
               <div className="flex flex-col gap-6">
                 {checkin.milestones.map((milestone, i) => (
                   <ChoiceGroup
                     key={milestone.id}
+                    id={`ci-milestone-${i}`}
                     legend={milestone.label}
                     value={results[i]}
                     onChange={(value) =>
@@ -174,6 +166,7 @@ export function ManagerCheckinPage() {
               <Card title={t('managerCheckin.notMet')} description={t('managerCheckin.notMetHelp')}>
                 <div className="flex flex-col gap-6">
                   <ChoiceGroup
+                    id="ci-action"
                     legend={t('managerCheckin.action')}
                     helperText={t('managerCheckin.actionHelp')}
                     value={actionType}
@@ -186,6 +179,7 @@ export function ManagerCheckinPage() {
                   />
                   {actionType === 'reschedule' && (
                     <TextField
+                      id="ci-new-date"
                       label={t('managerCheckin.newDate')}
                       helperText={t('managerCheckin.newDateHelp')}
                       inputMode="numeric"
@@ -198,6 +192,7 @@ export function ManagerCheckinPage() {
                   )}
                   {actionType === 'escalate' && (
                     <TextArea
+                      id="ci-note"
                       label={t('managerCheckin.note')}
                       helperText={t('managerCheckin.noteHelp')}
                       required

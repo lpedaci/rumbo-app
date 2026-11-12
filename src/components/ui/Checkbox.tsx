@@ -21,14 +21,20 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
 
   return (
     <div className={cn('flex min-h-12 items-start gap-3 py-2 md:min-h-0 md:py-1', className)}>
-      <input
-        ref={ref}
-        id={inputId}
-        type="checkbox"
-        aria-describedby={descriptionId}
-        className="mt-0.5 size-5 shrink-0 cursor-pointer rounded-xs accent-primary"
-        {...props}
-      />
+      {/* The box gets a 48 × 48 px touch area on mobile, like the buttons (2.1.3); this label adds no text. */}
+      <label
+        htmlFor={inputId}
+        className="relative mt-0.5 flex shrink-0 cursor-pointer max-md:after:absolute max-md:after:top-1/2 max-md:after:left-1/2 max-md:after:size-12 max-md:after:-translate-x-1/2 max-md:after:-translate-y-1/2 max-md:after:content-['']"
+      >
+        <input
+          ref={ref}
+          id={inputId}
+          type="checkbox"
+          aria-describedby={descriptionId}
+          className="size-5 cursor-pointer rounded-xs accent-primary"
+          {...props}
+        />
+      </label>
       <div className="flex min-w-0 flex-col gap-0.5">
         <label htmlFor={inputId} className="cursor-pointer text-body-medium text-on-surface">
           {label}

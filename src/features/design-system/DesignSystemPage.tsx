@@ -278,7 +278,7 @@ export function DesignSystemPage() {
         <div className="mx-auto flex h-16 w-full max-w-[max(80rem,80%)] items-center justify-between gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest px-4">
           <Link
             to="/"
-            className="flex min-w-0 items-center gap-3 rounded-sm focus-visible:outline-2 focus-visible:outline-primary"
+            className="flex min-h-12 min-w-0 items-center gap-3 rounded-sm md:min-h-0 focus-visible:outline-2 focus-visible:outline-primary"
           >
             <Logo showCompany={false} />
             <span aria-hidden className="hidden h-5 w-px bg-outline-variant sm:block" />

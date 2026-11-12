@@ -12,6 +12,8 @@
     "backHome": "Volver al inicio"
   },
   "ui": {
+    "errorSummary_one": "Revisa 1 campo antes de continuar",
+    "errorSummary_other": "Revisa {{count}} campos antes de continuar",
     "print": "Imprimir",
     "printLabel": "Imprimir o guardar como PDF",
     "required": "obligatorio",
@@ -1351,8 +1353,7 @@
     "cancel": "Cancelar",
     "done": "Check-in completado",
     "escalated": "Check-in completado y escalado a RRHH",
-    "alreadyDone": "Este check-in ya está completado.",
-    "errors": "Revisa estos puntos antes de guardar"
+    "alreadyDone": "Este check-in ya está completado."
   },
   "selfReview": {
     "title": "Tu autoevaluación de los {{days}} días",
