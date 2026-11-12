@@ -6,6 +6,7 @@ import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from '@/compone
 import { useMediaQuery } from '@/lib/use-media-query';
 import { cn } from '@/lib/utils';
 import type { Person } from '@/types/domain';
+import { EmailText } from '@/components/ui/EmailText';
 
 /**
  * One key contact. From 1024 px, the full card: avatar, relation chip, name, job title and
@@ -40,7 +41,7 @@ export function ContactCard({ person, relation }: { person: Person; relation: st
             className="inline-flex min-h-9 w-fit max-w-full items-start gap-2 py-1.5 rounded-sm text-body-medium text-primary underline-offset-4 hover:underline"
           >
             <Icon name="mail" size={18} className="shrink-0" />
-            <span className="min-w-0 [overflow-wrap:anywhere]">{person.email}</span>
+            <EmailText email={person.email} />
             <span className="sr-only">: {t('journey.contacts.email', { name: person.name })}</span>
           </a>
         </div>
@@ -84,7 +85,7 @@ export function ContactCard({ person, relation }: { person: Person; relation: st
               className="flex min-h-12 min-w-0 items-center gap-2 rounded-md bg-surface-container px-3 text-body-medium text-primary underline-offset-4 hover:underline md:min-h-10"
             >
               <Icon name="mail" className="shrink-0" />
-              <span className="min-w-0 [overflow-wrap:anywhere]">{person.email}</span>
+              <EmailText email={person.email} />
               <span className="sr-only">: {t('journey.contacts.email', { name: person.name })}</span>
             </a>
           </div>

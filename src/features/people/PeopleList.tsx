@@ -9,6 +9,7 @@ import { filterPeople, personStatus } from '@/lib/people';
 import { ROLES } from '@/lib/permissions';
 import { useDataStore } from '@/store/data-store';
 import { PersonStatusPill, RoleChip } from './PeopleBits';
+import { EmailText } from '@/components/ui/EmailText';
 
 const PANEL = 'flex min-w-0 flex-col gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-(--space-card-padding)';
 
@@ -89,7 +90,7 @@ export function PeopleList() {
                     <span className="text-body-small text-on-surface-variant">
                       {p.jobTitle} · {p.area}
                     </span>
-                    <span className="text-body-small text-on-surface-variant [overflow-wrap:anywhere]">{p.email}</span>
+                    <EmailText email={p.email} className="text-body-small text-on-surface-variant" />
                   </span>
                 </span>
                 <span className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-end">

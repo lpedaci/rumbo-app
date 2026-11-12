@@ -29,6 +29,7 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { Person, Role } from '@/types/domain';
 import { PersonStatusPill, RoleChip } from './PeopleBits';
+import { EmailText } from '@/components/ui/EmailText';
 
 const reasonSchema = z.string().trim().min(10, 'people.detail.reasonRequired').max(300, 'people.detail.reasonMax');
 
@@ -157,7 +158,7 @@ function PersonDetail({ person }: { person: Person }) {
             />
             <dl className="flex flex-col border-t border-outline-variant">
               {[
-                [t('people.fields.email'), <span key="e" className="[overflow-wrap:anywhere]">{person.email}</span>],
+                [t('people.fields.email'), <EmailText key="e" email={person.email} />],
                 ...(['dni', 'cuil', 'bankAccount'] as const)
                   .filter((f) => person[f])
                   .map((f) => [

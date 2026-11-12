@@ -3303,6 +3303,8 @@
       }
     },
     "detail": {
+      "standIn": "Resolve as {{name}} (demo)",
+      "standInTitle": "{{name}}'s review (demo)",
       "breadcrumb": "Campaign navigation",
       "facts": "Campaign facts",
       "back": "Back to campaigns",

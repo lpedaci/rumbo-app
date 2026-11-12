@@ -18,6 +18,7 @@ import { useCurrentUser } from '@/store/session-store';
 import type { PrivacyRequestType, SensitiveField } from '@/types/domain';
 import { MaskedValue } from './MaskedValue';
 import { PrivacyRequestRow } from './PrivacyRequestRow';
+import { EmailText } from '@/components/ui/EmailText';
 
 const TYPES: PrivacyRequestType[] = ['access', 'rectification', 'deletion'];
 const requestSchema = z.object({
@@ -75,7 +76,7 @@ export function MyPrivacyPage() {
 
   const rows: { label: string; value: React.ReactNode }[] = [
     { label: t('privacy.mine.fields.name'), value: person.name },
-    { label: t('privacy.mine.fields.email'), value: <span className="[overflow-wrap:anywhere]">{person.email}</span> },
+    { label: t('privacy.mine.fields.email'), value: <EmailText email={person.email} /> },
     { label: t('privacy.mine.fields.jobTitle'), value: person.jobTitle },
     { label: t('privacy.mine.fields.area'), value: person.area },
     ...(manager ? [{ label: t('privacy.mine.fields.manager'), value: manager.name }] : []),

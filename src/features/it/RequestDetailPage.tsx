@@ -22,6 +22,7 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { AccessResolutionAction } from '@/types/domain';
 import { RequestStatusPill } from './RequestStatusPill';
+import { EmailText } from '@/components/ui/EmailText';
 
 type RestoreAction = Exclude<AccessResolutionAction, 'reject'>;
 const ACTIONS: RestoreAction[] = ['unlock', 'force_password_reset', 'reset_mfa'];
@@ -325,7 +326,7 @@ export function RequestDetailPage() {
                 <span className="text-title-medium break-words text-on-surface">
                   {person?.name ?? t('it.unknownPerson')}
                 </span>
-                <span className="text-body-small break-all text-on-surface-variant">{request.email}</span>
+                <EmailText email={request.email} className="text-body-small text-on-surface-variant" />
               </div>
             </div>
             <dl className="flex flex-col border-t border-outline-variant">

@@ -12,6 +12,7 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
 import { MySessions } from './MySessions';
 import { RoleChip } from '@/features/people/PeopleBits';
+import { EmailText } from '@/components/ui/EmailText';
 
 /**
  * G5 · Mi seguridad: account, two-step verification (required or optional by role,
@@ -57,7 +58,7 @@ export function SecurityPage() {
                 phones and on the right from 768 px. Only one of the two chips is displayed. */}
             <div className="flex min-w-0 flex-1 flex-col gap-1.5">
               <span className="text-title-medium text-on-surface">{person.name}</span>
-              <span className="text-body-medium [overflow-wrap:anywhere] text-on-surface-variant">{person.email}</span>
+              <EmailText email={person.email} className="text-body-medium text-on-surface-variant" />
               <RoleChip role={user.role} className="w-fit md:hidden" />
             </div>
             <RoleChip role={user.role} className="hidden shrink-0 self-start md:inline-flex" />

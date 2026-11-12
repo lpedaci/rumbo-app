@@ -10,7 +10,21 @@
     "cuil": "23-38100000-0",
     "bankAccount": "0720123456705550000000",
     "areaId": "a-personas",
-    "jobTitleId": "jt-people-partner"
+    "jobTitleId": "jt-people-partner",
+    "managerId": "p-valeria"
+  },
+  {
+    "id": "p-valeria",
+    "name": "Valeria Ortiz",
+    "role": "manager",
+    "jobTitle": "Gerenta de Personas",
+    "area": "Personas",
+    "email": "valeria.ortiz@nortia.demo",
+    "dni": "28.734.519",
+    "cuil": "27-28734519-3",
+    "bankAccount": "0720153086205553724418",
+    "areaId": "a-personas",
+    "jobTitleId": "jt-people-lead"
   },
   {
     "id": "p-martin",

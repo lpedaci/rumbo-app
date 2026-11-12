@@ -96,17 +96,23 @@ function CampaignReview({ campaign, items }: { campaign: AccessReviewCampaign; i
   );
 }
 
-function PersonReview({
+export function PersonReview({
   campaign,
   person,
   rows,
+  actorId,
+  simulated = false,
 }: {
   campaign: AccessReviewCampaign;
   person: Person;
   rows: AccessReviewItem[];
+  /** D-120: who decides; by default the viewer, or the reviewer resolved with the demo shortcut (S6). */
+  actorId?: string;
+  simulated?: boolean;
 }) {
   const { t } = useTranslation();
   const user = useCurrentUser();
+  const actor = actorId ?? user?.personId;
   const text = useReviewText();
   const approvals = useDataStore((s) => s.approvals);
   const [revoking, setRevoking] = useState<AccessReviewItem | null>(null);
@@ -117,8 +123,8 @@ function PersonReview({
   const [open, setOpen] = useState(pending.length > 0);
 
   const keep = (ids: string[]) => {
-    if (!user) return;
-    const count = useDataStore.getState().decideReviewItems(campaign.id, ids, 'keep', '', user.personId);
+    if (!actor) return;
+    const count = useDataStore.getState().decideReviewItems(campaign.id, ids, 'keep', '', actor, simulated);
     if (count) toast.success(t('accessReview.keptToast', { count }));
   };
 
@@ -227,7 +233,14 @@ function PersonReview({
 
       <Dialog open={Boolean(revoking)} onOpenChange={(v) => !v && setRevoking(null)}>
         {revoking && (
-          <RevokeDialog campaign={campaign} item={revoking} person={person} onDone={() => setRevoking(null)} />
+          <RevokeDialog
+            campaign={campaign}
+            item={revoking}
+            person={person}
+            actorId={actor}
+            simulated={simulated}
+            onDone={() => setRevoking(null)}
+          />
         )}
       </Dialog>
     </section>
@@ -238,15 +251,18 @@ function RevokeDialog({
   campaign,
   item,
   person,
+  actorId,
+  simulated,
   onDone,
 }: {
   campaign: AccessReviewCampaign;
   item: AccessReviewItem;
   person: Person;
+  actorId?: string;
+  simulated: boolean;
   onDone: () => void;
 }) {
   const { t } = useTranslation();
-  const user = useCurrentUser();
   const text = useReviewText();
   const [reason, setReason] = useState('');
   const [tried, setTried] = useState(false);
@@ -257,12 +273,12 @@ function RevokeDialog({
 
   const submit = () => {
     setTried(true);
-    if (issue || !user) {
+    if (issue || !actorId) {
       document.getElementById('revoke-reason')?.focus();
       return;
     }
     const wouldBlock = role && itMinimumBlock(useDataStore.getState().people, item.personId, { toRole: 'hire' });
-    if (useDataStore.getState().decideReviewItems(campaign.id, [item.id], 'revoke', reason, user.personId)) {
+    if (useDataStore.getState().decideReviewItems(campaign.id, [item.id], 'revoke', reason, actorId, simulated)) {
       if (wouldBlock) {
         setBlocked(true);
         return;

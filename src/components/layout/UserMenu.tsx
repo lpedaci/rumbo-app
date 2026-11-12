@@ -17,6 +17,7 @@ import { can } from '@/lib/permissions';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
+import { EmailText } from '@/components/ui/EmailText';
 
 /** User menu (CLAUDE.md F0): name, role, "Mi seguridad", demo controls and "Cerrar sesión". */
 export function UserMenu({ placement = 'header' }: { placement?: 'header' | 'sidebar' }) {
@@ -82,7 +83,7 @@ export function UserMenu({ placement = 'header' }: { placement?: 'header' | 'sid
             <div className="flex min-w-0 flex-col">
               <span className="truncate text-label-large text-on-surface">{name}</span>
               <span className="text-body-small text-on-surface-variant">{t(`roles.${user.role}`)}</span>
-              <span className="text-body-small [overflow-wrap:anywhere] text-on-surface-variant">{person?.email}</span>
+              <EmailText email={person?.email ?? ''} className="text-body-small text-on-surface-variant" />
             </div>
           </div>
           <DropdownMenuSeparator />

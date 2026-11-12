@@ -7,6 +7,7 @@ import { Icon } from '@/components/ui/Icon';
 import { duration, easing, useShouldReduceMotion } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import type { Person } from '@/types/domain';
+import { EmailText } from '@/components/ui/EmailText';
 
 // Slow enough to read each step before it is checked (D-67).
 const STEP_MS = 1200;
@@ -57,7 +58,7 @@ export function SsoSimulation({ person, providerName, onDone }: SsoSimulationPro
         <Avatar name={person.name} role={person.role} />
         <div className="flex min-w-0 flex-col">
           <span className="truncate text-title-small text-on-surface">{person.name}</span>
-          <span className="text-body-small [overflow-wrap:anywhere] text-on-surface-variant">{person.email}</span>
+          <EmailText email={person.email} className="text-body-small text-on-surface-variant" />
         </div>
       </div>
 

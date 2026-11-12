@@ -426,6 +426,8 @@ Empresa ficticia para los datos: **Nortia S.A.**, empresa de servicios tecnológ
 
 **Segunda persona de sistemas (D-118):** además de Diego, los datos incluyen a **Ramiro Sosa, Analista de Seguridad IT**, sin cuenta de demo. Existe porque la doble aprobación (F14) necesita a otra persona de sistemas: lo que pide Diego lo decide Ramiro y lo que pide Ramiro lo decide Diego. Ramiro no aparece en G0 ni en "Ver como": la demo sigue teniendo cuatro recorridos.
 
+**Jefa de RRHH (D-120):** con el mismo patrón que Ramiro, los datos incluyen a **Valeria Ortiz, Gerenta de Personas**, jefa directa de Carla, sin cuenta de demo y sin aparecer en G0 ni en "Ver como". Su rol en la plataforma es jefe directo (sin equipo en onboarding y sin permisos de admin): no hay un rol nuevo ni cambia la matriz de permisos. Se muestra con iniciales sobre el contenedor de `role-hr`, el color de su área. Existe para que a Carla la revise su jefa en la revisión de accesos (F13), como en una empresa real.
+
 ---
 
 ## 5. Funciones principales del MVP
@@ -621,7 +623,8 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
 - Sistemas sigue el avance de la campaña (% revisado por jefe), envía recordatorios y ejecuta las revocaciones.
 - Al cerrar, se genera un resumen descargable de la campaña.
 - **Reglas de la campaña:**
-    - Nadie revisa sus propios accesos: cada persona la revisa su jefe directo según los datos. Si una persona del alcance no tiene jefe directo, la revisa RRHH, y eso se ve en el detalle de la campaña.
+    - Nadie revisa sus propios accesos: cada persona la revisa su jefe directo según los datos (a Carla, Valeria Ortiz; D-120). La regla "si no tiene jefe directo, la revisa RRHH" queda solo como respaldo, se ve en el detalle de la campaña y nunca asigna a la misma persona que se revisa.
+    - Cuando quien revisa no tiene cuenta de demo (Valeria), el detalle de la campaña (S6) ofrece "Resolver como Valeria (demo)", con el mismo rótulo de atajo y el mismo registro en la auditoría que "Resolver como Ramiro (demo)" (actor Valeria, detalle "decisión simulada en la demo").
     - Las cuentas con rol de admin (RRHH y sistemas, incluido Ramiro) **siempre** entran en el alcance, porque son las de mayor riesgo.
     - Si la decisión es revocar un rol de admin, la revocación no se aplica directo: genera una solicitud de doble aprobación (F14) y la fila de la campaña queda en "Revocación en aprobación" hasta que se resuelve.
     - Las revocaciones quedan en la auditoría con el nombre de la campaña.
@@ -887,7 +890,7 @@ interface UserPreferences {
 
 - Auditoría semilla: 40 a 60 eventos de las últimas semanas, incluidos intentos fallidos, un bloqueo y un acceso denegado.
 - Solicitudes de acceso semilla: 5 o 6 en distintos estados, con al menos una cuenta bloqueada pendiente.
-- Fase B: 2 versiones publicadas de al menos una plantilla (con ingresos en cada versión), 15 a 20 notificaciones por rol, comentarios en 3 o 4 tareas, 1 inicio de sesión inusual pendiente para Sofía, 1 cambio de puesto y 1 baja en curso con tareas de accesos, 1 campaña de revisión abierta a mitad de avance (con Martín como uno de los revisores, para mostrar J4), 2 aprobaciones pendientes (una pedida por Carla que decide Diego y una pedida por Diego que espera a Ramiro) y 2 solicitudes de privacidad. Ramiro Sosa como segunda persona de sistemas, sin cuenta de demo (D-118).
+- Fase B: 2 versiones publicadas de al menos una plantilla (con ingresos en cada versión), 15 a 20 notificaciones por rol, comentarios en 3 o 4 tareas, 1 inicio de sesión inusual pendiente para Sofía, 1 cambio de puesto y 1 baja en curso con tareas de accesos, 1 campaña de revisión abierta a mitad de avance (con Martín como uno de los revisores, para mostrar J4), 2 aprobaciones pendientes (una pedida por Carla que decide Diego y una pedida por Diego que espera a Ramiro) y 2 solicitudes de privacidad. Ramiro Sosa como segunda persona de sistemas, sin cuenta de demo (D-118). Valeria Ortiz, Gerenta de Personas, como jefa directa de Carla, sin cuenta de demo; en la campaña semilla, la revisión de Carla queda pendiente de Valeria (D-120).
 
 ---
 
@@ -932,6 +935,8 @@ No construir por ahora (quedan para iteraciones siguientes):
 - Integraciones reales (HRIS, Slack, Teams, envío real de emails).
 - Autogestión de acceso (recuperar contraseña por email, desbloqueo automático): **por decisión de diseño**, no por alcance; en un entorno corporativo siempre pasa por sistemas.
 - Autenticación y autorización reales (proveedor de identidad, tokens, verificación en servidor), backend o base de datos. Se simulan en la interfaz y se documentan en `docs/security.md`.
+
+**Línea futura: vista de dirección.** Panel de solo lectura de toda la organización para la gerencia de Personas, sin permisos de edición (D-120).
 
 **Línea futura: asistente conversacional.** Un chatbot que ayude al usuario dentro de la plataforma (por ejemplo, responder dudas del nuevo ingreso sobre su recorrido o guiar a RRHH en el armado de plantillas). **No construir ahora**: se define más adelante. Solo dejar previsto en el layout un lugar para un botón de ayuda flotante que hoy abre la ayuda contextual (F16).
 

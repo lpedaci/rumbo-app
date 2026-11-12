@@ -20,6 +20,7 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { ApprovalRequest } from '@/types/domain';
 import { ApprovalChange, ApprovalRow, ApprovalStatusPill, useApprovalText } from './ApprovalBits';
+import { EmailText } from '@/components/ui/EmailText';
 
 type Filter = 'pending' | 'decided' | 'all';
 const FILTERS: Filter[] = ['pending', 'decided', 'all'];
@@ -168,9 +169,7 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
         {target && <Avatar name={target.name} role={target.role} />}
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
           <span className="text-title-small text-on-surface">{text.title(a)}</span>
-          {target && (
-            <span className="text-body-small text-on-surface-variant [overflow-wrap:anywhere]">{target.email}</span>
-          )}
+          {target && <EmailText email={target.email} className="text-body-small text-on-surface-variant" />}
         </div>
         <ApprovalStatusPill status={a.status} className="shrink-0" />
       </div>
@@ -208,7 +207,12 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
               : t('approvals.blocked.own')}
           </InlineAlert>
           {standIn && (
-            <Button variant="text" leadingIcon="swap_horiz" className="self-start" onClick={() => setAsStandIn(true)}>
+            <Button
+              variant="text"
+              leadingIcon="swap_horiz"
+              className="h-auto min-h-10 self-start py-2 text-left whitespace-normal"
+              onClick={() => setAsStandIn(true)}
+            >
               {t('approvals.standIn', { name: standIn.name })}
             </Button>
           )}

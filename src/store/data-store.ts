@@ -66,7 +66,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 15;
+export const DATA_SCHEMA_VERSION = 16;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -199,6 +199,8 @@ interface DataActions {
     decision: ReviewDecision,
     reason: string,
     actorId: string,
+    /** D-120: decided with the demo shortcut in the name of a reviewer without a demo account. */
+    simulated?: boolean,
   ) => number;
   /** F13: IT executes a revoked system access. */
   executeReviewRevocation: (campaignId: string, itemId: string, actorId: string) => void;
@@ -1204,7 +1206,7 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
         return id;
       },
 
-      decideReviewItems: (campaignId, itemIds, decision, reason, actorId) => {
+      decideReviewItems: (campaignId, itemIds, decision, reason, actorId, simulated = false) => {
         const state = useDataStore.getState();
         const campaign = state.accessReviews.find((c) => c.id === campaignId);
         if (!campaign || campaign.status !== 'open') return 0;
@@ -1263,6 +1265,7 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
               resource: r.personId,
               result: blocked.has(r.id) ? ('denied' as const) : ('success' as const),
               detail: [
+                simulated ? SIMULATED_DECISION : '',
                 nameOf(r.personId),
                 r.kind === 'role' ? `rol ${r.access}` : r.access,
                 campaign.name,

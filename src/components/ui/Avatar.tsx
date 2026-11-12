@@ -32,6 +32,12 @@ const PERSONA_FILE: Record<string, string> = {
   'Tomás Herrera': 'tomas',
   'Valentina Ruiz': 'valentina',
 };
+/**
+ * D-120: Valeria Ortiz leads People. Her platform role is manager (no admin permissions), but she
+ * is shown with the HR color, the color of her area. The only exception to "color by role".
+ */
+const TONE_OVERRIDE: Record<string, Role> = { 'Valeria Ortiz': 'admin' };
+
 function photoFor(name: string): string | undefined {
   const stem = PERSONA_FILE[name];
   if (!stem) return undefined;
@@ -72,7 +78,8 @@ export function Avatar({
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
 }) {
-  const tone = role ? ROLE_AVATAR_TONE[role] : 'bg-surface-container-high text-on-surface ring-outline-variant';
+  const toneRole = TONE_OVERRIDE[name] ?? role;
+  const tone = toneRole ? ROLE_AVATAR_TONE[toneRole] : 'bg-surface-container-high text-on-surface ring-outline-variant';
   const photo = photoFor(name);
   const sizeClass = cn(
     size === 'sm' && 'size-8 text-label-medium',

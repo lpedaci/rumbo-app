@@ -11,6 +11,16 @@
     ]
   },
   {
+    "id": "jt-people-lead",
+    "name": "Gerencia de Personas",
+    "areaId": "a-personas",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "Sistema de liquidación"
+    ]
+  },
+  {
     "id": "jt-dev-lead",
     "name": "Liderazgo de Desarrollo",
     "areaId": "a-tecnologia",

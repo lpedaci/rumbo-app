@@ -3303,6 +3303,8 @@
       }
     },
     "detail": {
+      "standIn": "Resolver como {{name}} (demo)",
+      "standInTitle": "Revisión de {{name}} (demo)",
       "breadcrumb": "Navegación de la campaña",
       "facts": "Datos de la campaña",
       "back": "Volver a las campañas",

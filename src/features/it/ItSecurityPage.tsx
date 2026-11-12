@@ -30,6 +30,7 @@ import { PolicyChangeDialog } from '@/features/approvals/PolicyChangeDialog';
 import { pendingPolicyChange } from '@/lib/approvals';
 import { OrgSessions } from './OrgSessions';
 import { readableRoles } from '@/lib/people';
+import { EmailText } from '@/components/ui/EmailText';
 
 type Tab = 'locked' | 'sessions' | 'audit' | 'permissions' | 'policies';
 const TABS: { value: Tab; icon: IconName }[] = [
@@ -150,7 +151,7 @@ function LockedAccounts() {
                   {person && <Avatar name={person.name} role={person.role} size="sm" />}
                   <div className="flex min-w-0 flex-col gap-1.5">
                     <span className="truncate text-title-small text-on-surface">{person?.name ?? a.email}</span>
-                    <span className="text-body-small [overflow-wrap:anywhere] text-on-surface-variant">{a.email}</span>
+                    <EmailText email={a.email} className="text-body-small text-on-surface-variant" />
                     <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-body-small text-on-surface-variant tabular-nums">
                       <StatusPill tone="error" icon="lock" label={t('it.locked.attempts', { count: a.failedCount })} />
                       {a.lastAttemptAt && t('it.locked.last', { date: formatDateTime(a.lastAttemptAt) })}

@@ -32,7 +32,9 @@ describe('F13 · Access review rules', () => {
     const { people } = useDataStore.getState();
     expect(reviewerFor(person('p-sofia'), people)).toEqual({ reviewerId: 'p-martin', via: 'manager' });
     expect(reviewerFor(person('p-ramiro'), people)).toEqual({ reviewerId: 'p-carla', via: 'hr' });
-    expect(reviewerFor(person('p-carla'), people)).toEqual({ reviewerId: 'p-diego', via: 'it' });
+    // D-120: Carla is reviewed by her manager, Valeria; Valeria, without a manager, by HR (Carla).
+    expect(reviewerFor(person('p-carla'), people)).toEqual({ reviewerId: 'p-valeria', via: 'manager' });
+    expect(reviewerFor(person('p-valeria'), people)).toEqual({ reviewerId: 'p-carla', via: 'hr' });
     expect(campaign().items.every((i) => i.reviewerId !== i.personId)).toBe(true);
   });
 
@@ -115,6 +117,14 @@ describe('F13 · Store', () => {
     expect(person('p-ramiro').role).toBe('hire');
   });
 
+  it('lets IT resolve Valeria’s review as a demo shortcut, recorded in her name (D-120)', () => {
+    const rows = campaign().items.filter((i) => i.reviewerId === 'p-valeria').map((i) => i.id);
+    expect(campaign().items.filter((i) => i.reviewerId === 'p-valeria').every((i) => i.personId === 'p-carla' && !i.decision)).toBe(true);
+    expect(useDataStore.getState().decideReviewItems('AR-2026-0001', rows, 'keep', '', 'p-valeria', true)).toBe(rows.length);
+    expect(useDataStore.getState().auditEvents.at(-1)).toMatchObject({ actorId: 'p-valeria', action: 'access_review.keep' });
+    expect(useDataStore.getState().auditEvents.at(-1)!.detail).toContain('decisión simulada en la demo');
+  });
+
   it('creates a campaign, tells each reviewer and closes it only when everything is done', () => {
     const id = useDataStore.getState().createReviewCampaign(
       { name: 'Revisión de Comercial', dueDate: '2026-11-30', scope: { areaId: 'a-comercial' } },
@@ -160,7 +170,7 @@ describe('J4, S5 and S6 · Review screens', () => {
     });
     renderAt('/it/access-reviews/AR-2026-0001');
     expect(await screen.findByRole('heading', { level: 1, name: 'Revisión trimestral Q4 2026' })).toBeInTheDocument();
-    expect(screen.getByText(/Revisa por falta de jefe directo: Martín Rossi/)).toBeInTheDocument();
+    expect(screen.getByText(/Revisa por falta de jefe directo: .*Martín Rossi/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: es.accessReview.detail.close })).toBeDisabled();
   });
 });

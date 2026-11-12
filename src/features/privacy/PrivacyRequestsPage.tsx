@@ -17,6 +17,7 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { PrivacyRequest, PrivacyRequestStatus } from '@/types/domain';
 import { PrivacyRequestRow, PrivacyStatusPill, useDueText } from './PrivacyRequestRow';
+import { EmailText } from '@/components/ui/EmailText';
 
 type Filter = 'open' | 'all' | PrivacyRequestStatus;
 const FILTERS: Filter[] = ['open', 'new', 'in_progress', 'answered', 'rejected', 'all'];
@@ -153,7 +154,7 @@ function RequestDetail({ request: r, onDone }: { request: PrivacyRequest; onDone
           <Avatar name={person.name} role={person.role} />
           <div className="flex min-w-0 flex-col gap-0.5">
             <span className="text-title-small text-on-surface">{person.name}</span>
-            <span className="text-body-small text-on-surface-variant [overflow-wrap:anywhere]">{person.email}</span>
+            <EmailText email={person.email} className="text-body-small text-on-surface-variant" />
           </div>
           <PrivacyStatusPill status={r.status} className="ml-auto self-start" />
         </div>

@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 import { DetailHeader, HeaderChip } from '@/components/layout/DetailHeader';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
+import { Dialog, DialogClose, DialogContent } from '@/components/ui/Dialog';
+import { InlineAlert } from '@/components/ui/InlineAlert';
 import { Card } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icon';
 import { ProgressBar } from '@/components/ui/ProgressBar';
@@ -11,11 +14,13 @@ import { toast } from '@/components/ui/toast-store';
 import { NotFoundPage } from '@/features/system/NotFoundPage';
 import { campaignCsv, campaignProgress, closeBlock, itemState, progressByReviewer } from '@/lib/access-review';
 import { DEMO_TODAY, formatDate } from '@/lib/dates';
+import { DEMO_PERSON_IDS } from '@/lib/people';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import { RoleChip } from '@/features/people/PeopleBits';
 import type { AccessReviewCampaign, Role } from '@/types/domain';
 import { CampaignStatusPill, ReviewStatePill, useReviewText } from './ReviewBits';
+import { PersonReview } from './ReviewPage';
 
 /**
  * S6 · Review campaign (F13): progress by reviewer (and why each one reviews: manager, or HR or IT
@@ -62,7 +67,9 @@ export function CampaignDetailPage() {
         <Card title={t('accessReview.detail.reviewersTitle')}>
           <div className="flex flex-col gap-1">
             <ProgressBar value={percent} label={t('accessReview.progress', { done, total })} size="lg" />
-            <p className="text-body-small text-on-surface-variant tabular-nums">{t('accessReview.progress', { done, total })}</p>
+            <p className="text-body-small text-on-surface-variant tabular-nums">
+              {t('accessReview.progress', { done, total })}
+            </p>
           </div>
           <Reviewers campaign={campaign} />
         </Card>
@@ -78,57 +85,109 @@ function Reviewers({ campaign }: { campaign: AccessReviewCampaign }) {
   const user = useCurrentUser();
   const people = useDataStore((s) => s.people);
   const nameOf = (id: string) => people.find((p) => p.id === id)?.name ?? id;
+  // D-120: a reviewer without a demo account (Valeria) can be resolved in their name, as a demo shortcut
+  const [standIn, setStandIn] = useState<string | null>(null);
   return (
-    <ul className="-mx-2 flex flex-col border-t border-outline-variant">
-      {progressByReviewer(campaign.items).map((r) => {
-        const reviewer = people.find((p) => p.id === r.reviewerId);
-        const complete = r.done === r.total;
-        return (
-          <li
-            key={`${r.reviewerId}-${r.via}`}
-            className="flex min-h-14 min-w-0 flex-col gap-3 border-b border-outline-variant px-2 py-3 last:border-b-0 sm:flex-row sm:items-start"
-          >
-            <span className="flex min-w-0 flex-1 items-start gap-3">
-              {reviewer && <Avatar name={reviewer.name} role={reviewer.role} size="md" />}
-              <span className="flex min-w-0 flex-1 flex-col gap-1.5">
-                <span className="text-title-small text-on-surface">{nameOf(r.reviewerId)}</span>
-                <span className="text-body-small text-on-surface-variant">
-                  {t(`accessReview.detail.viaPeople.${r.via}`, { names: r.people.map(nameOf).join(', ') })}
-                </span>
-                <span className="flex max-w-xs flex-col gap-1">
-                  <ProgressBar value={(r.done / r.total) * 100} label={t('accessReview.campaigns.progress', { done: r.done, total: r.total })} />
-                  <span className="text-body-small text-on-surface-variant tabular-nums">
-                    {t('accessReview.campaigns.progress', { done: r.done, total: r.total })}
+    <>
+      <ul className="-mx-2 flex flex-col border-t border-outline-variant">
+        {progressByReviewer(campaign.items).map((r) => {
+          const reviewer = people.find((p) => p.id === r.reviewerId);
+          const complete = r.done === r.total;
+          return (
+            <li
+              key={`${r.reviewerId}-${r.via}`}
+              className="flex min-h-14 min-w-0 flex-col gap-3 border-b border-outline-variant px-2 py-3 last:border-b-0 sm:flex-row sm:items-start"
+            >
+              <span className="flex min-w-0 flex-1 items-start gap-3">
+                {reviewer && <Avatar name={reviewer.name} role={reviewer.role} size="md" />}
+                <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+                  <span className="text-title-small text-on-surface">{nameOf(r.reviewerId)}</span>
+                  <span className="text-body-small text-on-surface-variant">
+                    {t(`accessReview.detail.viaPeople.${r.via}`, { names: r.people.map(nameOf).join(', ') })}
+                  </span>
+                  <span className="flex max-w-xs flex-col gap-1">
+                    <ProgressBar
+                      value={(r.done / r.total) * 100}
+                      label={t('accessReview.campaigns.progress', { done: r.done, total: r.total })}
+                    />
+                    <span className="text-body-small text-on-surface-variant tabular-nums">
+                      {t('accessReview.campaigns.progress', { done: r.done, total: r.total })}
+                    </span>
                   </span>
                 </span>
               </span>
-            </span>
-            {complete ? (
-              <StatusPill tone="success" icon="check_circle" label={t('accessReview.detail.complete')} className="shrink-0 self-start" />
-            ) : (
-              // No reminder to oneself: the viewer's own rows are in their review (J4).
-              campaign.status === 'open' &&
-              r.reviewerId !== user?.personId && (
-                <Button
-                  variant="outlined"
-                  size="xs"
-                  leadingIcon="notifications"
-                  className="shrink-0 self-start"
-                  aria-label={t('accessReview.detail.remindLabel', { name: nameOf(r.reviewerId) })}
-                  onClick={() => {
-                    if (!user) return;
-                    useDataStore.getState().remindReviewer(campaign.id, r.reviewerId, user.personId);
-                    toast.success(t('accessReview.detail.reminded', { name: nameOf(r.reviewerId) }));
-                  }}
-                >
-                  {t('accessReview.detail.remind')}
-                </Button>
-              )
-            )}
-          </li>
-        );
-      })}
-    </ul>
+              <span className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
+                {complete ? (
+                  <StatusPill
+                    tone="success"
+                    icon="check_circle"
+                    label={t('accessReview.detail.complete')}
+                    className="shrink-0 self-start"
+                  />
+                ) : (
+                  // No reminder to oneself: the viewer's own rows are in their review (J4).
+                  campaign.status === 'open' &&
+                  r.reviewerId !== user?.personId && (
+                    <Button
+                      variant="outlined"
+                      size="xs"
+                      leadingIcon="notifications"
+                      className="shrink-0 self-start"
+                      aria-label={t('accessReview.detail.remindLabel', { name: nameOf(r.reviewerId) })}
+                      onClick={() => {
+                        if (!user) return;
+                        useDataStore.getState().remindReviewer(campaign.id, r.reviewerId, user.personId);
+                        toast.success(t('accessReview.detail.reminded', { name: nameOf(r.reviewerId) }));
+                      }}
+                    >
+                      {t('accessReview.detail.remind')}
+                    </Button>
+                  )
+                )}
+                {!complete && campaign.status === 'open' && !DEMO_PERSON_IDS.includes(r.reviewerId) && (
+                  <Button
+                    variant="text"
+                    leadingIcon="swap_horiz"
+                    className="h-auto min-h-10 py-2 text-left whitespace-normal"
+                    onClick={() => setStandIn(r.reviewerId)}
+                  >
+                    {t('accessReview.detail.standIn', { name: nameOf(r.reviewerId) })}
+                  </Button>
+                )}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+      <Dialog open={Boolean(standIn)} onOpenChange={(v) => !v && setStandIn(null)}>
+        {standIn && (
+          <DialogContent
+            title={t('accessReview.detail.standInTitle', { name: nameOf(standIn) })}
+            className="max-w-3xl"
+            actions={
+              <DialogClose asChild>
+                <Button variant="outlined">{t('ui.close')}</Button>
+              </DialogClose>
+            }
+          >
+            <InlineAlert tone="info">{t('approvals.standInNote', { name: nameOf(standIn) })}</InlineAlert>
+            {[...new Set(campaign.items.filter((i) => i.reviewerId === standIn).map((i) => i.personId))].map((id) => {
+              const person = people.find((p) => p.id === id);
+              return person ? (
+                <PersonReview
+                  key={id}
+                  campaign={campaign}
+                  person={person}
+                  rows={campaign.items.filter((i) => i.reviewerId === standIn && i.personId === id)}
+                  actorId={standIn}
+                  simulated
+                />
+              ) : null;
+            })}
+          </DialogContent>
+        )}
+      </Dialog>
+    </>
   );
 }
 
