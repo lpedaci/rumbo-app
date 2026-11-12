@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ConfirmDialog } from '@/components/ui/Dialog';
 import { Icon } from '@/components/ui/Icon';
 import { InlineAlert } from '@/components/ui/InlineAlert';
+import { RefChip } from '@/components/ui/RefChip';
 import { toast } from '@/components/ui/toast-store';
 import { formatDateTime } from '@/lib/dates';
 import { useDataStore } from '@/store/data-store';
@@ -105,10 +106,14 @@ export function MySessions({ personId }: { personId: string }) {
             <SessionRow
               key={s.id}
               session={s}
-              action={
+              // The control it names goes as a chip (pattern 16, D-83)
+              note={
                 s.current ? (
-                  <span className="text-body-small text-on-surface-variant">{t('sessions.currentHelp')}</span>
-                ) : (
+                  <Trans i18nKey="sessions.currentHelp" components={{ signOut: <RefChip icon="logout" /> }} />
+                ) : undefined
+              }
+              action={
+                s.current ? undefined : (
                   <Button variant="outlined" size="xs" onClick={() => setToRevoke(s)}>
                     {t('sessions.revoke')}
                   </Button>

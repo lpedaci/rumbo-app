@@ -2801,7 +2801,7 @@
     "revokeOthersConfirm": "Close the other sessions",
     "revokedOthers": "You closed the other sessions",
     "onlyThis": "Only this session is open.",
-    "currentHelp": "To close this session, use Sign out.",
+    "currentHelp": "To close this session, use <signOut>Sign out</signOut>.",
     "alert": {
       "title": "Was it you?",
       "body": "There was a new sign-in to your account from {{device}}, in {{place}}, on {{date}}.",

@@ -2801,7 +2801,7 @@
     "revokeOthersConfirm": "Cerrar las demás sesiones",
     "revokedOthers": "Cerraste las demás sesiones",
     "onlyThis": "Solo tienes abierta esta sesión.",
-    "currentHelp": "Para cerrar esta sesión, usa Cerrar sesión.",
+    "currentHelp": "Para cerrar esta sesión, usa <signOut>Cerrar sesión</signOut>.",
     "alert": {
       "title": "¿Fuiste tú?",
       "body": "Hubo un inicio de sesión nuevo en tu cuenta desde {{device}}, en {{place}}, el {{date}}.",

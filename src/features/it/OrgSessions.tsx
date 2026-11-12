@@ -61,6 +61,8 @@ export function OrgSessions() {
                     <span className="text-title-small text-on-surface">{p.name}</span>
                     <span className="text-body-small text-on-surface-variant">
                       {t('sessions.org.count', { count: mine.length })}
+                      {/* The clarification goes under the name, never in the right column (D-115) */}
+                      {self && <> · {t('sessions.org.yourAccount')}</>}
                     </span>
                     <ul className="flex flex-col gap-1">
                       {mine.map((s) => (
@@ -78,9 +80,7 @@ export function OrgSessions() {
                   {mine.some((s) => reportedSessions.has(s.id)) && (
                     <StatusPill tone="error" icon="gpp_maybe" label={t('sessions.org.unrecognized')} />
                   )}
-                  {self ? (
-                    <span className="text-body-small text-on-surface-variant">{t('sessions.org.yourAccount')}</span>
-                  ) : (
+                  {!self && (
                     <Button
                       variant="outlined"
                       size="xs"

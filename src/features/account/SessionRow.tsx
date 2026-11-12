@@ -7,10 +7,21 @@ import type { DeviceSession } from '@/types/domain';
 
 /**
  * One signed-in device (F11), with the list rhythm of the product (D-106): the kind of device
- * on the left; device and browser, place and last use in the middle; "Esta sesión" or the
- * action on the right.
+ * on the left; device and browser, place and last use (and an optional note) in the middle;
+ * "Esta sesión" or the action on the right.
  */
-export function SessionRow({ session: s, action, lead }: { session: DeviceSession; action?: ReactNode; lead?: ReactNode }) {
+export function SessionRow({
+  session: s,
+  action,
+  lead,
+  note,
+}: {
+  session: DeviceSession;
+  action?: ReactNode;
+  lead?: ReactNode;
+  /** Third line under the device (D-115): a clarification never goes in the right column. */
+  note?: ReactNode;
+}) {
   const { t } = useTranslation();
   return (
     <li className="flex min-h-14 min-w-0 flex-col gap-3 border-b border-outline-variant px-2 py-3 last:border-b-0 sm:flex-row sm:items-center sm:gap-4">
@@ -25,6 +36,7 @@ export function SessionRow({ session: s, action, lead }: { session: DeviceSessio
             <span aria-hidden>·</span>
             <span>{s.current ? t('sessions.activeNow') : t('sessions.lastSeen', { date: formatDateTime(s.lastSeenAt) })}</span>
           </span>
+          {note && <span className="text-body-small text-on-surface-variant">{note}</span>}
         </div>
       </div>
       <div className="flex shrink-0 flex-wrap items-center gap-3 sm:justify-end">
