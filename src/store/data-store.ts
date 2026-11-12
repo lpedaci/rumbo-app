@@ -5,10 +5,12 @@ import { DEMO_TODAY, demoNow } from '@/lib/dates';
 import type { IdentityCheck } from '@/lib/access';
 import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '@/lib/checkins';
 import { completeTask as completeTaskRule, tasksUnlockedBy } from '@/lib/journey';
+import { needsApproval } from '@/lib/people';
 import {
   onAccessRequest,
   onAccessRequestClosed,
   onCheckinCompleted,
+  onApprovalRequested,
   onComment,
   onLoginReported,
   onPrivacyAnswered,
@@ -20,15 +22,19 @@ import {
 import type {
   AccessRequest,
   AccessResolutionAction,
+  ApprovalRequest,
+  Area,
   AccountFlags,
   AuditEvent,
   AuthAttempts,
   CheckinStage,
   Comment,
   Hire,
+  JobTitle,
   Mood,
   Person,
   PrivacyRequest,
+  Role,
   SensitiveField,
   Template,
   TemplateVersion,
@@ -42,7 +48,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 10;
+export const DATA_SCHEMA_VERSION = 11;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -124,6 +130,20 @@ interface DataActions {
    * its id so the screen can show it.
    */
   reportLoginAlert: (alertId: string) => string | undefined;
+  /** F15: HR edits the work data of a person (person.update). */
+  updatePerson: (personId: string, change: Partial<Pick<Person, 'name' | 'jobTitle' | 'jobTitleId' | 'managerId'>>, actorId: string) => void;
+  /** F15: HR adds a person without an onboarding journey (person.create). */
+  addPerson: (person: Person, actorId: string) => void;
+  /**
+   * F15: changes the platform role. Changes that give or take an admin role (HR or IT) go to a
+   * second person (F14) and return the approval id; the rest apply at once.
+   */
+  changeRole: (personId: string, toRole: Role, reason: string, actorId: string) => string | undefined;
+  /** F15: catalogs of areas and job titles. */
+  saveArea: (area: Area, actorId: string) => void;
+  deleteArea: (areaId: string, actorId: string) => void;
+  saveJobTitle: (jobTitle: JobTitle, actorId: string) => void;
+  deleteJobTitle: (jobTitleId: string, actorId: string) => void;
   /** F7: marks one notification as read or unread. */
   setNotificationRead: (id: string, read: boolean) => void;
   /** F7: marks every notification of a person as read. */
@@ -176,6 +196,9 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.privacyRequests) &&
     Array.isArray(data.deviceSessions) &&
     Array.isArray(data.loginAlerts) &&
+    Array.isArray(data.areas) &&
+    Array.isArray(data.jobTitles) &&
+    Array.isArray(data.approvals) &&
     typeof data.accountFlags === 'object' &&
     data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
@@ -745,6 +768,125 @@ export const useDataStore = create<DataState>()(
         return request.id;
       },
 
+      updatePerson: (personId, change, actorId) =>
+        set((state) => {
+          const title = change.jobTitleId ? state.jobTitles.find((j) => j.id === change.jobTitleId) : undefined;
+          const area = title ? state.areas.find((a) => a.id === title.areaId) : undefined;
+          return {
+            people: state.people.map((p) =>
+              p.id === personId
+                ? { ...p, ...change, ...(area ? { areaId: area.id, area: area.name } : {}) }
+                : p,
+            ),
+            auditEvents: [
+              ...state.auditEvents,
+              { id: nextAuditId(), at: demoNow(), actorId, action: 'person.update', resource: personId, result: 'success', detail: Object.keys(change).join(', ') },
+            ],
+          };
+        }),
+
+      addPerson: (person, actorId) =>
+        set((state) => ({
+          people: [...state.people, person],
+          auditEvents: [
+            ...state.auditEvents,
+            { id: nextAuditId(), at: demoNow(), actorId, action: 'person.create', resource: person.id, result: 'success', detail: person.name },
+          ],
+        })),
+
+      changeRole: (personId, toRole, reason, actorId) => {
+        const state = useDataStore.getState();
+        const person = state.people.find((p) => p.id === personId);
+        if (!person || person.role === toRole) return undefined;
+        const at = demoNow();
+        if (needsApproval(person.role, toRole)) {
+          const numbers = state.approvals.map((a) => Number(a.id.split('-').at(-1)) || 0);
+          const approval: ApprovalRequest = {
+            id: `APR-${DEMO_TODAY.slice(0, 4)}-${String(Math.max(0, ...numbers) + 1).padStart(4, '0')}`,
+            action: 'role.change',
+            targetId: personId,
+            requestedBy: actorId,
+            reason: reason.trim(),
+            createdAt: at,
+            status: 'pending',
+            fromRole: person.role,
+            toRole,
+          };
+          set((s) => ({
+            approvals: [...s.approvals, approval],
+            notifications: [...s.notifications, ...onApprovalRequested(approval, s.people, person.name)],
+            auditEvents: [
+              ...s.auditEvents,
+              { id: nextAuditId(), at, actorId, action: 'approval.request', resource: personId, result: 'success', detail: `${person.role} → ${toRole} (${approval.id})` },
+            ],
+          }));
+          return approval.id;
+        }
+        set((s) => ({
+          people: s.people.map((p) => (p.id === personId ? { ...p, role: toRole } : p)),
+          auditEvents: [
+            ...s.auditEvents,
+            { id: nextAuditId(), at, actorId, action: 'person.role_change', resource: personId, result: 'success', detail: `${person.role} → ${toRole}` },
+          ],
+        }));
+        return undefined;
+      },
+
+      saveArea: (area, actorId) =>
+        set((state) => {
+          const exists = state.areas.some((a) => a.id === area.id);
+          return {
+            areas: exists ? state.areas.map((a) => (a.id === area.id ? area : a)) : [...state.areas, area],
+            // Renaming an area renames it on every person of the area.
+            people: state.people.map((p) => (p.areaId === area.id ? { ...p, area: area.name } : p)),
+            auditEvents: [
+              ...state.auditEvents,
+              { id: nextAuditId(), at: demoNow(), actorId, action: exists ? 'catalog.area_update' : 'catalog.area_create', resource: area.id, result: 'success', detail: area.name },
+            ],
+          };
+        }),
+
+      deleteArea: (areaId, actorId) =>
+        set((state) => {
+          if (state.people.some((p) => p.areaId === areaId) || state.jobTitles.some((j) => j.areaId === areaId)) return {};
+          return {
+            areas: state.areas.filter((a) => a.id !== areaId),
+            auditEvents: [
+              ...state.auditEvents,
+              { id: nextAuditId(), at: demoNow(), actorId, action: 'catalog.area_delete', resource: areaId, result: 'success' },
+            ],
+          };
+        }),
+
+      saveJobTitle: (jobTitle, actorId) =>
+        set((state) => {
+          const exists = state.jobTitles.some((j) => j.id === jobTitle.id);
+          const area = state.areas.find((a) => a.id === jobTitle.areaId);
+          return {
+            jobTitles: exists ? state.jobTitles.map((j) => (j.id === jobTitle.id ? jobTitle : j)) : [...state.jobTitles, jobTitle],
+            // Moving a job title to another area moves its people too.
+            people: area
+              ? state.people.map((p) => (p.jobTitleId === jobTitle.id ? { ...p, areaId: area.id, area: area.name } : p))
+              : state.people,
+            auditEvents: [
+              ...state.auditEvents,
+              { id: nextAuditId(), at: demoNow(), actorId, action: exists ? 'catalog.job_update' : 'catalog.job_create', resource: jobTitle.id, result: 'success', detail: jobTitle.name },
+            ],
+          };
+        }),
+
+      deleteJobTitle: (jobTitleId, actorId) =>
+        set((state) => {
+          if (state.people.some((p) => p.jobTitleId === jobTitleId)) return {};
+          return {
+            jobTitles: state.jobTitles.filter((j) => j.id !== jobTitleId),
+            auditEvents: [
+              ...state.auditEvents,
+              { id: nextAuditId(), at: demoNow(), actorId, action: 'catalog.job_delete', resource: jobTitleId, result: 'success' },
+            ],
+          };
+        }),
+
       setNotificationRead: (id, read) =>
         set((state) => ({
           notifications: state.notifications.map((n) =>
@@ -784,6 +926,9 @@ export const useDataStore = create<DataState>()(
         privacyRequests,
         deviceSessions,
         loginAlerts,
+        areas,
+        jobTitles,
+        approvals,
       }) => ({
         people,
         templates,
@@ -799,6 +944,9 @@ export const useDataStore = create<DataState>()(
         privacyRequests,
         deviceSessions,
         loginAlerts,
+        areas,
+        jobTitles,
+        approvals,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.
       migrate: () => buildSeed(),

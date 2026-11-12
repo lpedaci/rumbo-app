@@ -31,6 +31,11 @@ export interface Person {
   cuil?: string;
   /** Bank account (CBU) for the payroll, 22 digits. */
   bankAccount?: string;
+  /** F15: catalog entries. `area` and `jobTitle` keep the display text (the job title can be personal). */
+  areaId?: string;
+  jobTitleId?: string;
+  /** F12: an offboarded person keeps the record but can no longer sign in. Locked is derived (F6). */
+  status?: 'active' | 'offboarded';
 }
 
 export interface Session {
@@ -233,7 +238,8 @@ export type NotificationType =
   | 'privacy_request.new'
   | 'privacy_request.answered'
   | 'login.unusual'
-  | 'login.reported';
+  | 'login.reported'
+  | 'approval.pending';
 
 export type NotificationChannel = 'app' | 'email';
 
@@ -333,4 +339,41 @@ export interface LoginAlert {
   status: 'pending' | 'confirmed' | 'reported';
   /** Access request created when the person answered "No fui yo". */
   requestId?: string;
+}
+
+// ---------- Phase B: F15 people and catalogs, F14 approvals ----------
+
+export interface Area {
+  id: string;
+  name: string;
+}
+
+/** A job title of the catalog, with the template and access package suggested for it (F15, used by F12). */
+export interface JobTitle {
+  id: string;
+  name: string;
+  areaId: string;
+  suggestedTemplateId?: string;
+  suggestedAccess: string[];
+}
+
+/**
+ * A sensitive change that needs a second person (F14): who asked, why, and who decided. Whoever
+ * asks can never approve it.
+ */
+export interface ApprovalRequest {
+  /** For example `APR-2026-0003`. */
+  id: string;
+  action: 'role.change';
+  targetId: string;
+  requestedBy: string;
+  reason: string;
+  createdAt: string;
+  status: 'pending' | 'approved' | 'rejected';
+  /** Role change: from and to. */
+  fromRole: Role;
+  toRole: Role;
+  decidedBy?: string;
+  decidedAt?: string;
+  decisionNote?: string;
 }

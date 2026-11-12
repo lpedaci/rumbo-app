@@ -1,6 +1,7 @@
 import type { IconName } from '@/components/ui/Icon';
 import type {
   AccessRequest,
+  ApprovalRequest,
   AppNotification,
   AuthAttempts,
   Comment,
@@ -57,6 +58,7 @@ export const NOTIFICATION_TYPES: Record<NotificationType, TypeMeta> = {
   'privacy_request.answered': { category: 'people', icon: 'policy', tone: 'success', email: true },
   'login.unusual': { category: 'access', icon: 'gpp_maybe', tone: 'warning', email: true },
   'login.reported': { category: 'access', icon: 'gpp_maybe', tone: 'error', email: true },
+  'approval.pending': { category: 'access', icon: 'admin_panel_settings', tone: 'warning', email: true },
 };
 
 export const NOTIFICATION_CATEGORIES: NotificationCategory[] = ['tasks', 'checkins', 'people', 'access'];
@@ -289,6 +291,21 @@ export function onLoginReported(request: AccessRequest, people: Person[], person
         type: 'login.reported',
         params: { request: request.id, person: personName },
         link: `/it/requests/${request.id}`,
+      }),
+    );
+}
+
+/** F14: a sensitive change waits for a second person in IT (never the one who asked). */
+export function onApprovalRequested(approval: ApprovalRequest, people: Person[], targetName: string): AppNotification[] {
+  return people
+    .filter((p) => p.role === 'it_admin' && p.id !== approval.requestedBy)
+    .map((it) =>
+      makeNotification({
+        recipientId: it.id,
+        createdAt: approval.createdAt,
+        type: 'approval.pending',
+        params: { request: approval.id, person: targetName },
+        link: '/it/approvals',
       }),
     );
 }

@@ -32,6 +32,8 @@ export const ACTION_DESCRIPTIONS: Record<Action, string> = {
   'privacy_request:manage': 'Atender las solicitudes sobre datos personales (A12)',
   'pii:reveal': 'Revelar DNI, CUIL o datos bancarios con un motivo, que queda en la auditoría',
   'session:manage': 'Ver las sesiones activas de la organización y forzar su cierre (S3)',
+  'person:manage': 'Ver y editar personas, y pedir cambios de rol (A9, A10)',
+  'catalog:edit': 'Editar los catálogos de áreas y puestos (A9)',
   'notification:view': 'Ver sus propias notificaciones (G9)',
   'account:security_own': 'Ver "Mi seguridad" (G5)',
   'demo:switch_role': 'Usar el selector de rol de demo',

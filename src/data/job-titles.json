@@ -1,0 +1,97 @@
+[
+  {
+    "id": "jt-people-partner",
+    "name": "People Partner",
+    "areaId": "a-personas",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "Rumbo (RRHH)",
+      "Sistema de liquidación"
+    ]
+  },
+  {
+    "id": "jt-dev-lead",
+    "name": "Liderazgo de Desarrollo",
+    "areaId": "a-tecnologia",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "Jira",
+      "Confluence",
+      "GitHub"
+    ]
+  },
+  {
+    "id": "jt-data",
+    "name": "Análisis de Datos",
+    "areaId": "a-tecnologia",
+    "suggestedTemplateId": "tpl-data",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "Jira",
+      "Confluence",
+      "Data warehouse",
+      "Herramienta de BI"
+    ]
+  },
+  {
+    "id": "jt-frontend",
+    "name": "Desarrollo Frontend",
+    "areaId": "a-tecnologia",
+    "suggestedTemplateId": "tpl-frontend",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "Jira",
+      "Confluence",
+      "GitHub",
+      "Figma"
+    ]
+  },
+  {
+    "id": "jt-sales-lead",
+    "name": "Liderazgo Comercial",
+    "areaId": "a-comercial",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "CRM",
+      "Tablero comercial"
+    ]
+  },
+  {
+    "id": "jt-key-accounts",
+    "name": "Cuentas Clave",
+    "areaId": "a-comercial",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "CRM"
+    ]
+  },
+  {
+    "id": "jt-sales",
+    "name": "Gestión Comercial",
+    "areaId": "a-comercial",
+    "suggestedTemplateId": "tpl-sales",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "CRM",
+      "Herramienta de propuestas"
+    ]
+  },
+  {
+    "id": "jt-helpdesk",
+    "name": "Mesa de ayuda",
+    "areaId": "a-sistemas",
+    "suggestedAccess": [
+      "Cuenta de trabajo",
+      "Correo",
+      "Consola de identidades",
+      "Portal de tickets"
+    ]
+  }
+]

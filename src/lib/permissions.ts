@@ -52,6 +52,9 @@ export const PERMISSIONS = {
   'pii:reveal': { admin: 'all' },
   // F11 sessions: each person their own (in G5); IT sees and closes those of the organization (S3)
   'session:manage': { it_admin: 'all' },
+  // F15 people and catalogs (HR); changes to admin roles go through a second person (F14)
+  'person:manage': { admin: 'all' },
+  'catalog:edit': { admin: 'all' },
   // F7 notifications: each person only sees their own
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)
@@ -120,6 +123,7 @@ export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
   { prefix: '/notifications', action: 'notification:view' },
   { prefix: '/account/privacy', action: 'privacy:own' },
   { prefix: '/admin/privacy-requests', action: 'privacy_request:manage' },
+  { prefix: '/admin/people', action: 'person:manage' },
 ];
 
 export function requiredPermission(pathname: string): Action | null {

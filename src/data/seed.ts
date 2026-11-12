@@ -9,7 +9,10 @@ import type {
   AccessRequest,
   AppNotification,
   Comment,
+  ApprovalRequest,
+  Area,
   ConsentRecord,
+  JobTitle,
   DeviceSession,
   LoginAlert,
   PrivacyRequest,
@@ -38,7 +41,9 @@ import accessRequests from './access-requests.json';
 import auditEvents from './audit-events.json';
 import authAttempts from './auth-attempts.json';
 import checkinMilestones from './checkin-milestones.json';
+import areas from './areas.json';
 import comments from './comments.json';
+import jobTitles from './job-titles.json';
 import consents from './consents.json';
 import deviceSessions from './device-sessions.json';
 import loginAlerts from './login-alerts.json';
@@ -97,6 +102,11 @@ export interface DemoData {
   /** F11: signed-in devices and "¿Fuiste tú?" alerts. */
   deviceSessions: DeviceSession[];
   loginAlerts: LoginAlert[];
+  /** F15: catalogs of areas and job titles. */
+  areas: Area[];
+  jobTitles: JobTitle[];
+  /** F14: sensitive changes waiting for a second person. */
+  approvals: ApprovalRequest[];
 }
 
 function whoCompletes(owner: Owner, seed: HireSeed): string {
@@ -252,6 +262,9 @@ export function buildSeed(): DemoData {
     ),
     comments: comments as Comment[],
     consents: consents as ConsentRecord[],
+    areas: areas as Area[],
+    jobTitles: jobTitles as JobTitle[],
+    approvals: [] as ApprovalRequest[],
     deviceSessions: deviceSessions as DeviceSession[],
     loginAlerts: loginAlerts as LoginAlert[],
     // Legal deadlines computed from the configuration (src/app/legal.ts), never written by hand.

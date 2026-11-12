@@ -1,0 +1,18 @@
+[
+  {
+    "id": "a-personas",
+    "name": "Personas"
+  },
+  {
+    "id": "a-tecnologia",
+    "name": "Tecnología"
+  },
+  {
+    "id": "a-comercial",
+    "name": "Comercial"
+  },
+  {
+    "id": "a-sistemas",
+    "name": "Sistemas"
+  }
+]

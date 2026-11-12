@@ -393,3 +393,11 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - "No fui yo": cierra la sesión, crea la solicitud urgente para sistemas (primera en S1, píldora "Urgente") y avisa a sistemas.
 - S3: pestaña "Sesiones" con las sesiones de la organización y "Forzar cierre". Permiso `session:manage`.
 - Avisos "¿Fuiste tú?" e "Inicio de sesión no reconocido"; eventos de auditoría de sesiones y alertas. Tests de las tres acciones y del cierre forzado.
+
+## Paso 19 · F15 Personas y catálogos, 11/11/2026 (D-116)
+
+- Catálogos de áreas y puestos (con plantilla y accesos sugeridos) y personas enlazadas a ellos; modelo `ApprovalRequest` (esquema de datos 11).
+- A9 (`/admin/people`): pestañas Personas, Áreas y Puestos; búsqueda y filtros por área, rol y estado; "Dar de alta una persona".
+- A10 (`/admin/people/:id`): encabezado de ficha, datos laborales editables con identificadores ocultos, rol en Rumbo (los roles de RRHH y sistemas piden aprobación de sistemas) e historial de cambios desde la auditoría.
+- Permisos `person:manage` y `catalog:edit`; aviso "Cambio de rol por aprobar" a sistemas. Tests de reglas, catálogos y pantallas; A9 y A10 en Playwright.
+- Pendiente: aprobar o rechazar los cambios en S7 (F14).

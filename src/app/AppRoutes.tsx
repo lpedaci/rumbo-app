@@ -66,6 +66,10 @@ const MyPrivacyPage = lazy(() =>
 const PrivacyRequestsPage = lazy(() =>
   import('@/features/privacy/PrivacyRequestsPage').then((m) => ({ default: m.PrivacyRequestsPage })),
 );
+const PeoplePage = lazy(() => import('@/features/people/PeoplePage').then((m) => ({ default: m.PeoplePage })));
+const PersonDetailPage = lazy(() =>
+  import('@/features/people/PersonDetailPage').then((m) => ({ default: m.PersonDetailPage })),
+);
 const NotificationsPage = lazy(() =>
   import('@/features/notifications/NotificationsPage').then((m) => ({ default: m.NotificationsPage })),
 );
@@ -127,6 +131,8 @@ export function AppRoutes() {
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/account/privacy" element={<MyPrivacyPage />} />
             <Route path="/admin/privacy-requests" element={<PrivacyRequestsPage />} />
+            <Route path="/admin/people" element={<PeoplePage />} />
+            <Route path="/admin/people/:id" element={<PersonDetailPage />} />
 
             <Route path="/admin" element={<DashboardPage />} />
             <Route path="/admin/hires" element={<HiresPage />} />

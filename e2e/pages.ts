@@ -46,6 +46,8 @@ export const PAGES: CheckedPage[] = [
   { id: 'a6-template-new', path: '/#/admin/templates/new', role: 'admin' },
   { id: 'a8-template-versions', path: '/#/admin/templates/tpl-data/versions', role: 'admin' },
   { id: 'a4-hire-comments', path: '/#/admin/hires/h-sofia?comments=h-sofia-d15', role: 'admin' },
+  { id: 'a9-people', path: '/#/admin/people', role: 'admin' },
+  { id: 'a10-person', path: '/#/admin/people/p-nicolas', role: 'admin' },
   { id: 'a7-template-preview', path: '/#/admin/templates/tpl-data/preview', role: 'admin' },
   { id: 'j1-team', path: '/#/manager', role: 'manager' },
   { id: 'j2-hire', path: '/#/manager/hires/h-sofia', role: 'manager' },

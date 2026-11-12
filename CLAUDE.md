@@ -841,6 +841,7 @@ interface ApprovalRequest {
   createdAt: string; status: 'pending' | 'approved' | 'rejected'; decidedBy?: string; decidedAt?: string;
 }
 
+// Implementado (D-116): Person suma areaId y jobTitleId (catálogo) y conserva area y jobTitle como texto visible; ApprovalRequest suma fromRole y toRole.
 interface Area { id: string; name: string }
 interface JobTitle { id: string; name: string; areaId: string; suggestedTemplateId?: string; suggestedAccess: string[] }
 
