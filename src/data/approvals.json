@@ -1,0 +1,38 @@
+[
+  {
+    "id": "APR-2026-0001",
+    "action": "policy.change",
+    "targetId": "sessionIdleMinutes",
+    "fromValue": 15,
+    "toValue": 30,
+    "requestedBy": "p-ramiro",
+    "reason": "Varias personas de Comercial piden más tiempo porque trabajan con el panel abierto durante las reuniones.",
+    "createdAt": "2026-10-28T11:20:00",
+    "status": "rejected",
+    "decidedBy": "p-diego",
+    "decidedAt": "2026-10-29T09:45:00",
+    "decisionNote": "15 minutos es lo recomendado para cuentas con datos personales. El aviso ya permite seguir conectado."
+  },
+  {
+    "id": "APR-2026-0002",
+    "action": "role.change",
+    "targetId": "p-julieta",
+    "fromRole": "hire",
+    "toRole": "admin",
+    "requestedBy": "p-carla",
+    "reason": "Coordina el programa de buddies y necesita armar plantillas y dar de alta ingresos.",
+    "createdAt": "2026-11-09T15:20:00",
+    "status": "pending"
+  },
+  {
+    "id": "APR-2026-0003",
+    "action": "policy.change",
+    "targetId": "passwordMinLength",
+    "fromValue": 12,
+    "toValue": 14,
+    "requestedBy": "p-ramiro",
+    "reason": "Alinear la política de contraseñas con el estándar del grupo para 2027.",
+    "createdAt": "2026-11-10T09:05:00",
+    "status": "pending"
+  }
+]

@@ -60,6 +60,9 @@ export const NOTIFICATION_TYPES: Record<NotificationType, TypeMeta> = {
   'login.unusual': { category: 'access', icon: 'gpp_maybe', tone: 'warning', email: true },
   'login.reported': { category: 'access', icon: 'gpp_maybe', tone: 'error', email: true },
   'approval.pending': { category: 'access', icon: 'admin_panel_settings', tone: 'warning', email: true },
+  'approval.policy_pending': { category: 'access', icon: 'rule', tone: 'warning', email: true },
+  'approval.approved': { category: 'access', icon: 'check_circle', tone: 'success', email: true },
+  'approval.rejected': { category: 'access', icon: 'cancel', tone: 'error', email: true },
   'access_tasks.new': { category: 'access', icon: 'key', tone: 'info', email: true },
   'offboarding.reminder': { category: 'people', icon: 'logout', tone: 'warning', email: true },
 };
@@ -301,16 +304,41 @@ export function onLoginReported(request: AccessRequest, people: Person[], person
 /** F14: a sensitive change waits for a second person in IT (never the one who asked). */
 export function onApprovalRequested(approval: ApprovalRequest, people: Person[], targetName: string): AppNotification[] {
   return people
-    .filter((p) => p.role === 'it_admin' && p.id !== approval.requestedBy)
+    .filter((p) => p.role === 'it_admin' && p.id !== approval.requestedBy && p.id !== approval.targetId)
     .map((it) =>
       makeNotification({
         recipientId: it.id,
         createdAt: approval.createdAt,
-        type: 'approval.pending',
-        params: { request: approval.id, person: targetName },
-        link: '/it/approvals',
+        type: approval.action === 'policy.change' ? 'approval.policy_pending' : 'approval.pending',
+        params:
+          approval.action === 'policy.change'
+            ? { request: approval.id, policy: approval.targetId }
+            : { request: approval.id, person: targetName },
+        link: `/it/approvals?request=${approval.id}`,
       }),
     );
+}
+
+/** F14: the person who asked learns the decision (the HR admin sees the person record). */
+export function onApprovalDecided(approval: ApprovalRequest, people: Person[]): AppNotification[] {
+  const requester = people.find((p) => p.id === approval.requestedBy);
+  if (!requester || approval.status === 'pending') return [];
+  return [
+    makeNotification({
+      recipientId: requester.id,
+      createdAt: approval.decidedAt ?? approval.createdAt,
+      type: approval.status === 'approved' ? 'approval.approved' : 'approval.rejected',
+      params: {
+        request: approval.id,
+        name: people.find((p) => p.id === approval.decidedBy)?.name ?? '',
+        note: approval.decisionNote ?? '',
+      },
+      link:
+        approval.action === 'role.change' && requester.role === 'admin'
+          ? `/admin/people/${approval.targetId}`
+          : `/it/approvals?request=${approval.id}`,
+    }),
+  ];
 }
 
 /** F12: a joiner, mover or leaver gives IT access tasks; a leaver also reminds the manager. */
@@ -358,6 +386,7 @@ export function buildSeedNotifications(
   loginAlerts: LoginAlert[] = [],
   deviceSessions: DeviceSession[] = [],
   lifecycle: LifecycleEvent[] = [],
+  approvals: ApprovalRequest[] = [],
   today = DEMO_TODAY,
 ): AppNotification[] {
   const nameOf = (id: string) => people.find((p) => p.id === id)?.name ?? '';
@@ -559,6 +588,13 @@ export function buildSeedNotifications(
   // F12: access tasks for IT and the leaver reminder for the manager.
   for (const event of lifecycle) {
     for (const n of onLifecycle(event, people)) {
+      drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
+    }
+  }
+
+  for (const approval of approvals) {
+    const target = people.find((p) => p.id === approval.targetId)?.name ?? '';
+    for (const n of [...onApprovalRequested(approval, people, target), ...onApprovalDecided(approval, people)]) {
       drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
     }
   }

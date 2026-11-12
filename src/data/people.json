@@ -53,6 +53,19 @@
     "jobTitleId": "jt-helpdesk"
   },
   {
+    "id": "p-ramiro",
+    "name": "Ramiro Sosa",
+    "role": "it_admin",
+    "jobTitle": "Analista de Seguridad IT",
+    "area": "Sistemas",
+    "email": "ramiro@nortia.demo",
+    "dni": "36.518.204",
+    "cuil": "20-36518204-7",
+    "bankAccount": "0720153086205553719904",
+    "areaId": "a-sistemas",
+    "jobTitleId": "jt-helpdesk"
+  },
+  {
     "id": "p-lucia",
     "name": "Lucía Fernández",
     "role": "manager",

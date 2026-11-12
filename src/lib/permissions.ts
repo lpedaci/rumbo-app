@@ -58,6 +58,10 @@ export const PERMISSIONS = {
   // F12 access lifecycle: HR registers changes and leavers, IT grants and revokes access
   'lifecycle:manage': { admin: 'all' },
   'access_task:complete': { it_admin: 'all' },
+
+  // F14: double approval (the requester can never decide; see lib/approvals)
+  'approval:decide': { it_admin: 'all' },
+  'policy:propose': { it_admin: 'all' },
   // F7 notifications: each person only sees their own
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)
@@ -129,6 +133,7 @@ export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
   { prefix: '/admin/people', action: 'person:manage' },
   { prefix: '/admin/lifecycle', action: 'lifecycle:manage' },
   { prefix: '/it/lifecycle', action: 'access_task:complete' },
+  { prefix: '/it/approvals', action: 'approval:decide' },
 ];
 
 export function requiredPermission(pathname: string): Action | null {

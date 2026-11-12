@@ -63,6 +63,8 @@ export const PAGES: CheckedPage[] = [
   { id: 's2-request', path: '/#/it/requests/IT-2026-0141', role: 'it_admin' },
   { id: 's3-security', path: '/#/it/security', role: 'it_admin' },
   { id: 's4-access-tasks', path: '/#/it/lifecycle?event=LC-2026-0004', role: 'it_admin' },
+  { id: 's7-approvals', path: '/#/it/approvals', role: 'it_admin' },
+  { id: 's7-approval', path: '/#/it/approvals?request=APR-2026-0002', role: 'it_admin' },
   { id: 'ds-site', path: '/#/design-system' },
   { id: 'styleguide', path: '/#/styleguide' },
 ];

@@ -38,12 +38,13 @@ describe('F15 · People rules', () => {
     expect(store.changeRole('p-nicolas', 'manager', 'Pasa a liderar el equipo de Datos.', 'p-carla')).toBeUndefined();
     expect(useDataStore.getState().people.find((p) => p.id === 'p-nicolas')!.role).toBe('manager');
 
-    const id = useDataStore.getState().changeRole('p-julieta', 'admin', 'Se suma al equipo de Personas.', 'p-carla');
-    expect(id).toBe('APR-2026-0001');
+    const id = useDataStore.getState().changeRole('p-lucia', 'admin', 'Se suma al equipo de Personas.', 'p-carla');
+    expect(id).toBe('APR-2026-0004');
     const state = useDataStore.getState();
-    expect(state.people.find((p) => p.id === 'p-julieta')!.role).toBe('hire');
-    expect(state.approvals[0]).toMatchObject({ targetId: 'p-julieta', fromRole: 'hire', toRole: 'admin', status: 'pending', requestedBy: 'p-carla' });
-    expect(state.notifications.at(-1)).toMatchObject({ recipientId: 'p-diego', type: 'approval.pending' });
+    expect(state.people.find((p) => p.id === 'p-lucia')!.role).toBe('manager');
+    expect(state.approvals.at(-1)).toMatchObject({ targetId: 'p-lucia', fromRole: 'manager', toRole: 'admin', status: 'pending', requestedBy: 'p-carla' });
+    // Every IT admin hears about it (Diego and Ramiro), never the requester.
+    expect(state.notifications.filter((n) => n.type === 'approval.pending' && n.params.request === id).map((n) => n.recipientId).sort()).toEqual(['p-diego', 'p-ramiro']);
   });
 
   it('renames an area on every person of the area and never deletes one in use', () => {
@@ -66,7 +67,7 @@ describe('A9 and A10 · People screens', () => {
   });
 
   it('requests approval to make someone HR admin, with a required reason', async () => {
-    renderAt('/admin/people/p-julieta');
+    renderAt('/admin/people/p-lucia');
     expect(await screen.findByRole('heading', { name: es.people.detail.roleCard })).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText(new RegExp(es.people.detail.newRole)), { target: { value: 'admin' } });
     fireEvent.click(screen.getByRole('button', { name: es.people.detail.requestApproval }));
@@ -75,7 +76,7 @@ describe('A9 and A10 · People screens', () => {
       target: { value: 'Se suma al equipo de Personas.' },
     });
     fireEvent.click(screen.getByRole('button', { name: es.people.detail.requestApproval }));
-    await waitFor(() => expect(useDataStore.getState().approvals).toHaveLength(1));
+    await waitFor(() => expect(useDataStore.getState().approvals).toHaveLength(4));
     expect(await screen.findByText(/pendiente de aprobación/)).toBeInTheDocument();
   });
 

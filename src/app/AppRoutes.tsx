@@ -73,6 +73,9 @@ const PersonDetailPage = lazy(() =>
 const LifecyclePage = lazy(() =>
   import('@/features/lifecycle/LifecyclePage').then((m) => ({ default: m.LifecyclePage })),
 );
+const ApprovalsPage = lazy(() =>
+  import('@/features/approvals/ApprovalsPage').then((m) => ({ default: m.ApprovalsPage })),
+);
 const AccessTasksPage = lazy(() =>
   import('@/features/lifecycle/AccessTasksPage').then((m) => ({ default: m.AccessTasksPage })),
 );
@@ -162,6 +165,7 @@ export function AppRoutes() {
             <Route path="/it/requests" element={<RequestsPage />} />
             <Route path="/it/requests/:id" element={<RequestDetailPage />} />
             <Route path="/it/lifecycle" element={<AccessTasksPage />} />
+            <Route path="/it/approvals" element={<ApprovalsPage />} />
             <Route path="/it/security" element={<ItSecurityPage />} />
 
             {user && <Route path="*" element={<CatchAll />} />}

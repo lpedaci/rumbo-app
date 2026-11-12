@@ -147,7 +147,7 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-077 | Sistemas debe ver las sesiones de toda la organización y forzar su cierre. | Sistemas | F11 | S3 | Should | Queda en la auditoría. | Hecho |
 | RF-078 | El sistema debe generar tareas de accesos para sistemas en altas, cambios de puesto y bajas. | RRHH, Sistemas | F12 | A11, S4 | Should | La baja deshabilita la cuenta en la fecha efectiva. | Hecho |
 | RF-079 | El sistema debe permitir crear campañas de revisión de accesos que los jefes completan y sistemas cierra con resumen. | Sistemas, Jefe | F13 | S5, S6, J4 | Should | Avance en % por jefe; resumen descargable. | Pendiente |
-| RF-080 | Las acciones sensibles deben requerir doble aprobación, sin que quien pide pueda aprobar. | RRHH, Sistemas | F14 | S7 | Should | El botón de aprobar no está disponible para quien solicitó. | Pendiente |
+| RF-080 | Las acciones sensibles deben requerir doble aprobación, sin que quien pide pueda aprobar. | RRHH, Sistemas | F14 | S7 | Should | El botón de aprobar no está disponible para quien solicitó. | Hecho |
 | RF-081 | El sistema debe permitir gestionar personas, áreas y puestos (con plantilla y accesos sugeridos). | RRHH | F15 | A9, A10 | Should | El cambio de rol a admin pasa por doble aprobación. | Hecho |
 | RF-082 | El sistema debe ofrecer búsqueda global (`Ctrl+K` o `/`) filtrada por permisos y agrupada por tipo. | Todos | F16 | G6, G12 | Should | Sofía no encuentra recorridos ajenos. | Pendiente |
 | RF-083 | El sistema debe ofrecer ayuda contextual por pantalla y un recorrido guiado de 3 a 5 pasos por rol. | Todos | F16 | Todas | Should | Se puede saltar y volver a ver desde el menú. | Pendiente |

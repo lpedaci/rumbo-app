@@ -29,7 +29,8 @@ describe('F11 · Sessions and sign-in alerts', () => {
     expect(request).toMatchObject({ personId: 'p-sofia', reason: 'unrecognized_login', urgent: true, status: 'new' });
     expect(state.deviceSessions.find((s) => s.id === 'ds-sofia-2')?.revokedAt).toBeTruthy();
     expect(state.loginAlerts[0]).toMatchObject({ status: 'reported', requestId: request.id });
-    expect(state.notifications.at(-1)).toMatchObject({ recipientId: 'p-diego', type: 'login.reported' });
+    // Every IT admin is told (Diego and Ramiro).
+    expect(state.notifications.some((n) => n.recipientId === 'p-diego' && n.type === 'login.reported')).toBe(true);
     // The urgent request goes first in the IT inbox.
     expect(sortRequests(state.accessRequests)[0]!.id).toBe(request.id);
   });

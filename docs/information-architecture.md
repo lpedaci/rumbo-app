@@ -169,7 +169,7 @@ flowchart TD
     IT -.-> S4["S4 Tareas de accesos"]
     IT -.-> S5["S5 Revisiones (B)"]
     S5 -.-> S6["S6 Detalle de campaña (B)"]
-    IT -.-> S7["S7 Aprobaciones (B)"]
+    IT -.-> S7["S7 Aprobaciones"]
 
     ROOT --> CUENTA["Cuenta (todos)"]
     CUENTA --> G5["G5 Mi seguridad"]

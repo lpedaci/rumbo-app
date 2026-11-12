@@ -188,6 +188,7 @@
       "templates": "Plantillas",
       "lifecycle": "Altas y bajas",
       "accessTasks": "Accesos",
+      "approvals": "Aprobaciones",
       "people": "Personas",
       "privacy": "Privacidad",
       "team": "Mi equipo",
@@ -1637,6 +1638,9 @@
         "person.create": "Persona dada de alta",
         "person.role_change": "Rol cambiado",
         "approval.request": "Aprobación pedida",
+        "approval.approve": "Aprobación concedida",
+        "approval.reject": "Aprobación rechazada",
+        "policy.update": "Política cambiada",
         "catalog.area_create": "Área creada",
         "catalog.area_update": "Área modificada",
         "catalog.area_delete": "Área eliminada",
@@ -1698,6 +1702,8 @@
         "catalog_edit": "Editar catálogos",
         "lifecycle_manage": "Registrar altas y bajas",
         "access_task_complete": "Otorgar y revocar accesos",
+        "approval_decide": "Aprobar cambios sensibles",
+        "policy_propose": "Proponer cambios de políticas",
         "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
@@ -1706,7 +1712,7 @@
     },
     "policies": {
       "title": "Políticas de la organización",
-      "description": "Valores vigentes. En producción se configuran en el proveedor de identidad.",
+      "description": "Valores vigentes. Cada cambio se aplica cuando otra persona de sistemas lo aprueba; en producción se configuran en el proveedor de identidad.",
       "mfa": "Verificación en dos pasos obligatoria",
       "mfaDetail": "Para el resto de los roles es opcional y viene activada.",
       "session": "Cierre de sesión por inactividad",
@@ -2407,6 +2413,18 @@
         "pending": {
           "title": "Cambio de rol por aprobar",
           "body": "{{request}}: cambio de rol de {{person}}. Necesita una segunda persona de sistemas."
+        },
+        "policy_pending": {
+          "title": "Cambio de política por aprobar",
+          "body": "{{request}}: cambio de {{policy}}. Necesita una segunda persona de sistemas."
+        },
+        "approved": {
+          "title": "Solicitud aprobada",
+          "body": "{{request}}: {{name}} aprobó tu solicitud y el cambio ya se aplicó."
+        },
+        "rejected": {
+          "title": "Solicitud rechazada",
+          "body": "{{request}}: {{name}} rechazó tu solicitud. Motivo: {{note}}"
         }
       },
       "login": {
@@ -3078,6 +3096,96 @@
       "markDoneLabel": "Marcar como hecho: {{action}} {{system}}",
       "doneToast": "Acceso {{system}} marcado como hecho",
       "empty": "No hay tareas de accesos pendientes."
+    }
+  },
+  "approvals": {
+    "title": "Aprobaciones",
+    "description": "Cambios sensibles que se aplican solo cuando otra persona de sistemas los aprueba. Quien los pide nunca puede aprobarlos.",
+    "listTitle": "Solicitudes",
+    "filter": "Mostrar",
+    "filters": {
+      "pending": "Pendientes",
+      "decided": "Resueltas",
+      "all": "Todas"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "approved": "Aprobada",
+      "rejected": "Rechazada"
+    },
+    "actions": {
+      "role.change": "Cambio de rol",
+      "policy.change": "Cambio de política"
+    },
+    "roleTitle": "Cambio de rol de {{name}}",
+    "policyTitle": "Cambio de política: {{policy}}",
+    "change": "{{from}} → {{to}}",
+    "requestedBy": "Pedida por {{name}} el {{date}}",
+    "decidedBy": {
+      "approved": "Aprobada por {{name}} el {{date}}",
+      "rejected": "Rechazada por {{name}} el {{date}}"
+    },
+    "own": "Es tu solicitud: la decide otra persona de sistemas.",
+    "target": "El cambio es sobre tu cuenta: lo decide otra persona de sistemas.",
+    "empty": "No hay solicitudes en este filtro.",
+    "dialogTitle": "{{id}} · {{action}}",
+    "facts": {
+      "change": "Qué cambia",
+      "requester": "Pedida por",
+      "sent": "Fecha",
+      "decision": "Decisión"
+    },
+    "reason": "Motivo",
+    "decisionNote": "Nota de la decisión",
+    "noteLabel": "Nota",
+    "noteHelp": "Obligatoria para rechazar: explica el motivo a quien lo pidió. Hasta 300 caracteres. Por ejemplo: Falta la conformidad del jefe directo.",
+    "noteRequired": "Escribe el motivo del rechazo, con al menos 10 caracteres.",
+    "noteMax": "La nota puede tener hasta 300 caracteres.",
+    "approve": "Aprobar y aplicar",
+    "reject": "Rechazar",
+    "approvedToast": "Solicitud {{id}} aprobada y aplicada",
+    "rejectedToast": "Solicitud {{id}} rechazada",
+    "applyRole": "Al aprobarla, {{name}} pasa a tener el rol {{role}} en Rumbo.",
+    "applyPolicy": "Al aprobarla, la política cambia en el momento para toda la organización.",
+    "blocked": {
+      "own": "No puedes decidir esta solicitud porque la pediste tú. La aprueba o rechaza otra persona de sistemas.",
+      "target": "No puedes decidir esta solicitud porque el cambio es sobre tu cuenta."
+    },
+    "policyNames": {
+      "sessionIdleMinutes": "cierre de sesión por inactividad",
+      "lockoutAttempts": "intentos antes del bloqueo",
+      "passwordMinLength": "largo mínimo de la contraseña"
+    },
+    "units": {
+      "sessionIdleMinutes_one": "{{count}} minuto",
+      "sessionIdleMinutes_other": "{{count}} minutos",
+      "lockoutAttempts_one": "{{count}} intento",
+      "lockoutAttempts_other": "{{count}} intentos",
+      "passwordMinLength_one": "{{count}} carácter",
+      "passwordMinLength_other": "{{count}} caracteres"
+    },
+    "policy": {
+      "propose": "Proponer un cambio",
+      "dialogTitle": "Proponer un cambio de política",
+      "introRich": "El cambio se aplica cuando otra persona de sistemas lo aprueba en <chip>Aprobaciones</chip>.",
+      "field": "Política",
+      "fieldHelp": "Qué política cambiar. Cada opción muestra su valor vigente.",
+      "option": "{{policy}} (hoy: {{value}})",
+      "value": "Valor nuevo",
+      "valueHelp": "Número entero entre {{min}} y {{max}}. Por ejemplo: {{example}}.",
+      "valueHelpNone": "Elige primero la política para ver el rango permitido.",
+      "reason": "Motivo",
+      "reasonHelp": "Para qué se necesita el cambio. Entre 10 y 300 caracteres. Por ejemplo: Alinear la política con el estándar del grupo.",
+      "fieldRequired": "Elige la política.",
+      "fieldPending": "Esta política ya tiene un cambio pendiente ({{id}}). Espera a que se decida.",
+      "valueRequired": "Escribe el valor nuevo.",
+      "valueRange": "Escribe un número entero dentro del rango indicado.",
+      "valueSame": "Escribe un valor distinto del vigente.",
+      "reasonRequired": "Escribe el motivo, con al menos 10 caracteres.",
+      "reasonMax": "El motivo puede tener hasta 300 caracteres.",
+      "send": "Enviar a aprobación",
+      "sent": "Solicitud {{id}} enviada a aprobación",
+      "pendingLine": "Cambio a {{value}} pendiente de aprobación ({{id}})."
     }
   }
 }

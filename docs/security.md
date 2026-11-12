@@ -120,7 +120,7 @@ sequenceDiagram
 
 - **RBAC verificado siempre en el servidor**, con la misma matriz que hoy vive en `permissions.ts` (el front solo la usa para mostrar u ocultar).
 - **Seguridad por fila** (por ejemplo, *row-level security* de PostgreSQL): cada empresa cliente ve solo sus datos y cada jefe, solo a su equipo. La autoevaluación la ven solo el jefe directo y RRHH.
-- Acciones sensibles con **doble aprobación** (F14): quien pide un cambio de rol de administrador no puede aprobarlo.
+- Acciones sensibles con **doble aprobación** (F14): quien pide un cambio de rol de administrador o de una política de seguridad no puede aprobarlo, ni tampoco la persona a la que afecta. En la demo (D-118) la regla vive en `src/lib/approvals.ts`, los intentos bloqueados quedan en la auditoría como denegados y el cambio se aplica solo al aprobarse. En producción, la misma verificación se hace en el servidor y los cambios de política se aplican en el proveedor de identidad.
 
 ### 3.4 Datos
 

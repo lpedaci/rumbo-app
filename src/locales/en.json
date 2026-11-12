@@ -188,6 +188,7 @@
       "templates": "Templates",
       "lifecycle": "Joiners and leavers",
       "accessTasks": "Access",
+      "approvals": "Approvals",
       "people": "People",
       "privacy": "Privacy",
       "team": "My team",
@@ -1637,6 +1638,9 @@
         "person.create": "Person added",
         "person.role_change": "Role changed",
         "approval.request": "Approval requested",
+        "approval.approve": "Approval granted",
+        "approval.reject": "Approval rejected",
+        "policy.update": "Policy changed",
         "catalog.area_create": "Area created",
         "catalog.area_update": "Area updated",
         "catalog.area_delete": "Area deleted",
@@ -1698,6 +1702,8 @@
         "catalog_edit": "Edit catalogs",
         "lifecycle_manage": "Register joiners and leavers",
         "access_task_complete": "Grant and revoke access",
+        "approval_decide": "Approve sensitive changes",
+        "policy_propose": "Propose policy changes",
         "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
@@ -1706,7 +1712,7 @@
     },
     "policies": {
       "title": "Organization policies",
-      "description": "Current values. In production they are set in the identity provider.",
+      "description": "Current values. Each change applies when another person in IT approves it; in production they are set in the identity provider.",
       "mfa": "Two-step verification required",
       "mfaDetail": "For the other roles it is optional and on by default.",
       "session": "Sign-out after inactivity",
@@ -2407,6 +2413,18 @@
         "pending": {
           "title": "Role change to approve",
           "body": "{{request}}: role change for {{person}}. It needs a second IT person."
+        },
+        "policy_pending": {
+          "title": "Policy change to approve",
+          "body": "{{request}}: change to the {{policy}}. It needs a second person in IT."
+        },
+        "approved": {
+          "title": "Request approved",
+          "body": "{{request}}: {{name}} approved your request and the change is applied."
+        },
+        "rejected": {
+          "title": "Request rejected",
+          "body": "{{request}}: {{name}} rejected your request. Reason: {{note}}"
         }
       },
       "login": {
@@ -3078,6 +3096,96 @@
       "markDoneLabel": "Mark as done: {{action}} {{system}}",
       "doneToast": "Access {{system}} marked as done",
       "empty": "There are no pending access tasks."
+    }
+  },
+  "approvals": {
+    "title": "Approvals",
+    "description": "Sensitive changes that apply only when another person in IT approves them. Whoever asks can never approve them.",
+    "listTitle": "Requests",
+    "filter": "Show",
+    "filters": {
+      "pending": "Pending",
+      "decided": "Decided",
+      "all": "All"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "actions": {
+      "role.change": "Role change",
+      "policy.change": "Policy change"
+    },
+    "roleTitle": "Role change for {{name}}",
+    "policyTitle": "Policy change: {{policy}}",
+    "change": "{{from}} → {{to}}",
+    "requestedBy": "Requested by {{name}} on {{date}}",
+    "decidedBy": {
+      "approved": "Approved by {{name}} on {{date}}",
+      "rejected": "Rejected by {{name}} on {{date}}"
+    },
+    "own": "This is your request: another person in IT decides it.",
+    "target": "The change is about your account: another person in IT decides it.",
+    "empty": "There are no requests in this filter.",
+    "dialogTitle": "{{id}} · {{action}}",
+    "facts": {
+      "change": "What changes",
+      "requester": "Requested by",
+      "sent": "Date",
+      "decision": "Decision"
+    },
+    "reason": "Reason",
+    "decisionNote": "Decision note",
+    "noteLabel": "Note",
+    "noteHelp": "Required to reject: explain the reason to whoever asked. Up to 300 characters. For example: The manager has not agreed yet.",
+    "noteRequired": "Write the reason for the rejection, with at least 10 characters.",
+    "noteMax": "The note can have up to 300 characters.",
+    "approve": "Approve and apply",
+    "reject": "Reject",
+    "approvedToast": "Request {{id}} approved and applied",
+    "rejectedToast": "Request {{id}} rejected",
+    "applyRole": "Once approved, {{name}} gets the {{role}} role in Rumbo.",
+    "applyPolicy": "Once approved, the policy changes right away for the whole organization.",
+    "blocked": {
+      "own": "You cannot decide this request because you asked for it. Another person in IT approves or rejects it.",
+      "target": "You cannot decide this request because the change is about your account."
+    },
+    "policyNames": {
+      "sessionIdleMinutes": "sign-out after inactivity",
+      "lockoutAttempts": "attempts before lockout",
+      "passwordMinLength": "minimum password length"
+    },
+    "units": {
+      "sessionIdleMinutes_one": "{{count}} minute",
+      "sessionIdleMinutes_other": "{{count}} minutes",
+      "lockoutAttempts_one": "{{count}} attempt",
+      "lockoutAttempts_other": "{{count}} attempts",
+      "passwordMinLength_one": "{{count}} character",
+      "passwordMinLength_other": "{{count}} characters"
+    },
+    "policy": {
+      "propose": "Propose a change",
+      "dialogTitle": "Propose a policy change",
+      "introRich": "The change applies when another person in IT approves it in <chip>Approvals</chip>.",
+      "field": "Policy",
+      "fieldHelp": "Which policy to change. Each option shows its current value.",
+      "option": "{{policy}} (now: {{value}})",
+      "value": "New value",
+      "valueHelp": "Whole number between {{min}} and {{max}}. For example: {{example}}.",
+      "valueHelpNone": "Choose the policy first to see the allowed range.",
+      "reason": "Reason",
+      "reasonHelp": "Why the change is needed. Between 10 and 300 characters. For example: Align the policy with the group standard.",
+      "fieldRequired": "Choose the policy.",
+      "fieldPending": "This policy already has a pending change ({{id}}). Wait until it is decided.",
+      "valueRequired": "Write the new value.",
+      "valueRange": "Write a whole number within the range shown.",
+      "valueSame": "Write a value different from the current one.",
+      "reasonRequired": "Write the reason, with at least 10 characters.",
+      "reasonMax": "The reason can have up to 300 characters.",
+      "send": "Send for approval",
+      "sent": "Request {{id}} sent for approval",
+      "pendingLine": "Change to {{value}} pending approval ({{id}})."
     }
   }
 }

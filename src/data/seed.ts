@@ -39,6 +39,7 @@ import { buildSeedNotifications } from '@/lib/notifications';
 import { dueDateFor } from '@/lib/privacy';
 import { asVersion } from '@/lib/templates';
 import accessRequests from './access-requests.json';
+import approvals from './approvals.json';
 import auditEvents from './audit-events.json';
 import authAttempts from './auth-attempts.json';
 import checkinMilestones from './checkin-milestones.json';
@@ -264,12 +265,13 @@ export function buildSeed(): DemoData {
       loginAlerts as LoginAlert[],
       deviceSessions as DeviceSession[],
       lifecycleEvents as LifecycleEvent[],
+      approvals as ApprovalRequest[],
     ),
     comments: comments as Comment[],
     consents: consents as ConsentRecord[],
     areas: areas as Area[],
     jobTitles: jobTitles as JobTitle[],
-    approvals: [] as ApprovalRequest[],
+    approvals: approvals as ApprovalRequest[],
     lifecycle: lifecycleEvents as LifecycleEvent[],
     deviceSessions: deviceSessions as DeviceSession[],
     loginAlerts: loginAlerts as LoginAlert[],

@@ -26,5 +26,6 @@ export const NAV_ITEMS: NavItem[] = [
   { to: '/me/checkin', label: 'layout.nav.checkin', icon: 'fact_check', action: 'checkin:self_review' },
   { to: '/it/requests', label: 'layout.nav.requests', icon: 'support_agent', action: 'access_request:view' },
   { to: '/it/lifecycle', label: 'layout.nav.accessTasks', icon: 'key', action: 'access_task:complete' },
+  { to: '/it/approvals', label: 'layout.nav.approvals', icon: 'approval', action: 'approval:decide' },
   { to: '/it/security', label: 'layout.nav.security', icon: 'security', action: 'security:view' },
 ];

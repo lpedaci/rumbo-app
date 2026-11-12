@@ -240,6 +240,9 @@ export type NotificationType =
   | 'login.unusual'
   | 'login.reported'
   | 'approval.pending'
+  | 'approval.policy_pending'
+  | 'approval.approved'
+  | 'approval.rejected'
   | 'access_tasks.new'
   | 'offboarding.reminder';
 
@@ -359,22 +362,31 @@ export interface JobTitle {
   suggestedAccess: string[];
 }
 
+/** F14: security policies that change only with a second person's approval. */
+export type PolicyField = 'sessionIdleMinutes' | 'lockoutAttempts' | 'passwordMinLength';
+export type ApprovalAction = 'role.change' | 'policy.change';
+export type ApprovalStatus = 'pending' | 'approved' | 'rejected';
+
 /**
  * A sensitive change that needs a second person (F14): who asked, why, and who decided. Whoever
- * asks can never approve it.
+ * asks can never approve it, nor the person the change is about.
  */
 export interface ApprovalRequest {
   /** For example `APR-2026-0003`. */
   id: string;
-  action: 'role.change';
+  action: ApprovalAction;
+  /** The person (role change) or the policy field (policy change). */
   targetId: string;
   requestedBy: string;
   reason: string;
   createdAt: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: ApprovalStatus;
   /** Role change: from and to. */
-  fromRole: Role;
-  toRole: Role;
+  fromRole?: Role;
+  toRole?: Role;
+  /** Policy change: current and proposed value. */
+  fromValue?: number;
+  toValue?: number;
   decidedBy?: string;
   decidedAt?: string;
   decisionNote?: string;

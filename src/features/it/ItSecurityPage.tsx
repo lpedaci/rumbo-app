@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
-import { ConfirmDialog } from '@/components/ui/Dialog';
+import { ConfirmDialog, Dialog } from '@/components/ui/Dialog';
 import { FilterMenu } from '@/components/ui/FilterMenu';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { StatusPill, type StatusTone } from '@/components/ui/StatusPill';
@@ -25,7 +25,9 @@ import { can, PERMISSIONS, ROLES, type Action } from '@/lib/permissions';
 import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
-import type { AuditEvent } from '@/types/domain';
+import type { AuditEvent, PolicyField } from '@/types/domain';
+import { PolicyChangeDialog } from '@/features/approvals/PolicyChangeDialog';
+import { pendingPolicyChange } from '@/lib/approvals';
 import { OrgSessions } from './OrgSessions';
 import { readableRoles } from '@/lib/people';
 
@@ -464,7 +466,11 @@ function PermissionMatrix() {
 function Policies() {
   const { t } = useTranslation();
   const policy = useDataStore((s) => s.securityPolicy);
-  const items: { icon: IconName; title: string; value: string; detail: string }[] = [
+  const approvals = useDataStore((s) => s.approvals);
+  const user = useCurrentUser();
+  const [proposing, setProposing] = useState(false);
+  const units = (field: PolicyField, count: number) => t(`approvals.units.${field}`, { count });
+  const items: { icon: IconName; title: string; value: string; detail: string; field?: PolicyField }[] = [
     {
       icon: 'verified_user',
       title: t('it.policies.mfa'),
@@ -474,18 +480,21 @@ function Policies() {
     {
       icon: 'schedule',
       title: t('it.policies.session'),
+      field: 'sessionIdleMinutes',
       value: t('it.policies.minutes', { count: policy.sessionIdleMinutes }),
       detail: t('it.policies.sessionDetail', { count: policy.sessionWarningMinutes }),
     },
     {
       icon: 'lock',
       title: t('it.policies.lockout'),
+      field: 'lockoutAttempts',
       value: t('it.policies.attempts', { count: policy.lockoutAttempts }),
       detail: t('it.policies.lockoutDetail'),
     },
     {
       icon: 'password',
       title: t('it.policies.password'),
+      field: 'passwordMinLength',
       value: t('it.policies.chars', { count: policy.passwordMinLength }),
       detail: t('it.policies.passwordDetail'),
     },
@@ -511,11 +520,18 @@ function Policies() {
   ];
   return (
     <section aria-labelledby="policies-title" className={cn(PANEL, 'p-4 md:p-(--space-card-padding)')}>
-      <div className="mb-4 flex flex-col gap-1">
-        <h2 id="policies-title" className="text-title-medium text-on-surface">
-          {t('it.policies.title')}
-        </h2>
-        <p className="text-body-small text-on-surface-variant">{t('it.policies.description')}</p>
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex min-w-0 flex-col gap-1">
+          <h2 id="policies-title" className="text-title-medium text-on-surface">
+            {t('it.policies.title')}
+          </h2>
+          <p className="text-body-small text-on-surface-variant">{t('it.policies.description')}</p>
+        </div>
+        {can(user, 'policy:propose') && (
+          <Button variant="outlined" leadingIcon="rule" className="shrink-0" onClick={() => setProposing(true)}>
+            {t('approvals.policy.propose')}
+          </Button>
+        )}
       </div>
       <ul className="grid grid-cols-1 gap-(--space-bento-gap) md:grid-cols-2">
         {items.map((item) => (
@@ -530,10 +546,22 @@ function Policies() {
               <h3 className="text-title-small text-on-surface-variant">{item.title}</h3>
               <p className="text-title-medium text-on-surface">{item.value}</p>
               <p className="text-body-small text-on-surface-variant">{item.detail}</p>
+              {item.field && pendingPolicyChange(approvals, item.field) && (
+                <p className="flex items-start gap-1 text-body-small text-warning">
+                  <Icon name="hourglass_empty" size={16} className="mt-px" />
+                  {t('approvals.policy.pendingLine', {
+                    value: units(item.field, pendingPolicyChange(approvals, item.field)!.toValue ?? 0),
+                    id: pendingPolicyChange(approvals, item.field)!.id,
+                  })}
+                </p>
+              )}
             </div>
           </li>
         ))}
       </ul>
+      <Dialog open={proposing} onOpenChange={setProposing}>
+        {proposing && <PolicyChangeDialog onDone={() => setProposing(false)} />}
+      </Dialog>
     </section>
   );
 }

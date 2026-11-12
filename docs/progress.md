@@ -412,3 +412,14 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Prueba manual en el navegador: baja de Bruno Castro (cuenta deshabilitada, avisos y auditoría), cambio de puesto programado de Valentina Ruiz, marcado de accesos como sistemas y vista de celular. Correcciones: no se ofrece a quien ya tiene una baja o un cambio por venir; en celulares "Marcar como hecho" va debajo del texto; sin "·" suelto al cortar la línea.
 - INC-021 resuelta: las acciones de la sesión se fechan siempre en el día de la demo.
 - Tests de reglas, store y pantallas; A11 y S4 en Playwright.
+
+## Paso 21 · F14 Doble aprobación, 11/11/2026 (D-118)
+
+- Reglas en `src/lib/approvals.ts`: quién no puede decidir (quien pidió, la persona afectada o una solicitud ya decidida), rangos de las políticas, un cambio pendiente por política y orden de la bandeja.
+- S7 (`/it/approvals`): solicitudes con filtros (pendientes, resueltas, todas), detalle con qué cambia, quién lo pidió y por qué, y "Aprobar y aplicar" o "Rechazar" con nota obligatoria. Quien no puede decidir ve el motivo y solo "Cerrar".
+- S3: "Proponer un cambio" en Políticas y la línea del cambio pendiente en cada política.
+- Aprobar un cambio de rol lo aplica en la ficha (A10) y aprobar una política la cambia en toda la demo (bloqueo, contraseña o duración de la sesión). Avisos a sistemas y a quien pidió el cambio; auditoría de pedidos, decisiones, intentos denegados y cambios aplicados. Permisos `approval:decide` y `policy:propose`.
+- Datos semilla: Ramiro Sosa como segunda persona de sistemas y tres solicitudes (dos pendientes y una rechazada).
+- Prueba manual en el navegador: rechazo sin nota (error y foco), aprobación del rol de Julieta, propuesta de política con errores, cambio pendiente y bloqueo de la solicitud propia, vista de celular. Correcciones: el rol básico se lee "Acceso básico" como en Personas, las opciones de política empiezan con mayúscula y en celulares el estado va arriba del título.
+- Tests de reglas, store y pantallas; S7 en Playwright.
+- Pendiente: revelado masivo de datos sensibles por esta bandeja, con la exportación de F16.

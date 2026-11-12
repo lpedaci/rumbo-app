@@ -14,6 +14,8 @@ export function useNotificationText() {
       const values: Record<string, string | number> = { ...n.params };
       if (n.params.date) values.date = formatDate(n.params.date);
       if (n.params.count) values.count = Number(n.params.count);
+      // F14: the policy goes as its key and is read in the current language.
+      if (n.params.policy) values.policy = t(`approvals.policyNames.${n.params.policy}`);
       return {
         title: t(`notifications.types.${n.type}.title`),
         body: t(`notifications.types.${n.type}.body`, values),

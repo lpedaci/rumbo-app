@@ -3,6 +3,13 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { buildSeed, type DemoData } from '@/data/seed';
 import { DEMO_TODAY, demoNow } from '@/lib/dates';
 import type { IdentityCheck } from '@/lib/access';
+import {
+  applyPolicyChange,
+  decideBlock,
+  nextApprovalId,
+  pendingPolicyChange,
+  policyValueIssue,
+} from '@/lib/approvals';
 import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '@/lib/checkins';
 import { completeTask as completeTaskRule, tasksUnlockedBy } from '@/lib/journey';
 import { isEffective, joinerTasks, nextLifecycleId } from '@/lib/lifecycle';
@@ -11,6 +18,7 @@ import {
   onAccessRequest,
   onAccessRequestClosed,
   onCheckinCompleted,
+  onApprovalDecided,
   onApprovalRequested,
   onComment,
   onLifecycle,
@@ -36,6 +44,7 @@ import type {
   LifecycleEvent,
   Mood,
   Person,
+  PolicyField,
   PrivacyRequest,
   Role,
   SensitiveField,
@@ -51,7 +60,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 12;
+export const DATA_SCHEMA_VERSION = 13;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -142,6 +151,13 @@ interface DataActions {
    * second person (F14) and return the approval id; the rest apply at once.
    */
   changeRole: (personId: string, toRole: Role, reason: string, actorId: string) => string | undefined;
+  /** F14: IT proposes a new value for a security policy; it applies only when someone else approves it. */
+  requestPolicyChange: (field: PolicyField, toValue: number, reason: string, actorId: string) => string | undefined;
+  /**
+   * F14: a second person in IT approves or rejects a request. Never the one who asked nor the
+   * person it is about; an approved one is applied at once.
+   */
+  decideApproval: (id: string, decision: 'approved' | 'rejected', note: string, actorId: string) => boolean;
   /** F15: catalogs of areas and job titles. */
   saveArea: (area: Area, actorId: string) => void;
   deleteArea: (areaId: string, actorId: string) => void;
@@ -832,9 +848,8 @@ export const useDataStore = create<DataState>()(
         if (!person || person.role === toRole) return undefined;
         const at = demoNow();
         if (needsApproval(person.role, toRole)) {
-          const numbers = state.approvals.map((a) => Number(a.id.split('-').at(-1)) || 0);
           const approval: ApprovalRequest = {
-            id: `APR-${DEMO_TODAY.slice(0, 4)}-${String(Math.max(0, ...numbers) + 1).padStart(4, '0')}`,
+            id: nextApprovalId(state.approvals),
             action: 'role.change',
             targetId: personId,
             requestedBy: actorId,
@@ -862,6 +877,119 @@ export const useDataStore = create<DataState>()(
           ],
         }));
         return undefined;
+      },
+
+      requestPolicyChange: (field, toValue, reason, actorId) => {
+        const state = useDataStore.getState();
+        if (policyValueIssue(field, toValue, state.securityPolicy) || pendingPolicyChange(state.approvals, field)) {
+          return undefined;
+        }
+        const approval: ApprovalRequest = {
+          id: nextApprovalId(state.approvals),
+          action: 'policy.change',
+          targetId: field,
+          requestedBy: actorId,
+          reason: reason.trim(),
+          createdAt: demoNow(),
+          status: 'pending',
+          fromValue: state.securityPolicy[field],
+          toValue,
+        };
+        set((s) => ({
+          approvals: [...s.approvals, approval],
+          notifications: [...s.notifications, ...onApprovalRequested(approval, s.people, '')],
+          auditEvents: [
+            ...s.auditEvents,
+            {
+              id: nextAuditId(),
+              at: approval.createdAt,
+              actorId,
+              action: 'approval.request',
+              resource: field,
+              result: 'success',
+              detail: `${approval.fromValue} → ${toValue} · ${approval.id} · ${approval.reason}`,
+            },
+          ],
+        }));
+        return approval.id;
+      },
+
+      decideApproval: (id, decision, note, actorId) => {
+        const state = useDataStore.getState();
+        const approval = state.approvals.find((a) => a.id === id);
+        if (!approval) return false;
+        const block = decideBlock(approval, actorId);
+        if (block) {
+          // A blocked attempt is recorded too (segregation of duties).
+          if (block !== 'decided') {
+            set((s) => ({
+              auditEvents: [
+                ...s.auditEvents,
+                { id: nextAuditId(), at: demoNow(), actorId, action: `approval.${decision === 'approved' ? 'approve' : 'reject'}`, resource: id, result: 'denied', detail: block },
+              ],
+            }));
+          }
+          return false;
+        }
+        const at = demoNow();
+        const decided: ApprovalRequest = {
+          ...approval,
+          status: decision,
+          decidedBy: actorId,
+          decidedAt: at,
+          decisionNote: note.trim() || undefined,
+        };
+        const apply = decision === 'approved';
+        const target = state.people.find((p) => p.id === approval.targetId);
+        const field = approval.targetId as PolicyField;
+        set((s) => ({
+          approvals: s.approvals.map((a) => (a.id === id ? decided : a)),
+          people:
+            apply && approval.action === 'role.change' && approval.toRole
+              ? s.people.map((p) => (p.id === approval.targetId ? { ...p, role: approval.toRole! } : p))
+              : s.people,
+          securityPolicy:
+            apply && approval.action === 'policy.change' && approval.toValue !== undefined
+              ? applyPolicyChange(s.securityPolicy, field, approval.toValue)
+              : s.securityPolicy,
+          notifications: [...s.notifications, ...onApprovalDecided(decided, s.people)],
+          auditEvents: [
+            ...s.auditEvents,
+            {
+              id: nextAuditId(),
+              at,
+              actorId,
+              action: apply ? 'approval.approve' : 'approval.reject',
+              resource: id,
+              result: 'success',
+              detail: decided.decisionNote,
+            },
+            ...(apply
+              ? [
+                  approval.action === 'role.change'
+                    ? {
+                        id: nextAuditId(),
+                        at,
+                        actorId,
+                        action: 'person.role_change',
+                        resource: approval.targetId,
+                        result: 'success' as const,
+                        detail: `${approval.fromRole} → ${approval.toRole} · ${approval.id} · ${target?.name ?? ''}`,
+                      }
+                    : {
+                        id: nextAuditId(),
+                        at,
+                        actorId,
+                        action: 'policy.update',
+                        resource: field,
+                        result: 'success' as const,
+                        detail: `${approval.fromValue} → ${approval.toValue} · ${approval.id}`,
+                      },
+                ]
+              : []),
+          ],
+        }));
+        return true;
       },
 
       saveArea: (area, actorId) =>
