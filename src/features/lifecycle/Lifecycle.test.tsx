@@ -136,7 +136,15 @@ describe('A11 and S4 · Lifecycle screens', () => {
   it('registers a leaver from A11, with errors first and the access preview', async () => {
     renderAt('/admin/lifecycle');
     expect(await screen.findByRole('heading', { level: 1, name: es.lifecycle.title })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: es.lifecycle.registerLeaver }));
+    // One main action with its variants (D-134): the menu offers joiner, job change and leaver
+    fireEvent.pointerDown(screen.getByRole('button', { name: es.lifecycle.register }), { button: 0, ctrlKey: false });
+    const items = (await screen.findAllByRole('menuitem')).map((i) => i.textContent);
+    expect(items).toEqual([
+      expect.stringContaining(es.lifecycle.registerJoiner),
+      expect.stringContaining(es.lifecycle.types.mover),
+      expect.stringContaining(es.lifecycle.types.leaver),
+    ]);
+    fireEvent.click(screen.getByRole('menuitem', { name: new RegExp(`^${es.lifecycle.types.leaver}`) }));
     const dialog = await screen.findByRole('dialog');
     fireEvent.click(within(dialog).getByRole('button', { name: es.lifecycle.form.saveLeaver }));
     expect(await within(dialog).findByText(es.lifecycle.form.personRequired)).toBeInTheDocument();

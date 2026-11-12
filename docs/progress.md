@@ -488,3 +488,9 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - RNF-045 revisado flujo por flujo; G4 recibe el correo y el motivo desde el login (D-132).
 - G0: "Pantallas en esta versión" en 40; imagen para compartir con el hero actual; patrones de 2.2.1 numerados del 1 al 29 (D-133).
 - Tag y release v1.0.0 en GitHub.
+
+## Ajustes · Revisión de mobile, 12/11/2026 (D-134)
+
+- Gráfico de avance de A1 más liviano en celulares; foto al lado del nombre en A4 y J2; tarjeta de plantilla con el título junto al ícono.
+- A11 con una acción principal "Registrar un movimiento" y sus variantes en un menú; ancho máximo de los menús desplegables.
+- Fecha de envío y plazo de respuesta en líneas separadas en las solicitudes de privacidad.

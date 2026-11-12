@@ -1,9 +1,11 @@
 import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/Dialog';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
 import { FilterChip } from '@/components/ui/FilterChip';
 import { FilterMenu } from '@/components/ui/FilterMenu';
 import { ProgressBar } from '@/components/ui/ProgressBar';
@@ -17,6 +19,7 @@ import { demoNow, formatDate, formatDateTime } from '@/lib/dates';
 import { dateMask } from '@/lib/input-masks';
 import { isEffective, leaverTasks, moverTasks, nextLifecycleId, progressOfEvent } from '@/lib/lifecycle';
 import { DEMO_PERSON_IDS, itMinimumBlock } from '@/lib/people';
+import { can } from '@/lib/permissions';
 import { issuesByPath, lifecycleSchema, parseDisplayDate } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
@@ -34,6 +37,8 @@ const LEAVER_TYPES: LeaverType[] = ['resignation', 'dismissal', 'end_of_contract
  */
 export function LifecyclePage() {
   const { t } = useTranslation();
+  const user = useCurrentUser();
+  const navigate = useNavigate();
   const events = useDataStore((s) => s.lifecycle);
   const [filter, setFilter] = useState<Filter>('all');
   const [open, setOpen] = useState<LifecycleEvent | null>(null);
@@ -50,14 +55,40 @@ export function LifecyclePage() {
         title={t('lifecycle.title')}
         description={t('lifecycle.description')}
         actions={
-          <>
-            <Button variant="outlined" leadingIcon="swap_horiz" onClick={() => setForm('mover')}>
-              {t('lifecycle.registerMover')}
-            </Button>
-            <Button variant="outlined" leadingIcon="logout" onClick={() => setForm('leaver')}>
-              {t('lifecycle.registerLeaver')}
-            </Button>
-          </>
+          // One main action with its variants (2.1.3, D-134), as in the other listings: the joiner
+          // goes to A3, where a new hire is created with its journey and accesses
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button leadingIcon="add" trailingIcon="keyboard_arrow_down">
+                {t('lifecycle.register')}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent label={t('lifecycle.registerMenu')} align="start">
+              {user && can(user, 'hire:create') && (
+                <DropdownMenuItem
+                  icon="person_add"
+                  description={t('lifecycle.registerJoinerHelp')}
+                  onSelect={() => navigate('/admin/hires/new')}
+                >
+                  {t('lifecycle.registerJoiner')}
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem
+                icon="swap_horiz"
+                description={t('lifecycle.registerMoverHelp')}
+                onSelect={() => setForm('mover')}
+              >
+                {t('lifecycle.types.mover')}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                icon="logout"
+                description={t('lifecycle.registerLeaverHelp')}
+                onSelect={() => setForm('leaver')}
+              >
+                {t('lifecycle.types.leaver')}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         }
       />
 

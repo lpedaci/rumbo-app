@@ -7,6 +7,7 @@ import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YA
 import { Avatar } from '@/components/ui/Avatar';
 import { SegmentedButton } from '@/components/ui/SegmentedButton';
 import { formatPercent } from '@/lib/dates';
+import { useMediaQuery } from '@/lib/use-media-query';
 import type { CohortPoint, HireProgressPoint } from '@/lib/metrics';
 import type { Person } from '@/types/domain';
 import { ChartTooltip } from './ChartTooltip';
@@ -29,6 +30,8 @@ export function ProgressCard({
 }) {
   const { t, i18n } = useTranslation();
   const [view, setView] = useState<View>('cohort');
+  // On phones the chart is lighter (D-134): lower, three grid lines, softer fill, fewer month labels
+  const wide = useMediaQuery('(min-width: 48rem)');
   const locale = i18n.language === 'en' ? enUS : es;
   const monthLabel = (cohort: string) => format(parseISO(`${cohort}-01`), 'MMM yyyy', { locale });
   const data = cohorts.map((c) => ({ ...c, label: monthLabel(c.cohort), value: Math.round(c.averageProgress) }));
@@ -60,7 +63,7 @@ export function ProgressCard({
 
       {view === 'cohort' ? (
         <>
-          <div aria-hidden className="h-56 min-w-0 md:h-64">
+          <div aria-hidden className="h-44 min-w-0 md:h-64">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
                 <CartesianGrid vertical={false} stroke="var(--md-sys-color-outline-variant)" />
@@ -68,11 +71,13 @@ export function ProgressCard({
                   dataKey="label"
                   tickLine={false}
                   axisLine={false}
+                  interval="preserveStartEnd"
+                  minTickGap={wide ? 8 : 24}
                   tick={{ fontSize: 12, fill: 'var(--md-sys-color-on-surface-variant)' }}
                 />
                 <YAxis
                   domain={[0, 100]}
-                  ticks={[0, 25, 50, 75, 100]}
+                  ticks={wide ? [0, 25, 50, 75, 100] : [0, 50, 100]}
                   tickLine={false}
                   axisLine={false}
                   tick={{ fontSize: 12, fill: 'var(--md-sys-color-on-surface-variant)' }}
@@ -100,8 +105,8 @@ export function ProgressCard({
                   stroke="var(--chart-1)"
                   strokeWidth={2}
                   fill="var(--chart-1)"
-                  fillOpacity={0.12}
-                  dot={{ r: 3, fill: 'var(--chart-1)', strokeWidth: 0 }}
+                  fillOpacity={wide ? 0.12 : 0.08}
+                  dot={wide ? { r: 3, fill: 'var(--chart-1)', strokeWidth: 0 } : false}
                   activeDot={{ r: 5 }}
                   isAnimationActive={false}
                 />

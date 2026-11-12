@@ -86,8 +86,8 @@ export function HireDetailPage() {
         <PrintButton />
       </nav>
 
-      {/* The person is the subject of the record: photo next to the h1, facts as the standard chips (D-94) */}
-      <header className="mb-(--space-section) flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
+      {/* The person is the subject of the record: photo next to the h1 at every width, facts as the standard chips (D-94, D-134) */}
+      <header className="mb-(--space-section) flex min-w-0 items-center gap-4">
         {s.person && <Avatar name={s.person.name} role={s.person.role} size="xl" />}
         <div className="flex min-w-0 flex-col gap-2">
           <h1 className="text-headline-small text-balance text-on-surface">{s.person?.name}</h1>

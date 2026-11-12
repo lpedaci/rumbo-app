@@ -76,9 +76,10 @@ export function PrivacyRequestRow({
             </span>
           )}
           <span className={cn('text-body-medium text-on-surface', onOpen && 'line-clamp-2')}>{r.detail}</span>
-          <span className="text-body-small text-on-surface-variant tabular-nums">
-            {t('privacy.mine.sentOn', { date: formatDate(r.createdAt.slice(0, 10)) })} ·{' '}
-            {t('privacy.mine.due', { date: formatDate(r.dueAt) })}
+          {/* Two facts, one per line: when it arrived and until when it can be answered (D-134) */}
+          <span className="flex flex-col text-body-small text-on-surface-variant tabular-nums">
+            <span>{t('privacy.mine.sentOn', { date: formatDate(r.createdAt.slice(0, 10)) })}</span>
+            <span>{t('privacy.mine.due', { date: formatDate(r.dueAt) })}</span>
           </span>
           {showResponse && r.response && (
             <span className="mt-1 flex flex-col gap-1 rounded-md bg-surface-container p-3">

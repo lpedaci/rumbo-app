@@ -35,7 +35,7 @@ export function DropdownMenuContent({
         collisionPadding={8}
         aria-label={label}
         className={cn(
-          'z-50 max-h-[calc(100dvh-5rem)] min-w-60 overflow-y-auto rounded-md border border-outline-variant bg-surface-container-lowest p-1 shadow-elevation-1',
+          'z-50 max-h-[calc(100dvh-5rem)] max-w-[min(24rem,calc(100vw-1rem))] min-w-60 overflow-y-auto rounded-md border border-outline-variant bg-surface-container-lowest p-1 shadow-elevation-1',
           'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
           'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
           className,

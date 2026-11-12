@@ -238,18 +238,19 @@ export function TemplatesPage() {
                   key={template.id}
                   className="relative flex min-w-0 flex-col gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-5"
                 >
-                  <div className="flex items-start justify-between gap-2">
+                  {/* Icon and name on one line, the menu at the end (D-134) */}
+                  <div className="flex min-w-0 items-center gap-3">
                     <IconTile icon="route" />
-                    {/* Above the stretched link so it stays clickable */}
-                    <div className="relative z-10 -mt-1 -mr-2">{actionsMenu(template, usage)}</div>
-                  </div>
-                  <div className="flex min-w-0 flex-col gap-2">
                     <Link
                       to={`/admin/templates/${template.id}`}
-                      className="line-clamp-2 text-title-medium text-on-surface outline-none after:absolute after:inset-0 after:rounded-xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-primary"
+                      className="line-clamp-2 min-w-0 flex-1 text-title-medium text-on-surface outline-none after:absolute after:inset-0 after:rounded-xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-primary"
                     >
                       {template.name}
                     </Link>
+                    {/* Above the stretched link so it stays clickable */}
+                    <div className="relative z-10 -mr-2 shrink-0">{actionsMenu(template, usage)}</div>
+                  </div>
+                  <div className="flex min-w-0 flex-col gap-2">
                     <ul className="flex flex-wrap gap-1.5" aria-label={t('templates.list.tags')}>
                       {showJobTitle && (
                         <li className="rounded-full bg-surface-container-high px-2.5 py-0.5 text-label-medium text-on-surface">
