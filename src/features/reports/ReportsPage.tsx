@@ -37,7 +37,7 @@ function useReports() {
   const nameOf = (id?: string) => data.people.find((p) => p.id === id)?.name ?? '';
 
   const people = (unmasked: boolean) => ({
-    header: ['name', 'email', 'jobTitle', 'area', 'role', 'status', 'dni', 'cuil', 'bankAccount'].map((c) => t(`reports.columns.${c}`)),
+    header: ['name', 'email', 'jobTitle', 'area', 'role', 'status', 'dni', 'cuil'].map((c) => t(`reports.columns.${c}`)),
     rows: data.people.map((p) => {
       const hasHire = data.hires.some((h) => h.personId === p.id);
       return [
@@ -50,7 +50,6 @@ function useReports() {
         // Sensitive data hidden unless the export was approved by a second person (F14).
         p.dni ? (unmasked ? p.dni : mask(p.dni, 'dni')) : '',
         p.cuil ? (unmasked ? p.cuil : mask(p.cuil, 'cuil')) : '',
-        p.bankAccount ? (unmasked ? p.bankAccount : mask(p.bankAccount, 'bankAccount')) : '',
       ];
     }),
   });
@@ -105,7 +104,7 @@ function useReports() {
 
 /**
  * A13 · Reports and exports (F16): lists to CSV with sensitive data always hidden; an export with
- * DNI, CUIL and bank account unhidden only after a second person in IT approves it (F14), usable
+ * DNI and CUIL unhidden only after a second person in IT approves it (F14), usable
  * once; and where to print or save as PDF. Every download goes to the audit log.
  */
 export function ReportsPage() {

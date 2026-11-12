@@ -44,7 +44,6 @@ describe('privacy rules (F10)', () => {
   it('masks identifiers and keeps only the last digits', () => {
     expect(mask('39.562.914', 'dni')).toBe('***.***.2914');
     expect(mask('23-39562914-4', 'cuil')).toBe('**-****914-4');
-    expect(mask('0720143209705552469134', 'bankAccount')).toBe('•••• •••• •••• 9134');
   });
 
   it('asks the demo hire for the notice and not the other demo people', () => {

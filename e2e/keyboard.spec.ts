@@ -92,12 +92,14 @@ test("completes one of Sofía's tasks from Mi recorrido, only with the keyboard"
   // row link itself needs Option+Tab or the "highlight each item" setting)
   await tabTo(page, new RegExp(`^Marcar como hecha: ${task.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`));
   await page.keyboard.press('Space');
+  // Read what the app saved: an imported store can be another module instance than the app's
+  // after the dev server updates a module (INC-022)
   await expect
     .poll(() =>
-      page.evaluate(async (id) => {
-        const { useDataStore } = await import('/src/store/data-store.ts');
-        const hire = useDataStore.getState().hires.find((h: { id: string }) => h.id === 'h-sofia');
-        return hire.tasks.find((t: { id: string }) => t.id === id)?.status;
+      page.evaluate((id) => {
+        const saved = JSON.parse(window.localStorage.getItem('rumbo-data') ?? '{}');
+        const hire = saved.state?.hires?.find((h: { id: string }) => h.id === 'h-sofia');
+        return hire?.tasks.find((t: { id: string }) => t.id === id)?.status;
       }, task.id),
     )
     .toBe('done');

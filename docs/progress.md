@@ -494,3 +494,11 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Gráfico de avance de A1 más liviano en celulares; foto al lado del nombre en A4 y J2; tarjeta de plantilla con el título junto al ícono.
 - A11 con una acción principal "Registrar un movimiento" y sus variantes en un menú; ancho máximo de los menús desplegables.
 - Fecha de envío y plazo de respuesta en líneas separadas en las solicitudes de privacidad.
+
+## Ajustes · Sin cuenta bancaria, 12/11/2026 (D-135)
+
+- La plataforma deja de guardar el CBU: fuera de A4, A10, G10, A13, los datos semilla y el modelo. El enmascarado sigue con DNI y CUIL. Esquema de datos 18.
+
+## Ajustes · Flujos por pasos de tamaño fijo, 12/11/2026 (D-136)
+
+- G8 y la bienvenida guiada miden lo que su paso más largo; "Anterior" del primer paso conserva su lugar.

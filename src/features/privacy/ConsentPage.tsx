@@ -50,7 +50,6 @@ export function ConsentPage() {
     journeyYears: policy.retentionJourneyYears,
     selfReviewYears: policy.retentionSelfReviewYears,
   }) as NoticeStep[];
-  const step = steps[index]!;
   const last = index === steps.length - 1;
   const go = (delta: number) => {
     setDirection(delta);
@@ -66,6 +65,64 @@ export function ConsentPage() {
     useDataStore.getState().acceptPrivacyNotice(user.personId, policy.privacyNoticeVersion);
     toast.success(t('privacy.consent.accepted'));
     navigate(returnTo && returnTo !== '/consent' ? returnTo : homePath(user), { replace: true });
+  };
+
+  /** One step; `live` is false for the hidden copies that only reserve the height. */
+  const renderStep = (i: number, live: boolean) => {
+    const item = steps[i]!;
+    const isLast = i === steps.length - 1;
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-3">
+          <IconTile icon={item.icon} />
+          <h2 id={live ? 'consent-step-title' : undefined} className="text-title-large text-on-surface">
+            {item.title}
+          </h2>
+        </div>
+        <ul className="flex flex-col gap-3">
+          {item.items.map((text) => (
+            <li key={text} className="flex items-start gap-2 text-body-large text-on-surface">
+              <Icon name="check_circle" size={20} className="mt-0.5 shrink-0 text-primary" />
+              {text}
+            </li>
+          ))}
+        </ul>
+        {isLast && (
+          <div className="mt-2 flex flex-col gap-2 border-t border-outline-variant pt-4">
+            {live ? (
+              <>
+                <Checkbox
+                  id="consent-check"
+                  label={t('privacy.consent.check')}
+                  checked={checked}
+                  aria-invalid={tried && !checked ? true : undefined}
+                  onChange={(event) => setChecked(event.target.checked)}
+                />
+                {tried && !checked && (
+                  <p role="alert" className="flex items-center gap-1.5 text-body-small text-error">
+                    <Icon name="error" size={16} />
+                    {t('privacy.consent.checkRequired')}
+                  </p>
+                )}
+              </>
+            ) : (
+              // Same layout as the checkbox row and its error, without a control: the error
+              // line's space is reserved, so showing it does not move the buttons
+              <>
+                <div className="flex min-h-12 items-start gap-3 py-2 md:min-h-0 md:py-1">
+                  <span className="mt-0.5 size-5 shrink-0" />
+                  <span className="text-body-medium">{t('privacy.consent.check')}</span>
+                </div>
+                <p className="flex items-center gap-1.5 text-body-small">
+                  <span className="size-4 shrink-0" />
+                  {t('privacy.consent.checkRequired')}
+                </p>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    );
   };
 
   const slide = reduce
@@ -105,55 +162,40 @@ export function ConsentPage() {
           </p>
         </div>
 
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={index}
-            {...slide}
-            transition={{ duration: duration.long, ease: easing.emphasizedDecelerate }}
-            className="flex flex-col gap-4"
-          >
-            <div className="flex items-center gap-3">
-              <IconTile icon={step.icon} />
-              <h2 id="consent-step-title" className="text-title-large text-on-surface">
-                {step.title}
-              </h2>
+        {/* Fixed size (D-136): every step is laid out, hidden, in the same grid cell, so the card
+            takes the height of the longest one and the buttons never move between steps. The
+            space for the checkbox and its error is reserved too. */}
+        <div className="grid min-w-0">
+          {steps.map((_, i) => (
+            <div key={i} aria-hidden className="invisible col-start-1 row-start-1">
+              {renderStep(i, false)}
             </div>
-            <ul className="flex flex-col gap-3">
-              {step.items.map((item) => (
-                <li key={item} className="flex items-start gap-2 text-body-large text-on-surface">
-                  <Icon name="check_circle" size={20} className="mt-0.5 shrink-0 text-primary" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </AnimatePresence>
-
-        {last && (
-          <div className="flex flex-col gap-2 border-t border-outline-variant pt-4">
-            <Checkbox
-              id="consent-check"
-              label={t('privacy.consent.check')}
-              checked={checked}
-              aria-invalid={tried && !checked ? true : undefined}
-              onChange={(event) => setChecked(event.target.checked)}
-            />
-            {tried && !checked && (
-              <p role="alert" className="flex items-center gap-1.5 text-body-small text-error">
-                <Icon name="error" size={16} />
-                {t('privacy.consent.checkRequired')}
-              </p>
-            )}
-          </div>
-        )}
+          ))}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={index}
+              {...slide}
+              transition={{ duration: duration.long, ease: easing.emphasizedDecelerate }}
+              className="col-start-1 row-start-1 min-w-0"
+            >
+              {renderStep(index, true)}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-          {/* Hidden on the first step: nothing to go back to (2.2.1). */}
-          {index > 0 && (
-            <Button variant="outlined" onClick={() => go(-1)} fullWidth className="sm:w-auto">
-              {t('privacy.consent.previous')}
-            </Button>
-          )}
+          {/* Hidden on the first step: nothing to go back to (2.2.1). It keeps its place, so the
+              card does not change size on phones, where the buttons stack (D-136). */}
+          <Button
+            variant="outlined"
+            onClick={() => go(-1)}
+            fullWidth
+            className={cn('sm:w-auto', index === 0 && 'invisible')}
+            aria-hidden={index === 0 ? true : undefined}
+            tabIndex={index === 0 ? -1 : undefined}
+          >
+            {t('privacy.consent.previous')}
+          </Button>
           {last ? (
             <Button leadingIcon="check" onClick={accept} fullWidth className="sm:w-auto">
               {t('privacy.consent.accept')}

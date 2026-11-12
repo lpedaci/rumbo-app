@@ -69,7 +69,7 @@ Leyenda: ✅ todo · 👥 solo su equipo · 🙋 solo lo propio · — no permit
 | `comment:write` | Comentar en las tareas de los recorridos que ve (N2, J2, A4) | ✅ | 👥 | 🙋 | — |
 | `privacy:own` | Ver "Mi privacidad" y pedir acceso, rectificación o supresión de sus datos (G10) | 🙋 | 🙋 | 🙋 | 🙋 |
 | `privacy_request:manage` | Atender las solicitudes sobre datos personales (A12) | ✅ | — | — | — |
-| `pii:reveal` | Revelar DNI, CUIL o datos bancarios con un motivo, que queda en la auditoría | ✅ | — | — | — |
+| `pii:reveal` | Revelar el DNI o el CUIL con un motivo, que queda en la auditoría | ✅ | — | — | — |
 | `session:manage` | Ver las sesiones activas de la organización y forzar su cierre (S3) | — | — | — | ✅ |
 | `person:manage` | Ver y editar personas, y pedir cambios de rol (A9, A10) | ✅ | — | — | — |
 | `catalog:edit` | Editar los catálogos de áreas y puestos (A9) | ✅ | — | — | — |
@@ -98,7 +98,7 @@ Las secciones (`workspace:*`) definen a qué rutas entra cada rol: `/admin`, `/m
 | `comment:create` | Comentar en tareas del recorrido | ✅ | 👥 | 🙋 | — |
 | `privacy_request:create` | Enviar una solicitud sobre datos personales | 🙋 | 🙋 | 🙋 | 🙋 |
 | `privacy_request:manage` | Gestionar la bandeja de solicitudes de privacidad | ✅ | — | — | — |
-| `pii:reveal` | Revelar DNI, CUIL o datos bancarios (con motivo) | ✅ | — | — | — |
+| `pii:reveal` | Revelar el DNI o el CUIL (con motivo) | ✅ | — | — | — |
 | `session:view_all` | Ver sesiones activas de toda la organización | — | — | — | ✅ |
 | `session:force_logout` | Forzar el cierre de sesiones de una cuenta | — | — | — | ✅ |
 | `people:manage` | Alta y edición de personas, áreas y puestos | ✅ | — | — | — |

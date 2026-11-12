@@ -8,7 +8,6 @@
     "email": "carla@nortia.demo",
     "dni": "38.100.000",
     "cuil": "23-38100000-0",
-    "bankAccount": "0720123456705550000000",
     "areaId": "a-personas",
     "jobTitleId": "jt-people-partner",
     "managerId": "p-valeria"
@@ -22,7 +21,6 @@
     "email": "valeria.ortiz@nortia.demo",
     "dni": "28.734.519",
     "cuil": "27-28734519-3",
-    "bankAccount": "0720153086205553724418",
     "areaId": "a-personas",
     "jobTitleId": "jt-people-lead"
   },
@@ -35,7 +33,6 @@
     "email": "martin@nortia.demo",
     "dni": "38.831.457",
     "cuil": "23-38831457-7",
-    "bankAccount": "0720133333205551234567",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-dev-lead"
   },
@@ -49,7 +46,6 @@
     "managerId": "p-martin",
     "dni": "39.562.914",
     "cuil": "23-39562914-4",
-    "bankAccount": "0720143209705552469134",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-data"
   },
@@ -62,7 +58,6 @@
     "email": "diego@nortia.demo",
     "dni": "40.294.371",
     "cuil": "23-40294371-1",
-    "bankAccount": "0720153086205553703701",
     "areaId": "a-sistemas",
     "jobTitleId": "jt-helpdesk"
   },
@@ -75,7 +70,6 @@
     "email": "ramiro@nortia.demo",
     "dni": "36.518.204",
     "cuil": "20-36518204-7",
-    "bankAccount": "0720153086205553719904",
     "areaId": "a-sistemas",
     "jobTitleId": "jt-helpdesk"
   },
@@ -88,7 +82,6 @@
     "email": "lucia.fernandez@nortia.demo",
     "dni": "41.025.828",
     "cuil": "23-41025828-8",
-    "bankAccount": "0720162962705554938268",
     "areaId": "a-comercial",
     "jobTitleId": "jt-sales-lead"
   },
@@ -102,7 +95,6 @@
     "managerId": "p-martin",
     "dni": "41.757.285",
     "cuil": "23-41757285-5",
-    "bankAccount": "0720172839205556172835",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-data"
   },
@@ -116,7 +108,6 @@
     "managerId": "p-martin",
     "dni": "42.488.742",
     "cuil": "23-42488742-2",
-    "bankAccount": "0720182715705557407402",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-frontend"
   },
@@ -130,7 +121,6 @@
     "managerId": "p-lucia",
     "dni": "43.220.199",
     "cuil": "23-43220199-9",
-    "bankAccount": "0720192592205558641969",
     "areaId": "a-comercial",
     "jobTitleId": "jt-key-accounts"
   },
@@ -144,7 +134,6 @@
     "managerId": "p-martin",
     "dni": "43.951.656",
     "cuil": "23-43951656-6",
-    "bankAccount": "0720202468705559876536",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-data"
   },
@@ -158,7 +147,6 @@
     "managerId": "p-martin",
     "dni": "44.683.113",
     "cuil": "23-44683113-3",
-    "bankAccount": "0720212345205561111103",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-frontend"
   },
@@ -172,7 +160,6 @@
     "managerId": "p-martin",
     "dni": "45.414.570",
     "cuil": "23-45414570-0",
-    "bankAccount": "0720222221705562345670",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-frontend"
   },
@@ -186,7 +173,6 @@
     "managerId": "p-martin",
     "dni": "46.146.027",
     "cuil": "23-46146027-7",
-    "bankAccount": "0720232098205563580237",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-frontend"
   },
@@ -200,7 +186,6 @@
     "managerId": "p-martin",
     "dni": "46.877.484",
     "cuil": "23-46877484-4",
-    "bankAccount": "0720241974705564814804",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-data"
   },
@@ -214,7 +199,6 @@
     "managerId": "p-martin",
     "dni": "38.608.941",
     "cuil": "23-38608941-1",
-    "bankAccount": "0720251851205566049371",
     "areaId": "a-tecnologia",
     "jobTitleId": "jt-frontend"
   },
@@ -228,7 +212,6 @@
     "managerId": "p-lucia",
     "dni": "39.340.398",
     "cuil": "23-39340398-8",
-    "bankAccount": "0720261727705567283938",
     "areaId": "a-comercial",
     "jobTitleId": "jt-sales"
   },
@@ -242,7 +225,6 @@
     "managerId": "p-lucia",
     "dni": "40.071.855",
     "cuil": "23-40071855-5",
-    "bankAccount": "0720271604205568518505",
     "areaId": "a-comercial",
     "jobTitleId": "jt-sales"
   },
@@ -256,7 +238,6 @@
     "managerId": "p-lucia",
     "dni": "40.803.312",
     "cuil": "23-40803312-2",
-    "bankAccount": "0720281480705569753072",
     "areaId": "a-comercial",
     "jobTitleId": "jt-sales"
   },
@@ -270,7 +251,6 @@
     "managerId": "p-lucia",
     "dni": "41.534.769",
     "cuil": "23-41534769-9",
-    "bankAccount": "0720291357205570987639",
     "areaId": "a-comercial",
     "jobTitleId": "jt-sales"
   }

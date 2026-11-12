@@ -82,7 +82,7 @@ export function MyPrivacyPage() {
     ...(manager ? [{ label: t('privacy.mine.fields.manager'), value: manager.name }] : []),
     ...(person.employeeId ? [{ label: t('privacy.mine.fields.employeeId'), value: person.employeeId }] : []),
     ...(person.mobile ? [{ label: t('privacy.mine.fields.mobile'), value: maskPhone(person.mobile) }] : []),
-    ...(['dni', 'cuil', 'bankAccount'] as SensitiveField[])
+    ...(['dni', 'cuil'] as SensitiveField[])
       .filter((f) => person[f])
       .map((f) => ({
         label: t(`privacy.mine.fields.${f}`),

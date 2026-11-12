@@ -198,33 +198,49 @@ function WelcomeDialog({ personId, steps, finish }: { personId: string; steps: S
             <p className="sr-only" aria-live="polite">
               {t('welcome.stepOf', { current: index + 1, total: steps.length })}
             </p>
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: duration.medium }}
-                className="flex flex-col gap-2"
-              >
-                <DialogPrimitive.Title className="text-title-large text-on-surface">{step.title}</DialogPrimitive.Title>
-                <DialogPrimitive.Description id="welcome-body" className="text-body-medium text-on-surface-variant">
-                  {step.body}
-                </DialogPrimitive.Description>
-              </motion.div>
-            </AnimatePresence>
+            {/* Fixed size (D-136): every step's text is laid out, hidden, in the same grid cell, so
+                the dialog takes the height of the longest one and the buttons never move. */}
+            <div className="grid w-full min-w-0">
+              {steps.map((s, i) => (
+                <div key={i} aria-hidden className="invisible col-start-1 row-start-1 flex flex-col gap-2">
+                  <p className="text-title-large">{s.title}</p>
+                  <p className="text-body-medium">{s.body}</p>
+                </div>
+              ))}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: duration.medium }}
+                  className="col-start-1 row-start-1 flex flex-col gap-2"
+                >
+                  <DialogPrimitive.Title className="text-title-large text-on-surface">{step.title}</DialogPrimitive.Title>
+                  <DialogPrimitive.Description id="welcome-body" className="text-body-medium text-on-surface-variant">
+                    {step.body}
+                  </DialogPrimitive.Description>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
             <div className="flex w-full flex-col-reverse gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
               <Button variant="text" onClick={close} fullWidth className="sm:w-auto">
                 {t('welcome.skip')}
               </Button>
               <div className="flex flex-col-reverse gap-3 sm:flex-row">
-                {/* Hidden on the first step (2.2.1): nothing to go back to. */}
-                {index > 0 && (
-                  <Button variant="outlined" onClick={() => go(-1)} fullWidth className="sm:w-auto">
-                    {t('welcome.previous')}
-                  </Button>
-                )}
+                {/* Hidden on the first step (2.2.1): nothing to go back to. It keeps its place, so
+                    the dialog does not change size on phones, where the buttons stack (D-136). */}
+                <Button
+                  variant="outlined"
+                  onClick={() => go(-1)}
+                  fullWidth
+                  className={cn('sm:w-auto', index === 0 && 'invisible')}
+                  aria-hidden={index === 0 ? true : undefined}
+                  tabIndex={index === 0 ? -1 : undefined}
+                >
+                  {t('welcome.previous')}
+                </Button>
                 <Button onClick={() => (last ? close() : go(1))} fullWidth className="sm:w-auto">
                   {last ? finish : t('welcome.next')}
                 </Button>

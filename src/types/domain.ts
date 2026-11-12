@@ -29,8 +29,6 @@ export interface Person {
   /** F10: sensitive identifiers, fictitious and always shown masked unless revealed with a reason. */
   dni?: string;
   cuil?: string;
-  /** Bank account (CBU) for the payroll, 22 digits. */
-  bankAccount?: string;
   /** F15: catalog entries. `area` and `jobTitle` keep the display text (the job title can be personal). */
   areaId?: string;
   jobTitleId?: string;
@@ -317,7 +315,7 @@ export interface PrivacyRequest {
   answeredAt?: string;
 }
 
-export type SensitiveField = 'dni' | 'cuil' | 'bankAccount';
+export type SensitiveField = 'dni' | 'cuil';
 
 // ---------- Phase B: F11 sessions and sign-in alerts ----------
 
@@ -367,7 +365,7 @@ export interface JobTitle {
 
 /** F14: security policies that change only with a second person's approval. */
 export type PolicyField = 'sessionIdleMinutes' | 'lockoutAttempts' | 'passwordMinLength';
-/** `pii.export`: an export of people with DNI, CUIL and bank account unhidden (F14, F16). */
+/** `pii.export`: an export of people with DNI and CUIL unhidden (F14, F16). */
 export type ApprovalAction = 'role.change' | 'policy.change' | 'pii.export';
 export type ApprovalStatus = 'pending' | 'approved' | 'rejected';
 

@@ -171,7 +171,7 @@ La primera versión quedó demasiado básica y con aspecto de plantilla genéric
 6. **Personas con color:** cada rol tiene su color (`role-hr`, `role-manager`, `role-hire`, `role-it`, ver 2.1.1). Con foto, un anillo de 2 px del color del rol; sin foto, iniciales sobre el contenedor del rol. Igual en todo el producto (D-69).
 7. **Tablas aireadas:** avatar + nombre + dato secundario en la primera columna, estados en píldoras de color con ícono, filas con hover.
 8. **Progreso visible:** barras de progreso gruesas y redondeadas, checklist con íconos de estado, como en la tarjeta "You're almost there!".
-9. **Bienvenida guiada como la del video:** al primer ingreso de cada rol, un modal de 3 o 4 pasos con zona ilustrativa hecha con **componentes reales de Rumbo en miniatura** (por ejemplo, para Sofía: su tarjeta de recorrido, una tarea que se tilda y su check-in), puntos de progreso, "Anterior" / "Continuar" y un cierre ("Empezar mi recorrido"). Se puede saltar y volver a ver desde el menú (F16). En "Anterior" del primer paso: oculto o deshabilitado con texto que no dependa solo del color. Respeta reducir animaciones.
+9. **Bienvenida guiada como la del video:** al primer ingreso de cada rol, un modal de 3 o 4 pasos con zona ilustrativa hecha con **componentes reales de Rumbo en miniatura** (por ejemplo, para Sofía: su tarjeta de recorrido, una tarea que se tilda y su check-in), puntos de progreso, "Anterior" / "Continuar" y un cierre ("Empezar mi recorrido"). Se puede saltar y volver a ver desde el menú (F16). En "Anterior" del primer paso: oculto o deshabilitado con texto que no dependa solo del color. **Tamaño fijo** (D-136): todos los flujos por pasos (bienvenida, aviso de privacidad) miden lo que su paso más largo, y "Anterior" oculto conserva su lugar, para que la tarjeta o el modal no cambien de tamaño ni muevan los botones al avanzar. Respeta reducir animaciones.
 10. **Línea de tiempo del recorrido** (reemplaza la barra segmentada en N1, D-61): un tramo por etapa relleno según sus tareas hechas y el marcador "Hoy · día N" en ciruela; bajo cada tramo, nombre, "N de M" y estado con ícono y texto. Arriba, una frase con la conclusión ("Vas al día" o "Tienes N tareas vencidas"); debajo, "Lo próximo". La barra segmentada de `original-cf59fe35` queda para vistas previas. La tabla equivalente queda solo para lectores de pantalla, sin botón visible (D-83).
 11. **Catálogo de tarjetas para plantillas:** como `7fa40cfb`, A5 se muestra por defecto como **grilla de tarjetas** (nombre, puesto y área en chips, cantidad de tareas con ícono, ingresos que la usan, estado borrador o publicada, botón "Ver plantilla"), con la primera tarjeta "Crear plantilla" con borde punteado, y un selector para cambiar a vista de tabla.
 12. **Barra superior** (D-60, D-64, D-69): barra blanca flotante con borde y radio `xl`, sobre el fondo gris: logo en una línea ("Rumbo | Nortia S.A."), "Ver como", divisores, Ayuda y Notificaciones sobre `surface-container`, y la persona con foto, nombre y correo desde 1024 px (solo la foto en pantallas menores). En mobile, la barra superior y el menú inferior muestran solo íconos, sin el logo (está en el panel lateral, D-79), y el botón de menú abre ese panel.
@@ -602,7 +602,7 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
 - **Aviso de privacidad y consentimiento** la primera vez que cualquier usuario entra: qué datos se usan, para qué, quién los ve y por cuánto tiempo. Sin aceptar no se puede continuar; la aceptación queda registrada con fecha y versión del aviso.
 - Pantalla **"Mi privacidad"**: ver el aviso vigente, la fecha de aceptación y los datos personales propios que tiene la plataforma.
 - **Solicitudes sobre datos personales** (acceso, rectificación o supresión, según la Ley 25.326): el usuario la envía desde "Mi privacidad"; RRHH la gestiona en una bandeja con plazo de respuesta visible, estados y respuesta al usuario. Plazos: acceso en 10 días corridos (art. 14); rectificación y supresión en 5 días hábiles, sin sábados ni domingos (art. 16). Viven en una sola constante de configuración (`PRIVACY_DEADLINES`, `src/app/legal.ts`) por si una reforma los cambia (D-113).
-- **Enmascarado de datos sensibles:** DNI, CUIL y datos bancarios se muestran ocultos (`***.***.1234`). Revelarlos requiere el permiso `pii:reveal`, pide un motivo y queda en la auditoría.
+- **Enmascarado de datos sensibles:** el DNI y el CUIL se muestran ocultos (`***.***.1234`). La plataforma no guarda datos bancarios: los pide liquidación de sueldos y ningún flujo del recorrido los necesita (minimización, D-135). Revelarlos requiere el permiso `pii:reveal`, pide un motivo y queda en la auditoría.
 - **Retención:** política visible en la pantalla de políticas (ej.: datos del recorrido 2 años después de finalizado, autoevaluaciones 1 año). En la demo, los ingresos finalizados muestran la fecha programada de anonimización.
 
 ### F11. Sesiones, dispositivos y alertas de inicio de sesión
@@ -868,7 +868,7 @@ interface UserPreferences {
   notifications: Record<string, ('app' | 'email')[]>; reduceMotion: boolean; highContrast: boolean;
 }
 // Person suma: status ('active' | 'locked' | 'offboarded'), dni y cuil (ficticios, siempre enmascarados), areaId, jobTitleId, managerId.
-// Implementado (D-113): Person.dni, cuil y bankAccount (CBU), ficticios; SecurityPolicy suma retentionJourneyYears, retentionSelfReviewYears y privacyNoticeVersion.
+// Implementado (D-113, D-135): Person.dni y cuil, ficticios (sin cuenta bancaria: la pide liquidación de sueldos); SecurityPolicy suma retentionJourneyYears, retentionSelfReviewYears y privacyNoticeVersion.
 ```
 
 ### Reglas de negocio
@@ -1022,7 +1022,7 @@ Después de cada paso, verificar que el build compila, que los tests pasan y que
 - [ ] Publicar una versión nueva de una plantilla no cambia los recorridos en curso, y se pueden comparar y restaurar versiones.
 - [ ] Los comentarios con `@` notifican a la persona mencionada.
 - [ ] Ningún usuario usa la plataforma sin haber aceptado el aviso de privacidad, y las solicitudes de datos personales tienen plazo y estado.
-- [ ] DNI, CUIL y datos bancarios aparecen siempre enmascarados, también en exportaciones; revelarlos pide motivo y queda auditado.
+- [ ] El DNI y el CUIL aparecen siempre enmascarados, también en exportaciones; revelarlos pide motivo y queda auditado.
 - [ ] Se pueden ver y cerrar sesiones activas, y "No fui yo" genera una solicitud urgente para sistemas.
 - [ ] Un alta, un cambio de puesto y una baja generan sus tareas de accesos, y la baja deshabilita la cuenta en la fecha efectiva.
 - [ ] Una campaña de revisión de accesos se puede crear, completar por los jefes y cerrar con resumen.

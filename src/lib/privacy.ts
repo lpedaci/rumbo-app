@@ -48,7 +48,6 @@ export function daysLeft(dueAt: string, today = DEMO_TODAY): number {
 /** Masked identifier: everything hidden except the last 4 characters, keeping separators. */
 export function mask(value: string, field: SensitiveField): string {
   const last = value.replace(/\D/g, '').slice(-4);
-  if (field === 'bankAccount') return `•••• •••• •••• ${last}`;
   // DNI 39.562.914 → ***.***.2914 ; CUIL 23-39562914-4 → **-*****914-4
   if (field === 'dni') return `***.***.${last}`;
   return `**-****${value.replace(/\D/g, '').slice(-4, -1)}-${value.slice(-1)}`;

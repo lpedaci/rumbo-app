@@ -70,7 +70,7 @@ upgrade-insecure-requests
 | Auditoría de dependencias | `npm audit --audit-level=high` en CI: el deploy falla con vulnerabilidades altas o críticas |
 | Permisos del workflow | `contents: read` por defecto; `pages: write` e `id-token: write` solo en el job de deploy |
 | Almacenamiento local | `localStorage` guarda solo datos de demo, la sesión simulada y preferencias de interfaz; nunca algo que simule una contraseña ni un token. Si los datos guardados no tienen la forma esperada, se reemplazan por los datos semilla |
-| Datos enmascarados | El celular, el DNI, el CUIL y la cuenta bancaria (ficticios) se muestran enmascarados; RRHH puede mostrar uno escribiendo un motivo, que queda en la auditoría como `pii.reveal` (F10, D-113) |
+| Datos enmascarados | El celular, el DNI y el CUIL (ficticios) se muestran enmascarados; RRHH puede mostrar uno escribiendo un motivo, que queda en la auditoría como `pii.reveal` (F10, D-113) |
 | Sesiones y alertas | "Mi seguridad" lista los dispositivos con sesión abierta y permite cerrarlos; un inicio desde un dispositivo o lugar nuevo genera "¿Fuiste tú?", y "No fui yo" cierra esa sesión y abre una solicitud urgente para sistemas. Sistemas ve las sesiones de la organización y puede forzar su cierre (F11, D-114). Todo simulado: no hay tokens detrás |
 | Aviso de privacidad | Nadie entra a la app sin aceptar la versión vigente del aviso (G8); la aceptación queda con fecha, versión y evento `privacy.consent` (F10, D-113) |
 
@@ -122,14 +122,14 @@ sequenceDiagram
 - **Seguridad por fila** (por ejemplo, *row-level security* de PostgreSQL): cada empresa cliente ve solo sus datos y cada jefe, solo a su equipo. La autoevaluación la ven solo el jefe directo y RRHH.
 - Acciones sensibles con **doble aprobación** (F14): quien pide un cambio de rol de administrador o de una política de seguridad no puede aprobarlo, ni tampoco la persona a la que afecta. En la demo (D-118) la regla vive en `src/lib/approvals.ts`, los intentos bloqueados quedan en la auditoría como denegados y el cambio se aplica solo al aprobarse. En producción, la misma verificación se hace en el servidor y los cambios de política se aplican en el proveedor de identidad.
 - **Separación de funciones:** en producción, la doble aprobación exige al menos **dos personas con el rol de sistemas**; con una sola, nadie podría aprobar lo que ella pide y el control quedaría anulado. La demo lo resuelve con una segunda persona de datos (Ramiro Sosa, sin cuenta de demo) y un atajo rotulado "Resolver como Ramiro (demo)" que la auditoría marca como decisión simulada; ese atajo no existe en producción.
-- **Exportaciones** (F16, D-128): los listados salen siempre con DNI, CUIL y cuenta bancaria ocultos. Una exportación con esos datos sin ocultar es un pedido de doble aprobación (`pii.export`): quien lo pide no lo aprueba, solo esa persona lo descarga y una sola vez. Cada descarga queda en la auditoría. En producción, el archivo se genera en el servidor, con vencimiento corto y marca de agua con quién lo descargó.
+- **Exportaciones** (F16, D-128): los listados salen siempre con DNI y CUIL ocultos. Una exportación con esos datos sin ocultar es un pedido de doble aprobación (`pii.export`): quien lo pide no lo aprueba, solo esa persona lo descarga y una sola vez. Cada descarga queda en la auditoría. En producción, el archivo se genera en el servidor, con vencimiento corto y marca de agua con quién lo descargó.
 - **Control de separación de funciones: mínimo dos personas de sistemas** (D-121). Ningún cambio puede dejar a sistemas con menos de dos personas activas: ni quitar el rol (cambio de rol o revocación en una campaña) ni dar de baja. Se verifica al pedir el cambio y otra vez al aprobarlo, porque otra solicitud pudo aprobarse entre medio; si no se cumple, el cambio no se aplica y el intento queda en la auditoría con resultado `denied`. En producción, el mismo control vive en el servidor, dentro de la transacción que aplica el cambio, y se complementa con una cuenta de emergencia (*break-glass*) guardada fuera de la operación diaria.
 
 ### 3.4 Datos
 
 - Cifrado en tránsito (TLS 1.2 o superior) y en reposo (claves gestionadas por un servicio de KMS).
 - **Multiempresa con aislamiento lógico** por `tenant_id` en todas las tablas y en las políticas por fila; copias de seguridad cifradas y probadas.
-- **Minimización:** solo los datos necesarios para el recorrido; los datos sensibles (DNI, CUIL, datos bancarios) enmascarados y revelados solo con permiso, motivo y registro en la auditoría (F10).
+- **Minimización:** solo los datos necesarios para el recorrido. La plataforma no guarda la cuenta bancaria: la usa liquidación de sueldos y ninguna tarea del onboarding la necesita (D-135). Los datos sensibles que sí guarda (DNI y CUIL, para la identificación y la registración laboral) van enmascarados y revelados solo con permiso, motivo y registro en la auditoría (F10).
 - **Retención:** datos del recorrido 2 años después de finalizado y autoevaluaciones 1 año; luego se anonimizan.
 
 ### 3.5 Auditoría

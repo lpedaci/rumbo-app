@@ -225,7 +225,7 @@ export function HireDetailPage() {
                 {s.person?.mobile && <DetailRow label={t('hires.detail.mobile')} value={maskPhone(s.person.mobile)} />}
                 {/* F10: identifiers always masked; HR can show one with a reason (audited) */}
                 {s.person &&
-                  (['dni', 'cuil', 'bankAccount'] as const)
+                  (['dni', 'cuil'] as const)
                     .filter((f) => s.person![f])
                     .map((f) => (
                       <div key={f} className="flex min-w-0 flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-outline-variant py-3 last:border-b-0">

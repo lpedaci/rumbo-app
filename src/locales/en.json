@@ -2513,7 +2513,7 @@
           "title": "Role change to approve",
           "body": "{{request}}: role change for {{person}}. It needs a second IT person."
         },
-        "export_pending": {"title": "Export with sensitive data to approve", "body": "{{request}}: {{person}} asks to export people with DNI, CUIL and bank account unhidden."},
+        "export_pending": {"title": "Export with sensitive data to approve", "body": "{{request}}: {{person}} asks to export people with DNI and CUIL unhidden."},
         "policy_pending": {
           "title": "Policy change to approve",
           "body": "{{request}}: change to the {{policy}}. It needs a second person in IT."
@@ -2770,7 +2770,7 @@
         "items": [
           "Your work data: name, email, job title, area and manager.",
           "Your journey progress, check-ins and self-reviews.",
-          "Your identification data (DNI, CUIL and bank account), always shown hidden."
+          "Your identification data (DNI and CUIL), always shown hidden."
         ]
       },
       {
@@ -2834,8 +2834,7 @@
         "employeeId": "Employee number",
         "mobile": "Mobile",
         "dni": "DNI",
-        "cuil": "CUIL",
-        "bankAccount": "Bank account (CBU)"
+        "cuil": "CUIL"
       },
       "requestsCard": "Your requests",
       "requestsEmpty": "You haven't sent any requests yet. If you need to see, correct or delete your data, send one.",
@@ -3214,7 +3213,7 @@
     "standInBack": "Go back without deciding",
     "ownWaiting": "You cannot decide this request because you asked for it. {{name}} decides it.",
     "piiTitle": "Export with sensitive data",
-    "piiChange": "People · DNI, CUIL and bank account unhidden",
+    "piiChange": "People · DNI and CUIL unhidden",
     "applyPii": "Once approved, {{name}} can download the list of people with this data unhidden once.",
     "listTitle": "Requests",
     "filter": "Show",
@@ -3736,7 +3735,7 @@
     "title": "Reports and exports",
     "description": "Download Rumbo's data to analyze or present it. Sensitive data always goes out hidden.",
     "listTitle": "CSV lists",
-    "listHelp": "They open in any spreadsheet app. DNI, CUIL and bank account go out hidden.",
+    "listHelp": "They open in any spreadsheet app. DNI and CUIL go out hidden.",
     "rows_one": "{{count}} row",
     "rows_other": "{{count}} rows",
     "download": "Download CSV",
@@ -3757,7 +3756,7 @@
       },
       "people": {
         "title": "People",
-        "body": "Work details, role and status of each person, with DNI, CUIL and bank account hidden."
+        "body": "Work details, role and status of each person, with DNI and CUIL hidden."
       }
     },
     "columns": {
@@ -3769,7 +3768,6 @@
       "status": "Status",
       "dni": "DNI",
       "cuil": "CUIL",
-      "bankAccount": "Bank account",
       "startDate": "Start date",
       "progress": "Progress",
       "overdue": "Overdue tasks",
@@ -3793,7 +3791,7 @@
       "description": "For procedures that require it (for example, payroll). It needs another person in IT to approve it and it downloads only once.",
       "request": "Request the unhidden export",
       "dialogTitle": "Request the unhidden export",
-      "intro": "IT reviews the request. If approved, you can download the list of people with DNI, CUIL and bank account once, and the download goes to the audit log.",
+      "intro": "IT reviews the request. If approved, you can download the list of people with DNI and CUIL once, and the download goes to the audit log.",
       "reason": "Reason",
       "reasonHelp": "Why you need the data unhidden. Between 10 and 300 characters. For example: Payroll accounts for November.",
       "reasonRequired": "Write the reason, with at least 10 characters.",

@@ -159,7 +159,7 @@ function PersonDetail({ person }: { person: Person }) {
             <dl className="flex flex-col border-t border-outline-variant">
               {[
                 [t('people.fields.email'), <EmailText key="e" email={person.email} />],
-                ...(['dni', 'cuil', 'bankAccount'] as const)
+                ...(['dni', 'cuil'] as const)
                   .filter((f) => person[f])
                   .map((f) => [
                     t(`privacy.mine.fields.${f}`),

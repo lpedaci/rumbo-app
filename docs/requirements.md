@@ -140,7 +140,7 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-070 | El sistema debe pedir aceptar el aviso de privacidad en el primer ingreso, registrando fecha y versión. | Todos | F10 | G8 | Should | Sin aceptar no se continúa. | Hecho |
 | RF-071 | El sistema debe ofrecer "Mi privacidad" con el aviso vigente, la fecha de aceptación y los datos propios. | Todos | F10 | G10 | Should | | Hecho |
 | RF-072 | El sistema debe permitir enviar solicitudes de acceso, rectificación o supresión y gestionarlas con plazo y estado. | Todos, RRHH | F10 | G10, A12 | Should | El plazo de respuesta es visible en ambas vistas. | Hecho |
-| RF-073 | DNI, CUIL y datos bancarios deben mostrarse enmascarados; revelarlos requiere `pii:reveal`, motivo y auditoría. | RRHH | F10 | A10 | Should | También enmascarados en exportaciones. | Hecho |
+| RF-073 | El DNI y el CUIL deben mostrarse enmascarados (la plataforma no guarda datos bancarios, D-135); revelarlos requiere `pii:reveal`, motivo y auditoría. | RRHH | F10 | A10 | Should | También enmascarados en exportaciones. | Hecho |
 | RF-074 | El sistema debe mostrar la política de retención y la fecha programada de anonimización de ingresos finalizados. | RRHH, Sistemas | F10 | A4, S3 | Could | | Hecho |
 | RF-075 | El sistema debe listar las sesiones activas propias y permitir cerrarlas. | Todos | F11 | G5 | Should | La sesión actual está marcada. | Hecho |
 | RF-076 | El sistema debe alertar de inicios de sesión inusuales con "Sí, fui yo" o "No fui yo"; esta última cierra la sesión y genera una solicitud urgente. | Todos | F11 | G6, G9, S1 | Should | Sofía tiene una alerta semilla pendiente. | Hecho |
