@@ -424,6 +424,8 @@ Las tareas pueden tener como responsable a otras áreas (IT, Facilities, buddy),
 
 Empresa ficticia para los datos: **Nortia S.A.**, empresa de servicios tecnológicos con unos 300 empleados.
 
+**Segunda persona de sistemas (D-118):** además de Diego, los datos incluyen a **Ramiro Sosa, Analista de Seguridad IT**, sin cuenta de demo. Existe porque la doble aprobación (F14) necesita a otra persona de sistemas: lo que pide Diego lo decide Ramiro y lo que pide Ramiro lo decide Diego. Ramiro no aparece en G0 ni en "Ver como": la demo sigue teniendo cuatro recorridos.
+
 ---
 
 ## 5. Funciones principales del MVP
@@ -618,10 +620,17 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
 - Cada jefe recibe la lista de su equipo con los accesos y roles de cada persona y marca, para cada uno, **mantener** o **revocar** (con motivo).
 - Sistemas sigue el avance de la campaña (% revisado por jefe), envía recordatorios y ejecuta las revocaciones.
 - Al cerrar, se genera un resumen descargable de la campaña.
+- **Reglas de la campaña:**
+    - Nadie revisa sus propios accesos: cada persona la revisa su jefe directo según los datos. Si una persona del alcance no tiene jefe directo, la revisa RRHH, y eso se ve en el detalle de la campaña.
+    - Las cuentas con rol de admin (RRHH y sistemas, incluido Ramiro) **siempre** entran en el alcance, porque son las de mayor riesgo.
+    - Si la decisión es revocar un rol de admin, la revocación no se aplica directo: genera una solicitud de doble aprobación (F14) y la fila de la campaña queda en "Revocación en aprobación" hasta que se resuelve.
+    - Las revocaciones quedan en la auditoría con el nombre de la campaña.
 
 ### F14. Doble aprobación en cambios sensibles
 - Ciertas acciones necesitan una **segunda persona** que apruebe antes de aplicarse: asignar o quitar el rol de admin de RRHH o de admin de sistemas, cambiar políticas de seguridad y revelar datos sensibles en forma masiva.
 - Quien pide el cambio no puede aprobarlo. La solicitud queda pendiente en la bandeja de aprobaciones de sistemas, con motivo, y la persona que la aprueba o rechaza queda registrada.
+- **Cerrar el circuito en la demo (D-118):** cuando una solicitud de Diego espera a Ramiro, la fila muestra "Esperando a Ramiro Sosa" y, en el detalle, un botón de texto "Resolver como Ramiro (demo)" rotulado como atajo de demo, igual que "Ver como sistemas (demo)" en G4. Abre la misma decisión (aprobar o rechazar con nota) y la auditoría registra a Ramiro como actor con el detalle "decisión simulada en la demo". Diego nunca ve los botones normales de aprobar en sus propias solicitudes.
+- En `docs/security.md`, dejar asentado que en producción la doble aprobación exige al menos dos personas con el rol de sistemas (separación de funciones).
 
 ### F15. Gestión de usuarios y catálogos (admin RRHH)
 - Listado de personas con búsqueda y filtros (área, puesto, rol, estado: activa, bloqueada, dada de baja).
@@ -874,7 +883,7 @@ interface UserPreferences {
 
 - Auditoría semilla: 40 a 60 eventos de las últimas semanas, incluidos intentos fallidos, un bloqueo y un acceso denegado.
 - Solicitudes de acceso semilla: 5 o 6 en distintos estados, con al menos una cuenta bloqueada pendiente.
-- Fase B: 2 versiones publicadas de al menos una plantilla (con ingresos en cada versión), 15 a 20 notificaciones por rol, comentarios en 3 o 4 tareas, 1 inicio de sesión inusual pendiente para Sofía, 1 cambio de puesto y 1 baja en curso con tareas de accesos, 1 campaña de revisión abierta a mitad de avance, 2 aprobaciones pendientes y 2 solicitudes de privacidad.
+- Fase B: 2 versiones publicadas de al menos una plantilla (con ingresos en cada versión), 15 a 20 notificaciones por rol, comentarios en 3 o 4 tareas, 1 inicio de sesión inusual pendiente para Sofía, 1 cambio de puesto y 1 baja en curso con tareas de accesos, 1 campaña de revisión abierta a mitad de avance (con Martín como uno de los revisores, para mostrar J4), 2 aprobaciones pendientes (una pedida por Carla que decide Diego y una pedida por Diego que espera a Ramiro) y 2 solicitudes de privacidad. Ramiro Sosa como segunda persona de sistemas, sin cuenta de demo (D-118).
 
 ---
 

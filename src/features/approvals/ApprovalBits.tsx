@@ -3,7 +3,7 @@ import { Avatar } from '@/components/ui/Avatar';
 import type { IconName } from '@/components/ui/Icon';
 import { IconTile } from '@/components/ui/IconTile';
 import { StatusPill, type StatusTone } from '@/components/ui/StatusPill';
-import { decideBlock } from '@/lib/approvals';
+import { decidersOf, decideBlock } from '@/lib/approvals';
 import { formatDate } from '@/lib/dates';
 import { useDataStore } from '@/store/data-store';
 import type { ApprovalRequest, ApprovalStatus, PolicyField } from '@/types/domain';
@@ -63,6 +63,17 @@ export function ApprovalRow({ approval: a, viewerId, onOpen }: { approval: Appro
   const text = useApprovalText();
   const target = useDataStore((s) => (a.action === 'role.change' ? s.people.find((p) => p.id === a.targetId) : undefined));
   const block = decideBlock(a, viewerId);
+  // D-118: the viewer's own request says who it is waiting for.
+  const people = useDataStore((s) => s.people);
+  const waiting = block === 'own' ? decidersOf(a, people) : [];
+  const note =
+    block === 'own'
+      ? waiting.length
+        ? t('approvals.waitingFor', { name: waiting.map((p) => p.name).join(', ') })
+        : t('approvals.own')
+      : block === 'target'
+        ? t('approvals.target')
+        : undefined;
   return (
     <li className="@container border-b border-outline-variant last:border-b-0">
       <button
@@ -80,9 +91,7 @@ export function ApprovalRow({ approval: a, viewerId, onOpen }: { approval: Appro
           <span className="text-body-small text-on-surface-variant tabular-nums">
             {a.id} · {a.status === 'pending' ? text.requested(a) : text.decided(a)}
           </span>
-          {(block === 'own' || block === 'target') && (
-            <span className="text-body-small text-on-surface-variant">{t(`approvals.${block}`)}</span>
-          )}
+          {note && <span className="text-body-small text-on-surface-variant">{note}</span>}
         </span>
         <ApprovalStatusPill status={a.status} className="hidden shrink-0 @md:inline-flex" />
       </button>

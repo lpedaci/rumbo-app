@@ -3101,6 +3101,11 @@
   "approvals": {
     "title": "Aprobaciones",
     "description": "Cambios sensibles que se aplican solo cuando otra persona de sistemas los aprueba. Quien los pide nunca puede aprobarlos.",
+    "waitingFor": "Esperando a {{name}}",
+    "standIn": "Resolver como {{name}} (demo)",
+    "standInNote": "Atajo de demo: {{name}} no tiene cuenta de demo, así que decides en su nombre para ver el circuito completo. La auditoría registra a {{name}} con la marca de decisión simulada.",
+    "standInBack": "Volver sin decidir",
+    "ownWaiting": "No puedes decidir esta solicitud porque la pediste tú. La decide {{name}}.",
     "listTitle": "Solicitudes",
     "filter": "Mostrar",
     "filters": {

@@ -6,6 +6,7 @@ import type { IdentityCheck } from '@/lib/access';
 import {
   applyPolicyChange,
   decideBlock,
+  SIMULATED_DECISION,
   nextApprovalId,
   pendingPolicyChange,
   policyValueIssue,
@@ -60,7 +61,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 13;
+export const DATA_SCHEMA_VERSION = 14;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -157,7 +158,14 @@ interface DataActions {
    * F14: a second person in IT approves or rejects a request. Never the one who asked nor the
    * person it is about; an approved one is applied at once.
    */
-  decideApproval: (id: string, decision: 'approved' | 'rejected', note: string, actorId: string) => boolean;
+  decideApproval: (
+    id: string,
+    decision: 'approved' | 'rejected',
+    note: string,
+    actorId: string,
+    /** D-118: decided with the demo shortcut in the name of someone without a demo account. */
+    simulated?: boolean,
+  ) => boolean;
   /** F15: catalogs of areas and job titles. */
   saveArea: (area: Area, actorId: string) => void;
   deleteArea: (areaId: string, actorId: string) => void;
@@ -914,7 +922,7 @@ export const useDataStore = create<DataState>()(
         return approval.id;
       },
 
-      decideApproval: (id, decision, note, actorId) => {
+      decideApproval: (id, decision, note, actorId, simulated = false) => {
         const state = useDataStore.getState();
         const approval = state.approvals.find((a) => a.id === id);
         if (!approval) return false;
@@ -962,7 +970,7 @@ export const useDataStore = create<DataState>()(
               action: apply ? 'approval.approve' : 'approval.reject',
               resource: id,
               result: 'success',
-              detail: decided.decisionNote,
+              detail: [simulated ? SIMULATED_DECISION : '', decided.decisionNote ?? ''].filter(Boolean).join(' · ') || undefined,
             },
             ...(apply
               ? [

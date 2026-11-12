@@ -12,7 +12,7 @@ import { FilterMenu } from '@/components/ui/FilterMenu';
 import { InlineAlert } from '@/components/ui/InlineAlert';
 import { TextArea } from '@/components/ui/TextArea';
 import { toast } from '@/components/ui/toast-store';
-import { decideBlock, sortApprovals } from '@/lib/approvals';
+import { decidersOf, decideBlock, demoStandIn, sortApprovals } from '@/lib/approvals';
 import { formatDateTime } from '@/lib/dates';
 import { issuesByPath } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
@@ -96,20 +96,26 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
   const target = useDataStore((s) => (a.action === 'role.change' ? s.people.find((p) => p.id === a.targetId) : undefined));
   const [note, setNote] = useState('');
   const [tried, setTried] = useState<'approved' | 'rejected' | null>(null);
+  const people = useDataStore((s) => s.people);
   const block = user ? decideBlock(a, user.personId) : 'decided';
-  const canDecide = !block;
+  // D-118: the viewer's own request, when only someone without a demo account can decide it.
+  const standIn = user ? demoStandIn(a, people, user.personId) : undefined;
+  const [asStandIn, setAsStandIn] = useState(false);
+  const deciders = block === 'own' ? decidersOf(a, people) : [];
+  const canDecide = !block || (asStandIn && Boolean(standIn));
+  const actorId = asStandIn && standIn ? standIn.id : user?.personId;
   const issue =
     tried && issuesByPath((tried === 'rejected' ? rejectSchema : approveSchema).safeParse(note))[''];
 
   const decide = (decision: 'approved' | 'rejected') => {
-    if (!user) return;
+    if (!actorId) return;
     setTried(decision);
     const problem = issuesByPath((decision === 'rejected' ? rejectSchema : approveSchema).safeParse(note))[''];
     if (problem) {
       document.getElementById('approval-note')?.focus();
       return;
     }
-    if (useDataStore.getState().decideApproval(a.id, decision, note, user.personId)) {
+    if (useDataStore.getState().decideApproval(a.id, decision, note, actorId, asStandIn)) {
       toast.success(t(decision === 'approved' ? 'approvals.approvedToast' : 'approvals.rejectedToast', { id: a.id }));
       onDone();
     }
@@ -129,6 +135,11 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
       actions={
         canDecide ? (
           <>
+            {asStandIn && (
+              <Button variant="text" onClick={() => setAsStandIn(false)}>
+                {t('approvals.standInBack')}
+              </Button>
+            )}
             <Button variant="outlined" leadingIcon="cancel" onClick={() => decide('rejected')}>
               {t('approvals.reject')}
             </Button>
@@ -175,7 +186,22 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
         </section>
       )}
 
-      {(block === 'own' || block === 'target') && <InlineAlert tone="info">{t(`approvals.blocked.${block}`)}</InlineAlert>}
+      {block === 'target' && <InlineAlert tone="info">{t('approvals.blocked.target')}</InlineAlert>}
+      {block === 'own' && !asStandIn && (
+        <div className="flex flex-col gap-2">
+          <InlineAlert tone="info">
+            {deciders.length
+              ? t('approvals.ownWaiting', { name: deciders.map((p) => p.name).join(', ') })
+              : t('approvals.blocked.own')}
+          </InlineAlert>
+          {standIn && (
+            <Button variant="text" leadingIcon="swap_horiz" className="self-start" onClick={() => setAsStandIn(true)}>
+              {t('approvals.standIn', { name: standIn.name })}
+            </Button>
+          )}
+        </div>
+      )}
+      {asStandIn && standIn && <InlineAlert tone="info">{t('approvals.standInNote', { name: standIn.name })}</InlineAlert>}
 
       {canDecide && (
         <>

@@ -1,5 +1,6 @@
-import type { ApprovalRequest, PolicyField, SecurityPolicy } from '@/types/domain';
+import type { ApprovalRequest, Person, PolicyField, SecurityPolicy } from '@/types/domain';
 import { DEMO_TODAY } from './dates';
+import { DEMO_PERSON_IDS } from './people';
 
 /**
  * Double approval rules (F14): a sensitive change waits for a second person in IT. Whoever asked
@@ -31,6 +32,32 @@ export function decideBlock(approval: ApprovalRequest, actorId: string): DecideB
   if (approval.action === 'role.change' && approval.targetId === actorId) return 'target';
   return undefined;
 }
+
+/** Who can decide a pending request: the IT admins who neither asked for it nor are its subject. */
+export function decidersOf(approval: ApprovalRequest, people: Person[]): Person[] {
+  return people.filter(
+    (p) =>
+      p.role === 'it_admin' &&
+      p.status !== 'offboarded' &&
+      p.id !== approval.requestedBy &&
+      !(approval.action === 'role.change' && p.id === approval.targetId),
+  );
+}
+
+/**
+ * Demo shortcut (D-118): when the viewer's own request can only be decided by someone without a
+ * demo account (Ramiro), the viewer may resolve it in that person's name, labelled as a demo
+ * shortcut, so the visitor sees the whole circuit. Undefined when a demo account can decide it.
+ */
+export function demoStandIn(approval: ApprovalRequest, people: Person[], viewerId: string): Person | undefined {
+  if (decideBlock(approval, viewerId) !== 'own') return undefined;
+  const deciders = decidersOf(approval, people);
+  if (deciders.some((p) => DEMO_PERSON_IDS.includes(p.id))) return undefined;
+  return deciders[0];
+}
+
+/** Audit detail of a decision made with the demo shortcut. */
+export const SIMULATED_DECISION = 'decisión simulada en la demo';
 
 export function nextApprovalId(existing: { id: string }[]): string {
   const numbers = existing.map((a) => Number(a.id.split('-').at(-1)) || 0);

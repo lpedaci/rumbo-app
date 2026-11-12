@@ -3,7 +3,9 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { switchRole } from '@/features/auth/auth-service';
 import {
   applyPolicyChange,
+  decidersOf,
   decideBlock,
+  demoStandIn,
   nextApprovalId,
   pendingPolicyChange,
   policyValueIssue,
@@ -30,7 +32,7 @@ describe('F14 · Double approval rules', () => {
     expect(decideBlock(approval('APR-2026-0002'), 'p-carla')).toBe('own');
     expect(decideBlock(approval('APR-2026-0002'), 'p-julieta')).toBe('target');
     expect(decideBlock(approval('APR-2026-0002'), 'p-diego')).toBeUndefined();
-    expect(decideBlock(approval('APR-2026-0003'), 'p-ramiro')).toBe('own');
+    expect(decideBlock(approval('APR-2026-0003'), 'p-diego')).toBe('own');
     expect(decideBlock(approval('APR-2026-0001'), 'p-diego')).toBe('decided');
   });
 
@@ -43,6 +45,15 @@ describe('F14 · Double approval rules', () => {
     expect(pendingPolicyChange(approvals, 'passwordMinLength')?.id).toBe('APR-2026-0003');
     expect(pendingPolicyChange(approvals, 'lockoutAttempts')).toBeUndefined();
     expect(nextApprovalId(approvals)).toBe('APR-2026-0004');
+  });
+
+  it('lets Diego resolve as Ramiro only his own request, which only Ramiro can decide (D-118)', () => {
+    const { people } = useDataStore.getState();
+    expect(decidersOf(approval('APR-2026-0003'), people).map((p) => p.id)).toEqual(['p-ramiro']);
+    expect(demoStandIn(approval('APR-2026-0003'), people, 'p-diego')?.id).toBe('p-ramiro');
+    // Carla's request: Diego decides it himself, no shortcut.
+    expect(demoStandIn(approval('APR-2026-0002'), people, 'p-diego')).toBeUndefined();
+    expect(demoStandIn(approval('APR-2026-0002'), people, 'p-carla')).toBeUndefined();
   });
 
   it('moves the session warning with the session length', () => {
@@ -95,8 +106,16 @@ describe('F14 · Store', () => {
     expect(useDataStore.getState().auditEvents.at(-1)).toMatchObject({ action: 'policy.update', resource: 'lockoutAttempts' });
   });
 
+  it("records a shortcut decision in Ramiro's name, marked as simulated", () => {
+    expect(useDataStore.getState().decideApproval('APR-2026-0003', 'approved', '', 'p-ramiro', true)).toBe(true);
+    const state = useDataStore.getState();
+    expect(state.securityPolicy.passwordMinLength).toBe(14);
+    expect(state.auditEvents.at(-2)).toMatchObject({ actorId: 'p-ramiro', action: 'approval.approve', detail: 'decisión simulada en la demo' });
+    expect(state.notifications.at(-1)).toMatchObject({ recipientId: 'p-diego', type: 'approval.approved' });
+  });
+
   it('keeps the policy as it was when the change is rejected', () => {
-    useDataStore.getState().decideApproval('APR-2026-0003', 'rejected', 'Primero hay que avisar a todo el personal.', 'p-diego');
+    useDataStore.getState().decideApproval('APR-2026-0003', 'rejected', 'Primero hay que avisar a todo el personal.', 'p-ramiro');
     expect(useDataStore.getState().securityPolicy.passwordMinLength).toBe(12);
     expect(approval('APR-2026-0003')).toMatchObject({ status: 'rejected', decisionNote: 'Primero hay que avisar a todo el personal.' });
   });
@@ -116,8 +135,18 @@ describe('S7 and S3 · Approval screens', () => {
     useDataStore.getState().requestPolicyChange('lockoutAttempts', 4, 'Reducir el riesgo en cuentas con datos personales.', 'p-diego');
     renderAt('/it/approvals?request=APR-2026-0004');
     const dialog = await screen.findByRole('dialog');
-    expect(within(dialog).getByText(es.approvals.blocked.own)).toBeInTheDocument();
+    expect(within(dialog).getByText(/No puedes decidir esta solicitud porque la pediste tú. La decide Ramiro Sosa/)).toBeInTheDocument();
     expect(within(dialog).queryByRole('button', { name: es.approvals.approve })).not.toBeInTheDocument();
+  });
+
+  it('shows who the request waits for and resolves it as Ramiro from the shortcut', async () => {
+    renderAt('/it/approvals?request=APR-2026-0003');
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByText(/La decide Ramiro Sosa/)).toBeInTheDocument();
+    expect(within(dialog).queryByRole('button', { name: es.approvals.approve })).not.toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Resolver como Ramiro Sosa (demo)' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: es.approvals.approve }));
+    await waitFor(() => expect(approval('APR-2026-0003')).toMatchObject({ status: 'approved', decidedBy: 'p-ramiro' }));
   });
 
   it('sends a policy change from S3 for approval', async () => {

@@ -30,7 +30,7 @@
     "targetId": "passwordMinLength",
     "fromValue": 12,
     "toValue": 14,
-    "requestedBy": "p-ramiro",
+    "requestedBy": "p-diego",
     "reason": "Alinear la política de contraseñas con el estándar del grupo para 2027.",
     "createdAt": "2026-11-10T09:05:00",
     "status": "pending"

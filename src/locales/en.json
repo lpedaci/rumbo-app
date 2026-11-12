@@ -3101,6 +3101,11 @@
   "approvals": {
     "title": "Approvals",
     "description": "Sensitive changes that apply only when another person in IT approves them. Whoever asks can never approve them.",
+    "waitingFor": "Waiting for {{name}}",
+    "standIn": "Resolve as {{name}} (demo)",
+    "standInNote": "Demo shortcut: {{name}} has no demo account, so you decide in their name to see the whole circuit. The audit log records {{name}} with the simulated decision mark.",
+    "standInBack": "Go back without deciding",
+    "ownWaiting": "You cannot decide this request because you asked for it. {{name}} decides it.",
     "listTitle": "Requests",
     "filter": "Show",
     "filters": {
