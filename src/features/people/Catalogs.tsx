@@ -104,7 +104,9 @@ export function AreasCatalog() {
   };
   const save = () => {
     setTried(true);
-    if (issue || !user || !editing) return;
+    // The focus goes to the field with the problem (2.10)
+    if (issue) return document.getElementById('area-name')?.focus();
+    if (!user || !editing) return;
     useDataStore
       .getState()
       .saveArea({ id: editing === 'new' ? newId('a') : editing.id, name: name.trim() }, user.personId);
@@ -230,7 +232,9 @@ export function JobTitlesCatalog() {
   };
   const save = () => {
     setTried(true);
-    if (nameIssue || areaIssue || !user || !editing) return;
+    if (nameIssue) return document.getElementById('job-name')?.focus();
+    if (areaIssue) return document.getElementById('job-area')?.focus();
+    if (!user || !editing) return;
     useDataStore.getState().saveJobTitle(
       {
         id: editing === 'new' ? newId('jt') : editing.id,
@@ -352,6 +356,8 @@ export function JobTitlesCatalog() {
                 value={form.access}
                 onChange={(event) => setForm({ ...form, access: event.target.value })}
               />
+              {/* Enter in a field submits, as the buttons live outside the form (dialog actions) */}
+              <button type="submit" hidden aria-hidden tabIndex={-1} />
             </form>
           </DialogContent>
         )}

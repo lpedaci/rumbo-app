@@ -45,3 +45,12 @@ export function filterPeople(people: Person[], attempts: AuthAttempts[], f: Peop
     .filter((p) => f.status === 'all' || personStatus(p, attempts) === f.status)
     .sort((a, b) => a.name.localeCompare(b.name, 'es'));
 }
+
+/**
+ * Audit details keep role ids ("hire → manager"); on screen they read as role names
+ * ("Acceso básico → Jefe directo") through the translation passed in.
+ */
+export function readableRoles(detail: string, roleName: (role: Role) => string): string {
+  return detail.replace(/\b(it_admin|admin|manager|hire)\b/g, (r) => roleName(r as Role));
+}
+

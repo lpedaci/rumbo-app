@@ -817,7 +817,7 @@ export const useDataStore = create<DataState>()(
             notifications: [...s.notifications, ...onApprovalRequested(approval, s.people, person.name)],
             auditEvents: [
               ...s.auditEvents,
-              { id: nextAuditId(), at, actorId, action: 'approval.request', resource: personId, result: 'success', detail: `${person.role} → ${toRole} (${approval.id})` },
+              { id: nextAuditId(), at, actorId, action: 'approval.request', resource: personId, result: 'success', detail: `${person.role} → ${toRole} · ${approval.id} · ${reason.trim()}` },
             ],
           }));
           return approval.id;
@@ -826,7 +826,7 @@ export const useDataStore = create<DataState>()(
           people: s.people.map((p) => (p.id === personId ? { ...p, role: toRole } : p)),
           auditEvents: [
             ...s.auditEvents,
-            { id: nextAuditId(), at, actorId, action: 'person.role_change', resource: personId, result: 'success', detail: `${person.role} → ${toRole}` },
+            { id: nextAuditId(), at, actorId, action: 'person.role_change', resource: personId, result: 'success', detail: `${person.role} → ${toRole} · ${reason.trim()}` },
           ],
         }));
         return undefined;

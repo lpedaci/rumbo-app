@@ -27,6 +27,7 @@ import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { AuditEvent } from '@/types/domain';
 import { OrgSessions } from './OrgSessions';
+import { readableRoles } from '@/lib/people';
 
 type Tab = 'locked' | 'sessions' | 'audit' | 'permissions' | 'policies';
 const TABS: { value: Tab; icon: IconName }[] = [
@@ -335,7 +336,7 @@ function AuditLog() {
                           <span>{actionLabel(e.action)}</span>
                           {e.detail && (
                             <span className="truncate text-body-small text-on-surface-variant" title={e.detail}>
-                              {e.detail}
+                              {readableRoles(e.detail, (r) => t(`roles.${r}`))}
                             </span>
                           )}
                         </div>
@@ -373,7 +374,7 @@ function AuditLog() {
                 </span>
                 {(e.resource || e.detail) && (
                   <span className="truncate text-body-small text-on-surface-variant">
-                    {[e.resource, e.detail].filter(Boolean).join(' · ')}
+                    {[e.resource, e.detail && readableRoles(e.detail, (r) => t(`roles.${r}`))].filter(Boolean).join(' · ')}
                   </span>
                 )}
               </li>

@@ -105,7 +105,15 @@ function NewPersonDialog({ onDone }: { onDone: () => void }) {
 
   const save = () => {
     setTried(true);
-    if (!personSchema.safeParse(form).success || !user) return;
+    const result = personSchema.safeParse(form);
+    if (!result.success) {
+      // The focus goes to the first field with a problem (2.10)
+      const first = ['name', 'jobTitleId', 'jobTitle'].find((k) => issuesByPath(result)[k]);
+      const ids: Record<string, string> = { name: 'person-name', jobTitleId: 'person-job', jobTitle: 'person-title' };
+      if (first) document.getElementById(ids[first]!)?.focus();
+      return;
+    }
+    if (!user) return;
     const job = jobTitles.find((j) => j.id === form.jobTitleId)!;
     const area = areas.find((a) => a.id === job.areaId);
     const id = newId('p');
@@ -194,6 +202,8 @@ function NewPersonDialog({ onDone }: { onDone: () => void }) {
           onChange={(event) => setForm({ ...form, managerId: event.target.value })}
           options={[{ value: '', label: t('people.fields.noManager') }, ...managers.map((m) => ({ value: m.id, label: m.name }))]}
         />
+        {/* Enter in a field submits, as the buttons live outside the form (dialog actions) */}
+        <button type="submit" hidden aria-hidden tabIndex={-1} />
       </form>
     </DialogContent>
   );

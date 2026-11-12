@@ -15,7 +15,7 @@ import { toast } from '@/components/ui/toast-store';
 import { MaskedValue } from '@/features/privacy/MaskedValue';
 import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { formatDate, formatDateTime } from '@/lib/dates';
-import { DEMO_PERSON_IDS, needsApproval, pendingRoleChange, personStatus } from '@/lib/people';
+import { DEMO_PERSON_IDS, needsApproval, pendingRoleChange, personStatus, readableRoles } from '@/lib/people';
 import { ROLES } from '@/lib/permissions';
 import { issuesByPath, requiredText } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
@@ -54,6 +54,7 @@ function PersonDetail({ person }: { person: Person }) {
   const managers = people.filter((p) => (p.role === 'manager' || p.role === 'admin') && p.id !== person.id);
   const titleIssue = issuesByPath(requiredText.safeParse(form.jobTitle))[''];
   const nameOf = (pid: string) => people.find((p) => p.id === pid)?.name ?? pid;
+  const roleName = (r: Role) => (r === 'hire' ? t('people.roleBasic') : t(`roles.${r}`));
   const history = events
     .filter((e) => e.resource === person.id || e.resource?.startsWith(`${person.id}:`))
     .sort((a, b) => b.at.localeCompare(a.at));
@@ -191,7 +192,7 @@ function PersonDetail({ person }: { person: Person }) {
                   </span>
                   <span className="text-body-small text-on-surface-variant tabular-nums">
                     {formatDateTime(e.at)} · {nameOf(e.actorId)}
-                    {e.detail ? ` · ${e.detail}` : ''}
+                    {e.detail ? ` · ${readableRoles(e.detail, roleName)}` : ''}
                   </span>
                 </li>
               ))}
