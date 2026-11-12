@@ -186,6 +186,8 @@
       "dashboard": "Dashboard",
       "hires": "New hires",
       "templates": "Templates",
+      "lifecycle": "Joiners and leavers",
+      "accessTasks": "Access",
       "people": "People",
       "privacy": "Privacy",
       "team": "My team",
@@ -1641,6 +1643,11 @@
         "catalog.job_create": "Job created",
         "catalog.job_update": "Job updated",
         "catalog.job_delete": "Job deleted",
+        "lifecycle.joiner": "Joiner registered",
+        "lifecycle.mover": "Job change registered",
+        "lifecycle.leaver": "Leaver registered",
+        "access.grant": "Access granted",
+        "access.revoke": "Access revoked",
         "hire.create": "New hire added",
         "task.complete": "Task marked as done",
         "checkin.self_review": "Self-review sent",
@@ -1689,6 +1696,8 @@
         "session_manage": "Manage organization sessions",
         "person_manage": "Manage people",
         "catalog_edit": "Edit catalogs",
+        "lifecycle_manage": "Register joiners and leavers",
+        "access_task_complete": "Grant and revoke access",
         "notification_view": "View their notifications",
         "account_security_own": "View \"My security\"",
         "demo_switch_role": "Use the demo role selector",
@@ -2382,6 +2391,18 @@
       "appOnly": "This type of notice only arrives inside Rumbo, not by email."
     },
     "types": {
+      "offboarding": {
+        "reminder": {
+          "title": "Leaver on your team",
+          "body": "{{person}} leaves Nortia on {{date}}. Coordinate the handover of their equipment and tasks."
+        }
+      },
+      "access_tasks": {
+        "new": {
+          "title": "Access to manage",
+          "body": "{{person}}: {{count}} accesses to manage, effective on {{date}}."
+        }
+      },
       "approval": {
         "pending": {
           "title": "Role change to approve",
@@ -2983,6 +3004,80 @@
       "dialogNew": "Add job",
       "dialogEdit": "Edit job",
       "save": "Save job"
+    }
+  },
+  "lifecycle": {
+    "title": "Joiners, movers and leavers",
+    "description": "The moves of people that change their access. IT grants or revokes each one; here you see the progress.",
+    "types": {
+      "joiner": "Joiner",
+      "mover": "Job change",
+      "leaver": "Leaver"
+    },
+    "typeFilter": "Type",
+    "all": "All",
+    "state": {
+      "scheduled": "Scheduled",
+      "in_progress": "In progress",
+      "done": "Complete"
+    },
+    "effective": "Effective on {{date}}",
+    "progress": "{{done}} of {{total}} accesses done",
+    "jobChange": "{{from}} → {{to}}",
+    "registerMover": "Register a job change",
+    "registerLeaver": "Register a leaver",
+    "empty": "There are no moves of this type.",
+    "offboarded": "Account disabled",
+    "leaverTypes": {
+      "resignation": "Resignation",
+      "dismissal": "Dismissal",
+      "end_of_contract": "End of contract"
+    },
+    "form": {
+      "person": "Person",
+      "personHelp": "Who changes or leaves. Demo accounts are not listed, so the demo keeps working.",
+      "newJob": "New job",
+      "newJobHelp": "From the jobs catalog. The access comes from comparing the current job with the new one.",
+      "effectiveDate": "Effective date",
+      "effectiveDateHelp": "Format DD/MM/YYYY, for example: 16/11/2026. If it is today or earlier, it applies right away.",
+      "leaverType": "Type of leaver",
+      "leaverTypeHelp": "Choose one.",
+      "detail": "Details",
+      "detailHelp": "Up to 300 characters. For example: Resignation submitted on 06/11/2026.",
+      "preview": "Access created for IT",
+      "previewNone": "Choose the person and the job to see the access.",
+      "grantCount": "Grant: {{list}}",
+      "revokeCount": "Revoke: {{list}}",
+      "saveMover": "Register change",
+      "saveLeaver": "Register leaver",
+      "saved": "Move {{id}} registered",
+      "personRequired": "Choose the person.",
+      "jobRequired": "Choose the new job.",
+      "jobSame": "Choose a job different from the current one.",
+      "dateRequired": "Write the date in the DD/MM/YYYY format.",
+      "typeRequired": "Choose the type of leaver.",
+      "detailMax": "Details can have up to 300 characters.",
+      "leaverNote": "On the effective date the account is disabled, its sessions are closed and the manager is told."
+    },
+    "detail": {
+      "title": "{{id}} · {{type}}",
+      "tasks": "Access",
+      "grant": "Grant",
+      "revoke": "Revoke",
+      "done": "Done on {{date}} by {{name}}",
+      "pending": "Pending",
+      "registeredBy": "Registered on {{date}} by {{name}}"
+    },
+    "it": {
+      "title": "Access tasks",
+      "description": "Access to grant or revoke for joiners, job changes and leavers. Mark them as you complete them.",
+      "filter": "Show",
+      "pending": "Pending",
+      "all": "All",
+      "markDone": "Mark as done",
+      "markDoneLabel": "Mark as done: {{action}} {{system}}",
+      "doneToast": "Access {{system}} marked as done",
+      "empty": "There are no pending access tasks."
     }
   }
 }

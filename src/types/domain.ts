@@ -239,7 +239,9 @@ export type NotificationType =
   | 'privacy_request.answered'
   | 'login.unusual'
   | 'login.reported'
-  | 'approval.pending';
+  | 'approval.pending'
+  | 'access_tasks.new'
+  | 'offboarding.reminder';
 
 export type NotificationChannel = 'app' | 'email';
 
@@ -376,4 +378,36 @@ export interface ApprovalRequest {
   decidedBy?: string;
   decidedAt?: string;
   decisionNote?: string;
+}
+
+// ---------- Phase B: F12 access lifecycle ----------
+
+/** One access to grant or revoke in a joiner, mover or leaver (F12). */
+export interface AccessTask {
+  id: string;
+  system: string;
+  action: 'grant' | 'revoke';
+  status: 'pending' | 'done';
+  doneBy?: string;
+  doneAt?: string;
+}
+
+export type LifecycleType = 'joiner' | 'mover' | 'leaver';
+export type LeaverType = 'resignation' | 'dismissal' | 'end_of_contract';
+
+/** A joiner, a change of job or area, or a leaver, with the access tasks it creates for IT (F12). */
+export interface LifecycleEvent {
+  /** For example `LC-2026-0004`. */
+  id: string;
+  personId: string;
+  type: LifecycleType;
+  effectiveDate: string;
+  createdBy: string;
+  createdAt: string;
+  /** Mover and leaver: the job before. Joiner and mover: the job after. */
+  fromJobTitleId?: string;
+  toJobTitleId?: string;
+  leaverType?: LeaverType;
+  detail?: string;
+  accessTasks: AccessTask[];
 }

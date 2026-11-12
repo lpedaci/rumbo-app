@@ -13,6 +13,7 @@ import type {
   Area,
   ConsentRecord,
   JobTitle,
+  LifecycleEvent,
   DeviceSession,
   LoginAlert,
   PrivacyRequest,
@@ -44,6 +45,7 @@ import checkinMilestones from './checkin-milestones.json';
 import areas from './areas.json';
 import comments from './comments.json';
 import jobTitles from './job-titles.json';
+import lifecycleEvents from './lifecycle-events.json';
 import consents from './consents.json';
 import deviceSessions from './device-sessions.json';
 import loginAlerts from './login-alerts.json';
@@ -107,6 +109,8 @@ export interface DemoData {
   jobTitles: JobTitle[];
   /** F14: sensitive changes waiting for a second person. */
   approvals: ApprovalRequest[];
+  /** F12: joiners, movers and leavers with their access tasks. */
+  lifecycle: LifecycleEvent[];
 }
 
 function whoCompletes(owner: Owner, seed: HireSeed): string {
@@ -259,12 +263,14 @@ export function buildSeed(): DemoData {
       comments as Comment[],
       loginAlerts as LoginAlert[],
       deviceSessions as DeviceSession[],
+      lifecycleEvents as LifecycleEvent[],
     ),
     comments: comments as Comment[],
     consents: consents as ConsentRecord[],
     areas: areas as Area[],
     jobTitles: jobTitles as JobTitle[],
     approvals: [] as ApprovalRequest[],
+    lifecycle: lifecycleEvents as LifecycleEvent[],
     deviceSessions: deviceSessions as DeviceSession[],
     loginAlerts: loginAlerts as LoginAlert[],
     // Legal deadlines computed from the configuration (src/app/legal.ts), never written by hand.

@@ -1,0 +1,160 @@
+[
+  {
+    "id": "LC-2026-0001",
+    "personId": "p-tomas",
+    "type": "joiner",
+    "effectiveDate": "2026-11-24",
+    "createdBy": "p-carla",
+    "createdAt": "2026-11-03T13:00:00.000Z",
+    "toJobTitleId": "jt-frontend",
+    "accessTasks": [
+      {
+        "id": "at-0001",
+        "system": "Cuenta de trabajo",
+        "action": "grant",
+        "status": "done",
+        "doneBy": "p-diego",
+        "doneAt": "2026-11-05T14:00:00.000Z"
+      },
+      {
+        "id": "at-0002",
+        "system": "Correo",
+        "action": "grant",
+        "status": "done",
+        "doneBy": "p-diego",
+        "doneAt": "2026-11-05T14:05:00.000Z"
+      },
+      {
+        "id": "at-0003",
+        "system": "Jira",
+        "action": "grant",
+        "status": "pending"
+      },
+      {
+        "id": "at-0004",
+        "system": "Confluence",
+        "action": "grant",
+        "status": "pending"
+      },
+      {
+        "id": "at-0005",
+        "system": "GitHub",
+        "action": "grant",
+        "status": "pending"
+      },
+      {
+        "id": "at-0006",
+        "system": "Figma",
+        "action": "grant",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "LC-2026-0002",
+    "personId": "p-mateo",
+    "type": "joiner",
+    "effectiveDate": "2026-12-01",
+    "createdBy": "p-carla",
+    "createdAt": "2026-11-10T12:30:00.000Z",
+    "toJobTitleId": "jt-sales",
+    "accessTasks": [
+      {
+        "id": "at-0007",
+        "system": "Cuenta de trabajo",
+        "action": "grant",
+        "status": "pending"
+      },
+      {
+        "id": "at-0008",
+        "system": "Correo",
+        "action": "grant",
+        "status": "pending"
+      },
+      {
+        "id": "at-0009",
+        "system": "CRM",
+        "action": "grant",
+        "status": "pending"
+      },
+      {
+        "id": "at-0010",
+        "system": "Herramienta de propuestas",
+        "action": "grant",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "LC-2026-0003",
+    "personId": "p-nicolas",
+    "type": "mover",
+    "effectiveDate": "2026-11-16",
+    "createdBy": "p-carla",
+    "createdAt": "2026-11-09T15:00:00.000Z",
+    "fromJobTitleId": "jt-data",
+    "toJobTitleId": "jt-dev-lead",
+    "detail": "Pasa a liderar el equipo técnico de Datos.",
+    "accessTasks": [
+      {
+        "id": "at-0011",
+        "system": "GitHub",
+        "action": "grant",
+        "status": "done",
+        "doneBy": "p-diego",
+        "doneAt": "2026-11-10T13:20:00.000Z"
+      },
+      {
+        "id": "at-0012",
+        "system": "Data warehouse",
+        "action": "revoke",
+        "status": "pending"
+      },
+      {
+        "id": "at-0013",
+        "system": "Herramienta de BI",
+        "action": "revoke",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "LC-2026-0004",
+    "personId": "p-federico",
+    "type": "leaver",
+    "effectiveDate": "2026-11-13",
+    "createdBy": "p-carla",
+    "createdAt": "2026-11-06T14:30:00.000Z",
+    "fromJobTitleId": "jt-key-accounts",
+    "leaverType": "resignation",
+    "detail": "Renuncia presentada el 06/11/2026.",
+    "accessTasks": [
+      {
+        "id": "at-0014",
+        "system": "Cuenta de trabajo",
+        "action": "revoke",
+        "status": "pending"
+      },
+      {
+        "id": "at-0015",
+        "system": "Correo",
+        "action": "revoke",
+        "status": "pending"
+      },
+      {
+        "id": "at-0016",
+        "system": "CRM",
+        "action": "revoke",
+        "status": "done",
+        "doneBy": "p-diego",
+        "doneAt": "2026-11-09T16:00:00.000Z"
+      },
+      {
+        "id": "at-0017",
+        "system": "Dispositivos asignados",
+        "action": "revoke",
+        "status": "pending"
+      }
+    ]
+  }
+]

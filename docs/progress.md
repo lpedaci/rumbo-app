@@ -402,3 +402,13 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Permisos `person:manage` y `catalog:edit`; aviso "Cambio de rol por aprobar" a sistemas. Tests de reglas, catálogos y pantallas; A9 y A10 en Playwright.
 - Pendiente: aprobar o rechazar los cambios en S7 (F14).
 - Prueba manual en el navegador de catálogos y alta de persona: agregar, renombrar (con cambio en todas las personas del área) y eliminar áreas; agregar puestos con plantilla y accesos; alta de persona con correo y legajo automáticos; cambio de rol. Correcciones: el foco va al primer campo con error en los diálogos, Enter envía los formularios de varios campos, el historial y la auditoría muestran los roles por su nombre y el cambio de rol guarda el motivo. Se registró INC-021 (fechas de la sesión después de las 21 h).
+
+## Paso 20 · F12 Ciclo de vida de accesos, 11/11/2026 (D-117)
+
+- Modelo `LifecycleEvent` con tareas de accesos (`grant` o `revoke`), reglas en `src/lib/lifecycle.ts` (alta, cambio y baja a partir del catálogo de puestos, estado programado, en curso o completo) y cuatro movimientos semilla (dos altas, un cambio de puesto y una baja).
+- A11 (`/admin/lifecycle`): movimientos con avance, filtros por tipo, detalle en un diálogo y registro de cambios de puesto y bajas con validación, foco en el primer error y vista previa de los accesos que se generan.
+- S4 (`/it/lifecycle`): una tarjeta por movimiento con "Marcar como hecho" en cada acceso, filtro de pendientes y enlace desde los avisos (`?event=`).
+- El alta de ingreso (A3) crea su movimiento; la baja efectiva deshabilita la cuenta y cierra sus sesiones; avisos a sistemas y al jefe directo; auditoría de cada paso. Permisos `lifecycle:manage` y `access_task:complete`.
+- Prueba manual en el navegador: baja de Bruno Castro (cuenta deshabilitada, avisos y auditoría), cambio de puesto programado de Valentina Ruiz, marcado de accesos como sistemas y vista de celular. Correcciones: no se ofrece a quien ya tiene una baja o un cambio por venir; en celulares "Marcar como hecho" va debajo del texto; sin "·" suelto al cortar la línea.
+- INC-021 resuelta: las acciones de la sesión se fechan siempre en el día de la demo.
+- Tests de reglas, store y pantallas; A11 y S4 en Playwright.

@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { addDays, daysBetween, formatDate, formatNumber, formatPercent, relativeDue, stageForOffset } from './dates';
+import {
+  addDays,
+  DEMO_TODAY,
+  daysBetween,
+  demoNow,
+  formatDate,
+  formatDateTime,
+  formatNumber,
+  formatPercent,
+  relativeDue,
+  stageForOffset,
+} from './dates';
 
 describe('dates', () => {
   it('adds calendar days across months and years', () => {
@@ -32,6 +43,13 @@ describe('dates', () => {
     expect(stageForOffset(29)).toBe('month1');
     expect(stageForOffset(30)).toBe('days30to90');
     expect(stageForOffset(90)).toBe('days30to90');
+  });
+
+  it('stamps the demo day with the local clock time, also late at night (INC-021)', () => {
+    const late = new Date(2027, 0, 5, 23, 47, 12, 300);
+    expect(demoNow(late)).toBe(`${DEMO_TODAY}T23:47:12.300`);
+    expect(demoNow(late).slice(0, 10)).toBe(DEMO_TODAY);
+    expect(formatDateTime(demoNow(late))).toBe('10/11/2026 23:47');
   });
 });
 

@@ -824,6 +824,7 @@ interface LoginAlert {
   status: 'pending' | 'confirmed' | 'reported';
 }
 
+// Implementado (D-117): LifecycleEvent suma createdAt, fromJobTitleId, toJobTitleId y leaverType; los accesos salen de JobTitle.suggestedAccess.
 interface LifecycleEvent {
   id: string; personId: string; type: 'joiner' | 'mover' | 'leaver';
   effectiveDate: string; createdBy: string; detail?: string;

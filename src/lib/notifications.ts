@@ -8,6 +8,7 @@ import type {
   DeviceSession,
   Hire,
   HireTask,
+  LifecycleEvent,
   LoginAlert,
   NotificationType,
   Person,
@@ -59,6 +60,8 @@ export const NOTIFICATION_TYPES: Record<NotificationType, TypeMeta> = {
   'login.unusual': { category: 'access', icon: 'gpp_maybe', tone: 'warning', email: true },
   'login.reported': { category: 'access', icon: 'gpp_maybe', tone: 'error', email: true },
   'approval.pending': { category: 'access', icon: 'admin_panel_settings', tone: 'warning', email: true },
+  'access_tasks.new': { category: 'access', icon: 'key', tone: 'info', email: true },
+  'offboarding.reminder': { category: 'people', icon: 'logout', tone: 'warning', email: true },
 };
 
 export const NOTIFICATION_CATEGORIES: NotificationCategory[] = ['tasks', 'checkins', 'people', 'access'];
@@ -310,6 +313,35 @@ export function onApprovalRequested(approval: ApprovalRequest, people: Person[],
     );
 }
 
+/** F12: a joiner, mover or leaver gives IT access tasks; a leaver also reminds the manager. */
+export function onLifecycle(event: LifecycleEvent, people: Person[]): AppNotification[] {
+  const person = people.find((p) => p.id === event.personId);
+  const name = person?.name ?? '';
+  const list = people
+    .filter((p) => p.role === 'it_admin')
+    .map((it) =>
+      makeNotification({
+        recipientId: it.id,
+        createdAt: event.createdAt,
+        type: 'access_tasks.new',
+        params: { person: name, kind: event.type, count: String(event.accessTasks.length), date: event.effectiveDate },
+        link: `/it/lifecycle?event=${event.id}`,
+      }),
+    );
+  if (event.type === 'leaver' && person?.managerId) {
+    list.push(
+      makeNotification({
+        recipientId: person.managerId,
+        createdAt: event.createdAt,
+        type: 'offboarding.reminder',
+        params: { person: name, date: event.effectiveDate },
+        link: '/manager',
+      }),
+    );
+  }
+  return list;
+}
+
 // ---------- Seed ----------
 
 /**
@@ -325,6 +357,7 @@ export function buildSeedNotifications(
   comments: Comment[] = [],
   loginAlerts: LoginAlert[] = [],
   deviceSessions: DeviceSession[] = [],
+  lifecycle: LifecycleEvent[] = [],
   today = DEMO_TODAY,
 ): AppNotification[] {
   const nameOf = (id: string) => people.find((p) => p.id === id)?.name ?? '';
@@ -519,6 +552,13 @@ export function buildSeedNotifications(
     const session = deviceSessions.find((s) => s.id === alert.sessionId);
     if (!session) continue;
     for (const n of onUnusualLogin(alert, session)) {
+      drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
+    }
+  }
+
+  // F12: access tasks for IT and the leaver reminder for the manager.
+  for (const event of lifecycle) {
+    for (const n of onLifecycle(event, people)) {
       drafts.push({ recipientId: n.recipientId, createdAt: n.createdAt, type: n.type, params: n.params, link: n.link });
     }
   }

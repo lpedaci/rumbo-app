@@ -70,6 +70,12 @@ const PeoplePage = lazy(() => import('@/features/people/PeoplePage').then((m) =>
 const PersonDetailPage = lazy(() =>
   import('@/features/people/PersonDetailPage').then((m) => ({ default: m.PersonDetailPage })),
 );
+const LifecyclePage = lazy(() =>
+  import('@/features/lifecycle/LifecyclePage').then((m) => ({ default: m.LifecyclePage })),
+);
+const AccessTasksPage = lazy(() =>
+  import('@/features/lifecycle/AccessTasksPage').then((m) => ({ default: m.AccessTasksPage })),
+);
 const NotificationsPage = lazy(() =>
   import('@/features/notifications/NotificationsPage').then((m) => ({ default: m.NotificationsPage })),
 );
@@ -133,6 +139,7 @@ export function AppRoutes() {
             <Route path="/admin/privacy-requests" element={<PrivacyRequestsPage />} />
             <Route path="/admin/people" element={<PeoplePage />} />
             <Route path="/admin/people/:id" element={<PersonDetailPage />} />
+            <Route path="/admin/lifecycle" element={<LifecyclePage />} />
 
             <Route path="/admin" element={<DashboardPage />} />
             <Route path="/admin/hires" element={<HiresPage />} />
@@ -154,6 +161,7 @@ export function AppRoutes() {
 
             <Route path="/it/requests" element={<RequestsPage />} />
             <Route path="/it/requests/:id" element={<RequestDetailPage />} />
+            <Route path="/it/lifecycle" element={<AccessTasksPage />} />
             <Route path="/it/security" element={<ItSecurityPage />} />
 
             {user && <Route path="*" element={<CatchAll />} />}

@@ -186,6 +186,8 @@
       "dashboard": "Panel",
       "hires": "Ingresos",
       "templates": "Plantillas",
+      "lifecycle": "Altas y bajas",
+      "accessTasks": "Accesos",
       "people": "Personas",
       "privacy": "Privacidad",
       "team": "Mi equipo",
@@ -1641,6 +1643,11 @@
         "catalog.job_create": "Puesto creado",
         "catalog.job_update": "Puesto modificado",
         "catalog.job_delete": "Puesto eliminado",
+        "lifecycle.joiner": "Alta registrada",
+        "lifecycle.mover": "Cambio de puesto registrado",
+        "lifecycle.leaver": "Baja registrada",
+        "access.grant": "Acceso otorgado",
+        "access.revoke": "Acceso revocado",
         "hire.create": "Alta de ingreso",
         "task.complete": "Tarea marcada como hecha",
         "checkin.self_review": "Autoevaluación enviada",
@@ -1689,6 +1696,8 @@
         "session_manage": "Gestionar sesiones de la organización",
         "person_manage": "Gestionar personas",
         "catalog_edit": "Editar catálogos",
+        "lifecycle_manage": "Registrar altas y bajas",
+        "access_task_complete": "Otorgar y revocar accesos",
         "notification_view": "Ver sus notificaciones",
         "account_security_own": "Ver \"Mi seguridad\"",
         "demo_switch_role": "Usar el selector de rol de demo",
@@ -2382,6 +2391,18 @@
       "appOnly": "Este tipo de aviso solo llega dentro de Rumbo, no por correo."
     },
     "types": {
+      "offboarding": {
+        "reminder": {
+          "title": "Baja en tu equipo",
+          "body": "{{person}} deja Nortia el {{date}}. Coordina la entrega de su equipo y de sus tareas."
+        }
+      },
+      "access_tasks": {
+        "new": {
+          "title": "Accesos por gestionar",
+          "body": "{{person}}: {{count}} accesos para gestionar, efectivo el {{date}}."
+        }
+      },
       "approval": {
         "pending": {
           "title": "Cambio de rol por aprobar",
@@ -2983,6 +3004,80 @@
       "dialogNew": "Agregar puesto",
       "dialogEdit": "Editar puesto",
       "save": "Guardar puesto"
+    }
+  },
+  "lifecycle": {
+    "title": "Altas, cambios y bajas",
+    "description": "Los movimientos de personas que cambian sus accesos. Sistemas otorga o revoca cada acceso; acá ves el avance.",
+    "types": {
+      "joiner": "Alta",
+      "mover": "Cambio de puesto",
+      "leaver": "Baja"
+    },
+    "typeFilter": "Tipo",
+    "all": "Todos",
+    "state": {
+      "scheduled": "Programado",
+      "in_progress": "En curso",
+      "done": "Completo"
+    },
+    "effective": "Efectivo el {{date}}",
+    "progress": "{{done}} de {{total}} accesos listos",
+    "jobChange": "{{from}} → {{to}}",
+    "registerMover": "Registrar un cambio de puesto",
+    "registerLeaver": "Registrar una baja",
+    "empty": "No hay movimientos de este tipo.",
+    "offboarded": "Cuenta deshabilitada",
+    "leaverTypes": {
+      "resignation": "Renuncia",
+      "dismissal": "Desvinculación",
+      "end_of_contract": "Fin de contrato"
+    },
+    "form": {
+      "person": "Persona",
+      "personHelp": "Quién cambia o se va. Las cuentas de demo no aparecen, para no cortar la demo.",
+      "newJob": "Puesto nuevo",
+      "newJobHelp": "Del catálogo de puestos. Los accesos salen de comparar el puesto actual con el nuevo.",
+      "effectiveDate": "Fecha efectiva",
+      "effectiveDateHelp": "Formato DD/MM/AAAA, por ejemplo: 16/11/2026. Si es hoy o antes, se aplica en el momento.",
+      "leaverType": "Tipo de baja",
+      "leaverTypeHelp": "Elige una opción.",
+      "detail": "Detalle",
+      "detailHelp": "Hasta 300 caracteres. Por ejemplo: Renuncia presentada el 06/11/2026.",
+      "preview": "Accesos que se generan para sistemas",
+      "previewNone": "Elige la persona y el puesto para ver los accesos.",
+      "grantCount": "Otorgar: {{list}}",
+      "revokeCount": "Revocar: {{list}}",
+      "saveMover": "Registrar cambio",
+      "saveLeaver": "Registrar baja",
+      "saved": "Movimiento {{id}} registrado",
+      "personRequired": "Elige a la persona.",
+      "jobRequired": "Elige el puesto nuevo.",
+      "jobSame": "Elige un puesto distinto del actual.",
+      "dateRequired": "Escribe la fecha con el formato DD/MM/AAAA.",
+      "typeRequired": "Elige el tipo de baja.",
+      "detailMax": "El detalle puede tener hasta 300 caracteres.",
+      "leaverNote": "En la fecha efectiva la cuenta queda deshabilitada, se cierran sus sesiones y se avisa a su jefe directo."
+    },
+    "detail": {
+      "title": "{{id}} · {{type}}",
+      "tasks": "Accesos",
+      "grant": "Otorgar",
+      "revoke": "Revocar",
+      "done": "Hecho el {{date}} por {{name}}",
+      "pending": "Pendiente",
+      "registeredBy": "Registrado el {{date}} por {{name}}"
+    },
+    "it": {
+      "title": "Tareas de accesos",
+      "description": "Accesos para otorgar o revocar por altas, cambios de puesto y bajas. Márcalos a medida que los completes.",
+      "filter": "Mostrar",
+      "pending": "Pendientes",
+      "all": "Todos",
+      "markDone": "Marcar como hecho",
+      "markDoneLabel": "Marcar como hecho: {{action}} {{system}}",
+      "doneToast": "Acceso {{system}} marcado como hecho",
+      "empty": "No hay tareas de accesos pendientes."
     }
   }
 }

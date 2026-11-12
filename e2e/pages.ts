@@ -48,6 +48,7 @@ export const PAGES: CheckedPage[] = [
   { id: 'a4-hire-comments', path: '/#/admin/hires/h-sofia?comments=h-sofia-d15', role: 'admin' },
   { id: 'a9-people', path: '/#/admin/people', role: 'admin' },
   { id: 'a10-person', path: '/#/admin/people/p-nicolas', role: 'admin' },
+  { id: 'a11-lifecycle', path: '/#/admin/lifecycle', role: 'admin' },
   { id: 'a7-template-preview', path: '/#/admin/templates/tpl-data/preview', role: 'admin' },
   { id: 'j1-team', path: '/#/manager', role: 'manager' },
   { id: 'j2-hire', path: '/#/manager/hires/h-sofia', role: 'manager' },
@@ -61,6 +62,7 @@ export const PAGES: CheckedPage[] = [
   { id: 'home-it', path: '/#/it/requests', role: 'it_admin' },
   { id: 's2-request', path: '/#/it/requests/IT-2026-0141', role: 'it_admin' },
   { id: 's3-security', path: '/#/it/security', role: 'it_admin' },
+  { id: 's4-access-tasks', path: '/#/it/lifecycle?event=LC-2026-0004', role: 'it_admin' },
   { id: 'ds-site', path: '/#/design-system' },
   { id: 'styleguide', path: '/#/styleguide' },
 ];

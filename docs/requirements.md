@@ -145,7 +145,7 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 | RF-075 | El sistema debe listar las sesiones activas propias y permitir cerrarlas. | Todos | F11 | G5 | Should | La sesión actual está marcada. | Hecho |
 | RF-076 | El sistema debe alertar de inicios de sesión inusuales con "Sí, fui yo" o "No fui yo"; esta última cierra la sesión y genera una solicitud urgente. | Todos | F11 | G6, G9, S1 | Should | Sofía tiene una alerta semilla pendiente. | Hecho |
 | RF-077 | Sistemas debe ver las sesiones de toda la organización y forzar su cierre. | Sistemas | F11 | S3 | Should | Queda en la auditoría. | Hecho |
-| RF-078 | El sistema debe generar tareas de accesos para sistemas en altas, cambios de puesto y bajas. | RRHH, Sistemas | F12 | A11, S4 | Should | La baja deshabilita la cuenta en la fecha efectiva. | Pendiente |
+| RF-078 | El sistema debe generar tareas de accesos para sistemas en altas, cambios de puesto y bajas. | RRHH, Sistemas | F12 | A11, S4 | Should | La baja deshabilita la cuenta en la fecha efectiva. | Hecho |
 | RF-079 | El sistema debe permitir crear campañas de revisión de accesos que los jefes completan y sistemas cierra con resumen. | Sistemas, Jefe | F13 | S5, S6, J4 | Should | Avance en % por jefe; resumen descargable. | Pendiente |
 | RF-080 | Las acciones sensibles deben requerir doble aprobación, sin que quien pide pueda aprobar. | RRHH, Sistemas | F14 | S7 | Should | El botón de aprobar no está disponible para quien solicitó. | Pendiente |
 | RF-081 | El sistema debe permitir gestionar personas, áreas y puestos (con plantilla y accesos sugeridos). | RRHH | F15 | A9, A10 | Should | El cambio de rol a admin pasa por doble aprobación. | Hecho |

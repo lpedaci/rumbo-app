@@ -5,6 +5,7 @@ import { DEMO_TODAY, demoNow } from '@/lib/dates';
 import type { IdentityCheck } from '@/lib/access';
 import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '@/lib/checkins';
 import { completeTask as completeTaskRule, tasksUnlockedBy } from '@/lib/journey';
+import { isEffective, joinerTasks, nextLifecycleId } from '@/lib/lifecycle';
 import { needsApproval } from '@/lib/people';
 import {
   onAccessRequest,
@@ -12,6 +13,7 @@ import {
   onCheckinCompleted,
   onApprovalRequested,
   onComment,
+  onLifecycle,
   onLoginReported,
   onPrivacyAnswered,
   onPrivacyRequest,
@@ -31,6 +33,7 @@ import type {
   Comment,
   Hire,
   JobTitle,
+  LifecycleEvent,
   Mood,
   Person,
   PrivacyRequest,
@@ -48,7 +51,7 @@ import type {
 
 export const DATA_STORAGE_KEY = 'rumbo-data';
 /** Bump when the shape or the seed people change: stored data from older versions is replaced by the seed. */
-export const DATA_SCHEMA_VERSION = 11;
+export const DATA_SCHEMA_VERSION = 12;
 
 interface DataActions {
   /** Appends an audit event (every sensitive action calls this, CLAUDE.md section 7). */
@@ -144,6 +147,14 @@ interface DataActions {
   deleteArea: (areaId: string, actorId: string) => void;
   saveJobTitle: (jobTitle: JobTitle, actorId: string) => void;
   deleteJobTitle: (jobTitleId: string, actorId: string) => void;
+  /**
+   * F12: HR registers a change of job or a leaver. IT gets the access tasks; a change that is
+   * already effective updates the job now, and an effective leaver disables the account and
+   * closes its sessions.
+   */
+  registerLifecycle: (event: LifecycleEvent, actorId: string) => void;
+  /** F12: IT marks an access as granted or revoked. */
+  completeAccessTask: (eventId: string, taskId: string, actorId: string) => void;
   /** F7: marks one notification as read or unread. */
   setNotificationRead: (id: string, read: boolean) => void;
   /** F7: marks every notification of a person as read. */
@@ -199,6 +210,7 @@ export function isValidDemoData(value: unknown): value is DemoData {
     Array.isArray(data.areas) &&
     Array.isArray(data.jobTitles) &&
     Array.isArray(data.approvals) &&
+    Array.isArray(data.lifecycle) &&
     typeof data.accountFlags === 'object' &&
     data.accountFlags !== null &&
     typeof data.securityPolicy === 'object' &&
@@ -359,24 +371,44 @@ export const useDataStore = create<DataState>()(
           };
         }),
 
-      addHire: (person, hire, actorId) =>
-        set((state) => ({
-          people: [...state.people, person],
-          hires: [...state.hires, hire],
-          notifications: [...state.notifications, ...onHireCreated(hire, person, demoNow())],
-          auditEvents: [
-            ...state.auditEvents,
-            {
-              id: nextAuditId(),
-              at: demoNow(),
-              actorId,
-              action: 'hire.create',
-              resource: hire.id,
-              result: 'success',
-              detail: person.name,
-            },
-          ],
-        })),
+      addHire: (newPerson, hire, actorId) =>
+        set((state) => {
+          // F12: the job of the catalog that suggests this template gives the access to grant.
+          const job = state.jobTitles.find((j) => j.suggestedTemplateId === hire.templateId);
+          const person = job ? { ...newPerson, jobTitleId: job.id } : newPerson;
+          const joiner: LifecycleEvent = {
+            id: nextLifecycleId(state.lifecycle),
+            personId: person.id,
+            type: 'joiner',
+            effectiveDate: hire.startDate,
+            createdBy: actorId,
+            createdAt: demoNow(),
+            toJobTitleId: job?.id,
+            accessTasks: joinerTasks(job),
+          };
+          return {
+            people: [...state.people, person],
+            hires: [...state.hires, hire],
+            lifecycle: [...state.lifecycle, joiner],
+            notifications: [
+              ...state.notifications,
+              ...onHireCreated(hire, person, demoNow()),
+              ...onLifecycle(joiner, [...state.people, person]),
+            ],
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at: demoNow(),
+                actorId,
+                action: 'hire.create',
+                resource: hire.id,
+                result: 'success',
+                detail: person.name,
+              },
+            ],
+          };
+        }),
 
       submitSelfReview: (hireId, stage, review, actorId) =>
         set((state) => ({
@@ -887,6 +919,75 @@ export const useDataStore = create<DataState>()(
           };
         }),
 
+      registerLifecycle: (event, actorId) =>
+        set((state) => {
+          const at = demoNow();
+          const effective = isEffective(event);
+          const job = state.jobTitles.find((j) => j.id === event.toJobTitleId);
+          const area = job && state.areas.find((a) => a.id === job.areaId);
+          return {
+            lifecycle: [...state.lifecycle, event],
+            people: state.people.map((p) => {
+              if (p.id !== event.personId || !effective) return p;
+              if (event.type === 'leaver') return { ...p, status: 'offboarded' as const };
+              if (event.type === 'mover' && job)
+                return { ...p, jobTitleId: job.id, ...(area ? { areaId: area.id, area: area.name } : {}) };
+              return p;
+            }),
+            deviceSessions:
+              event.type === 'leaver' && effective
+                ? state.deviceSessions.map((s) =>
+                    s.personId === event.personId && !s.revokedAt ? { ...s, revokedAt: at, revokedBy: actorId } : s,
+                  )
+                : state.deviceSessions,
+            notifications: [...state.notifications, ...onLifecycle(event, state.people)],
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: `lifecycle.${event.type}`,
+                resource: event.personId,
+                result: 'success',
+                detail: `${event.id} · ${event.effectiveDate}`,
+              },
+            ],
+          };
+        }),
+
+      completeAccessTask: (eventId, taskId, actorId) =>
+        set((state) => {
+          const event = state.lifecycle.find((e) => e.id === eventId);
+          const task = event?.accessTasks.find((x) => x.id === taskId);
+          if (!event || !task || task.status === 'done') return {};
+          const at = demoNow();
+          return {
+            lifecycle: state.lifecycle.map((e) =>
+              e.id === eventId
+                ? {
+                    ...e,
+                    accessTasks: e.accessTasks.map((x) =>
+                      x.id === taskId ? { ...x, status: 'done' as const, doneBy: actorId, doneAt: at } : x,
+                    ),
+                  }
+                : e,
+            ),
+            auditEvents: [
+              ...state.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: task.action === 'grant' ? 'access.grant' : 'access.revoke',
+                resource: event.personId,
+                result: 'success',
+                detail: `${task.system} · ${event.id}`,
+              },
+            ],
+          };
+        }),
+
       setNotificationRead: (id, read) =>
         set((state) => ({
           notifications: state.notifications.map((n) =>
@@ -929,6 +1030,7 @@ export const useDataStore = create<DataState>()(
         areas,
         jobTitles,
         approvals,
+        lifecycle,
       }) => ({
         people,
         templates,
@@ -947,6 +1049,7 @@ export const useDataStore = create<DataState>()(
         areas,
         jobTitles,
         approvals,
+        lifecycle,
       }),
       // Older schema versions are not migrated in the demo: they are replaced by fresh seed data.
       migrate: () => buildSeed(),

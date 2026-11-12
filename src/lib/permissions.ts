@@ -55,6 +55,9 @@ export const PERMISSIONS = {
   // F15 people and catalogs (HR); changes to admin roles go through a second person (F14)
   'person:manage': { admin: 'all' },
   'catalog:edit': { admin: 'all' },
+  // F12 access lifecycle: HR registers changes and leavers, IT grants and revokes access
+  'lifecycle:manage': { admin: 'all' },
+  'access_task:complete': { it_admin: 'all' },
   // F7 notifications: each person only sees their own
   'notification:view': { admin: 'own', manager: 'own', hire: 'own', it_admin: 'own' },
   // Own account (G5)
@@ -124,6 +127,8 @@ export const ROUTE_PERMISSIONS: { prefix: string; action: Action }[] = [
   { prefix: '/account/privacy', action: 'privacy:own' },
   { prefix: '/admin/privacy-requests', action: 'privacy_request:manage' },
   { prefix: '/admin/people', action: 'person:manage' },
+  { prefix: '/admin/lifecycle', action: 'lifecycle:manage' },
+  { prefix: '/it/lifecycle', action: 'access_task:complete' },
 ];
 
 export function requiredPermission(pathname: string): Action | null {

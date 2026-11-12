@@ -146,7 +146,7 @@ flowchart TD
     A6 -.-> A8["A8 Versiones"]
     RRHH -.-> A9["A9 Personas"]
     A9 -.-> A10["A10 Ficha de persona"]
-    RRHH -.-> A11["A11 Ciclo de vida (B)"]
+    RRHH -.-> A11["A11 Altas, cambios y bajas"]
     RRHH -.-> A12["A12 Solicitudes de privacidad"]
     RRHH -.-> A13["A13 Reportes (B)"]
 
@@ -166,7 +166,7 @@ flowchart TD
     SOL --> S1["S1 Bandeja"]
     S1 --> S2["S2 Detalle"]
     IT --> S3["S3 Seguridad y auditoría"]
-    IT -.-> S4["S4 Tareas de accesos (B)"]
+    IT -.-> S4["S4 Tareas de accesos"]
     IT -.-> S5["S5 Revisiones (B)"]
     S5 -.-> S6["S6 Detalle de campaña (B)"]
     IT -.-> S7["S7 Aprobaciones (B)"]

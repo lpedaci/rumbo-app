@@ -34,6 +34,8 @@ export const ACTION_DESCRIPTIONS: Record<Action, string> = {
   'session:manage': 'Ver las sesiones activas de la organización y forzar su cierre (S3)',
   'person:manage': 'Ver y editar personas, y pedir cambios de rol (A9, A10)',
   'catalog:edit': 'Editar los catálogos de áreas y puestos (A9)',
+  'lifecycle:manage': 'Registrar altas, cambios de puesto y bajas (A11)',
+  'access_task:complete': 'Otorgar y revocar accesos de altas, cambios y bajas (S4)',
   'notification:view': 'Ver sus propias notificaciones (G9)',
   'account:security_own': 'Ver "Mi seguridad" (G5)',
   'demo:switch_role': 'Usar el selector de rol de demo',

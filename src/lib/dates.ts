@@ -8,11 +8,13 @@ import type { Stage } from '@/types/domain';
  */
 export const DEMO_TODAY = '2026-11-10';
 
-/** Current demo date-time for timestamps created during the session (DEMO_TODAY + real clock time). */
-export function demoNow(): string {
-  const now = new Date();
-  const time = now.toISOString().slice(10); // "THH:mm:ss.sssZ"
-  return `${DEMO_TODAY}${time}`;
+/**
+ * Current demo date-time for timestamps created during the session: DEMO_TODAY plus the local
+ * clock time, with no zone, so the stored date and the date shown are always DEMO_TODAY (INC-021:
+ * with the UTC time, actions after 21 h in Buenos Aires were shown on the day before).
+ */
+export function demoNow(now = new Date()): string {
+  return `${DEMO_TODAY}T${format(now, 'HH:mm:ss.SSS')}`;
 }
 
 /** ISO `YYYY-MM-DD` + n days. Works on calendar days, independent of time zone. */

@@ -138,6 +138,7 @@ sequenceDiagram
 
 - Altas, cambios de puesto y bajas sincronizados entre el sistema de RRHH (HRIS), el proveedor de identidad y Rumbo.
 - Revocación automática en la fecha de baja y revisiones periódicas de accesos por jefe (F12, F13).
+- En la demo (D-117), los accesos de cada puesto salen del catálogo; la baja deshabilita la cuenta y cierra sus sesiones en la fecha efectiva, y cada acceso otorgado o revocado queda en la auditoría con quién y cuándo. En producción, la deshabilitación la hace el proveedor de identidad por SCIM, sin esperar a que alguien marque la tarea.
 
 ### 3.7 Detección y respuesta
 
