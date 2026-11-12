@@ -502,3 +502,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 ## Ajustes · Flujos por pasos de tamaño fijo, 12/11/2026 (D-136)
 
 - G8 y la bienvenida guiada miden lo que su paso más largo; "Anterior" del primer paso conserva su lugar.
+
+## Ajustes · Retratos nuevos, 12/11/2026 (D-137)
+
+- Ocho personas más con foto (Valeria, Ramiro, Agustina, Martina, Camila, Paula, Joaquín y Mateo).

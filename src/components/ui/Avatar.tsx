@@ -12,7 +12,7 @@ export function initials(name: string): string {
 }
 
 /**
- * Portraits chosen by Lourdes for the demo personas and some of the people around them (D-69, D-84, D-93). Files go in
+ * Portraits chosen by Lourdes for the demo personas and some of the people around them (D-69, D-84, D-93, D-137). Files go in
  * src/assets/avatars/ named after the person (carla, martin, sofia, diego, nicolas) as .webp,
  * .jpg or .png; anyone without a file keeps their initials. See SOURCE.md there.
  */
@@ -31,10 +31,19 @@ const PERSONA_FILE: Record<string, string> = {
   'Julieta Paz': 'julieta',
   'Tomás Herrera': 'tomas',
   'Valentina Ruiz': 'valentina',
+  // D-137
+  'Valeria Ortiz': 'valeria',
+  'Ramiro Sosa': 'ramiro',
+  'Agustina Vega': 'agustina',
+  'Martina López': 'martina',
+  'Camila Torres': 'camila',
+  'Paula Giménez': 'paula',
+  'Joaquín Benítez': 'joaquin',
+  'Mateo Romero': 'mateo',
 };
 /**
  * D-120: Valeria Ortiz leads People. Her platform role is manager (no admin permissions), but she
- * is shown with the HR color, the color of her area. The only exception to "color by role".
+ * is shown with the HR color (the ring of her photo, D-137), the color of her area. The only exception to "color by role".
  */
 const TONE_OVERRIDE: Record<string, Role> = { 'Valeria Ortiz': 'admin' };
 

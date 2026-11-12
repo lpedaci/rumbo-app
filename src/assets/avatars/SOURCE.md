@@ -20,5 +20,13 @@ Provistos por Lourdes en `design-references/`, recortados al rostro y reducidos 
 | `tomas.webp` | Tomás Herrera, desarrollador frontend (D-93) | `1619.jpg` |
 | `valentina.webp` | Valentina Ruiz, desarrolladora frontend (D-93) | `59171.jpg` |
 | `nicolas.webp` | Nicolás Acosta, buddy de Sofía (agregado el 11/11/2026, D-84) | `young-man-formal-clothes_21730-2120.avif` |
+| `valeria.webp` | Valeria Ortiz, Gerenta de Personas (D-137) | `11905.jpg` |
+| `ramiro.webp` | Ramiro Sosa, Analista de Seguridad IT (D-137) | `719.jpg` |
+| `agustina.webp` | Agustina Vega, desarrolladora frontend (D-137) | `2149304146.jpg` |
+| `martina.webp` | Martina López, analista de datos (D-137) | `3966.jpg` |
+| `camila.webp` | Camila Torres, ejecutiva comercial (D-137) | `2148213468.jpg` |
+| `paula.webp` | Paula Giménez, ejecutiva comercial (D-137) | `2151098593.jpg` |
+| `joaquin.webp` | Joaquín Benítez, ejecutivo comercial (D-137) | `34735.jpg` |
+| `mateo.webp` | Mateo Romero, ejecutivo comercial (D-137) | `3600.jpg` |
 
-Origen: banco de imágenes Magnific (magnific.com, antes Freepik), búsqueda "corporate people headshot picture". Licencia: Lourdes confirmó el 11/11/2026 que todos los originales, incluidas las cinco fotos agregadas en D-93, son del mismo banco y tienen licencia para usarse en un portfolio público. La licencia gratuita de ese banco pide atribución: "Fotos de personas: Magnific" figura en el case study, en `docs/README.md`, en `docs/design-system.md` y en `/styleguide` (D-92).
+Origen: banco de imágenes Magnific (magnific.com, antes Freepik), búsqueda "corporate people headshot picture". Licencia: Lourdes confirmó el 11/11/2026 que todos los originales, incluidas las cinco fotos agregadas en D-93, son del mismo banco (las ocho de D-137, del 12/11/2026, las agregó ella en `design-references/` junto a las anteriores) y tienen licencia para usarse en un portfolio público. La licencia gratuita de ese banco pide atribución: "Fotos de personas: Magnific" figura en el case study, en `docs/README.md`, en `docs/design-system.md` y en `/styleguide` (D-92).
