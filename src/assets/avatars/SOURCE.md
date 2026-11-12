@@ -28,5 +28,7 @@ Provistos por Lourdes en `design-references/`, recortados al rostro y reducidos 
 | `paula.webp` | Paula Giménez, ejecutiva comercial (D-137) | `2151098593.jpg` |
 | `joaquin.webp` | Joaquín Benítez, ejecutivo comercial (D-137) | `34735.jpg` |
 | `mateo.webp` | Mateo Romero, ejecutivo comercial (D-137) | `3600.jpg` |
+| `lucas.webp` | Lucas Ortiz, analista de datos Jr. (D-137) | `29663.jpg` |
+| `bruno.webp` | Bruno Castro, desarrollador frontend (D-137) | `9047.jpg` |
 
-Origen: banco de imágenes Magnific (magnific.com, antes Freepik), búsqueda "corporate people headshot picture". Licencia: Lourdes confirmó el 11/11/2026 que todos los originales, incluidas las cinco fotos agregadas en D-93, son del mismo banco (las ocho de D-137, del 12/11/2026, las agregó ella en `design-references/` junto a las anteriores) y tienen licencia para usarse en un portfolio público. La licencia gratuita de ese banco pide atribución: "Fotos de personas: Magnific" figura en el case study, en `docs/README.md`, en `docs/design-system.md` y en `/styleguide` (D-92).
+Origen: banco de imágenes Magnific (magnific.com, antes Freepik), búsqueda "corporate people headshot picture". Licencia: Lourdes confirmó el 11/11/2026 que todos los originales, incluidas las cinco fotos agregadas en D-93, son del mismo banco (las diez de D-137, del 12/11/2026, las agregó ella en `design-references/` junto a las anteriores) y tienen licencia para usarse en un portfolio público. La licencia gratuita de ese banco pide atribución: "Fotos de personas: Magnific" figura en el case study, en `docs/README.md`, en `docs/design-system.md` y en `/styleguide` (D-92).

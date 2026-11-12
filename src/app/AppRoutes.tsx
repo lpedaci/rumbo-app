@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { ScrollToTop } from './ScrollToTop';
 import { PageSkeleton } from '@/components/ui/PageSkeleton';
 import { Navigate, Route, Routes } from 'react-router';
 import { AppLayout } from '@/components/layout/AppLayout';
@@ -128,6 +129,7 @@ export function AppRoutes() {
 
   return (
     <Suspense fallback={<PageSkeleton standalone />}>
+      <ScrollToTop />
       <Routes>
         {/* Demo start (G0) and access (G1 to G4): public */}
         <Route path="/" element={<RootRoute />} />

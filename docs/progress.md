@@ -505,4 +505,8 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 
 ## Ajustes · Retratos nuevos, 12/11/2026 (D-137)
 
-- Ocho personas más con foto (Valeria, Ramiro, Agustina, Martina, Camila, Paula, Joaquín y Mateo).
+- Diez personas más con foto (Valeria, Ramiro, Agustina, Martina, Camila, Paula, Joaquín, Mateo, Lucas y Bruno): todas las de los datos.
+
+## Ajustes · Desplazamiento al cambiar de pantalla, 12/11/2026 (D-138)
+
+- Cada pantalla nueva abre desde arriba (`ScrollToTop`), con test de Playwright en los tres motores.

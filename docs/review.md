@@ -7,7 +7,7 @@
 
 Las **dos fases están completas en funciones**: las 40 pantallas funcionan con datos de demo, los cuatro roles se recorren de punta a punta y se puede cambiar de rol en cualquier momento. La seguridad está en sus tres capas (simulada en la interfaz, aplicada en el front y documentada para producción) y la interfaz está completa en español e inglés.
 
-Están en verde el build, **355 tests unitarios y de componentes**, **612 pruebas de Playwright en Chromium** (desbordes en 6 anchos con capturas, áreas táctiles a 375 px, axe, un botón principal por región y cuatro flujos solo con teclado), **310 en WebKit y 310 en Firefox** (desbordes y teclado, WebKit en local y los dos en GitHub Actions), Lighthouse con **98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO** en G0, G1, N1 y A1, y el deploy de GitHub Pages. La prueba con NVDA queda a cargo de Lourdes.
+Están en verde el build, **355 tests unitarios y de componentes**, **613 pruebas de Playwright en Chromium** (desbordes en 6 anchos con capturas, áreas táctiles a 375 px, axe, un botón principal por región, cuatro flujos solo con teclado y desplazamiento al cambiar de pantalla), **311 en WebKit y 311 en Firefox** (desbordes, teclado y desplazamiento, WebKit en local y los dos en GitHub Actions), Lighthouse con **98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO** en G0, G1, N1 y A1, y el deploy de GitHub Pages. La prueba con NVDA queda a cargo de Lourdes.
 
 | Fase | Avance aproximado | Comentario |
 | --- | --- | --- |
@@ -159,12 +159,12 @@ Ninguna categoría quedó por debajo de 90. Antes de los ajustes, G1 y A1 tenía
 
 ### 5.2 Navegadores
 
-| Navegador | Motor | Desbordes en 6 anchos | Flujos con teclado | Dónde corre |
+| Navegador | Motor | Desbordes en 6 anchos | Flujos con teclado y desplazamiento | Dónde corre |
 | --- | --- | --- | --- | --- |
-| Chrome | Chromium | 306 de 306 | 4 de 4 | Local, antes de cada revisión |
+| Chrome | Chromium | 306 de 306 | 5 de 5 | Local, antes de cada revisión |
 | Edge | Chromium | Cubierto por Chromium | Cubierto por Chromium | Edge usa el mismo motor que Chrome: no se prueba aparte |
-| Safari | WebKit | 306 de 306 | 4 de 4 | Local y GitHub Actions (en verde en los dos) |
-| Firefox | Gecko | 306 de 306 | 4 de 4 | GitHub Actions (INC-031) |
+| Safari | WebKit | 306 de 306 | 5 de 5 | Local y GitHub Actions (en verde en los dos) |
+| Firefox | Gecko | 306 de 306 | 5 de 5 | GitHub Actions (INC-031) |
 
 En WebKit, como en Safari sin la opción "Resaltar cada ítem con Tab", la tecla Tab no se detiene en los enlaces: se llega a ellos con Opción+Tab. Las acciones principales son botones, así que los flujos se completan con Tab; la tarea de Sofía se marca con el botón de su fila. En esta computadora Windows no deja ejecutar el Firefox de Playwright (no está firmado) y no se cambió esa política de seguridad: Firefox corre en GitHub Actions (`.github/workflows/browsers.yml`), aparte del deploy. La primera corrida en Firefox falló en el login con teclado por un error del test, no de la app (INC-032); con el ajuste, los dos navegadores quedaron en verde.
 
@@ -192,9 +192,9 @@ En WebKit, como en Safari sin la opción "Resaltar cada ítem con Tab", la tecla
 
 ## 7. Dudas y decisiones
 
-`docs/decisions.md` registra **137 decisiones** (D-01 a D-137). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Ya no queda ninguna pendiente de confirmación: **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
+`docs/decisions.md` registra **138 decisiones** (D-01 a D-138). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Ya no queda ninguna pendiente de confirmación: **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
 
-Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región), D-132 (no pedir dos veces el mismo dato), D-133 (cifra de pantallas, imagen para compartir y numeración de patrones), D-134 (ajustes de mobile) D-135 (la plataforma no guarda la cuenta bancaria) D-136 (flujos por pasos de tamaño fijo) y D-137 (ocho retratos nuevos).
+Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región), D-132 (no pedir dos veces el mismo dato), D-133 (cifra de pantallas, imagen para compartir y numeración de patrones), D-134 (ajustes de mobile) D-135 (la plataforma no guarda la cuenta bancaria) D-136 (flujos por pasos de tamaño fijo) D-137 (diez retratos nuevos) y D-138 (cada pantalla abre desde arriba).
 
 ---
 
@@ -206,13 +206,13 @@ Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria 
 | `docs/README.md` | Completo | Índice |
 | `personas.md` | Completo | Proto-personas rotuladas como hipótesis; resultados de validación pendientes |
 | `roles.md` | Completo | Sincronizado con `permissions.ts` por test |
-| `requirements.md` | Completo | 89 RF hechos y 8 Won't; 55 RNF: 52 hechos y 3 parciales, cada uno con su evidencia |
+| `requirements.md` | Completo | 89 RF hechos y 8 Won't; 56 RNF: 53 hechos y 3 parciales, cada uno con su evidencia |
 | `use-cases.md` | Completo | 14 casos con diagrama |
 | `flows.md` | Completo | Task flows, user flows, wireflows y diagramas de estados rotulados |
 | `information-architecture.md` | Completo | G11 sin el rótulo de fase B; resultados de card sorting y tree testing pendientes |
 | `design-system.md` | Completo | Incluye `ErrorSummary`, casilla con área táctil, preferencias y alto contraste |
 | `security.md` | Completo | Producción, separación de funciones y exportaciones |
-| `issues.md` | Completo | 38 incidencias; solo INC-001 sigue abierta |
+| `issues.md` | Completo | 39 incidencias; solo INC-001 sigue abierta |
 | `decisions.md` | Completo | Ver sección 7 |
 | `progress.md` | Completo | Pasos 0 a 25 |
 | `visual-audit.md` | Completo | Del piloto |

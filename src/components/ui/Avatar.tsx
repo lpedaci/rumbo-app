@@ -40,6 +40,8 @@ const PERSONA_FILE: Record<string, string> = {
   'Paula Giménez': 'paula',
   'Joaquín Benítez': 'joaquin',
   'Mateo Romero': 'mateo',
+  'Lucas Ortiz': 'lucas',
+  'Bruno Castro': 'bruno',
 };
 /**
  * D-120: Valeria Ortiz leads People. Her platform role is manager (no admin permissions), but she
