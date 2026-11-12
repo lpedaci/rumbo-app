@@ -169,7 +169,22 @@ El resultado se expresa en **MoSCoW** y es coherente con las fases:
 
 ---
 
-## 3. Requerimientos no funcionales (RNF)
+## 3. Matriz de reglas de negocio
+
+Reglas que el sistema hace cumplir siempre, con dónde se verifican y cómo se prueban (sección 7 de `CLAUDE.md`).
+
+| ID | Regla | Funciones | Dónde se verifica | Prueba | Estado |
+| --- | --- | --- | --- | --- | --- |
+| RN-01 | La fecha de una tarea es la fecha de ingreso más su plazo relativo (`dueDate = startDate + offsetDays`). | F2, F3 | `src/lib/journey.ts` | Tests de `journey` | Hecho |
+| RN-02 | Una tarea está bloqueada si alguna de sus dependencias no está hecha, y vencida si su fecha pasó y no está hecha; el estado se calcula, no se guarda. | F1 | `src/lib/journey.ts` | Tests de `journey` | Hecho |
+| RN-03 | Publicar una plantilla nunca modifica los recorridos existentes. | F8 | `src/lib/templates.ts`, store | Tests de plantillas | Hecho |
+| RN-04 | Quien pide una acción con doble aprobación nunca puede aprobarla, ni la persona a la que afecta. | F14 | `src/lib/approvals.ts`, store | Tests de aprobaciones | Hecho |
+| RN-05 | **Sistemas nunca queda con menos de dos personas activas** (D-121): no se aplica un cambio de rol, una revocación en una campaña ni una baja que lo dejaría así. Se verifica al pedir y al aprobar; el intento queda auditado como `denied`. | F12, F13, F14, F15 | `itMinimumBlock` en `src/lib/people.ts` y el store | `ItMinimum.test.tsx`, `AccessReview.test.tsx` | Hecho |
+| RN-06 | Nadie revisa sus propios accesos: lo revisa su jefe directo; sin jefe, RRHH; a RRHH, sistemas. Las cuentas admin entran en todas las campañas. | F13 | `src/lib/access-review.ts` | Tests de revisión de accesos | Hecho |
+| RN-07 | Toda acción sobre datos sensibles, permisos o accesos genera un evento de auditoría. | F6 a F15 | Store | Tests de cada función | Hecho |
+| RN-08 | La fecha de "hoy" de la demo es fija (`DEMO_TODAY`) y las métricas se calculan desde los datos. | F4 | `src/lib/dates.ts`, `src/lib/metrics.ts` | Tests de métricas | Hecho |
+
+## 4. Requerimientos no funcionales (RNF)
 
 Organizados según las características de calidad de **ISO/IEC 25010:2023** (ISO/IEC, 2023).
 

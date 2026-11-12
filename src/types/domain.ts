@@ -417,6 +417,8 @@ export interface AccessReviewItem {
   revokedBy?: string;
   /** Revoked admin role: the double approval it waits for (F14). */
   approvalId?: string;
+  /** Revocation not applied: it would leave IT with fewer than two people (D-121). */
+  blockedAt?: string;
 }
 
 export interface AccessReviewCampaign {

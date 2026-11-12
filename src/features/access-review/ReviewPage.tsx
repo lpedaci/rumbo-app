@@ -12,11 +12,14 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { TextArea } from '@/components/ui/TextArea';
 import { toast } from '@/components/ui/toast-store';
 import { campaignProgress, itemState, revokeBlock } from '@/lib/access-review';
+import { itMinimumBlock } from '@/lib/people';
+import { InlineAlert } from '@/components/ui/InlineAlert';
 import { cn } from '@/lib/utils';
 import { issuesByPath } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
-import type { AccessReviewCampaign, AccessReviewItem, Person } from '@/types/domain';
+import { RoleChip } from '@/features/people/PeopleBits';
+import type { AccessReviewCampaign, AccessReviewItem, Person, Role } from '@/types/domain';
 import { ReviewStatePill, useReviewText } from './ReviewBits';
 
 const reasonSchema = z
@@ -80,7 +83,9 @@ function CampaignReview({ campaign, items }: { campaign: AccessReviewCampaign; i
           {due.text}
         </p>
         <ProgressBar value={percent} label={t('accessReview.progress', { done, total })} size="lg" />
-        <p className="text-body-small text-on-surface-variant tabular-nums">{t('accessReview.progress', { done, total })}</p>
+        <p className="text-body-small text-on-surface-variant tabular-nums">
+          {t('accessReview.progress', { done, total })}
+        </p>
       </div>
       <div className="flex flex-col gap-6 border-t border-outline-variant pt-4">
         {byPerson.map(({ person, rows }) =>
@@ -91,7 +96,15 @@ function CampaignReview({ campaign, items }: { campaign: AccessReviewCampaign; i
   );
 }
 
-function PersonReview({ campaign, person, rows }: { campaign: AccessReviewCampaign; person: Person; rows: AccessReviewItem[] }) {
+function PersonReview({
+  campaign,
+  person,
+  rows,
+}: {
+  campaign: AccessReviewCampaign;
+  person: Person;
+  rows: AccessReviewItem[];
+}) {
   const { t } = useTranslation();
   const user = useCurrentUser();
   const text = useReviewText();
@@ -128,7 +141,12 @@ function PersonReview({ campaign, person, rows }: { campaign: AccessReviewCampai
           </div>
         </div>
         {pending.length > 0 ? (
-          <Button variant="text" leadingIcon="done_all" className="self-start" onClick={() => keep(pending.map((r) => r.id))}>
+          <Button
+            variant="text"
+            leadingIcon="done_all"
+            className="self-start"
+            onClick={() => keep(pending.map((r) => r.id))}
+          >
             {t('accessReview.keepAll', { count: pending.length })}
           </Button>
         ) : (
@@ -158,8 +176,17 @@ function PersonReview({ campaign, person, rows }: { campaign: AccessReviewCampai
               <span className="flex min-w-0 flex-1 items-start gap-3">
                 <IconTile icon={row.kind === 'role' ? 'admin_panel_settings' : 'key'} tone="neutral" />
                 <span className="flex min-w-0 flex-1 flex-col gap-1.5">
-                  <span className="text-title-small text-on-surface">{access}</span>
-                  <span className="text-body-small text-on-surface-variant">{t(`accessReview.kind.${row.kind}`)}</span>
+                  {row.kind === 'role' ? (
+                    <>
+                      <span className="text-title-small text-on-surface">{t('accessReview.kind.role')}</span>
+                      <RoleChip role={row.access as Role} />
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-title-small text-on-surface">{access}</span>
+                      <span className="text-body-small text-on-surface-variant">{t('accessReview.kind.access')}</span>
+                    </>
+                  )}
                   {row.reason && <span className="text-body-small text-on-surface-variant">{row.reason}</span>}
                   {/* D-115: the clarification goes under the row text, never in the action column */}
                   {state === 'pending' && blocked && (
@@ -223,6 +250,8 @@ function RevokeDialog({
   const text = useReviewText();
   const [reason, setReason] = useState('');
   const [tried, setTried] = useState(false);
+  // D-121: shown after the attempt, which is recorded as denied and leaves the row blocked
+  const [blocked, setBlocked] = useState(false);
   const issue = issuesByPath(reasonSchema.safeParse(reason))[''];
   const role = item.kind === 'role';
 
@@ -232,7 +261,12 @@ function RevokeDialog({
       document.getElementById('revoke-reason')?.focus();
       return;
     }
+    const wouldBlock = role && itMinimumBlock(useDataStore.getState().people, item.personId, { toRole: 'hire' });
     if (useDataStore.getState().decideReviewItems(campaign.id, [item.id], 'revoke', reason, user.personId)) {
+      if (wouldBlock) {
+        setBlocked(true);
+        return;
+      }
       toast.success(t(role ? 'accessReview.revokeDialog.doneRole' : 'accessReview.revokeDialog.done'));
       onDone();
     }
@@ -242,29 +276,41 @@ function RevokeDialog({
     <DialogContent
       title={t('accessReview.revokeDialog.title', { access: text.access(item) })}
       actions={
-        <>
-          <DialogClose asChild>
-            <Button variant="outlined">{t('ui.cancel')}</Button>
-          </DialogClose>
-          <Button variant="danger" leadingIcon="do_not_disturb_on" onClick={submit}>
-            {t(role ? 'accessReview.revokeDialog.confirmRole' : 'accessReview.revokeDialog.confirm')}
+        blocked ? (
+          <Button variant="outlined" onClick={onDone}>
+            {t('itMinimum.close')}
           </Button>
-        </>
+        ) : (
+          <>
+            <DialogClose asChild>
+              <Button variant="outlined">{t('ui.cancel')}</Button>
+            </DialogClose>
+            <Button variant="danger" leadingIcon="do_not_disturb_on" onClick={submit}>
+              {t(role ? 'accessReview.revokeDialog.confirmRole' : 'accessReview.revokeDialog.confirm')}
+            </Button>
+          </>
+        )
       }
     >
-      <p className="text-body-medium text-on-surface">
-        {t(role ? 'accessReview.revokeDialog.introRole' : 'accessReview.revokeDialog.intro', { name: person.name })}
-      </p>
-      <TextArea
-        id="revoke-reason"
-        label={t('accessReview.revokeDialog.reason')}
-        required
-        helperText={t('accessReview.revokeDialog.reasonHelp')}
-        error={tried && issue ? t(issue) : undefined}
-        value={reason}
-        rows={3}
-        onChange={(event) => setReason(event.target.value)}
-      />
+      {blocked ? (
+        <InlineAlert tone="error">{t('itMinimum.role')}</InlineAlert>
+      ) : (
+        <>
+          <p className="text-body-medium text-on-surface">
+            {t(role ? 'accessReview.revokeDialog.introRole' : 'accessReview.revokeDialog.intro', { name: person.name })}
+          </p>
+          <TextArea
+            id="revoke-reason"
+            label={t('accessReview.revokeDialog.reason')}
+            required
+            helperText={t('accessReview.revokeDialog.reasonHelp')}
+            error={tried && issue ? t(issue) : undefined}
+            value={reason}
+            rows={3}
+            onChange={(event) => setReason(event.target.value)}
+          />
+        </>
+      )}
     </DialogContent>
   );
 }

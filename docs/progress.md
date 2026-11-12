@@ -434,3 +434,10 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 - Revocar un rol de admin abre la doble aprobación (F14); avisos a cada revisor al crear la campaña y en los recordatorios; auditoría con el nombre de la campaña. Permisos `access_review:manage` y `access_review:review`.
 - Prueba manual en el navegador: Martín revoca Jira de Agustina (con error de motivo vacío y foco), Carla pide quitar el rol de admin de Ramiro, Diego ejecuta una revocación y aprueba la de Ramiro, y la fila pasa a "Revocado". Correcciones: sin recordatorio a uno mismo, personas revisadas plegadas y la acción principal arriba en celulares.
 - Tests de reglas, store y pantallas; J4, S5 y S6 en Playwright.
+
+## Ajustes · Mínimo de dos personas de sistemas, roles como chips y hero de G0, 12/11/2026 (D-121, D-122)
+
+- Regla de separación de funciones: sistemas nunca queda con menos de dos personas activas. Se aplica en la revocación de una campaña (fila "Revocación bloqueada"), el cambio de rol de A10 y la baja de A11, al pedir y al aprobar (S7 deshabilita "Aprobar y aplicar" con el motivo). Cada intento queda auditado como `denied`, con el motivo legible en S3 y en el historial de A10.
+- Revisión del sistema de diseño: los roles que se muestran como dato van en `RoleChip` (S7, J4, S6 y G5, que tenía un chip propio); el texto del cambio pendiente en A10 lee "Acceso básico" como en Personas.
+- G0: las tarjetas del hero solo desde 1280 px.
+- Tests: la revocación del rol de Ramiro queda bloqueada, la nueva verificación al aprobar, el cambio de rol y la baja; y la revocación con tres personas en sistemas sí pasa a aprobación.

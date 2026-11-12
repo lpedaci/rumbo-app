@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { z } from 'zod';
@@ -14,11 +14,12 @@ import { TextArea } from '@/components/ui/TextArea';
 import { toast } from '@/components/ui/toast-store';
 import { decidersOf, decideBlock, demoStandIn, sortApprovals } from '@/lib/approvals';
 import { formatDateTime } from '@/lib/dates';
+import { itMinimumBlock } from '@/lib/people';
 import { issuesByPath } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
 import type { ApprovalRequest } from '@/types/domain';
-import { ApprovalRow, ApprovalStatusPill, useApprovalText } from './ApprovalBits';
+import { ApprovalChange, ApprovalRow, ApprovalStatusPill, useApprovalText } from './ApprovalBits';
 
 type Filter = 'pending' | 'decided' | 'all';
 const FILTERS: Filter[] = ['pending', 'decided', 'all'];
@@ -93,7 +94,9 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
   const { t } = useTranslation();
   const user = useCurrentUser();
   const text = useApprovalText();
-  const target = useDataStore((s) => (a.action === 'role.change' ? s.people.find((p) => p.id === a.targetId) : undefined));
+  const target = useDataStore((s) =>
+    a.action === 'role.change' ? s.people.find((p) => p.id === a.targetId) : undefined,
+  );
   const [note, setNote] = useState('');
   const [tried, setTried] = useState<'approved' | 'rejected' | null>(null);
   const people = useDataStore((s) => s.people);
@@ -103,9 +106,11 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
   const [asStandIn, setAsStandIn] = useState(false);
   const deciders = block === 'own' ? decidersOf(a, people) : [];
   const canDecide = !block || (asStandIn && Boolean(standIn));
+  // D-121: checked again when approving, in case IT changed since the request was made
+  const itBlocked =
+    a.status === 'pending' && a.action === 'role.change' && itMinimumBlock(people, a.targetId, { toRole: a.toRole });
   const actorId = asStandIn && standIn ? standIn.id : user?.personId;
-  const issue =
-    tried && issuesByPath((tried === 'rejected' ? rejectSchema : approveSchema).safeParse(note))[''];
+  const issue = tried && issuesByPath((tried === 'rejected' ? rejectSchema : approveSchema).safeParse(note))[''];
 
   const decide = (decision: 'approved' | 'rejected') => {
     if (!actorId) return;
@@ -121,11 +126,11 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
     }
   };
 
-  const facts: [string, string][] = [
-    [t('approvals.facts.change'), text.change(a)],
+  const facts: [string, ReactNode][] = [
+    [t('approvals.facts.change'), <ApprovalChange key="change" approval={a} className="justify-end" />],
     [t('approvals.facts.requester'), text.nameOf(a.requestedBy)],
     [t('approvals.facts.sent'), formatDateTime(a.createdAt)],
-    ...(a.status !== 'pending' ? ([[t('approvals.facts.decision'), text.decided(a)]] as [string, string][]) : []),
+    ...(a.status !== 'pending' ? ([[t('approvals.facts.decision'), text.decided(a)]] as [string, ReactNode][]) : []),
   ];
 
   return (
@@ -143,7 +148,12 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
             <Button variant="outlined" leadingIcon="cancel" onClick={() => decide('rejected')}>
               {t('approvals.reject')}
             </Button>
-            <Button leadingIcon="check" onClick={() => decide('approved')}>
+            <Button
+              leadingIcon="check"
+              disabled={itBlocked}
+              aria-describedby={itBlocked ? 'approval-it-minimum' : undefined}
+              onClick={() => decide('approved')}
+            >
               {t('approvals.approve')}
             </Button>
           </>
@@ -167,7 +177,10 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
 
       <dl className="flex flex-col border-y border-outline-variant">
         {facts.map(([label, value]) => (
-          <div key={label} className="flex flex-wrap justify-between gap-2 border-b border-outline-variant py-3 last:border-b-0">
+          <div
+            key={label}
+            className="flex flex-wrap justify-between gap-2 border-b border-outline-variant py-3 last:border-b-0"
+          >
             <dt className="text-body-medium text-on-surface-variant">{label}</dt>
             <dd className="text-body-medium text-on-surface tabular-nums">{value}</dd>
           </div>
@@ -201,8 +214,16 @@ function ApprovalDetail({ approval: a, onDone }: { approval: ApprovalRequest; on
           )}
         </div>
       )}
-      {asStandIn && standIn && <InlineAlert tone="info">{t('approvals.standInNote', { name: standIn.name })}</InlineAlert>}
+      {asStandIn && standIn && (
+        <InlineAlert tone="info">{t('approvals.standInNote', { name: standIn.name })}</InlineAlert>
+      )}
 
+      {canDecide && itBlocked && (
+        <div id="approval-it-minimum" className="flex flex-col gap-2">
+          <InlineAlert tone="error">{t('itMinimum.role')}</InlineAlert>
+          <p className="text-body-small text-on-surface-variant">{t('itMinimum.approveDisabled')}</p>
+        </div>
+      )}
       {canDecide && (
         <>
           <p className="text-body-medium text-on-surface">

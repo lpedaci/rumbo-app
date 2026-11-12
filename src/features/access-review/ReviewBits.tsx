@@ -13,6 +13,8 @@ const STATE: Record<ItemState, { tone: StatusTone; icon: IconName }> = {
   revoke_in_approval: { tone: 'warning', icon: 'hourglass_empty' },
   revoked: { tone: 'success', icon: 'do_not_disturb_on' },
   revoke_rejected: { tone: 'info', icon: 'info' },
+  // D-121: not applied, IT would keep fewer than two people
+  revoke_blocked: { tone: 'error', icon: 'block' },
 };
 
 export function ReviewStatePill({ state, className }: { state: ItemState; className?: string }) {

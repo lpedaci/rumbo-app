@@ -13,7 +13,8 @@ import { campaignCsv, campaignProgress, closeBlock, itemState, progressByReviewe
 import { DEMO_TODAY, formatDate } from '@/lib/dates';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
-import type { AccessReviewCampaign } from '@/types/domain';
+import { RoleChip } from '@/features/people/PeopleBits';
+import type { AccessReviewCampaign, Role } from '@/types/domain';
 import { CampaignStatusPill, ReviewStatePill, useReviewText } from './ReviewBits';
 
 /**
@@ -160,8 +161,9 @@ function Revocations({ campaign }: { campaign: AccessReviewCampaign }) {
                   {person && <Avatar name={person.name} role={person.role} size="md" />}
                   <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                     <span className="text-title-small text-on-surface">
-                      {access} · {nameOf(row.personId)}
+                      {row.kind === 'role' ? t('accessReview.kind.role') : access} · {nameOf(row.personId)}
                     </span>
+                    {row.kind === 'role' && <RoleChip role={row.access as Role} />}
                     {row.reason && <span className="text-body-medium text-on-surface">{row.reason}</span>}
                     <span className="text-body-small text-on-surface-variant tabular-nums">
                       {t('accessReview.detail.revocationMeta', {

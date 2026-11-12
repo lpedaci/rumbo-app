@@ -15,7 +15,7 @@ import { applyManagerCheckin, applySelfReview, type ManagerCheckinInput } from '
 import { completeTask as completeTaskRule, tasksUnlockedBy } from '@/lib/journey';
 import { buildReviewItems, closeBlock, nextCampaignId, revokeBlock } from '@/lib/access-review';
 import { isEffective, joinerTasks, nextLifecycleId } from '@/lib/lifecycle';
-import { needsApproval } from '@/lib/people';
+import { itMinimumBlock, needsApproval } from '@/lib/people';
 import {
   onAccessRequest,
   onAccessRequestClosed,
@@ -234,6 +234,9 @@ function nextCommentId() {
   commentCounter += 1;
   return `cm-${Date.now().toString(36)}-${commentCounter}`;
 }
+
+/** D-121: audit detail of an attempt blocked because IT would keep fewer than two people. */
+const IT_MINIMUM = 'it_minimum';
 
 let auditCounter = 0;
 function nextAuditId() {
@@ -885,6 +888,23 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
         const person = state.people.find((p) => p.id === personId);
         if (!person || person.role === toRole) return undefined;
         const at = demoNow();
+        if (itMinimumBlock(state.people, personId, { toRole })) {
+          set((s) => ({
+            auditEvents: [
+              ...s.auditEvents,
+              {
+                id: nextAuditId(),
+                at,
+                actorId,
+                action: 'approval.request',
+                resource: personId,
+                result: 'denied',
+                detail: `${person.role} → ${toRole} · ${IT_MINIMUM} · ${reason.trim()}`,
+              },
+            ],
+          }));
+          return undefined;
+        }
         if (needsApproval(person.role, toRole)) {
           const approval: ApprovalRequest = {
             id: nextApprovalId(state.approvals),
@@ -957,6 +977,20 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
         const approval = state.approvals.find((a) => a.id === id);
         if (!approval) return false;
         const block = decideBlock(approval, actorId);
+        if (
+          !block &&
+          decision === 'approved' &&
+          approval.action === 'role.change' &&
+          itMinimumBlock(state.people, approval.targetId, { toRole: approval.toRole })
+        ) {
+          set((s) => ({
+            auditEvents: [
+              ...s.auditEvents,
+              { id: nextAuditId(), at: demoNow(), actorId, action: 'approval.approve', resource: id, result: 'denied', detail: IT_MINIMUM },
+            ],
+          }));
+          return false;
+        }
         if (block) {
           // A blocked attempt is recorded too (segregation of duties).
           if (block !== 'decided') {
@@ -1088,6 +1122,22 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
       registerLifecycle: (event, actorId) =>
         set((state) => {
           const at = demoNow();
+          if (event.type === 'leaver' && itMinimumBlock(state.people, event.personId, { leaves: true })) {
+            return {
+              auditEvents: [
+                ...state.auditEvents,
+                {
+                  id: nextAuditId(),
+                  at,
+                  actorId,
+                  action: 'lifecycle.leaver',
+                  resource: event.personId,
+                  result: 'denied',
+                  detail: `${event.id} · ${IT_MINIMUM}`,
+                },
+              ],
+            };
+          }
           const effective = isEffective(event);
           const job = state.jobTitles.find((j) => j.id === event.toJobTitleId);
           const area = job && state.areas.find((a) => a.id === job.areaId);
@@ -1170,7 +1220,13 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
         const at = demoNow();
         // Revoking an admin role goes through the double approval (F14), with the campaign in the reason.
         const approvalIds = new Map<string, string>();
-        for (const row of rows.filter((r) => decision === 'revoke' && r.kind === 'role')) {
+        // D-121: an IT role whose revocation would leave IT with fewer than two people is blocked.
+        const blocked = new Set(
+          rows
+            .filter((r) => decision === 'revoke' && r.kind === 'role' && itMinimumBlock(state.people, r.personId, { toRole: 'hire' }))
+            .map((r) => r.id),
+        );
+        for (const row of rows.filter((r) => decision === 'revoke' && r.kind === 'role' && !blocked.has(r.id))) {
           const approvalId: string | undefined = useDataStore
             .getState()
             .changeRole(row.personId, 'hire', `${campaign.name}: ${reason.trim()}`, actorId);
@@ -1191,6 +1247,7 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
                           decidedAt: at,
                           reason: decision === 'revoke' ? reason.trim() : undefined,
                           approvalId: approvalIds.get(i.id),
+                          blockedAt: blocked.has(i.id) ? at : undefined,
                         }
                       : i,
                   ),
@@ -1204,13 +1261,14 @@ export const useDataStore: UseBoundStore<Mutate<StoreApi<DataState>, [['zustand/
               actorId,
               action: decision === 'keep' ? 'access_review.keep' : 'access_review.revoke',
               resource: r.personId,
-              result: 'success' as const,
+              result: blocked.has(r.id) ? ('denied' as const) : ('success' as const),
               detail: [
                 nameOf(r.personId),
                 r.kind === 'role' ? `rol ${r.access}` : r.access,
                 campaign.name,
                 decision === 'revoke' ? reason.trim() : '',
                 approvalIds.get(r.id) ?? '',
+                blocked.has(r.id) ? IT_MINIMUM : '',
               ]
                 .filter(Boolean)
                 .join(' · '),

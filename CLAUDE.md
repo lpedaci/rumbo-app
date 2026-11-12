@@ -451,7 +451,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
 - Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
 - **Estructura de página de producto B2B** (D-70 y D-71, a partir de dos referencias de Lourdes):
     1. Barra superior flotante con el logo, enlaces a las secciones ("Cómo funciona", "Recorridos", "Preguntas") y la acción principal "Elegir un recorrido". Por debajo de 1024 px, los enlaces van en un menú.
-    2. Hero centrado (D-73) con la etiqueta "Plataforma de onboarding para empresas · Caso de diseño UX/UI B2B" (D-75): titular con las palabras clave en `primary`, texto, "Elegir un recorrido" y el enlace "Ver el case study"; tarjetas reales del producto flotando a los costados desde 1280 px (en grilla debajo en tablet; ocultas en celulares).
+    2. Hero centrado (D-73) con la etiqueta "Plataforma de onboarding para empresas · Caso de diseño UX/UI B2B" (D-75): titular con las palabras clave en `primary`, texto, "Elegir un recorrido" y el enlace "Ver el case study"; tarjetas reales del producto flotando a los costados, solo desde 1280 px; por debajo no se muestran, para que el hero quede limpio (D-122).
     3. **El problema:** tres tarjetas con una escena hecha con piezas de Rumbo.
     4. **La solución:** bento de cinco tarjetas (recorridos por etapa, constructor de plantillas, check-ins, panel de seguimiento, seguridad y accesos), cada una con una mini interfaz.
     5. **Un recorrido para cada rol:** una sección por rol que alterna lados desde 1024 px: de un lado la foto, el chip del rol, un título, qué hace, qué se puede recorrer y "Recorrer como…"; del otro, una miniatura de su pantalla dentro de un marco, sobre el contenedor plano del color del rol. Las miniaturas usan los datos de demo cuando se puede.
@@ -625,12 +625,14 @@ Se construyen **después** de que el núcleo (F0 a F6) esté completo y funciona
     - Las cuentas con rol de admin (RRHH y sistemas, incluido Ramiro) **siempre** entran en el alcance, porque son las de mayor riesgo.
     - Si la decisión es revocar un rol de admin, la revocación no se aplica directo: genera una solicitud de doble aprobación (F14) y la fila de la campaña queda en "Revocación en aprobación" hasta que se resuelve.
     - Las revocaciones quedan en la auditoría con el nombre de la campaña.
+    - **Mínimo dos personas de sistemas** (D-121): si revocar un rol de sistemas dejaría a sistemas con menos de dos personas activas, la revocación no se aplica: se muestra "No se puede quitar este rol: sistemas quedaría con una sola persona y nadie podría aprobar sus cambios. Primero asigna el rol a otra persona.", la fila queda en "Revocación bloqueada" (ícono y texto) y el intento queda en la auditoría con resultado `denied`.
 
 ### F14. Doble aprobación en cambios sensibles
 - Ciertas acciones necesitan una **segunda persona** que apruebe antes de aplicarse: asignar o quitar el rol de admin de RRHH o de admin de sistemas, cambiar políticas de seguridad y revelar datos sensibles en forma masiva.
 - Quien pide el cambio no puede aprobarlo. La solicitud queda pendiente en la bandeja de aprobaciones de sistemas, con motivo, y la persona que la aprueba o rechaza queda registrada.
 - **Cerrar el circuito en la demo (D-118):** cuando una solicitud de Diego espera a Ramiro, la fila muestra "Esperando a Ramiro Sosa" y, en el detalle, un botón de texto "Resolver como Ramiro (demo)" rotulado como atajo de demo, igual que "Ver como sistemas (demo)" en G4. Abre la misma decisión (aprobar o rechazar con nota) y la auditoría registra a Ramiro como actor con el detalle "decisión simulada en la demo". Diego nunca ve los botones normales de aprobar en sus propias solicitudes.
 - En `docs/security.md`, dejar asentado que en producción la doble aprobación exige al menos dos personas con el rol de sistemas (separación de funciones).
+- **Mínimo dos personas de sistemas** (D-121): ningún cambio puede dejar a sistemas con menos de dos personas activas, porque la doble aprobación dejaría de funcionar. Vale para la revocación en una campaña (F13), el cambio de rol (F15) y la baja (F12). Se verifica al crear la solicitud y otra vez al aprobarla (por si otra persona cambió entre medio); si no se cumple, no se aplica, se muestra "No se puede quitar este rol: sistemas quedaría con una sola persona y nadie podría aprobar sus cambios. Primero asigna el rol a otra persona." (en la baja, "No se puede dar de baja a esta persona…") y el intento queda en la auditoría con resultado `denied`. Al aprobar, el botón queda deshabilitado con el motivo y la solicitud se puede rechazar.
 
 ### F15. Gestión de usuarios y catálogos (admin RRHH)
 - Listado de personas con búsqueda y filtros (área, puesto, rol, estado: activa, bloqueada, dada de baja).
@@ -871,6 +873,7 @@ interface UserPreferences {
 - Una tarea está `blocked` si alguna de sus dependencias no está `done`.
 - Una tarea está `overdue` si `dueDate < hoy` y no está `done`. El estado se calcula, no se guarda.
 - Quien solicita una acción con doble aprobación nunca puede aprobarla.
+- Sistemas nunca queda con menos de dos personas activas (`MIN_IT_ADMINS = 2`, D-121): un cambio de rol, una revocación o una baja que lo dejaría así no se aplica y queda auditado como `denied`. Se verifica al pedir y al aprobar.
 - Publicar una plantilla nunca modifica los recorridos existentes.
 - Toda acción sobre datos sensibles, permisos o accesos genera un `AuditEvent`.
 - La **fecha de "hoy"** de la demo se fija en una constante: `DEMO_TODAY = '2026-11-10'`, para que los datos siempre se vean coherentes, sin importar cuándo se abra el portfolio.

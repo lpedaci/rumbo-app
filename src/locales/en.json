@@ -3146,6 +3146,7 @@
     },
     "roleTitle": "Role change for {{name}}",
     "policyTitle": "Policy change: {{policy}}",
+    "changeTo": "changes to",
     "change": "{{from}} → {{to}}",
     "requestedBy": "Requested by {{name}} on {{date}}",
     "decidedBy": {
@@ -3248,7 +3249,8 @@
       "revoke_pending": "Revocation pending",
       "revoke_in_approval": "Revocation in approval",
       "revoked": "Revoked",
-      "revoke_rejected": "Revocation rejected"
+      "revoke_rejected": "Revocation rejected",
+      "revoke_blocked": "Revocation blocked"
     },
     "demoRole": "This is a demo account: its role does not change, so you can keep exploring the demo with View as.",
     "via": {
@@ -3347,5 +3349,12 @@
         "date": "Date"
       }
     }
+  },
+  "itMinimum": {
+    "role": "This role cannot be removed: IT would have only one person and nobody could approve their changes. First give the role to someone else.",
+    "leaver": "This person cannot be offboarded: IT would have only one person and nobody could approve their changes. First give the IT role to someone else.",
+    "approveDisabled": "It cannot be approved while IT would have only one person. You can reject it with a note.",
+    "audit": "blocked: IT would keep fewer than two people",
+    "close": "Got it"
   }
 }

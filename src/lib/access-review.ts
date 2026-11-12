@@ -67,12 +67,21 @@ function slug(text: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
-export type ItemState = 'pending' | 'kept' | 'revoke_pending' | 'revoke_in_approval' | 'revoked' | 'revoke_rejected';
+export type ItemState =
+  | 'pending'
+  | 'kept'
+  | 'revoke_pending'
+  | 'revoke_in_approval'
+  | 'revoked'
+  | 'revoke_rejected'
+  | 'revoke_blocked';
 
 /** The state of a row, derived from its decision, its execution and its approval (F14). */
 export function itemState(item: AccessReviewItem, approvals: ApprovalRequest[]): ItemState {
   if (!item.decision) return 'pending';
   if (item.decision === 'keep') return 'kept';
+  // D-121: the revocation would leave IT with fewer than two people, so it was not applied.
+  if (item.blockedAt) return 'revoke_blocked';
   if (item.kind === 'role') {
     const approval = approvals.find((a) => a.id === item.approvalId);
     if (approval?.status === 'approved') return 'revoked';

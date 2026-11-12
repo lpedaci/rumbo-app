@@ -15,7 +15,14 @@ import { toast } from '@/components/ui/toast-store';
 import { MaskedValue } from '@/features/privacy/MaskedValue';
 import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
 import { formatDate, formatDateTime } from '@/lib/dates';
-import { DEMO_PERSON_IDS, needsApproval, pendingRoleChange, personStatus, readableRoles } from '@/lib/people';
+import {
+  DEMO_PERSON_IDS,
+  itMinimumBlock,
+  needsApproval,
+  pendingRoleChange,
+  personStatus,
+  readableRoles,
+} from '@/lib/people';
 import { ROLES } from '@/lib/permissions';
 import { issuesByPath, requiredText } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
@@ -192,7 +199,7 @@ function PersonDetail({ person }: { person: Person }) {
                   </span>
                   <span className="text-body-small text-on-surface-variant tabular-nums">
                     {formatDateTime(e.at)} · {nameOf(e.actorId)}
-                    {e.detail ? ` · ${readableRoles(e.detail, roleName)}` : ''}
+                    {e.detail ? ` · ${readableRoles(e.detail, roleName, t('itMinimum.audit'))}` : ''}
                   </span>
                 </li>
               ))}
@@ -217,11 +224,19 @@ function RoleCard({ person }: { person: Person }) {
   const [reason, setReason] = useState('');
   const [tried, setTried] = useState(false);
   const approval = toRole ? needsApproval(person.role, toRole) : false;
-  const roleIssue = toRole ? undefined : 'people.detail.roleSame';
+  // D-121: taking the IT role away must never leave IT with fewer than two people
+  const itBlocked = toRole ? itMinimumBlock(people, person.id, { toRole }) : false;
+  const roleIssue = !toRole ? 'people.detail.roleSame' : itBlocked ? 'itMinimum.role' : undefined;
   const reasonIssue = issuesByPath(reasonSchema.safeParse(reason))[''];
 
   const submit = () => {
     setTried(true);
+    if (itBlocked && user && toRole) {
+      // The attempt is recorded as denied in the audit log (the store checks it too).
+      useDataStore.getState().changeRole(person.id, toRole, reason, user.personId);
+      document.getElementById('pd-role')?.focus();
+      return;
+    }
     if (roleIssue || reasonIssue || !user || !toRole) return;
     const id = useDataStore.getState().changeRole(person.id, toRole, reason, user.personId);
     toast.success(id ? t('people.detail.approvalRequested', { id }) : t('people.detail.roleChanged'));
@@ -238,7 +253,7 @@ function RoleCard({ person }: { person: Person }) {
       {pending ? (
         <InlineAlert tone="warning">
           {t('people.detail.pending', {
-            role: t(`roles.${pending.toRole}`),
+            role: pending.toRole === 'hire' && !hasHire ? t('people.roleBasic') : t(`roles.${pending.toRole}`),
             id: pending.id,
             name: people.find((p) => p.id === pending.requestedBy)?.name ?? '',
             date: formatDate(pending.createdAt.slice(0, 10)),

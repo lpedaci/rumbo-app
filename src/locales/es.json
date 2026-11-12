@@ -3146,6 +3146,7 @@
     },
     "roleTitle": "Cambio de rol de {{name}}",
     "policyTitle": "Cambio de política: {{policy}}",
+    "changeTo": "pasa a",
     "change": "{{from}} → {{to}}",
     "requestedBy": "Pedida por {{name}} el {{date}}",
     "decidedBy": {
@@ -3248,7 +3249,8 @@
       "revoke_pending": "Revocación pendiente",
       "revoke_in_approval": "Revocación en aprobación",
       "revoked": "Revocado",
-      "revoke_rejected": "Revocación rechazada"
+      "revoke_rejected": "Revocación rechazada",
+      "revoke_blocked": "Revocación bloqueada"
     },
     "demoRole": "Es una cuenta de demo: su rol no cambia, para que puedas seguir recorriendo la demo con Ver como.",
     "via": {
@@ -3347,5 +3349,12 @@
         "date": "Fecha"
       }
     }
+  },
+  "itMinimum": {
+    "role": "No se puede quitar este rol: sistemas quedaría con una sola persona y nadie podría aprobar sus cambios. Primero asigna el rol a otra persona.",
+    "leaver": "No se puede dar de baja a esta persona: sistemas quedaría con una sola persona y nadie podría aprobar sus cambios. Primero asigna el rol de sistemas a otra persona.",
+    "approveDisabled": "No se puede aprobar mientras sistemas quede con una sola persona. Puedes rechazarla con una nota.",
+    "audit": "bloqueado: sistemas quedaría con menos de dos personas",
+    "close": "Entendido"
   }
 }

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '@/components/layout/PageHeader';
-import { Avatar, ROLE_ACCENT } from '@/components/ui/Avatar';
+import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Icon } from '@/components/ui/Icon';
@@ -8,10 +8,10 @@ import { StatusPill } from '@/components/ui/StatusPill';
 import { toast } from '@/components/ui/toast-store';
 import { findDemoPerson, mfaRequired } from '@/features/auth/auth-service';
 import { formatDate, formatDateTime } from '@/lib/dates';
-import { cn } from '@/lib/utils';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
 import { MySessions } from './MySessions';
+import { RoleChip } from '@/features/people/PeopleBits';
 
 /**
  * G5 · Mi seguridad: account, two-step verification (required or optional by role,
@@ -45,7 +45,6 @@ export function SecurityPage() {
     toast.success(t('security.forgotten'));
   };
 
-  const roleChip = cn('inline-flex h-6 items-center rounded-full px-2.5 text-label-medium', ROLE_ACCENT[person.role].chip);
   return (
     <>
       <PageHeader title={t('security.title')} description={t('security.subtitle')} />
@@ -59,9 +58,9 @@ export function SecurityPage() {
             <div className="flex min-w-0 flex-1 flex-col gap-1.5">
               <span className="text-title-medium text-on-surface">{person.name}</span>
               <span className="text-body-medium [overflow-wrap:anywhere] text-on-surface-variant">{person.email}</span>
-              <span className={cn(roleChip, 'w-fit md:hidden')}>{t(`roles.${user.role}`)}</span>
+              <RoleChip role={user.role} className="w-fit md:hidden" />
             </div>
-            <span className={cn(roleChip, 'hidden shrink-0 self-start md:inline-flex')}>{t(`roles.${user.role}`)}</span>
+            <RoleChip role={user.role} className="hidden shrink-0 self-start md:inline-flex" />
           </div>
           <dl className="flex flex-col border-t border-outline-variant">
             {[

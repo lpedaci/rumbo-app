@@ -52,10 +52,8 @@ export function HeroCards() {
   });
 
   return (
-    <div
-      aria-hidden
-      className="mt-12 hidden w-full grid-cols-2 gap-3 sm:grid xl:pointer-events-none xl:absolute xl:inset-0 xl:mt-0 xl:block"
-    >
+    // Only from 1280 px, floating at the sides of the hero (D-122); below, the hero stays clean.
+    <div aria-hidden className="pointer-events-none absolute inset-0 hidden xl:block">
       {/* Top left: tasks on time with its trend */}
       <motion.div {...enter(0)} className={cn(CARD, 'xl:absolute xl:top-4 xl:left-0 xl:w-60 xl:-rotate-0')}>
         <div className="flex items-center justify-between gap-2">

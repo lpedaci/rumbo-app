@@ -83,14 +83,34 @@ describe('F13 · Store', () => {
     });
   });
 
-  it('sends the revocation of an admin role to double approval and follows its decision', () => {
+  it('blocks the revocation of Ramiro: IT would keep only one person (D-121)', () => {
+    const row = campaign().items.find((i) => i.personId === 'p-ramiro' && i.kind === 'role')!;
+    const approvals = useDataStore.getState().approvals.length;
+    useDataStore.getState().decideReviewItems('AR-2026-0001', [row.id], 'revoke', 'Ya no administra Rumbo.', 'p-carla');
+    const decided = campaign().items.find((i) => i.id === row.id)!;
+    expect(itemState(decided, useDataStore.getState().approvals)).toBe('revoke_blocked');
+    expect(decided.approvalId).toBeUndefined();
+    expect(useDataStore.getState().approvals).toHaveLength(approvals);
+    expect(person('p-ramiro').role).toBe('it_admin');
+    expect(useDataStore.getState().auditEvents.at(-1)).toMatchObject({
+      action: 'access_review.revoke',
+      result: 'denied',
+      actorId: 'p-carla',
+    });
+    expect(useDataStore.getState().auditEvents.at(-1)!.detail).toContain('Revisión trimestral Q4 2026');
+    // A blocked row counts as decided: it does not hold the campaign open.
+    expect(closeBlock(campaign(), useDataStore.getState().approvals)).toBe('undecided');
+  });
+
+  it('sends the revocation to double approval when IT keeps two people', () => {
+    // A third person in IT first (requested by Carla, approved by Diego).
+    const id = useDataStore.getState().changeRole('p-julieta', 'it_admin', 'Se suma a la mesa de ayuda.', 'p-carla')!;
+    useDataStore.getState().decideApproval(id, 'approved', '', 'p-diego');
     const row = campaign().items.find((i) => i.personId === 'p-ramiro' && i.kind === 'role')!;
     useDataStore.getState().decideReviewItems('AR-2026-0001', [row.id], 'revoke', 'Ya no administra Rumbo.', 'p-carla');
     const decided = campaign().items.find((i) => i.id === row.id)!;
-    expect(decided.approvalId).toBe('APR-2026-0004');
-    expect(person('p-ramiro').role).toBe('it_admin');
     expect(itemState(decided, useDataStore.getState().approvals)).toBe('revoke_in_approval');
-    useDataStore.getState().decideApproval('APR-2026-0004', 'approved', '', 'p-diego');
+    useDataStore.getState().decideApproval(decided.approvalId!, 'approved', '', 'p-diego');
     expect(itemState(decided, useDataStore.getState().approvals)).toBe('revoked');
     expect(person('p-ramiro').role).toBe('hire');
   });

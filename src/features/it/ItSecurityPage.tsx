@@ -338,7 +338,7 @@ function AuditLog() {
                           <span>{actionLabel(e.action)}</span>
                           {e.detail && (
                             <span className="truncate text-body-small text-on-surface-variant" title={e.detail}>
-                              {readableRoles(e.detail, (r) => t(`roles.${r}`))}
+                              {readableRoles(e.detail, (r) => t(`roles.${r}`), t('itMinimum.audit'))}
                             </span>
                           )}
                         </div>
@@ -376,7 +376,7 @@ function AuditLog() {
                 </span>
                 {(e.resource || e.detail) && (
                   <span className="truncate text-body-small text-on-surface-variant">
-                    {[e.resource, e.detail && readableRoles(e.detail, (r) => t(`roles.${r}`))].filter(Boolean).join(' · ')}
+                    {[e.resource, e.detail && readableRoles(e.detail, (r) => t(`roles.${r}`), t('itMinimum.audit'))].filter(Boolean).join(' · ')}
                   </span>
                 )}
               </li>

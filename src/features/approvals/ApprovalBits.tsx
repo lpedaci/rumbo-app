@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { Icon } from '@/components/ui/Icon';
+import { RoleChip } from '@/features/people/PeopleBits';
 import { Avatar } from '@/components/ui/Avatar';
 import type { IconName } from '@/components/ui/Icon';
 import { IconTile } from '@/components/ui/IconTile';
@@ -57,6 +59,27 @@ export function useApprovalText() {
 }
 
 /**
+ * What a request changes. Roles always go as `RoleChip`, in their color (D-69), like everywhere
+ * else; a policy goes as plain values ("12 caracteres → 14 caracteres").
+ */
+export function ApprovalChange({ approval: a, className }: { approval: ApprovalRequest; className?: string }) {
+  const { t } = useTranslation();
+  const text = useApprovalText();
+  const hasHire = useDataStore((s) => s.hires.some((h) => h.personId === a.targetId));
+  if (a.action !== 'role.change' || !a.fromRole || !a.toRole) {
+    return <span className={className}>{text.change(a)}</span>;
+  }
+  return (
+    <span className={`flex flex-wrap items-center gap-1.5 ${className ?? ''}`}>
+      <RoleChip role={a.fromRole} newHire={hasHire} />
+      <Icon name="arrow_forward" size={16} className="text-on-surface-variant" />
+      <span className="sr-only">{t('approvals.changeTo')}</span>
+      <RoleChip role={a.toRole} newHire={hasHire} />
+    </span>
+  );
+}
+
+/**
  * One request in the list rhythm (D-106, D-115): the person or the policy on the left; title,
  * change and who asked in the middle, with a third line when the viewer cannot decide it; the
  * status on the right. The whole row opens the request.
@@ -103,7 +126,7 @@ export function ApprovalRow({
           )}
           <span className="flex min-w-0 flex-1 flex-col gap-1.5">
             <span className="text-title-small text-on-surface">{text.title(a)}</span>
-            <span className="text-body-medium text-on-surface">{text.change(a)}</span>
+            <ApprovalChange approval={a} className="text-body-medium text-on-surface" />
             <span className="text-body-small text-on-surface-variant tabular-nums">
               {a.id} · {a.status === 'pending' ? text.requested(a) : text.decided(a)}
             </span>

@@ -13,7 +13,7 @@ import { toast } from '@/components/ui/toast-store';
 import { demoNow, formatDateTime } from '@/lib/dates';
 import { dateMask } from '@/lib/input-masks';
 import { isEffective, leaverTasks, moverTasks, nextLifecycleId } from '@/lib/lifecycle';
-import { DEMO_PERSON_IDS } from '@/lib/people';
+import { DEMO_PERSON_IDS, itMinimumBlock } from '@/lib/people';
 import { parseDisplayDate } from '@/lib/validation';
 import { useDataStore } from '@/store/data-store';
 import { useCurrentUser } from '@/store/session-store';
@@ -176,7 +176,11 @@ function MoveForm({ kind, onDone }: { kind: 'mover' | 'leaver'; onDone: () => vo
   const iso = parseDisplayDate(date);
 
   const errors = {
-    person: personId ? undefined : t('lifecycle.form.personRequired'),
+    person: !personId
+      ? t('lifecycle.form.personRequired')
+      : kind === 'leaver' && itMinimumBlock(people, personId, { leaves: true })
+        ? t('itMinimum.leaver')
+        : undefined,
     job:
       kind !== 'mover'
         ? undefined
@@ -208,6 +212,16 @@ function MoveForm({ kind, onDone }: { kind: 'mover' | 'leaver'; onDone: () => vo
       ['detail', 'mv-detail'],
     ];
     const first = order.find(([k]) => errors[k]);
+    if (first && user && kind === 'leaver' && personId && itMinimumBlock(people, personId, { leaves: true })) {
+      // D-121: the attempt is recorded as denied in the audit log
+      useDataStore.getState().logAudit({
+        actorId: user.personId,
+        action: 'lifecycle.leaver',
+        resource: personId,
+        result: 'denied',
+        detail: 'it_minimum',
+      });
+    }
     if (first) {
       // The focus goes to the first field with a problem (2.10)
       const target =
