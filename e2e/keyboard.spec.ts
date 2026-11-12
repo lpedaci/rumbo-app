@@ -26,7 +26,11 @@ async function focusedName(page: Page): Promise<string> {
 }
 
 /** Presses Tab until the focused element's name matches, as a person scanning the page would. */
-async function tabTo(page: Page, name: RegExp, { max = 120, back = false } = {}) {
+async function tabTo(page: Page, name: RegExp, { max = 120, back = false, next = false } = {}) {
+  // The app may have moved the focus there already (for example, into the first field of a
+  // form that just opened); Firefox does not cycle back into the page after its last element.
+  // `next` skips the focused element, to reach the next control with the same name.
+  if (!next && name.test(await focusedName(page))) return;
   for (let i = 0; i < max; i += 1) {
     await page.keyboard.press(back ? 'Shift+Tab' : 'Tab');
     if (name.test(await focusedName(page))) return;
@@ -141,7 +145,7 @@ test("does Sofía's 30-day check-in as Martín, only with the keyboard", async (
   const groups = page.locator('form fieldset');
   const milestones = (await groups.count()) >= 3 ? 3 : await groups.count();
   for (let i = 0; i < milestones; i += 1) {
-    await tabTo(page, /^Cumplido$/);
+    await tabTo(page, /^Cumplido$/, { next: true });
     await page.keyboard.press('Space');
   }
   await expect(page.locator('form input[type=radio]:checked')).toHaveCount(milestones);
