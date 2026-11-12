@@ -91,11 +91,11 @@ export function AccessTaskList({
   const { t } = useTranslation();
   const people = useDataStore((s) => s.people);
   return (
-    <ul className="@container flex flex-col">
+    <ul className="@container -mx-2 flex flex-col">
       {event.accessTasks.map((task) => (
         <li
           key={task.id}
-          className="flex min-h-12 min-w-0 items-start gap-3 border-b border-outline-variant py-2.5 last:border-b-0"
+          className="flex min-h-14 min-w-0 items-start gap-3 border-b border-outline-variant px-2 py-3 last:border-b-0"
         >
           <Icon
             name={task.status === 'done' ? 'check_circle' : task.action === 'grant' ? 'add_circle' : 'do_not_disturb_on'}

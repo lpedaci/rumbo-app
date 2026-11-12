@@ -49,7 +49,10 @@ export function useApprovalText() {
     decided: (a: ApprovalRequest) =>
       a.status === 'pending' || !a.decidedAt
         ? ''
-        : t(`approvals.decidedBy.${a.status}`, { name: nameOf(a.decidedBy), date: formatDate(a.decidedAt.slice(0, 10)) }),
+        : t(`approvals.decidedBy.${a.status}`, {
+            name: nameOf(a.decidedBy),
+            date: formatDate(a.decidedAt.slice(0, 10)),
+          }),
   };
 }
 
@@ -58,10 +61,20 @@ export function useApprovalText() {
  * change and who asked in the middle, with a third line when the viewer cannot decide it; the
  * status on the right. The whole row opens the request.
  */
-export function ApprovalRow({ approval: a, viewerId, onOpen }: { approval: ApprovalRequest; viewerId: string; onOpen: () => void }) {
+export function ApprovalRow({
+  approval: a,
+  viewerId,
+  onOpen,
+}: {
+  approval: ApprovalRequest;
+  viewerId: string;
+  onOpen: () => void;
+}) {
   const { t } = useTranslation();
   const text = useApprovalText();
-  const target = useDataStore((s) => (a.action === 'role.change' ? s.people.find((p) => p.id === a.targetId) : undefined));
+  const target = useDataStore((s) =>
+    a.action === 'role.change' ? s.people.find((p) => p.id === a.targetId) : undefined,
+  );
   const block = decideBlock(a, viewerId);
   // D-118: the viewer's own request says who it is waiting for.
   const people = useDataStore((s) => s.people);
@@ -75,25 +88,30 @@ export function ApprovalRow({ approval: a, viewerId, onOpen }: { approval: Appro
         ? t('approvals.target')
         : undefined;
   return (
-    <li className="@container border-b border-outline-variant last:border-b-0">
+    <li className="border-b border-outline-variant last:border-b-0">
       <button
         type="button"
         onClick={onOpen}
         // Named by its own visible content (WCAG 2.5.3, label in name)
-        className="flex min-h-14 w-full min-w-0 items-start gap-3 rounded-md px-2 py-3 text-left transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
+        className="flex min-h-14 w-full min-w-0 flex-col gap-3 rounded-md px-2 py-3 text-left sm:flex-row sm:items-start transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
       >
-        {target ? <Avatar name={target.name} role={target.role} size="md" /> : <IconTile icon="rule" tone="neutral" />}
-        <span className="flex min-w-0 flex-1 flex-col gap-1.5">
-          {/* Narrow container: the status goes above the title, so the text keeps its width (D-103). */}
-          <ApprovalStatusPill status={a.status} className="w-fit @md:hidden" />
-          <span className="text-title-small text-on-surface">{text.title(a)}</span>
-          <span className="text-body-medium text-on-surface">{text.change(a)}</span>
-          <span className="text-body-small text-on-surface-variant tabular-nums">
-            {a.id} · {a.status === 'pending' ? text.requested(a) : text.decided(a)}
+        <span className="flex min-w-0 flex-1 items-start gap-3">
+          {target ? (
+            <Avatar name={target.name} role={target.role} size="md" />
+          ) : (
+            <IconTile icon="rule" tone="neutral" />
+          )}
+          <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+            <span className="text-title-small text-on-surface">{text.title(a)}</span>
+            <span className="text-body-medium text-on-surface">{text.change(a)}</span>
+            <span className="text-body-small text-on-surface-variant tabular-nums">
+              {a.id} · {a.status === 'pending' ? text.requested(a) : text.decided(a)}
+            </span>
+            {note && <span className="text-body-small text-on-surface-variant">{note}</span>}
           </span>
-          {note && <span className="text-body-small text-on-surface-variant">{note}</span>}
         </span>
-        <ApprovalStatusPill status={a.status} className="hidden shrink-0 @md:inline-flex" />
+        {/* Phones: the status goes on its own line under the content, as in every list (D-106, D-115). */}
+        <ApprovalStatusPill status={a.status} className="shrink-0 self-start" />
       </button>
     </li>
   );

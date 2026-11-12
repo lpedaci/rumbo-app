@@ -25,7 +25,12 @@ export function useDueText() {
   const { t } = useTranslation();
   return (request: PrivacyRequest) => {
     if (request.status === 'answered' || request.status === 'rejected') {
-      return { text: t('privacy.requests.answeredOn', { date: formatDate((request.answeredAt ?? request.createdAt).slice(0, 10)) }), late: false };
+      return {
+        text: t('privacy.requests.answeredOn', {
+          date: formatDate((request.answeredAt ?? request.createdAt).slice(0, 10)),
+        }),
+        late: false,
+      };
     }
     const left = daysLeft(request.dueAt);
     if (left > 0) return { text: t('privacy.requests.dueIn', { count: left }), late: false };
@@ -57,31 +62,36 @@ export function PrivacyRequestRow({
 
   const content = (
     <>
-      {person ? <Avatar name={person.name} role={person.role} size="md" /> : <IconTile icon="policy" tone="neutral" />}
-      <span className="flex min-w-0 flex-1 flex-col gap-1.5">
-        <span className="text-title-small text-on-surface">{title}</span>
-        {person && (
-          <span className="text-body-small text-on-surface-variant">
-            {t(`privacy.types.${r.type}`)} · {r.id}
-          </span>
+      <span className="flex min-w-0 flex-1 items-start gap-3">
+        {person ? (
+          <Avatar name={person.name} role={person.role} size="md" />
+        ) : (
+          <IconTile icon="policy" tone="neutral" />
         )}
-        <span className={cn('text-body-medium text-on-surface', onOpen && 'line-clamp-2')}>{r.detail}</span>
-        <span className="text-body-small text-on-surface-variant tabular-nums">
-          {t('privacy.mine.sentOn', { date: formatDate(r.createdAt.slice(0, 10)) })} ·{' '}
-          {t('privacy.mine.due', { date: formatDate(r.dueAt) })}
+        <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+          <span className="text-title-small text-on-surface">{title}</span>
+          {person && (
+            <span className="text-body-small text-on-surface-variant">
+              {t(`privacy.types.${r.type}`)} · {r.id}
+            </span>
+          )}
+          <span className={cn('text-body-medium text-on-surface', onOpen && 'line-clamp-2')}>{r.detail}</span>
+          <span className="text-body-small text-on-surface-variant tabular-nums">
+            {t('privacy.mine.sentOn', { date: formatDate(r.createdAt.slice(0, 10)) })} ·{' '}
+            {t('privacy.mine.due', { date: formatDate(r.dueAt) })}
+          </span>
+          {showResponse && r.response && (
+            <span className="mt-1 flex flex-col gap-1 rounded-md bg-surface-container p-3">
+              <span className="text-label-medium text-on-surface-variant">{t('privacy.mine.response')}</span>
+              <span className="text-body-medium text-on-surface">{r.response}</span>
+            </span>
+          )}
         </span>
-        {showResponse && r.response && (
-          <span className="mt-1 flex flex-col gap-1 rounded-md bg-surface-container p-3">
-            <span className="text-label-medium text-on-surface-variant">{t('privacy.mine.response')}</span>
-            <span className="text-body-medium text-on-surface">{r.response}</span>
-          </span>
-        )}
       </span>
-      <span className="flex shrink-0 flex-col items-end gap-1.5 text-right">
+      {/* Phones: status and deadline on their own line under the content, as in every list (D-106, D-115). */}
+      <span className="flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1.5 sm:flex-col sm:items-end sm:text-right">
         <PrivacyStatusPill status={r.status} />
-        <span
-          className={cn('flex items-center gap-1 text-label-medium', due.late ? 'text-error' : 'text-on-surface')}
-        >
+        <span className={cn('flex items-center gap-1 text-label-medium', due.late ? 'text-error' : 'text-on-surface')}>
           {due.late && <Icon name="error" size={16} />}
           {due.text}
         </span>
@@ -96,12 +106,12 @@ export function PrivacyRequestRow({
           type="button"
           onClick={onOpen}
           // Named by its own visible content (WCAG 2.5.3, label in name)
-          className="flex min-h-14 w-full min-w-0 items-start gap-3 rounded-md px-2 py-3 text-left transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
+          className="flex min-h-14 w-full min-w-0 flex-col gap-3 rounded-md px-2 py-3 text-left sm:flex-row sm:items-start transition-colors hover:bg-surface-container focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
         >
           {content}
         </button>
       ) : (
-        <div className="flex min-h-14 min-w-0 items-start gap-3 px-2 py-3">{content}</div>
+        <div className="flex min-h-14 min-w-0 flex-col gap-3 px-2 py-3 sm:flex-row sm:items-start">{content}</div>
       )}
     </li>
   );
