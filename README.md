@@ -138,7 +138,7 @@ Integrada desde el diseño, no como revisión al final:
 
 1. **Simulada en la interfaz:** SSO, MFA, bloqueo por intentos, derivación obligatoria a sistemas con **verificación de identidad**, expiración de sesión, permisos por rol y auditoría.
 2. **Aplicada de verdad:** Content Security Policy en el sitio publicado, validación de formularios con esquemas de Zod, sin HTML construido con datos, `npm audit` en CI y dependencias con versión fija.
-3. **Arquitectura de producción:** OIDC/SAML con Entra ID o Google Workspace, SCIM, sesiones con cookies `HttpOnly`, autorización en el servidor y por fila, auditoría inmutable, Ley 25.326 y GDPR.
+3. **Arquitectura de producción:** OIDC/SAML con Entra ID o Google Workspace, SCIM, una capa de borde con Cloudflare (cabeceras de seguridad, WAF, límites de pedidos y protección contra bots y DDoS), sesiones con cookies `HttpOnly`, autorización en el servidor y por fila, auditoría inmutable, Ley 25.326 y GDPR.
 
 Detalle completo, amenazas y mitigaciones en [`docs/security.md`](docs/security.md).
 

@@ -921,6 +921,7 @@ Crear `docs/security.md` explicando cómo se implementaría de verdad, para el c
 - **Datos:** cifrado en tránsito (TLS) y en reposo, separación por empresa cliente (multi-tenant), minimización de datos y plazos de retención.
 - **Auditoría:** registro inmutable de eventos sensibles, con acceso restringido.
 - **Ciclo de vida de identidades:** altas, cambios y bajas sincronizados con el sistema de RRHH y el proveedor de identidad, revocación automática en la fecha de baja y revisiones periódicas de accesos.
+- **Capa de borde** (D-141): Cloudflare (o el equivalente de la nube del cliente) delante de la aplicación, con las cabeceras de seguridad, TLS, WAF, límites de pedidos, gestión de bots, protección DDoS y acceso *Zero Trust* a los entornos internos; figura como subencargado del tratamiento y nunca guarda en caché respuestas con datos personales. No reemplaza la autorización en el servidor.
 - **Detección:** alertas de inicio de sesión inusual basadas en el proveedor de identidad y monitoreo centralizado de eventos.
 - **Cumplimiento:** Ley 25.326 de Protección de los Datos Personales (Argentina) y, para clientes internacionales, GDPR; referencia de controles a OWASP ASVS e ISO/IEC 27001.
 - **Privacidad por diseño:** consentimiento informado del nuevo ingreso, acceso a sus propios datos y criterios explícitos sobre quién ve las autoevaluaciones.

@@ -6,7 +6,7 @@ Rumbo es un **prototipo de portfolio**: corre por completo en el navegador, sin 
 2. **Aplicada de verdad en el front-end:** buenas prácticas reales que sí rigen en el sitio publicado.
 3. **Arquitectura de producción:** cómo se implementaría en un producto real. Es la base para el case study.
 
-Última revisión: 11/11/2026 (paso 11, D-95).
+Última revisión: 12/11/2026 (capa de borde, D-141).
 
 ---
 
@@ -151,7 +151,7 @@ sequenceDiagram
 
 ### 3.8 Cabeceras HTTP
 
-Con un servidor propio o una CDN se enviarían como cabeceras:
+Con un servidor propio o desde la capa de borde (sección 3.9) se enviarían como cabeceras:
 
 | Cabecera | Valor propuesto |
 | --- | --- |
@@ -162,13 +162,39 @@ Con un servidor propio o una CDN se enviarían como cabeceras:
 | `Permissions-Policy` | Desactivar cámara, micrófono, geolocalización y pagos |
 | `Cross-Origin-Opener-Policy` | `same-origin` |
 
-### 3.9 Cumplimiento
+### 3.9 Capa de borde (Cloudflare)
+
+Delante de la aplicación va una capa de borde que recibe todo el tráfico antes que el servidor. Se toma **Cloudflare** como referencia porque cubre en un solo servicio lo que sigue; AWS CloudFront con AWS WAF o Azure Front Door resuelven lo mismo si el cliente ya trabaja con esa nube.
+
+| Qué hace | Cómo se configura | Qué riesgo baja |
+| --- | --- | --- |
+| **Cabeceras de seguridad** | Reglas de transformación (*Transform Rules*) para las cabeceras de la sección 3.8; HSTS desde la configuración de TLS; un Worker inserta el *nonce* de la CSP en cada respuesta | Clickjacking, degradación a HTTP, XSS por estilos o scripts en línea |
+| **TLS** | Solo HTTPS, TLS 1.2 como mínimo y TLS 1.3 activo; certificado también entre el borde y el servidor (modo *Full (strict)*) | Intercepción del tráfico |
+| **Firewall de aplicaciones (WAF)** | Reglas administradas basadas en el OWASP Core Rule Set, más reglas propias para la API | Inyecciones y ataques web conocidos antes de llegar al servidor |
+| **Límite de pedidos** | Reglas de *rate limiting* por IP y por ruta, más estrictas en el inicio de sesión, las exportaciones y la búsqueda | Fuerza bruta, relleno de credenciales y extracción masiva de datos |
+| **Bots** | Gestión de bots con desafío solo ante tráfico sospechoso, nunca un CAPTCHA en el uso normal (WCAG 3.3.8) | Automatización abusiva sin frenar a las personas |
+| **Ataques de denegación de servicio** | Protección DDoS de capa 3, 4 y 7 incluida en el servicio | Caída de la plataforma |
+| **Acceso a entornos internos** | Cloudflare Access (modelo *Zero Trust*) delante de staging y de las herramientas de administración, con el mismo proveedor de identidad (sección 3.1) | Exposición de entornos que no son públicos |
+| **Registros** | Envío de los eventos del borde (bloqueos del WAF, límites alcanzados) al monitoreo centralizado de la sección 3.7 | Detección tardía de un ataque |
+
+**Qué no cambia:** la capa de borde protege el camino hasta la aplicación, no reemplaza la autorización en el servidor (3.3), el cifrado de los datos (3.4) ni la auditoría (3.5). Un pedido que pasa el borde se sigue verificando como cualquier otro.
+
+**Protección de datos:** el borde termina el TLS, así que ve el tráfico descifrado. Por eso:
+
+- Cloudflare figura como **subencargado del tratamiento** en los acuerdos con cada empresa cliente (GDPR, art. 28; Ley 25.326), con su acuerdo de tratamiento de datos firmado.
+- La caché del borde se usa solo para los archivos estáticos de la aplicación; las respuestas de la API llevan `Cache-Control: no-store` y nunca se guardan en el borde.
+- Los registros del borde no guardan cuerpos de pedidos ni datos personales más allá de la IP, con la misma retención que el resto del monitoreo.
+- Si un cliente exige que los datos no salgan de una región, se usan los servicios de localización regional del proveedor o la alternativa de su nube.
+
+**En la demo actual:** GitHub Pages no permite enviar cabeceras, y por eso `frame-ancestors` y HSTS quedan pendientes (sección 2.1). Poner Cloudflare delante de la demo requiere un dominio propio (por ejemplo, `rumbo.<dominio>.com` apuntado a `lpedaci.github.io`) y una cuenta de Cloudflare. Con eso se aplicarían de verdad las cabeceras de la sección 3.8, salvo el *nonce* de la CSP, que necesita un Worker. No cambiaría la seguridad simulada ni los datos, que viven en el navegador de cada visitante. Queda como paso opcional si la demo se muda a un dominio propio.
+
+### 3.10 Cumplimiento
 
 - **Argentina:** Ley 25.326 de Protección de los Datos Personales: consentimiento informado, derechos de acceso, rectificación y supresión (F10), y registro de las bases de datos.
 - **Clientes internacionales:** GDPR, con acuerdos de tratamiento de datos con cada cliente y con los subencargados.
 - **Controles de referencia:** OWASP ASVS (nivel 2) para la aplicación e ISO/IEC 27001 para el sistema de gestión de seguridad.
 
-### 3.10 Privacidad por diseño
+### 3.11 Privacidad por diseño
 
 - Aviso de privacidad y consentimiento la primera vez que alguien entra (F10), con versión y fecha de aceptación.
 - Cada persona puede ver los datos que la plataforma tiene sobre ella y pedir correcciones.
@@ -182,17 +208,21 @@ Con un servidor propio o una CDN se enviarían como cabeceras:
 | --- | --- | --- |
 | Robo de credenciales por phishing | SSO con MFA resistente al phishing; Rumbo no tiene contraseñas propias | Simulado; la pantalla de SSO no imita al proveedor |
 | Ingeniería social sobre la mesa de ayuda | Verificación con datos registrados de antemano; nunca con los que trae la solicitud | Implementado en S2 |
-| Fuerza bruta | Bloqueo por intentos en el proveedor y límites de frecuencia | Simulado (5 intentos) |
+| Fuerza bruta y relleno de credenciales | Bloqueo por intentos en el proveedor y límites de frecuencia en el borde (3.9) | Simulado (5 intentos) |
 | XSS | CSP estricta, React escapa el texto, sin HTML de usuario | CSP aplicada en el build; sin `dangerouslySetInnerHTML` |
 | Robo de sesión | Cookies `HttpOnly`, `Secure`, `SameSite`; sesiones cortas | La sesión de demo no es una credencial real |
 | Acceso a datos de otro equipo o empresa | Autorización en el servidor y por fila | `can()` y filtros por rol en el cliente |
 | Escalada de privilegios | Doble aprobación y auditoría de cambios de rol | Fase B (F14) |
 | Dependencias vulnerables | `npm audit` en CI, versiones fijas, actualizaciones periódicas | Aplicado |
-| Clickjacking | `frame-ancestors 'none'` como cabecera | No aplicable en GitHub Pages; documentado |
+| Clickjacking | `frame-ancestors 'none'` como cabecera, enviada desde el borde (3.9) | No aplicable en GitHub Pages; aplicable con un dominio propio detrás de Cloudflare |
+| Denegación de servicio y bots | Protección DDoS, gestión de bots y límites de pedidos en el borde (3.9) | No aplica: sitio estático en GitHub Pages |
+| Ataques web conocidos (inyección, rutas maliciosas) | WAF con el OWASP Core Rule Set en el borde, más validación en el servidor | Validación con Zod en el cliente |
 
 ---
 
 ## Referencias
+
+Cloudflare. (s.f.). *Cloudflare Web Application Firewall (WAF)*. Cloudflare Docs. https://developers.cloudflare.com/waf/
 
 European Parliament & Council of the European Union. (2016). *Regulation (EU) 2016/679 (General Data Protection Regulation)*. https://eur-lex.europa.eu/eli/reg/2016/679/oj
 
@@ -205,5 +235,7 @@ Ley 25.326 de Protección de los Datos Personales. (2000). Boletín Oficial de l
 OpenID Foundation. (2014). *OpenID Connect Core 1.0*. https://openid.net/specs/openid-connect-core-1_0.html
 
 OWASP Foundation. (2021). *Application Security Verification Standard 4.0.3*. https://owasp.org/www-project-application-security-verification-standard/
+
+OWASP Foundation. (s.f.). *OWASP ModSecurity Core Rule Set*. https://coreruleset.org/
 
 World Wide Web Consortium. (2023). *Content Security Policy Level 3*. https://www.w3.org/TR/CSP3/

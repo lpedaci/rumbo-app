@@ -518,3 +518,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 ## Ajustes · Estados de carga, 12/11/2026 (D-140)
 
 - Un esqueleto por plantilla de página, en el producto (al cargar y la primera vez que se abre cada pantalla) y en el sitio del sistema de diseño.
+
+## Ajustes · Capa de borde, 12/11/2026 (D-141)
+
+- `docs/security.md` documenta Cloudflare como capa de borde de producción (cabeceras, TLS, WAF, límites, bots, DDoS y acceso a entornos internos) y su tratamiento como subencargado de datos.
