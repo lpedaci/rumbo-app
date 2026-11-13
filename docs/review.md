@@ -192,9 +192,9 @@ En WebKit, como en Safari sin la opción "Resaltar cada ítem con Tab", la tecla
 
 ## 7. Dudas y decisiones
 
-`docs/decisions.md` registra **138 decisiones** (D-01 a D-138). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Ya no queda ninguna pendiente de confirmación: **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
+`docs/decisions.md` registra **139 decisiones** (D-01 a D-139). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Ya no queda ninguna pendiente de confirmación: **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
 
-Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región), D-132 (no pedir dos veces el mismo dato), D-133 (cifra de pantallas, imagen para compartir y numeración de patrones), D-134 (ajustes de mobile) D-135 (la plataforma no guarda la cuenta bancaria) D-136 (flujos por pasos de tamaño fijo) D-137 (diez retratos nuevos) y D-138 (cada pantalla abre desde arriba).
+Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región), D-132 (no pedir dos veces el mismo dato), D-133 (cifra de pantallas, imagen para compartir y numeración de patrones), D-134 (ajustes de mobile) D-135 (la plataforma no guarda la cuenta bancaria) D-136 (flujos por pasos de tamaño fijo) D-137 (diez retratos nuevos) D-138 (cada pantalla abre desde arriba) y D-139 (README y pantallas de la portada capturadas desde la app).
 
 ---
 
@@ -212,7 +212,7 @@ Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria 
 | `information-architecture.md` | Completo | G11 sin el rótulo de fase B; resultados de card sorting y tree testing pendientes |
 | `design-system.md` | Completo | Incluye `ErrorSummary`, casilla con área táctil, preferencias y alto contraste |
 | `security.md` | Completo | Producción, separación de funciones y exportaciones |
-| `issues.md` | Completo | 39 incidencias; solo INC-001 sigue abierta |
+| `issues.md` | Completo | 41 incidencias; solo INC-001 sigue abierta |
 | `decisions.md` | Completo | Ver sección 7 |
 | `progress.md` | Completo | Pasos 0 a 25 |
 | `visual-audit.md` | Completo | Del piloto |

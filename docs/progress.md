@@ -510,3 +510,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 ## Ajustes · Desplazamiento al cambiar de pantalla, 12/11/2026 (D-138)
 
 - Cada pantalla nueva abre desde arriba (`ScrollToTop`), con test de Playwright en los tres motores.
+
+## Ajustes · README y pantallas de la portada, 12/11/2026 (D-139)
+
+- README con funciones por área y fotos con anillo de rol; pantallas del hero de G0 capturadas desde la app con `npm run og`; imagen para compartir regenerada.

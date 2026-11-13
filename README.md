@@ -16,7 +16,7 @@ Plataforma B2B de onboarding corporativo · Caso de diseño UX/UI y prototipo na
 ![Idiomas](https://img.shields.io/badge/idiomas-es%20%C2%B7%20en-9C3D74)
 ![Datos ficticios](https://img.shields.io/badge/datos-100%25%20ficticios-4A6366)
 
-<img src="docs/readme/hero.jpg" alt="Portada de Rumbo: titular, tarjetas reales del producto con tareas a tiempo, alertas para RRHH, dónde se traban los recorridos y el avance de un recorrido" width="900" />
+<img src="docs/readme/hero.jpg" alt="Portada de Rumbo: el titular «Cada persona sabe qué hacer, con quién y para cuándo» y, debajo, los inicios de Sofía, Carla y Martín superpuestos" width="900" />
 
 </div>
 
@@ -35,19 +35,18 @@ En muchas empresas, el ingreso de una persona nueva depende de planillas, correo
 
 Rumbo convierte el ingreso en un **recorrido por etapas** (preingreso, semana 1, mes 1, días 30 a 90) que RRHH diseña una vez por puesto y que se adapta a cada fecha de ingreso. Cada tarea tiene responsable, plazo y dependencias; el jefe acompaña con **check-ins 30/60/90**; y RRHH ve en un panel **dónde se traban los recorridos** para actuar a tiempo.
 
-Alrededor del núcleo está lo que se espera de una plataforma corporativa:
+Se construyó en dos fases: primero el **núcleo** del producto y después la **base corporativa**, lo que se espera de cualquier plataforma que maneja datos de personas.
 
-| Núcleo (fase A) | Base corporativa (fase B) |
-| --- | --- |
-| Inicio de sesión con SSO y verificación en dos pasos simulados, bloqueo y derivación a sistemas | Centro de notificaciones con vista previa del correo |
-| Mi recorrido, con tareas, cursos y dependencias | Plantillas con borrador, publicación, versiones y comparación |
-| Constructor de plantillas con arrastrar y soltar y su alternativa por teclado | Comentarios con menciones en las tareas |
-| Alta de ingresos con fechas calculadas | Aviso de privacidad, datos ocultos y solicitudes de la Ley 25.326 |
-| Panel de seguimiento con alertas | Sesiones activas y alertas de inicio de sesión inusual |
-| Check-ins 30/60/90 con escalamiento a RRHH | Altas, cambios de puesto y bajas con sus accesos |
-| Solicitudes de acceso, auditoría, permisos y políticas | Doble aprobación y revisión periódica de accesos |
-| | Búsqueda global, ayuda por pantalla, reportes en CSV y vistas para imprimir |
-| | Preferencias e interfaz completa en español e inglés |
+| Área | Núcleo (fase A) | Base corporativa (fase B) |
+| --- | --- | --- |
+| **Acceso y seguridad** | Inicio de sesión con SSO y verificación en dos pasos simulados, bloqueo por intentos y derivación a sistemas | Sesiones activas, alertas de inicio de sesión inusual y doble aprobación de cambios sensibles |
+| **Recorrido** | Mi recorrido por etapas, con tareas, cursos y dependencias | Comentarios con menciones en cada tarea |
+| **Plantillas** | Constructor con arrastrar y soltar y su alternativa por teclado | Borrador, publicación, versiones y comparación |
+| **Personas e ingresos** | Alta de ingresos con fechas calculadas desde la plantilla | Personas y catálogos; altas, cambios de puesto y bajas con sus accesos |
+| **Seguimiento** | Panel con alertas y check-ins 30/60/90 con escalamiento a RRHH | Centro de notificaciones, reportes en CSV y vistas para imprimir |
+| **Control** | Solicitudes de acceso, auditoría, matriz de permisos y políticas | Revisión periódica de accesos por cada jefe |
+| **Privacidad** | Mínimo privilegio: cada rol ve solo lo que necesita | Aviso de privacidad, DNI y CUIL ocultos y solicitudes de la Ley 25.326 |
+| **Uso diario** | Cambio de rol con «Ver como», aviso de sesión por vencer y «Restablecer demo» | Búsqueda global, ayuda por pantalla, preferencias y la interfaz completa en español e inglés |
 
 ---
 
@@ -55,12 +54,12 @@ Alrededor del núcleo está lo que se espera de una plataforma corporativa:
 
 La demo se recorre con cuatro personas ficticias de **Nortia S.A.** y se puede cambiar de rol en cualquier momento con el selector **Ver como**.
 
-| | Rol | Qué hace | Pantallas principales |
-| --- | --- | --- | --- |
-| <img src="src/assets/avatars/carla.webp" alt="" width="48" /> | **Carla Méndez** · RRHH | Diseña plantillas por puesto, da de alta ingresos, sigue el avance y las alertas y gestiona personas, privacidad y reportes | Panel (A1), ingresos (A2 a A4), plantillas y versiones (A5 a A8), personas (A9, A10), altas y bajas (A11), privacidad (A12), reportes (A13) |
-| <img src="src/assets/avatars/martin.webp" alt="" width="48" /> | **Martín Rossi** · Jefe directo | Acompaña a su equipo, hace los check-ins, escala a RRHH si un hito no se cumple y revisa los accesos de su equipo | Mi equipo (J1), ficha (J2), check-in (J3), revisión de accesos (J4) |
-| <img src="src/assets/avatars/sofia.webp" alt="" width="48" /> | **Sofía Ramírez** · Nuevo ingreso | Ve su recorrido, completa tareas, comenta y responde su autoevaluación | Mi recorrido (N1), tarea (N2), autoevaluación (N3) |
-| <img src="src/assets/avatars/diego.webp" alt="" width="48" /> | **Diego Ferreyra** · Sistemas | Atiende solicitudes de acceso verificando la identidad, otorga y revoca accesos, aprueba cambios sensibles y revisa la auditoría | Solicitudes (S1, S2), seguridad y auditoría (S3), accesos (S4), revisiones (S5, S6), aprobaciones (S7) |
+| Persona | Qué hace | Pantallas principales |
+| :---: | --- | --- |
+| <img src="docs/readme/people/carla.png" alt="" width="56" height="56" /><br/>**Carla Méndez**<br/>RRHH | Diseña plantillas por puesto, da de alta ingresos, sigue el avance y las alertas y gestiona personas, privacidad y reportes | Panel (A1), ingresos (A2 a A4), plantillas y versiones (A5 a A8), personas (A9, A10), altas y bajas (A11), privacidad (A12), reportes (A13) |
+| <img src="docs/readme/people/martin.png" alt="" width="56" height="56" /><br/>**Martín Rossi**<br/>Jefe directo | Acompaña a su equipo, hace los check-ins, escala a RRHH si un hito no se cumple y revisa los accesos de su equipo | Mi equipo (J1), ficha (J2), check-in (J3), revisión de accesos (J4) |
+| <img src="docs/readme/people/sofia.png" alt="" width="56" height="56" /><br/>**Sofía Ramírez**<br/>Nuevo ingreso | Ve su recorrido, completa tareas, comenta y responde su autoevaluación | Mi recorrido (N1), tarea (N2), autoevaluación (N3) |
+| <img src="docs/readme/people/diego.png" alt="" width="56" height="56" /><br/>**Diego Ferreyra**<br/>Sistemas | Atiende solicitudes de acceso verificando la identidad, otorga y revoca accesos, aprueba cambios sensibles y revisa la auditoría | Solicitudes (S1, S2), seguridad y auditoría (S3), accesos (S4), revisiones (S5, S6), aprobaciones (S7) |
 
 Todos tienen además notificaciones (G9), búsqueda (G12), Mi seguridad (G5), Mi privacidad (G10) y Preferencias (G11): **40 pantallas** en total.
 
@@ -217,7 +216,7 @@ src/
   locales/      es.json y en.json
   styles/       tokens de Material 3 y utilidades
 docs/           documentación del proyecto (ver docs/README.md)
-e2e/            pruebas de desbordes, áreas táctiles y accesibilidad con Playwright
+e2e/            pruebas con Playwright: desbordes, áreas táctiles, axe, teclado, botón principal y desplazamiento
 ```
 
 ---
@@ -225,14 +224,14 @@ e2e/            pruebas de desbordes, áreas táctiles y accesibilidad con Playw
 ## Calidad
 
 ![Vitest](https://img.shields.io/badge/Vitest-355%20tests-6E9F18?logo=vitest&logoColor=white)
-![Playwright](https://img.shields.io/badge/Playwright-612%20pruebas-2EAD33?logo=playwright&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-613%20pruebas-2EAD33?logo=playwright&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI-2088FF?logo=githubactions&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deploy-222222?logo=githubpages&logoColor=white)
 
 - **Tests unitarios y de componentes** (Vitest y Testing Library): reglas de negocio, permisos, contraste de tokens y flujos de cada rol.
 - **Desbordes en 6 anchos** (320, 375, 768, 1024, 1280 y 1440 px) con capturas en [`docs/screenshots/`](docs/screenshots/), **áreas táctiles de 48 px** en mobile y **axe** en cada pantalla (Playwright).
-- **Tres navegadores:** Chromium (y con él Edge), WebKit (el motor de Safari) y Firefox para desbordes y para cuatro flujos hechos solo con el teclado; un botón principal por región verificado en todas las pantallas.
+- **Tres navegadores:** Chromium (y con él Edge), WebKit (el motor de Safari) y Firefox para desbordes, cuatro flujos hechos solo con el teclado y que cada pantalla nueva abra desde arriba; un botón principal por región verificado en todas las pantallas.
 - **Rendimiento:** Lighthouse contra el build de producción con 98 a 100 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO ([`docs/review.md`](docs/review.md)).
 - **CI en cada push:** auditoría de dependencias, lint, tests, build, control de la CSP y deploy a GitHub Pages.
 
@@ -252,7 +251,8 @@ npm run dev
 | `npm run dev` | Servidor de desarrollo en `http://localhost:5173` |
 | `npm run build` | Chequeo de tipos y build de producción en `dist/` |
 | `npm test` | Tests unitarios y de componentes |
-| `npm run test:e2e` | Desbordes, áreas táctiles y accesibilidad en 6 anchos, con capturas |
+| `npm run test:e2e` | Desbordes, áreas táctiles y accesibilidad en 6 anchos (con capturas), flujos con teclado y desplazamiento |
+| `npm run og` | Regenera las pantallas de la portada, la imagen para compartir, la portada de este README, las figuras y los wireflows |
 | `npm run lint` | ESLint |
 | `npm run preview` | Sirve el build de producción en `http://localhost:4173` |
 | `npm run perf:lighthouse` | Lighthouse en G0, G1, N1 y A1 contra el build (con `npm run preview` abierto) |
@@ -273,7 +273,7 @@ En la portada, elige un recorrido e inicia sesión con un clic; todo está preca
 ## Créditos
 
 - **Diseño y desarrollo:** Lourdes Pedaci, Experience Designer (Learning y UX/UI) · [LinkedIn](https://www.linkedin.com/in/lourdes-pedaci/) · [Portfolio](https://lpedaci.github.io/portfolio/) · [GitHub](https://github.com/lpedaci)
-- **Fotos de personas:** Magnific (antes Freepik), con licencia; detalle en [`src/assets/avatars/SOURCE.md`](src/assets/avatars/SOURCE.md).
+- **Fotos de personas:** Magnific (antes Freepik), con licencia, para todas las personas de la demo; detalle en [`src/assets/avatars/SOURCE.md`](src/assets/avatars/SOURCE.md).
 - **Íconos:** Material Symbols (Google), Apache 2.0. **Tipografía:** Inter, SIL Open Font License.
 - Nortia S.A., sus personas y sus datos son ficticios. Los logos de Microsoft y Google se usan solo en los botones de inicio de sesión simulados.
 
