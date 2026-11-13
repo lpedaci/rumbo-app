@@ -449,7 +449,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     1. Logo y nombre de Rumbo, y una frase que diga qué es y qué problema resuelve (por ejemplo: "Cada persona sabe qué hacer, con quién y para cuándo").
     2. Breve explicación de la demo: es un prototipo con datos ficticios de una empresa inventada, Nortia S.A.
     3. **Elección del recorrido:** cuatro tarjetas, una por rol (Carla, RRHH; Martín, jefe directo; Sofía, nuevo ingreso; Diego, sistemas). Cada una con la foto de la persona, la barra y el chip del color de su rol, qué hace y qué va a poder recorrer (2 o 3 puntos concretos).
-    4. Botones "Ver el case study" y "Ver la documentación" (al `docs/README.md` del repositorio). La URL del case study sale de una constante `CASE_STUDY_URL` en un único archivo de configuración; mientras el case study no esté publicado, apunta al portfolio: `https://lpedaci.github.io/portfolio/`. El botón se muestra siempre.
+    4. Botones "Ver el case study" y "Ver la documentación" (al `docs/README.md` del repositorio). La URL del case study sale de una constante `CASE_STUDY_URL` en un único archivo de configuración; apunta al case study publicado: `https://lpedaci.github.io/portfolio/casos/rumbo/` (D-143). El botón se muestra siempre.
     5. "Restablecer demo".
 - Al elegir una tarjeta se abre el login con ese rol preseleccionado (`/login?demo=carla`, `martin`, `sofia` o `diego`).
 - **Estructura de página de producto B2B** (D-70 y D-71, a partir de dos referencias de Lourdes):

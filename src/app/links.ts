@@ -4,8 +4,8 @@
  */
 export const DOCS_URL = 'https://github.com/lpedaci/rumbo-app/blob/main/docs/README.md';
 
-/** Case study in Lourdes's portfolio. Until it is published, it points to the portfolio home (D-41). */
-export const CASE_STUDY_URL = 'https://lpedaci.github.io/portfolio/';
+/** Case study in Lourdes's portfolio (D-41; published on 12/11/2026, D-143). */
+export const CASE_STUDY_URL = 'https://lpedaci.github.io/portfolio/casos/rumbo/';
 
 /** Public design system site inside the app (D-98). */
 export const DESIGN_SYSTEM_PATH = '/design-system';

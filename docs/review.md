@@ -192,9 +192,9 @@ En WebKit, como en Safari sin la opción "Resaltar cada ítem con Tab", la tecla
 
 ## 7. Dudas y decisiones
 
-`docs/decisions.md` registra **142 decisiones** (D-01 a D-142). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Quedan dos para que Lourdes confirme: **D-137** (a quién se asignó cada retrato nuevo) y **D-141** (si se quiere un dominio propio para activar Cloudflare en la demo). **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
+`docs/decisions.md` registra **143 decisiones** (D-01 a D-143). Casi todas están tomadas, confirmadas por Lourdes o incorporadas a la spec. Quedan dos para que Lourdes confirme: **D-137** (a quién se asignó cada retrato nuevo) y **D-141** (si se quiere un dominio propio para activar Cloudflare en la demo). **D-53** se ajustó a pedido de Lourdes ("Ver como" también pregunta, con guardar borrador, descartar o quedarse) y **D-105** quedó confirmada (7 a 11 notificaciones por persona, generadas a partir de los datos), con CLAUDE.md actualizado.
 
-Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región), D-132 (no pedir dos veces el mismo dato), D-133 (cifra de pantallas, imagen para compartir y numeración de patrones), D-134 (ajustes de mobile) D-135 (la plataforma no guarda la cuenta bancaria) D-136 (flujos por pasos de tamaño fijo) D-137 (diez retratos nuevos) D-138 (cada pantalla abre desde arriba) D-139 (README y pantallas de la portada capturadas desde la app) D-140 (estados de carga por plantilla de página) D-141 (capa de borde con Cloudflare en la arquitectura de producción) y D-142 (cifras de atrasos por responsable confirmadas y fijadas por un test).
+Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria solo de visualización, números según el idioma), D-130 (resumen de errores, esquemas de Zod de fase B y áreas táctiles verificadas) D-131 (salida con cambios sin guardar, división del paquete, Lighthouse, navegadores, teclado y botón principal por región), D-132 (no pedir dos veces el mismo dato), D-133 (cifra de pantallas, imagen para compartir y numeración de patrones), D-134 (ajustes de mobile) D-135 (la plataforma no guarda la cuenta bancaria) D-136 (flujos por pasos de tamaño fijo) D-137 (diez retratos nuevos) D-138 (cada pantalla abre desde arriba) D-139 (README y pantallas de la portada capturadas desde la app) D-140 (estados de carga por plantilla de página) D-141 (capa de borde con Cloudflare en la arquitectura de producción) D-142 (cifras de atrasos por responsable confirmadas y fijadas por un test) y D-143 (enlace al case study publicado).
 
 ---
 
@@ -235,6 +235,5 @@ Decisiones de este último tramo: D-129 (preferencias por persona, zona horaria 
 
 1. Prueba con NVDA (Lourdes) y registrar lo que aparezca en `issues.md`.
 2. Recorrer la demo publicada en un iPhone y en un Android reales.
-3. Publicar el case study y apuntar `CASE_STUDY_URL` a su página.
-4. Validar proto-personas e IA con usuarios y completar las secciones de resultados.
-5. Líneas futuras de la sección 9: vista de dirección y asistente conversacional.
+3. Validar proto-personas e IA con usuarios y completar las secciones de resultados.
+4. Líneas futuras de la sección 9: vista de dirección y asistente conversacional.

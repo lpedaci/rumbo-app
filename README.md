@@ -8,7 +8,7 @@
 
 Plataforma B2B de onboarding corporativo · Caso de diseño UX/UI y prototipo navegable de alta fidelidad
 
-[**Ver la demo**](https://lpedaci.github.io/rumbo-app/) · [Case study](https://lpedaci.github.io/portfolio/) · [Documentación](docs/README.md) · [Sistema de diseño](https://lpedaci.github.io/rumbo-app/#/design-system)
+[**Ver la demo**](https://lpedaci.github.io/rumbo-app/) · [Case study](https://lpedaci.github.io/portfolio/casos/rumbo/) · [Documentación](docs/README.md) · [Sistema de diseño](https://lpedaci.github.io/rumbo-app/#/design-system)
 
 ![Deploy](https://img.shields.io/github/actions/workflow/status/lpedaci/rumbo-app/deploy.yml?branch=main&label=CI%20%C2%B7%20deploy&logo=githubactions&logoColor=white)
 ![WCAG 2.2 AA](https://img.shields.io/badge/WCAG-2.2%20AA-1F6F78?logo=w3c&logoColor=white)
