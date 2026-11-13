@@ -143,7 +143,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 **Cómo queda la demo con la semilla**
 - 6 ingresos activos, 2 próximos a ingresar y 3 finalizados.
 - 86 % de tareas a tiempo, 5 recorridos con atraso y 75 % de avance promedio.
-- IT es el cuello de botella: 7 tareas atrasadas, contra 3 de la persona nueva y 1 del jefe.
+- IT es el cuello de botella: 7 tareas atrasadas, contra 3 de la persona nueva y 1 del jefe (de 11; confirmado el 12/11/2026 en el panel y fijado por un test, D-142).
 - Alertas: el check-in escalado de Valentina, tareas bloqueadas de Lucas (42 días) y de Agustina (13 días), y los check-ins vencidos de Camila y Valentina.
 - Sofía, el día 28: 72 % de avance, una lectura vencida, "Primer análisis guiado" en curso, que vence hoy, y el check-in de 30 días pendiente para el 12/11/2026.
 

@@ -105,6 +105,14 @@ describe('bottleneck attribution', () => {
     expect(byOwner.it).toBeGreaterThan(byOwner.hire);
   });
 
+  // Figures cited in the case study (D-142): if the seed changes them, this test fails so the
+  // published text is reviewed before the demo shows something different.
+  it('matches the published figures: IT 7, new hire 3, manager 1, out of 11', () => {
+    const byOwner = overdueByOwner(seed.hires);
+    expect(byOwner).toEqual({ it: 7, hire: 3, manager: 1, buddy: 0, hr: 0, facilities: 0 });
+    expect(Object.values(byOwner).reduce((sum, n) => sum + n, 0)).toBe(11);
+  });
+
   it('raises one blocked alert per journey', () => {
     const blocked = alerts(seed.hires).filter((a) => a.kind === 'task_blocked');
     expect(new Set(blocked.map((a) => a.hireId)).size).toBe(blocked.length);

@@ -224,7 +224,7 @@ e2e/            pruebas con Playwright: desbordes, áreas táctiles, axe, teclad
 
 ## Calidad
 
-![Vitest](https://img.shields.io/badge/Vitest-379%20tests-6E9F18?logo=vitest&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-380%20tests-6E9F18?logo=vitest&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-614%20pruebas-2EAD33?logo=playwright&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI-2088FF?logo=githubactions&logoColor=white)
