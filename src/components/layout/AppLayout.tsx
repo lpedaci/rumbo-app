@@ -1,9 +1,9 @@
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { PageSkeleton } from '@/components/ui/PageSkeleton';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
 import { BackToTop } from './BackToTop';
+import { RouteLoading } from './RouteLoading';
 import { BottomNav, MobileNavDrawer, SideNav } from './MainNav';
 import { SessionTimeout } from './SessionTimeout';
 import { TopBar } from './TopBar';
@@ -70,10 +70,11 @@ export function AppLayout() {
             <div className="w-full min-w-0 min-[120rem]:px-[10%]">
               {/* Remounted when the date format or time zone change, so every date is shown again */}
               <div key={`${prefs?.dateFormat}-${prefs?.timezone}`} className="contents">
-                {/* The bar and the menu stay while the screen's code loads (D-131) */}
-                <Suspense fallback={<PageSkeleton />}>
+                {/* The bar and the menu stay while the screen loads, with the skeleton of its
+                    page template (D-131, D-140) */}
+                <RouteLoading>
                   <Outlet />
-                </Suspense>
+                </RouteLoading>
               </div>
             </div>
           </main>

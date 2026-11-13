@@ -39,4 +39,4 @@ jobs:
         run: npx playwright install --with-deps ${{ matrix.browser }}
 
       - name: Overflow at 6 widths and keyboard flows
-        run: npx playwright test e2e/overflow.spec.ts e2e/keyboard.spec.ts e2e/scroll.spec.ts --project=${{ matrix.browser }} --reporter=github,line
+        run: npx playwright test e2e/overflow.spec.ts e2e/keyboard.spec.ts e2e/scroll.spec.ts e2e/loading.spec.ts --project=${{ matrix.browser }} --reporter=github,line

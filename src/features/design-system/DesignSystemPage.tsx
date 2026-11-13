@@ -14,6 +14,7 @@ import { useRevealOnce } from '@/lib/use-reveal-once';
 import { cn } from '@/lib/utils';
 import { ComponentsSection } from './DsComponents';
 import { AppLayersFigure, TokenTiersFigure } from './DsFigures';
+import { LoadingSection } from './DsLoading';
 import { ColorSection, IconsSection, MotionSection, SpaceSection, TypeSection } from './DsFoundations';
 
 type SectionId =
@@ -26,6 +27,7 @@ type SectionId =
   | 'motion'
   | 'components'
   | 'patterns'
+  | 'loading'
   | 'a11y'
   | 'voice'
   | 'app';
@@ -33,7 +35,7 @@ type SectionId =
 const GROUPS: { key: 'foundations' | 'components' | 'patterns' | 'guidelines'; ids: SectionId[] }[] = [
   { key: 'foundations', ids: ['principles', 'tokens', 'color', 'type', 'space', 'icons', 'motion'] },
   { key: 'components', ids: ['components'] },
-  { key: 'patterns', ids: ['patterns', 'app'] },
+  { key: 'patterns', ids: ['patterns', 'loading', 'app'] },
   { key: 'guidelines', ids: ['a11y', 'voice'] },
 ];
 const ORDER = GROUPS.flatMap((g) => g.ids);
@@ -401,6 +403,9 @@ export function DesignSystemPage() {
                     </li>
                   ))}
                 </ul>
+              </DsSection>
+              <DsSection id="loading">
+                <LoadingSection />
               </DsSection>
               <DsSection id="app">
                 <AppLayersFigure />

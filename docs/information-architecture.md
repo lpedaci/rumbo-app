@@ -183,7 +183,7 @@ Jerarquía de secciones y pantallas que ve cada rol. Las líneas punteadas son d
 
 ## 7. Plantillas de página
 
-Cinco tipos de pantalla con zonas fijas. Todas comparten el layout G6 (header, menú lateral y área de contenido con un único `h1`).
+Cinco tipos de pantalla con zonas fijas. Todas comparten el layout G6 (header, menú lateral y área de contenido con un único `h1`). Cada plantilla tiene su esqueleto de carga con la misma forma (`PageSkeleton`, D-140); el listado tiene además la variante de catálogo de tarjetas (A5).
 
 | Plantilla | Pantallas | Zonas, de arriba hacia abajo |
 | --- | --- | --- |

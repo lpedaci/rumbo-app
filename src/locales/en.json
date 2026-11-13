@@ -1905,6 +1905,11 @@
         "title": "Solutions that repeat across the product",
         "intro": "Each pattern comes from a recorded decision. The number points to docs/decisions.md."
       },
+      "loading": {
+        "eyebrow": "Loading states",
+        "title": "The shape of the screen before its data",
+        "intro": "While a screen loads, it shows gray blocks in the shape of what is coming, on the same white cards. There is one per page template."
+      },
       "a11y": {
         "eyebrow": "Accessibility",
         "title": "WCAG 2.2 AA by design",
@@ -2429,6 +2434,49 @@
       "repo": "Repository",
       "demo": "Back to Rumbo",
       "credits": "Icons: Material Symbols (Apache 2.0). Typeface: Inter (SIL OFL). People photos: Magnific, licensed."
+    },
+    "loading": {
+      "choose": "Page template",
+      "kinds": {
+        "dashboard": {
+          "name": "Panel",
+          "body": "Each role's home, security and reports: greeting with chips, KPI row, main chart and alerts."
+        },
+        "list": {
+          "name": "Listing",
+          "body": "Hires, people, requests and the other listings: title with an action, search and filters, and rows with avatar, two lines and status."
+        },
+        "cards": {
+          "name": "Catalog",
+          "body": "Templates: a grid of cards with icon, name, chips, figures and status."
+        },
+        "detail": {
+          "name": "Record",
+          "body": "Hire, person, task, request and campaign records: photo next to the name, chips, main list and label-value details."
+        },
+        "form": {
+          "name": "Form",
+          "body": "New hire, check-ins and preferences: fields with label, input and supporting text, and the footer with the actions."
+        },
+        "steps": {
+          "name": "Step flow",
+          "body": "Sign-in and privacy notice: logo, title and the step card, outside the layout."
+        }
+      },
+      "rules": [
+        [
+          "Shape, not filler",
+          "Each block is as tall as the line it stands for (title, text, pill, field or button) and uses the real radii, so the screen does not jump when the content arrives."
+        ],
+        [
+          "Opacity pulse only",
+          "Blocks breathe between 100% and 55% opacity, with no animated gradient (2.6). With \"reduce motion\" they stay still."
+        ],
+        [
+          "Announced once",
+          "The skeleton is a status (\"Loading…\") for screen readers; the blocks are decorative. The bar and the menu stay visible and usable."
+        ]
+      ]
     }
   },
   "notifications": {
@@ -2513,7 +2561,10 @@
           "title": "Role change to approve",
           "body": "{{request}}: role change for {{person}}. It needs a second IT person."
         },
-        "export_pending": {"title": "Export with sensitive data to approve", "body": "{{request}}: {{person}} asks to export people with DNI and CUIL unhidden."},
+        "export_pending": {
+          "title": "Export with sensitive data to approve",
+          "body": "{{request}}: {{person}} asks to export people with DNI and CUIL unhidden."
+        },
         "policy_pending": {
           "title": "Policy change to approve",
           "body": "{{request}}: change to the {{policy}}. It needs a second person in IT."
@@ -3183,7 +3234,16 @@
       "leaverNote": "On the effective date the account is disabled, its sessions are closed and the manager is told."
     },
     "detail": {
-      "facts": {"type": "Type", "change": "Change", "leaverType": "Type of leaver", "effective": "Effective date", "registered": "Registered", "registeredValue": "{{date}} by {{name}}", "progress": "Progress", "note": "Details"},
+      "facts": {
+        "type": "Type",
+        "change": "Change",
+        "leaverType": "Type of leaver",
+        "effective": "Effective date",
+        "registered": "Registered",
+        "registeredValue": "{{date}} by {{name}}",
+        "progress": "Progress",
+        "note": "Details"
+      },
       "title": "{{id}} · {{type}}",
       "tasks": "Access",
       "grant": "Grant",
@@ -3485,7 +3545,15 @@
     "generic": "This screen",
     "genericPurpose": "Use the menu to move through your role's sections. If something does not work as expected, write to the help desk.",
     "screens": {
-      "preferences": {"title": "Preferences", "purpose": "How you see Rumbo and where you get notifications.", "points": ["Change the language, time zone and date format.", "Choose whether each kind of notification arrives in the app, by email or both.", "Turn on reduced motion or high contrast."]},
+      "preferences": {
+        "title": "Preferences",
+        "purpose": "How you see Rumbo and where you get notifications.",
+        "points": [
+          "Change the language, time zone and date format.",
+          "Choose whether each kind of notification arrives in the app, by email or both.",
+          "Turn on reduced motion or high contrast."
+        ]
+      },
       "dashboard": {
         "title": "Tracking dashboard",
         "purpose": "Shows how every journey is going and where they get stuck.",

@@ -237,7 +237,7 @@ Usar **Motion** (Framer Motion) solo para estas animaciones, con duraciones de 1
 - **Flujos por pasos** (recorrido guiado, aviso de privacidad, problemas para ingresar): transición lateral entre pasos y avance del indicador de puntos, como en la referencia `original-d624f662`.
 - **Constructor de plantillas:** la tarjeta arrastrada se eleva levemente y las demás se reacomodan con transición.
 - **Modales, menús y toasts:** aparición y salida con fundido y escala o desplazamiento corto.
-- **Carga:** esqueletos con pulso suave (sin degradé animado).
+- **Carga:** esqueletos con pulso suave (sin degradé animado), con la forma de la pantalla que viene: uno por plantilla de página (panel, listado, catálogo, ficha, formulario y flujo por pasos), con bloques grises sobre las mismas tarjetas blancas. Se ven mientras llega el código de la pantalla y, como carga simulada breve, la primera vez que se abre cada pantalla en la sesión (D-140).
 - **Inicio de la demo (G0):** el hero entra escalonado al cargar y cada sección aparece una vez al hacer scroll, con fundido y desplazamiento corto (D-74); dentro de cada sección, las tarjetas y filas de una lista entran una tras otra, 50 ms entre cada una, y las secciones por rol desde los costados alternados (D-92).
 - Respetar `prefers-reduced-motion` y la preferencia "reducir animaciones" (F17): en ese caso, solo cambios de opacidad o ninguno.
 - No animar por animar: nada de rebotes, rotaciones decorativas ni animaciones en bucle.

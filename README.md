@@ -109,6 +109,7 @@ Material Design 3 traducido a tokens propios: no se ve como una app de Google, p
 - **Tipografía:** Inter con la escala de M3 y los títulos enfatizados de M3 Expressive; cifras tabulares en KPIs, tablas y fechas.
 - **Jerarquía por elevación tonal**, no por sombras; sin degradés; una sola forma de esquinas suaves en botones, pestañas y chips.
 - **Bento** para paneles, **línea de tiempo** del recorrido, **encabezado de ficha** único, tablas que se seleccionan por fila completa y pie de formulario anclado.
+- **Estados de carga** con la forma de cada plantilla de página (panel, listado, catálogo, ficha, formulario y flujo por pasos).
 - **Movimiento** con las curvas de M3, 150 a 300 ms, escalonado al entrar y siempre respetando "reducir animaciones".
 
 <img src="docs/readme/token-tiers.png" alt="Niveles de tokens: 1 Referencia (valores crudos, tipografía), 2 Sistema (roles de color, personas y gráficos, espacio y elevación, movimiento), 3 Tema de Tailwind (@theme inline y utilidades) y 4 Componentes (variantes con cva y pantallas), con el control de calidad debajo (test de contraste y documentación viva)." width="900" />
@@ -216,15 +217,15 @@ src/
   locales/      es.json y en.json
   styles/       tokens de Material 3 y utilidades
 docs/           documentación del proyecto (ver docs/README.md)
-e2e/            pruebas con Playwright: desbordes, áreas táctiles, axe, teclado, botón principal y desplazamiento
+e2e/            pruebas con Playwright: desbordes, áreas táctiles, axe, teclado, botón principal, desplazamiento y carga
 ```
 
 ---
 
 ## Calidad
 
-![Vitest](https://img.shields.io/badge/Vitest-355%20tests-6E9F18?logo=vitest&logoColor=white)
-![Playwright](https://img.shields.io/badge/Playwright-613%20pruebas-2EAD33?logo=playwright&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-379%20tests-6E9F18?logo=vitest&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-614%20pruebas-2EAD33?logo=playwright&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI-2088FF?logo=githubactions&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deploy-222222?logo=githubpages&logoColor=white)

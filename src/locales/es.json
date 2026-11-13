@@ -1905,6 +1905,11 @@
         "title": "Soluciones que se repiten en todo el producto",
         "intro": "Cada patrón nació de una decisión registrada. El número remite a docs/decisions.md."
       },
+      "loading": {
+        "eyebrow": "Estados de carga",
+        "title": "La forma de la pantalla antes que sus datos",
+        "intro": "Mientras una pantalla carga, muestra bloques grises con la forma de lo que viene, sobre las mismas tarjetas blancas. Hay uno por cada plantilla de página."
+      },
       "a11y": {
         "eyebrow": "Accesibilidad",
         "title": "WCAG 2.2 AA desde el diseño",
@@ -2429,6 +2434,49 @@
       "repo": "Repositorio",
       "demo": "Volver a Rumbo",
       "credits": "Íconos: Material Symbols (Apache 2.0). Tipografía: Inter (SIL OFL). Fotos de personas: Magnific, con licencia."
+    },
+    "loading": {
+      "choose": "Plantilla de página",
+      "kinds": {
+        "dashboard": {
+          "name": "Panel",
+          "body": "Inicios de cada rol, seguridad y reportes: saludo con chips, fila de KPIs, gráfico principal y alertas."
+        },
+        "list": {
+          "name": "Listado",
+          "body": "Ingresos, personas, solicitudes y el resto de los listados: título con acción, búsqueda y filtros, y filas con avatar, dos líneas y estado."
+        },
+        "cards": {
+          "name": "Catálogo",
+          "body": "Plantillas: grilla de tarjetas con ícono, nombre, chips, cifras y estado."
+        },
+        "detail": {
+          "name": "Ficha",
+          "body": "Fichas de ingreso, persona, tarea, solicitud y campaña: foto al lado del nombre, chips, lista principal y detalles con etiqueta y valor."
+        },
+        "form": {
+          "name": "Formulario",
+          "body": "Alta, check-ins y preferencias: campos con etiqueta, campo y texto de ayuda, y el pie con las acciones."
+        },
+        "steps": {
+          "name": "Flujo por pasos",
+          "body": "Inicio de sesión y aviso de privacidad: logo, título y la tarjeta del paso, fuera del layout."
+        }
+      },
+      "rules": [
+        [
+          "Forma, no relleno",
+          "Cada bloque tiene el alto de la línea que reemplaza (título, texto, píldora, campo o botón) y los radios reales, para que la pantalla no salte cuando llega el contenido."
+        ],
+        [
+          "Solo pulso de opacidad",
+          "Los bloques respiran entre 100 % y 55 % de opacidad, sin degradé animado (2.6). Con \"reducir animaciones\" quedan quietos."
+        ],
+        [
+          "Se anuncia una vez",
+          "El esqueleto es un estado (\"Cargando…\") para lectores de pantalla; los bloques son decorativos. La barra y el menú siguen visibles y usables."
+        ]
+      ]
     }
   },
   "notifications": {
@@ -2513,7 +2561,10 @@
           "title": "Cambio de rol por aprobar",
           "body": "{{request}}: cambio de rol de {{person}}. Necesita una segunda persona de sistemas."
         },
-        "export_pending": {"title": "Exportación con datos sensibles por aprobar", "body": "{{request}}: {{person}} pide exportar personas con DNI y CUIL sin ocultar."},
+        "export_pending": {
+          "title": "Exportación con datos sensibles por aprobar",
+          "body": "{{request}}: {{person}} pide exportar personas con DNI y CUIL sin ocultar."
+        },
         "policy_pending": {
           "title": "Cambio de política por aprobar",
           "body": "{{request}}: cambio de {{policy}}. Necesita una segunda persona de sistemas."
@@ -3183,7 +3234,16 @@
       "leaverNote": "En la fecha efectiva la cuenta queda deshabilitada, se cierran sus sesiones y se avisa a su jefe directo."
     },
     "detail": {
-      "facts": {"type": "Tipo", "change": "Cambio", "leaverType": "Tipo de baja", "effective": "Fecha efectiva", "registered": "Registrado", "registeredValue": "{{date}} por {{name}}", "progress": "Avance", "note": "Detalle"},
+      "facts": {
+        "type": "Tipo",
+        "change": "Cambio",
+        "leaverType": "Tipo de baja",
+        "effective": "Fecha efectiva",
+        "registered": "Registrado",
+        "registeredValue": "{{date}} por {{name}}",
+        "progress": "Avance",
+        "note": "Detalle"
+      },
       "title": "{{id}} · {{type}}",
       "tasks": "Accesos",
       "grant": "Otorgar",
@@ -3485,7 +3545,15 @@
     "generic": "Esta pantalla",
     "genericPurpose": "Usa el menú para moverte por las secciones de tu rol. Si algo no funciona como esperas, escribe a la mesa de ayuda.",
     "screens": {
-      "preferences": {"title": "Preferencias", "purpose": "Cómo ves Rumbo y dónde recibes los avisos.", "points": ["Cambia el idioma, la zona horaria y el formato de fecha.", "Elige si cada tipo de aviso llega en la app, por correo o en ambos.", "Activa reducir animaciones o alto contraste."]},
+      "preferences": {
+        "title": "Preferencias",
+        "purpose": "Cómo ves Rumbo y dónde recibes los avisos.",
+        "points": [
+          "Cambia el idioma, la zona horaria y el formato de fecha.",
+          "Elige si cada tipo de aviso llega en la app, por correo o en ambos.",
+          "Activa reducir animaciones o alto contraste."
+        ]
+      },
       "dashboard": {
         "title": "Panel de seguimiento",
         "purpose": "Muestra cómo avanzan todos los recorridos y dónde se traban.",

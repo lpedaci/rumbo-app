@@ -23,8 +23,8 @@ export default defineConfig({
   // run the overflow test and the main flows with the keyboard (D-131). Edge uses Chromium.
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: /(overflow|keyboard|scroll)\.spec\.ts/ },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: /(overflow|keyboard|scroll)\.spec\.ts/ },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: /(overflow|keyboard|scroll|loading)\.spec\.ts/ },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: /(overflow|keyboard|scroll|loading)\.spec\.ts/ },
   ],
   webServer: {
     command: 'npm run dev -- --port 5180 --strictPort',

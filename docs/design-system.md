@@ -221,8 +221,19 @@ Tonos `success`, `warning`, `error`, `info`, `primary` y `neutral`. Siempre llev
 ### ProgressBar
 Barra lineal con `role="progressbar"`, nombre accesible y valor. Se llena desde 0 al aparecer y anima los cambios en 300 ms. Tonos `primary` y `success`.
 
-### Skeleton
-Bloque con pulso de opacidad, oculto para lectores de pantalla.
+### Skeleton y PageSkeleton
+`Skeleton` es un bloque con pulso de opacidad, oculto para lectores de pantalla. `PageSkeleton` (D-140) arma con esos bloques la forma de una pantalla, uno por plantilla de página (`src/lib/page-kind.ts` elige cuál según la ruta):
+
+| Variante | Pantallas | Qué muestra |
+| --- | --- | --- |
+| `dashboard` | A1, J1, N1, S3, A13 | Saludo con chips, cuatro KPIs, gráfico principal y lista de alertas |
+| `list` | A2, A9, S1, G9 y el resto de los listados | Título con acción, búsqueda y filtros, filas con avatar, dos líneas y estado |
+| `cards` | A5 | Grilla de tarjetas con ícono, nombre, chips, cifras y estado |
+| `detail` | A4, J2, N2, S2, A10, S6, A6 a A8 | Foto al lado del nombre, chips, lista principal y detalles con etiqueta y valor |
+| `form` | A3, J3, N3, G11 | Campos con etiqueta, campo y texto de ayuda, y el pie con las acciones |
+| `steps` | G1 a G4, G8 | Logo, título y la tarjeta del paso, fuera del layout |
+
+Reglas: cada bloque tiene el alto de la línea que reemplaza y los radios reales; van sobre las mismas tarjetas blancas; se anuncian una vez como estado ("Cargando…") y la barra y el menú siguen usables. Se ven mientras llega el código de la pantalla y, como carga simulada breve (450 ms, `RouteLoading`), la primera vez que se abre cada pantalla en la sesión. En el sitio del sistema de diseño, sección "Estados de carga", se ven en vivo.
 
 ### Table
 `TableContainer` es una región enfocable con nombre: si la tabla no entra, el desplazamiento ocurre dentro de ella y nunca en la página. Encabezado en `surface-container` con `title-small`; filas con hover en `surface-container-high`. El patrón de tarjetas en mobile se implementa con cada listado, desde el paso 7.
@@ -389,7 +400,7 @@ Reemplaza las bandas de color de D-72.
 - **Encabezado de ficha con persona** (D-94, D-134): la foto va al lado del nombre en todos los anchos, con los chips debajo del nombre (A4, J2 y `DetailHeader`).
 - **Tarjeta de plantilla** (A5, D-134): ícono, nombre y menú en la primera fila; chips de puesto y área, cifras con ícono y, al pie, la fecha de edición y el estado.
 - **Gráficos en celulares** (D-134): por debajo de 768 px el gráfico de área baja a 11 rem, muestra tres líneas de guía, relleno al 8 %, sin puntos y los meses que entren.
-- **Carga de una pantalla** (`PageSkeleton`, D-131): título, línea de propósito y un bento de tarjetas con el pulso suave de 2.6, dentro del layout (la barra y el menú siguen visibles); se anuncia una vez como "Cargando…".
+- **Carga de una pantalla** (`PageSkeleton`, D-131, D-140): el esqueleto de la plantilla de página que viene, dentro del layout (la barra y el menú siguen visibles); se anuncia una vez a los lectores de pantalla. Detalle en la sección de componentes.
 - **Salir con cambios sin guardar** (D-131): diálogo "Tienes cambios sin guardar" con Quedarme y Descartar cambios (outlined) y Guardar borrador y salir (filled); el mismo para el menú, Volver, el botón Atrás y "Ver como".
 - **Resumen de errores** (`ErrorSummary`, D-130): en formularios largos (A3, A6, J3), un `InlineAlert` de error arriba con el título "Revisa N campos antes de continuar" y una línea por campo ("Campo: qué corregir") subrayada que lleva el foco al campo. Toma el foco en cada intento de envío; mientras se corrige, se actualiza sin mover el foco.
 - **Casilla** (`Checkbox`): la fila mide 48 px en mobile y la casilla suma un área táctil invisible de 48 × 48 px, como los botones (D-130).

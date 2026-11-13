@@ -1,7 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { ScrollToTop } from './ScrollToTop';
 import { PageSkeleton } from '@/components/ui/PageSkeleton';
-import { Navigate, Route, Routes } from 'react-router';
+import { pageKind } from '@/lib/page-kind';
+import { Navigate, Route, Routes, useLocation } from 'react-router';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { NextCheckinRedirect } from '@/features/journey/NextCheckinRedirect';
 import { AccessDeniedPage } from '@/features/system/AccessDeniedPage';
@@ -124,11 +125,17 @@ function CatchAll() {
   return user ? <AccessDeniedPage reason="not_found" /> : <NotFoundPage />;
 }
 
+/** While a screen outside the layout loads its code: the skeleton of its page template (D-140). */
+function RouteFallback() {
+  const { pathname } = useLocation();
+  return <PageSkeleton kind={pageKind(pathname)} standalone />;
+}
+
 export function AppRoutes() {
   const user = useCurrentUser();
 
   return (
-    <Suspense fallback={<PageSkeleton standalone />}>
+    <Suspense fallback={<RouteFallback />}>
       <ScrollToTop />
       <Routes>
         {/* Demo start (G0) and access (G1 to G4): public */}
