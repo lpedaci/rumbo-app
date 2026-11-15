@@ -1,6 +1,6 @@
 # Arquitectura de la información
 
-> Estado: **borrador para revisión**, 10/11/2026. La organización y los rótulos son hipótesis de diseño; se validan con card sorting y test de árbol (sección 9).
+> Estado: **implementada** en las 40 pantallas (actualizada al 15/11/2026). La organización y los rótulos siguen siendo hipótesis de diseño hasta validarlos con card sorting y test de árbol (sección 9).
 
 La arquitectura de la información de Rumbo se describe con los cuatro sistemas clásicos: organización, rotulado, navegación y búsqueda (Rosenfeld et al., 2015). Complementa al [mapa de pantallas de flows.md](flows.md), que muestra cómo se navega entre pantallas. Este documento muestra cómo se agrupa y se nombra el contenido.
 

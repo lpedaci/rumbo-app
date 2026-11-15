@@ -2,7 +2,7 @@
 
 > **Sitio del sistema de diseño:** [lpedaci.github.io/rumbo-app/#/design-system](https://lpedaci.github.io/rumbo-app/#/design-system) (D-98). Este documento es la versión en Markdown. En tablet y mobile, el sitio se recorre con la barra "Secciones" del encabezado (D-104).
 >
-> Estado: **implementado en el paso 2** (10/11/2026). Los valores de este documento son los de `src/styles/tokens.css` y coinciden con la página interna `/styleguide`, disponible solo con `npm run dev` en `http://localhost:5173/#/styleguide`.
+> Estado: **implementado** desde el paso 2 (10/11/2026) y actualizado hasta los estados de carga (D-140, 15/11/2026). Los valores de este documento son los de `src/styles/tokens.css` y coinciden con la página interna `/styleguide`, disponible solo con `npm run dev` en `http://localhost:5173/#/styleguide`.
 
 Rumbo usa **Material Design 3** (Google, s.f.) como base: roles de color, escala tipográfica, forma, estados, elevación y patrones de componentes. No usa una librería de Material, sino **Tailwind CSS 4 y shadcn/ui** (con Radix debajo). Así los fundamentos de M3 se convierten en tokens propios y el producto no se ve como una app de Google por defecto.
 

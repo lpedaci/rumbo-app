@@ -522,3 +522,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 ## Ajustes · Capa de borde, 12/11/2026 (D-141)
 
 - `docs/security.md` documenta Cloudflare como capa de borde de producción (cabeceras, TLS, WAF, límites, bots, DDoS y acceso a entornos internos) y su tratamiento como subencargado de datos.
+
+## Ajustes · Documentación al día, 15/11/2026
+
+- `docs/README.md` con el estado final (versión 1.0), cifras, enlaces a la demo, al case study y al sistema de diseño, e índice completo (seguridad, auditoría visual, wireflows, capturas, Lighthouse). Encabezados de `requirements.md`, `information-architecture.md` y `design-system.md` al día.

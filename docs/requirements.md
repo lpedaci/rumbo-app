@@ -1,6 +1,6 @@
 # Requerimientos
 
-Derivados de `CLAUDE.md` (secciones 1 a 8 y 11). Estado de todos: **pendiente** (10/11/2026, antes del paso 1).
+Derivados de `CLAUDE.md` (secciones 1 a 8 y 11). Estado al 15/11/2026: los **89 RF están hechos**; de los **57 RNF**, 54 están hechos y 3 son parciales (ver cada fila). La columna de estado dice cómo se verificó cada uno.
 
 ## 1. Criterio de priorización
 

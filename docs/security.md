@@ -6,7 +6,7 @@ Rumbo es un **prototipo de portfolio**: corre por completo en el navegador, sin 
 2. **Aplicada de verdad en el front-end:** buenas prácticas reales que sí rigen en el sitio publicado.
 3. **Arquitectura de producción:** cómo se implementaría en un producto real. Es la base para el case study.
 
-Última revisión: 12/11/2026 (capa de borde, D-141).
+Última revisión: 12/11/2026 (capa de borde, D-141). Vigente para la versión 1.0.
 
 ---
 
