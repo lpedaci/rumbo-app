@@ -530,3 +530,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 ## Ajustes · Licencia, 16/11/2026 (D-144)
 
 - `LICENSE` (todos los derechos reservados), pie de autoría en todas las pantallas, sección en el README y `package.json`, como en Alcancía.
+
+## Confirmaciones, 16/11/2026
+
+- Lourdes confirmó D-137 (retratos), D-141 (capa de borde) y D-144 (licencia con exclusión de terceros). No queda ninguna decisión pendiente de confirmación.
