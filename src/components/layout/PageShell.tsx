@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { RightsFooter } from './RightsNotice';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 
@@ -29,6 +30,8 @@ export function PageShell({ children, width = 'narrow' }: PageShellProps) {
         )}
       >
         {children}
+        {/* Authorship and rights (D-144) */}
+        <RightsFooter className="border-t border-outline-variant pt-5" />
       </main>
     </>
   );

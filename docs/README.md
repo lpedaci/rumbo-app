@@ -14,7 +14,7 @@ Rumbo es una plataforma B2B de recorridos de ingreso (onboarding) corporativo. E
 | Requerimientos funcionales | 89, todos hechos | [requirements.md](requirements.md) |
 | Requerimientos no funcionales (ISO/IEC 25010:2023) | 57: 54 hechos y 3 parciales | [requirements.md](requirements.md) |
 | Casos de uso | 14 | [use-cases.md](use-cases.md) |
-| Decisiones de diseño registradas | 143 (D-01 a D-143) | [decisions.md](decisions.md) |
+| Decisiones de diseño registradas | 144 (D-01 a D-144) | [decisions.md](decisions.md) |
 | Incidencias registradas | 41, todas resueltas o descartadas salvo INC-001 (avisos moderados de una dependencia de desarrollo) | [issues.md](issues.md) |
 | Tests unitarios y de componentes | 380 (Vitest) | [review.md](review.md) |
 | Pruebas de navegador | 614 en Chromium y 312 en WebKit y en Firefox (Playwright) | [review.md](review.md) |
@@ -81,7 +81,7 @@ Los requerimientos parciales y lo que falta verificar (la prueba con NVDA y en c
 
 ## Créditos
 
-- **Diseño y desarrollo:** Lourdes Pedaci, Experience Designer (Learning y UX/UI).
+- **Diseño y desarrollo:** Lourdes Pedaci, Experience Designer (Learning y UX/UI). Todos los derechos reservados: ver [LICENSE](../LICENSE).
 - **Fotos de personas:** Magnific (magnific.com, antes Freepik), con licencia confirmada por Lourdes para un portfolio público. Detalle de cada archivo en `src/assets/avatars/SOURCE.md`.
 - **Íconos:** Material Symbols (Google), licencia Apache 2.0.
 - **Tipografía:** Inter, SIL Open Font License.

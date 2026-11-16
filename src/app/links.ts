@@ -13,6 +13,8 @@ export const DESIGN_SYSTEM_SITE_URL = 'https://lpedaci.github.io/rumbo-app/#/des
 /** Markdown version of the design system (docs/design-system.md), kept in sync with the site. */
 export const DESIGN_SYSTEM_MD_URL = 'https://github.com/lpedaci/rumbo-app/blob/main/docs/design-system.md';
 export const REPO_URL = 'https://github.com/lpedaci/rumbo-app';
+/** All rights reserved (D-144), as in Alcancía. */
+export const LICENSE_URL = `${REPO_URL}/blob/main/LICENSE`;
 
 /** Lourdes's portfolio and LinkedIn profile, in the G0 footer (D-92). */
 export const PORTFOLIO_URL = 'https://lpedaci.github.io/portfolio/';

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { RightsFooter } from '@/components/layout/RightsNotice';
 import { isRouteErrorResponse, useRouteError } from 'react-router';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
@@ -72,6 +73,8 @@ export function RouteErrorPage() {
           </details>
         </section>
       </main>
+      {/* Authorship and rights (D-144) */}
+      <RightsFooter className="mx-auto w-full max-w-2xl" />
     </div>
   );
 }

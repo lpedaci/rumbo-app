@@ -7,6 +7,7 @@ import {
   DOCS_URL,
 } from '@/app/links';
 import { AuthorLinks } from '@/components/brand/AuthorLinks';
+import { RightsNotice } from '@/components/layout/RightsNotice';
 import { BackToTop } from '@/components/layout/BackToTop';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
@@ -326,9 +327,8 @@ export function DemoHomePage() {
               {/* Who made it (D-92, D-102): one line across the footer, name and role, then the profiles */}
               <AuthorLinks className="border-t border-outline-variant pt-5" />
 
-              <p className="border-t border-outline-variant pt-5 text-center text-body-small text-on-surface-variant">
-                {t('home.footer.copyright', { year: new Date().getFullYear() })}
-              </p>
+              {/* Authorship and rights with the link to the license (D-144) */}
+              <RightsNotice className="border-t border-outline-variant pt-5 text-center" />
 
               {/* Decorative wordmark, flat color and cut by the card edge, as in the reference */}
               <svg aria-hidden focusable="false" viewBox="0 0 1000 210" className="-mb-2 w-full text-primary-container">

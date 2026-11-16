@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { Logo } from '@/components/layout/Logo';
+import { RightsFooter } from '@/components/layout/RightsNotice';
 import { cn } from '@/lib/utils';
 
 interface AuthLayoutProps {
@@ -59,6 +60,8 @@ export function AuthLayout({ children, aside, showcase }: AuthLayoutProps) {
             <Logo />
           </Link>
           {children}
+          {/* Authorship and rights (D-144) */}
+          <RightsFooter />
         </div>
       </main>
       {showcase && (

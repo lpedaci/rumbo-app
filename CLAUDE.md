@@ -462,7 +462,7 @@ La demo para el portfolio y el producto se separan: la pantalla de inicio presen
     7. **Recorre la demo en tres pasos:** elegir, iniciar sesión en un clic y cambiar de rol con «Ver como».
     8. **Preguntas frecuentes** en acordeón accesible.
     La página es blanca y continua: las secciones se separan por espacio, sin bandas de color; el hero tiene una cuadrícula muy tenue, que se repite en algunas secciones de cifras y llamados (en número, los tres pasos, el bento de "La solución" (D-124) y la franja final en su versión `primary-container`), nunca detrás de textos largos (D-92). Los encabezados van centrados: una etiqueta de texto simple en `primary` (sin píldora), el `h2` con las palabras clave en `primary` y sin punto final, y una línea de contexto (D-73, D-74). Sin texturas de puntos: dificultan la lectura. Antes del pie, una franja `primary-container` con "Elegir un recorrido".
-    9. **Pie organizado por tareas:** marca con su frase y el aviso de demo; columnas "Explorar" (secciones de la página), "El proyecto" (case study, documentación y el sitio del sistema de diseño) y "La demo" (elegir un recorrido, restablecer); abajo, en una línea a todo el ancho, "Diseño y desarrollo: Lourdes Pedaci, Experience Designer (Learning y UX/UI)" con botones de ícono con tooltip a su LinkedIn, su portfolio y su GitHub (`AuthorLinks`, igual en el pie del sitio del sistema de diseño; D-102, D-103), y debajo el copyright con el año actual, centrado; y la marca "Rumbo" grande como SVG decorativo (D-92).
+    9. **Pie organizado por tareas:** marca con su frase y el aviso de demo; columnas "Explorar" (secciones de la página), "El proyecto" (case study, documentación y el sitio del sistema de diseño) y "La demo" (elegir un recorrido, restablecer); abajo, en una línea a todo el ancho, "Diseño y desarrollo: Lourdes Pedaci, Experience Designer (Learning y UX/UI)" con botones de ícono con tooltip a su LinkedIn, su portfolio y su GitHub (`AuthorLinks`, igual en el pie del sitio del sistema de diseño; D-102, D-103), y debajo el aviso de derechos con el enlace a la licencia, centrado (D-144); y la marca "Rumbo" grande como SVG decorativo (D-92).
 - **No se usan** logos de otras empresas ("empresas que confían") ni testimonios: serían inventados.
 - Sin degradés ni sombras en tarjetas en reposo; en mobile, todo en una columna (las cifras, de a dos).
 
@@ -1142,6 +1142,12 @@ Documentar el sistema de diseño implementado, como referencia para el case stud
 - Íconos: `favicon.svg` (la flecha del logo), `apple-touch-icon.png`, `icon-512.png` y `site.webmanifest`.
 - Las URL de las etiquetas son absolutas (`https://lpedaci.github.io/rumbo-app/`).
 
-## 16. README del repositorio
+## 16. Licencia y autoría (D-144)
+
+- **Todos los derechos reservados**, igual que Alcancía: `LICENSE` en la raíz (Ley 11.723), con los elementos de terceros excluidos (Inter, Material Symbols, fotos de Magnific y logos de Microsoft y Google conservan sus licencias).
+- **Pie en todas las pantallas** (`RightsNotice`): "© 2026 Lourdes Pedaci · Todos los derechos reservados" con enlace a `LICENSE`, en `body-small` y `on-surface-variant`. Va en la app, en el acceso (G1 a G4 y G8), en G0, en el sitio del sistema de diseño y en las páginas sueltas (404 y error).
+- Sección "Licencia" al final del README y `package.json` con `"license": "UNLICENSED"`, `"private": true` y `"author": "Lourdes Pedaci"`.
+
+## 17. README del repositorio
 
 El README debe incluir: descripción del problema, roles, capturas de las pantallas principales, link a la demo, link al case study en el portfolio, enlace a `docs/README.md` (documentación), stack, cómo correrlo (`npm install`, `npm run dev`) y autoría: **Lourdes Pedaci, Experience Designer (Learning y UX/UI)**.

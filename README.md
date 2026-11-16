@@ -283,3 +283,13 @@ En la portada, elige un recorrido e inicia sesión con un clic; todo está preca
 ## Referencias
 
 Brown, S. (s.f.). *The C4 model for visualising software architecture*. https://c4model.com/
+
+---
+
+## Licencia
+
+Copyright (c) 2026 Lourdes Pedaci. Todos los derechos reservados.
+
+Este repositorio y su contenido (código fuente, diseño, sistema de diseño, textos, documentación, diagramas e ilustraciones) son obra de Lourdes Pedaci y están protegidos por la Ley 11.723 de Propiedad Intelectual de la República Argentina y por los tratados internacionales aplicables. Que el repositorio sea visible públicamente no otorga ninguna licencia: queda prohibido copiar, modificar, distribuir, sublicenciar o crear obras derivadas, total o parcialmente, sin autorización previa y por escrito de la autora. Los elementos de terceros (Inter, Material Symbols, las fotos de Magnific y los logos de Microsoft y Google) conservan sus propias licencias. Nortia S.A., sus personas y sus datos son ficticios.
+
+Texto completo en [LICENSE](LICENSE).

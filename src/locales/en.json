@@ -646,8 +646,7 @@
       "linkedin": "Lourdes Pedaci on LinkedIn",
       "portfolio": "Lourdes Pedaci's portfolio",
       "github": "Lourdes Pedaci's GitHub",
-      "designSystem": "Design system",
-      "copyright": "© {{year}} Lourdes Pedaci"
+      "designSystem": "Design system"
     },
     "cta": {
       "title": "Explore Rumbo from any role",
@@ -3932,5 +3931,10 @@
     "note": "Changes apply when you save.",
     "save": "Save preferences",
     "saved": "Preferences saved"
+  },
+  "rights": {
+    "notice": "© 2026 Lourdes Pedaci · All rights reserved",
+    "license": "License",
+    "newTab": "(opens in a new tab)"
   }
 }

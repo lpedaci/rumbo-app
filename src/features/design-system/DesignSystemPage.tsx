@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { DESIGN_SYSTEM_MD_URL, REPO_URL } from '@/app/links';
 import { AuthorLinks } from '@/components/brand/AuthorLinks';
+import { RightsNotice } from '@/components/layout/RightsNotice';
 import { BackToTop } from '@/components/layout/BackToTop';
 import { Logo } from '@/components/layout/Logo';
 import { Button } from '@/components/ui/Button';
@@ -506,9 +507,8 @@ export function DesignSystemPage() {
               </a>
             </li>
           </ul>
-          <p className="text-center text-body-small text-on-surface-variant">
-            {t('home.footer.copyright', { year: new Date().getFullYear() })}
-          </p>
+          {/* Authorship and rights with the link to the license (D-144) */}
+          <RightsNotice className="text-center" />
         </div>
       </footer>
       <BackToTop />

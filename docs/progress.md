@@ -526,3 +526,7 @@ Se actualiza al terminar cada paso de la sección 10 de `CLAUDE.md`.
 ## Ajustes · Documentación al día, 15/11/2026
 
 - `docs/README.md` con el estado final (versión 1.0), cifras, enlaces a la demo, al case study y al sistema de diseño, e índice completo (seguridad, auditoría visual, wireflows, capturas, Lighthouse). Encabezados de `requirements.md`, `information-architecture.md` y `design-system.md` al día.
+
+## Ajustes · Licencia, 16/11/2026 (D-144)
+
+- `LICENSE` (todos los derechos reservados), pie de autoría en todas las pantallas, sección en el README y `package.json`, como en Alcancía.

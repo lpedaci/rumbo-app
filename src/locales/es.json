@@ -646,8 +646,7 @@
       "linkedin": "LinkedIn de Lourdes Pedaci",
       "portfolio": "Portfolio de Lourdes Pedaci",
       "github": "GitHub de Lourdes Pedaci",
-      "designSystem": "Sistema de diseño",
-      "copyright": "© {{year}} Lourdes Pedaci"
+      "designSystem": "Sistema de diseño"
     },
     "cta": {
       "title": "Recorre Rumbo desde el rol que quieras",
@@ -3932,5 +3931,10 @@
     "note": "Los cambios se aplican al guardar.",
     "save": "Guardar preferencias",
     "saved": "Preferencias guardadas"
+  },
+  "rights": {
+    "notice": "© 2026 Lourdes Pedaci · Todos los derechos reservados",
+    "license": "Licencia",
+    "newTab": "(se abre en una pestaña nueva)"
   }
 }

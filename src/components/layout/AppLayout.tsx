@@ -4,6 +4,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router';
 import { useCurrentUser, useSessionStore } from '@/store/session-store';
 import { BackToTop } from './BackToTop';
 import { RouteLoading } from './RouteLoading';
+import { RightsFooter } from './RightsNotice';
 import { BottomNav, MobileNavDrawer, SideNav } from './MainNav';
 import { SessionTimeout } from './SessionTimeout';
 import { TopBar } from './TopBar';
@@ -76,6 +77,8 @@ export function AppLayout() {
                   <Outlet />
                 </RouteLoading>
               </div>
+              {/* Authorship and rights at the foot of every screen (D-144) */}
+              <RightsFooter className="mt-(--space-section) border-t border-outline-variant pt-5" />
             </div>
           </main>
         </div>

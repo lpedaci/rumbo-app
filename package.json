@@ -1,7 +1,9 @@
 {
   "name": "rumbo-onboarding",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "author": "Lourdes Pedaci",
   "description": "Rumbo: plataforma B2B de recorridos de ingreso corporativo. Prototipo de portfolio de Lourdes Pedaci.",
   "type": "module",
   "engines": {
